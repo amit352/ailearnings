@@ -493,6 +493,33 @@
                 ))}
               </div>
             </div>
+            {/* Community feedback card */}
+            <div className="mt-6 rounded-xl border border-blue-500/20 bg-blue-500/5 p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <MessageSquare size={15} className="text-blue-400" />
+                <p className="text-sm font-semibold text-white">Help make this better</p>
+              </div>
+              <p className="text-sm text-gray-400 mb-4">This roadmap is community-driven. If you spot something outdated, missing, or wrong — please say so.</p>
+              <div className="grid grid-cols-1 gap-2 mb-4">
+                {[
+                  { icon: Lightbulb, label: "Suggest a missing resource", href: "https://github.com/amit352/ailearnings/discussions/new?category=ideas", color: "text-yellow-400" },
+                  { icon: AlertTriangle, label: "Report an outdated or broken link", href: "https://github.com/amit352/ailearnings/discussions/new?category=general", color: "text-orange-400" },
+                  { icon: Check, label: "Share your experience after completing a phase", href: "https://github.com/amit352/ailearnings/discussions/new?category=general", color: "text-green-400" },
+                ].map(({ icon: Icon, label, href, color }, i) => (
+                  <a key={i} href={href} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 bg-gray-900/60 hover:bg-gray-800/80 border border-white/8 hover:border-white/15 rounded-lg px-3 py-2.5 transition-all group">
+                    <Icon size={13} className={`${color} flex-shrink-0`} />
+                    <span className="text-sm text-gray-300 group-hover:text-white transition-colors">{label}</span>
+                    <ArrowRight size={12} className="text-gray-600 group-hover:text-gray-400 ml-auto flex-shrink-0 transition-colors" />
+                  </a>
+                ))}
+              </div>
+              <a href="https://github.com/amit352/ailearnings/discussions" target="_blank" rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 text-xs text-gray-500 hover:text-gray-300 transition-colors">
+                <Github size={12} /> View all discussions on GitHub
+              </a>
+            </div>
+
             <p className="text-center text-gray-400 text-xs mt-6">Click each phase to expand · Use tabs to navigate sections</p>
           </div>
         </div>
@@ -3346,6 +3373,28 @@ function KnowledgeGaps() {
       );
     }
 
+    function FeedbackBanner() {
+      const [dismissed, setDismissed] = React.useState(false);
+      if (dismissed) return null;
+      return (
+        <div className="fixed bottom-16 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none">
+          <div className="pointer-events-auto flex items-center gap-3 bg-gray-900/95 border border-blue-500/30 backdrop-blur-sm rounded-xl px-4 py-3 shadow-[0_0_24px_rgba(59,130,246,0.12)] max-w-lg w-full">
+            <MessageSquare size={16} className="text-blue-400 flex-shrink-0" />
+            <p className="text-sm text-gray-300 flex-1">
+              Help improve this roadmap —{" "}
+              <a href="https://github.com/amit352/ailearnings/discussions" target="_blank" rel="noopener noreferrer"
+                className="text-blue-400 hover:text-blue-300 underline underline-offset-2">suggest a resource or share feedback</a>
+            </p>
+            <button onClick={() => setDismissed(true)}
+              aria-label="Dismiss"
+              className="text-gray-500 hover:text-gray-300 transition-colors flex-shrink-0 ml-1">
+              <X size={14} />
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     function ScrollToTop() {
       const [visible, setVisible] = React.useState(false);
       React.useEffect(() => {
@@ -3448,6 +3497,7 @@ function KnowledgeGaps() {
 
           <main><div key={activeTab}><Component /></div></main>
           <Footer />
+          <FeedbackBanner />
           <ScrollToTop />
         </div>
       );
