@@ -344,7 +344,7 @@
                                       <ExternalLink size={12} className="flex-shrink-0 opacity-60 text-blue-400 mt-0.5"/>
                                       <div>
                                         <span className="text-sm text-blue-400 group-hover:text-blue-300">{r.label}</span>
-                                        {r.note && <p className="text-xs text-gray-500 mt-0.5">{r.note}</p>}
+                                        {r.note && <p className="text-xs text-gray-400 mt-0.5">{r.note}</p>}
                                       </div>
                                     </div>
                                     <span className="text-xs text-gray-400 ml-2 flex-shrink-0">{r.time}</span>
