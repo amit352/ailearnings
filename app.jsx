@@ -231,7 +231,12 @@
     function Roadmap() {
       const [open, setOpen] = useState(1);
       const [tab, setTab] = useState({});
-      const setPhaseTab = (id, t, e) => { e.stopPropagation(); setTab(prev => ({ ...prev, [id]: t })); };
+      const [visited, setVisited] = useState({ "1-learn": true });
+      const setPhaseTab = (id, t, e) => {
+        e.stopPropagation();
+        setTab(prev => ({ ...prev, [id]: t }));
+        setVisited(prev => ({ ...prev, [`${id}-${t}`]: true }));
+      };
 
       const [done, setDone] = React.useState(() => {
         try { return JSON.parse(localStorage.getItem("ai_progress") || "{}"); } catch { return {}; }
@@ -334,6 +339,31 @@
                     </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Other sections */}
+              <div className="mb-6">
+                <p className="text-xs text-gray-500 uppercase tracking-wider mb-3 text-center">Also inside this tool</p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {[
+                    { slug: "prep-plan",      icon: Calendar,      color: "text-orange-400", label: "Prep Plan",      desc: "6-week fast track" },
+                    { slug: "prompt-eng",     icon: Zap,           color: "text-yellow-400", label: "Prompt Eng",     desc: "Techniques & templates" },
+                    { slug: "readiness",      icon: CheckCircle,   color: "text-green-400",  label: "Readiness",      desc: "Am I ready to move on?" },
+                    { slug: "genai-guide",    icon: Cpu,           color: "text-purple-400", label: "GenAI Guide",    desc: "How each AI domain works" },
+                    { slug: "resources",      icon: BookOpen,      color: "text-blue-400",   label: "Resources",      desc: "Books & courses by phase" },
+                    { slug: "assessment",     icon: BarChart2,     color: "text-pink-400",   label: "Assessment",     desc: "Where will I stand?" },
+                    { slug: "beyond-roadmap", icon: Compass,       color: "text-teal-400",   label: "Beyond Roadmap", desc: "What to do after" },
+                  ].map(({ slug, icon: Icon, color, label, desc }) => (
+                    <a key={slug} href={`#${slug}`}
+                      className="flex items-start gap-2 bg-gray-800/40 hover:bg-gray-800/80 border border-white/6 hover:border-white/12 rounded-lg px-3 py-2.5 transition-colors group">
+                      <Icon size={14} className={`${color} flex-shrink-0 mt-0.5`}/>
+                      <div>
+                        <p className="text-xs font-medium text-gray-300 group-hover:text-white">{label}</p>
+                        <p className="text-xs text-gray-600">{desc}</p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
               </div>
 
               {/* Progress bar — returning users only */}
@@ -444,12 +474,19 @@
                       {open === p.id && (
                         <div className="border-t border-gray-800">
                           <div className="flex gap-1 p-3 pb-0 flex-wrap">
-                            {["learn", "resources", ...(p.config ? ["setup"] : []), ...(p.agentic ? ["how it works"] : []), ...(p.training ? ["training"] : []), "project"].map(t => (
-                              <button key={t} onClick={e => setPhaseTab(p.id, t, e)}
-                                className={`text-xs px-3 py-1.5 rounded-t-lg capitalize transition-colors ${activeTab === t ? "bg-gray-700 text-white" : "text-gray-400 hover:text-gray-300"}`}>
-                                {t}
-                              </button>
-                            ))}
+                            {["learn", "resources", ...(p.config ? ["setup"] : []), ...(p.agentic ? ["how it works"] : []), ...(p.training ? ["training"] : []), "project"].map(t => {
+                              const isVisited = visited[`${p.id}-${t}`];
+                              const isActive = activeTab === t;
+                              return (
+                                <button key={t} onClick={e => setPhaseTab(p.id, t, e)}
+                                  className={`relative text-xs px-3 py-1.5 rounded-t-lg capitalize transition-colors ${isActive ? "bg-gray-700 text-white" : "text-gray-400 hover:text-gray-300"}`}>
+                                  {t}
+                                  {!isVisited && !isActive && (
+                                    <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"/>
+                                  )}
+                                </button>
+                              );
+                            })}
                           </div>
                           <div className="p-4 space-y-3">
                             <p className="text-gray-300 text-sm">{p.goal}</p>
@@ -476,6 +513,12 @@
                                 })}
                               </ul>
                             )}
+                            {activeTab === "learn" && (
+                              <button onClick={e => setPhaseTab(p.id, "resources", e)}
+                                className="w-full mt-2 flex items-center justify-center gap-2 text-xs text-blue-400 hover:text-blue-300 bg-blue-500/8 hover:bg-blue-500/15 border border-blue-500/20 rounded-lg py-2 transition-colors">
+                                Ready? See curated resources for this phase <ArrowRight size={12}/>
+                              </button>
+                            )}
                             {activeTab === "resources" && (
                               <div className="space-y-1.5">
                                 <p className="text-xs text-gray-500 mb-2">Ordered by recommendation — start from the top.</p>
@@ -498,6 +541,10 @@
                                     <span className="text-xs text-gray-400 ml-2 flex-shrink-0">{r.time}</span>
                                   </a>
                                 ))}
+                                <button onClick={e => setPhaseTab(p.id, "project", e)}
+                                  className="w-full mt-2 flex items-center justify-center gap-2 text-xs text-green-400 hover:text-green-300 bg-green-500/8 hover:bg-green-500/15 border border-green-500/20 rounded-lg py-2 transition-colors">
+                                  Now see what to build — the phase project <ArrowRight size={12}/>
+                                </button>
                               </div>
                             )}
                             {activeTab === "setup" && p.config && (
