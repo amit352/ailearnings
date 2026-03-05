@@ -272,7 +272,7 @@
         setTimeout(() => {
           const el = document.getElementById("roadmap-start");
           if (el) {
-            const top = el.getBoundingClientRect().top + window.scrollY - 16;
+            const top = el.getBoundingClientRect().top + window.scrollY - 64;
             window.scrollTo({ top, behavior: "smooth" });
           }
         }, 50);
