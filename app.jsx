@@ -328,23 +328,34 @@
                 ))}
               </div>
 
-              {/* Section links — compact pill row */}
+              {/* Section links — pills with hover tooltip */}
               <div>
                 <p className="text-xs text-gray-500 uppercase tracking-wider mb-3 text-center">Also inside this tool</p>
                 <div className="flex flex-wrap justify-center gap-2">
                   {[
-                    { slug: "prep-plan",      icon: Calendar,    color: "text-orange-400", label: "Prep Plan" },
-                    { slug: "prompt-eng",     icon: Zap,         color: "text-yellow-400", label: "Prompt Eng" },
-                    { slug: "genai-guide",    icon: Cpu,         color: "text-purple-400", label: "GenAI Guide" },
-                    { slug: "readiness",      icon: CheckCircle, color: "text-green-400",  label: "Readiness Check" },
-                    { slug: "resources",      icon: BookOpen,    color: "text-blue-400",   label: "Books & Courses" },
-                    { slug: "assessment",     icon: BarChart2,   color: "text-pink-400",   label: "Assessment" },
-                    { slug: "beyond-roadmap", icon: Compass,     color: "text-teal-400",   label: "Beyond Roadmap" },
-                  ].map(({ slug, icon: Icon, color, label }) => (
-                    <a key={slug} href={`#${slug}`}
-                      className="inline-flex items-center gap-1.5 bg-gray-800/60 hover:bg-gray-700/60 border border-white/8 hover:border-white/15 text-gray-300 hover:text-white text-xs px-3 py-1.5 rounded-full transition-colors">
-                      <Icon size={11} className={color}/>{label}
-                    </a>
+                    { slug: "prep-plan",      icon: Calendar,    color: "text-orange-400", label: "Prep Plan",       when: "Already know some AI basics?", why: "A focused 6-week sprint to go from zero to building your first AI app — faster than the full roadmap." },
+                    { slug: "prompt-eng",     icon: Zap,         color: "text-yellow-400", label: "Prompt Eng",      when: "Starting Phase 3?",            why: "Master techniques, templates, and a 6-week plan to become genuinely good at prompting — the skill every AI app depends on." },
+                    { slug: "genai-guide",    icon: Cpu,         color: "text-purple-400", label: "GenAI Guide",     when: "Curious how AI actually works?", why: "A deep dive into text, code, image, and audio AI — how each domain works under the hood, with tools to explore." },
+                    { slug: "readiness",      icon: CheckCircle, color: "text-green-400",  label: "Readiness Check", when: "About to move phases?",        why: "Before moving on, check the green flags and move-on rules to make sure you're actually ready — not just rushed." },
+                    { slug: "resources",      icon: BookOpen,    color: "text-blue-400",   label: "Books & Courses", when: "Want to go deeper?",            why: "The best books and paid/free courses mapped to each phase — for when the free resources aren't enough." },
+                    { slug: "assessment",     icon: BarChart2,   color: "text-pink-400",   label: "Assessment",      when: "Planning your journey?",       why: "See exactly where you'll stand as an AI engineer after completing the roadmap — what roles you'll be ready for." },
+                    { slug: "beyond-roadmap", icon: Compass,     color: "text-teal-400",   label: "Beyond Roadmap",  when: "Finished the roadmap?",        why: "What to learn next, what gaps remain, and what projects will take you from competent to expert." },
+                  ].map(({ slug, icon: Icon, color, label, when, why }) => (
+                    <div key={slug} className="relative group">
+                      <a href={`#${slug}`}
+                        className="inline-flex items-center gap-1.5 bg-gray-800/60 hover:bg-gray-700/60 border border-white/8 hover:border-white/15 text-gray-300 hover:text-white text-xs px-3 py-1.5 rounded-full transition-colors">
+                        <Icon size={11} className={color}/>{label}
+                      </a>
+                      {/* Tooltip */}
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-50">
+                        <div className="bg-gray-900 border border-white/10 rounded-xl px-3 py-2.5 shadow-xl">
+                          <p className="text-xs font-semibold text-white mb-0.5">{label}</p>
+                          <p className="text-xs text-blue-400 mb-1">{when}</p>
+                          <p className="text-xs text-gray-400 leading-relaxed">{why}</p>
+                        </div>
+                        <div className="w-2 h-2 bg-gray-900 border-r border-b border-white/10 rotate-45 mx-auto -mt-1"/>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
