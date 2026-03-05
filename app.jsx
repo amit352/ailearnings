@@ -515,7 +515,7 @@
                 ))}
               </div>
               <a href="https://github.com/amit352/ailearnings/discussions" target="_blank" rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 text-xs text-gray-500 hover:text-gray-300 transition-colors">
+                className="flex items-center justify-center gap-2 text-xs text-gray-400 hover:text-gray-200 transition-colors">
                 <Github size={12} /> View all discussions on GitHub
               </a>
             </div>
@@ -3373,27 +3373,6 @@ function KnowledgeGaps() {
       );
     }
 
-    function FeedbackBanner() {
-      const [dismissed, setDismissed] = React.useState(false);
-      if (dismissed) return null;
-      return (
-        <div className="fixed bottom-16 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none">
-          <div className="pointer-events-auto flex items-center gap-3 bg-gray-900/95 border border-blue-500/30 backdrop-blur-sm rounded-xl px-4 py-3 shadow-[0_0_24px_rgba(59,130,246,0.12)] max-w-lg w-full">
-            <MessageSquare size={16} className="text-blue-400 flex-shrink-0" />
-            <p className="text-sm text-gray-300 flex-1">
-              Help improve this roadmap —{" "}
-              <a href="https://github.com/amit352/ailearnings/discussions" target="_blank" rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300 underline underline-offset-2">suggest a resource or share feedback</a>
-            </p>
-            <button onClick={() => setDismissed(true)}
-              aria-label="Dismiss"
-              className="text-gray-500 hover:text-gray-300 transition-colors flex-shrink-0 ml-1">
-              <X size={14} />
-            </button>
-          </div>
-        </div>
-      );
-    }
 
     function ScrollToTop() {
       const [visible, setVisible] = React.useState(false);
@@ -3497,7 +3476,6 @@ function KnowledgeGaps() {
 
           <main><div key={activeTab}><Component /></div></main>
           <Footer />
-          <FeedbackBanner />
           <ScrollToTop />
         </div>
       );
