@@ -267,72 +267,85 @@
           <div className="max-w-3xl mx-auto">
             {/* Hero Section */}
             <div className="text-center mb-10 pt-4">
+              {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-3 py-1 mb-4">
                 <BrainCircuit size={12} className="text-blue-400"/>
-                <span className="text-xs text-blue-400 font-medium">Updated March 2026</span>
+                <span className="text-xs text-blue-400 font-medium">Updated March 2026 · Free · For software developers</span>
               </div>
+
+              {/* H1 */}
               <h1 className="text-4xl md:text-5xl font-bold mb-3 leading-tight">
                 <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">The AI Engineering</span>
                 <br />
                 <span className="text-white">Roadmap</span>
               </h1>
-              <p className="text-gray-400 text-base max-w-lg mx-auto mb-3">
-                Not sure where to start with AI? This roadmap cuts through the noise — curated free resources, in the right order, for working developers.
+
+              {/* Subtitle */}
+              <p className="text-gray-400 text-base max-w-lg mx-auto mb-5">
+                A structured path from zero to production-ready AI — with curated free resources, hands-on projects, and milestones at every phase.
               </p>
+
+              {/* Stats pills */}
               <div className="flex flex-wrap justify-center gap-2 mb-6">
                 {[
-                  ["No course fees", "100% free resources only"],
-                  ["Built by devs", "Structured for software engineers, not researchers"],
-                  ["Track your progress", "Check off topics as you go — saved in your browser"],
-                ].map(([title, desc]) => (
-                  <div key={title} className="flex items-start gap-1.5 bg-gray-800/40 border border-white/6 rounded-lg px-3 py-2 text-left max-w-[180px]">
-                    <Check size={12} className="text-green-400 flex-shrink-0 mt-0.5"/>
+                  [Layers, "blue", "7", "Phases"],
+                  [Clock, "purple", "~14", "months"],
+                  [BookOpen, "green", "50+", "Resources"],
+                  [Wrench, "orange", "7", "Projects"],
+                ].map(([Icon, color, val, label]) => (
+                  <span key={label} className="inline-flex items-center gap-1.5 bg-gray-800/60 border border-white/8 text-gray-300 text-xs px-3 py-1.5 rounded-full">
+                    <Icon size={12} className={`text-${color}-400`}/><strong className="text-white">{val}</strong> {label}
+                  </span>
+                ))}
+              </div>
+
+              {/* USP cards — 3 differentiators, each with feature detail */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-left">
+                {[
+                  {
+                    icon: BookOpen, color: "text-blue-400", bg: "bg-blue-500/8 border-blue-500/15",
+                    title: "Not just links",
+                    desc: "Every phase has topics to study, a project to build, and a milestone to confirm you're ready to move on.",
+                  },
+                  {
+                    icon: Code2, color: "text-purple-400", bg: "bg-purple-500/8 border-purple-500/15",
+                    title: "Built for developers",
+                    desc: "No research papers, no math-heavy theory. Structured for engineers who want to ship AI-powered products.",
+                  },
+                  {
+                    icon: Check, color: "text-green-400", bg: "bg-green-500/8 border-green-500/15",
+                    title: "Track as you learn",
+                    desc: "Check off topics as you go. Progress is saved in your browser — pick up where you left off any time.",
+                  },
+                ].map(({icon: Icon, color, bg, title, desc}) => (
+                  <div key={title} className={`flex items-start gap-3 rounded-xl border ${bg} px-4 py-3`}>
+                    <Icon size={16} className={`${color} flex-shrink-0 mt-0.5`}/>
                     <div>
-                      <p className="text-xs font-medium text-white">{title}</p>
-                      <p className="text-xs text-gray-500">{desc}</p>
+                      <p className="text-sm font-semibold text-white mb-0.5">{title}</p>
+                      <p className="text-xs text-gray-400 leading-relaxed">{desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
+
+              {/* Progress bar — returning users only */}
               {totalDone > 0 && (
-                <div className="max-w-sm mx-auto mb-5">
-                  <div className="flex justify-between text-xs text-gray-400 mb-1.5">
-                    <span>Your progress</span>
+                <div className="max-w-sm mx-auto mb-5 bg-gray-800/60 border border-white/8 rounded-xl px-4 py-3">
+                  <div className="flex justify-between text-xs mb-2">
+                    <span className="text-gray-400">Your progress</span>
                     <span className="text-blue-400 font-medium">{totalDone}/{totalTopics} topics · {overallPct}%</span>
                   </div>
-                  <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
                     <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-500" style={{width: `${overallPct}%`}}/>
                   </div>
                 </div>
               )}
-              <div className="flex flex-wrap justify-center gap-3 mb-6">
-                <span className="inline-flex items-center gap-1.5 bg-gray-800/60 border border-white/8 text-gray-300 text-xs px-3 py-1.5 rounded-full">
-                  <Layers size={12} className="text-blue-400"/><strong className="text-white">7</strong> Phases
-                </span>
-                <span className="inline-flex items-center gap-1.5 bg-gray-800/60 border border-white/8 text-gray-300 text-xs px-3 py-1.5 rounded-full">
-                  <Clock size={12} className="text-purple-400"/>~<strong className="text-white">14</strong> months
-                </span>
-                <span className="inline-flex items-center gap-1.5 bg-gray-800/60 border border-white/8 text-gray-300 text-xs px-3 py-1.5 rounded-full">
-                  <BookOpen size={12} className="text-green-400"/><strong className="text-white">50+</strong> Resources
-                </span>
-                <span className="inline-flex items-center gap-1.5 bg-gray-800/60 border border-white/8 text-gray-300 text-xs px-3 py-1.5 rounded-full">
-                  <Tag size={12} className="text-orange-400"/><strong className="text-white">Free</strong>
-                </span>
-              </div>
-              <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 mb-6 text-xs text-gray-500">
-                {[
-                  [BookOpen, "Curated resources with why-notes"],
-                  [Wrench, "Hands-on project per phase"],
-                  [Check, "Milestone to verify you're ready"],
-                  [Settings, "Hardware & setup guides"],
-                ].map(([Icon, label]) => (
-                  <span key={label} className="inline-flex items-center gap-1.5"><Icon size={11} className="text-gray-600"/>{label}</span>
-                ))}
-              </div>
+
+              {/* CTAs */}
               <div className="flex flex-wrap items-center justify-center gap-3">
                 <button onClick={scrollToPhase1}
                   className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
-                  Start Phase 1 <ArrowRight size={14}/>
+                  {totalDone > 0 ? "Continue learning" : "Start Phase 1"} <ArrowRight size={14}/>
                 </button>
                 <a href="https://github.com/amit352/ailearnings/discussions" target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-gray-800/60 hover:bg-gray-700/60 border border-white/8 hover:border-white/15 text-gray-300 hover:text-white text-sm px-5 py-2.5 rounded-lg transition-all">
