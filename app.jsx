@@ -254,6 +254,14 @@
       const totalDone = roadmapPhases.reduce((s, p) => s + p.topics.filter((_, i) => done[`${p.id}-${i}`]).length, 0);
       const overallPct = totalTopics ? Math.round((totalDone / totalTopics) * 100) : 0;
 
+      const [tipDismissed, setTipDismissed] = React.useState(() => {
+        try { return localStorage.getItem("ai_tips_dismissed") === "1"; } catch { return false; }
+      });
+      const dismissTip = () => {
+        setTipDismissed(true);
+        try { localStorage.setItem("ai_tips_dismissed", "1"); } catch {}
+      };
+
       const scrollToPhase1 = () => {
         setOpen(1);
         setTimeout(() => {
@@ -354,6 +362,35 @@
               </div>
             </div>
 
+            {!tipDismissed && (
+              <div className="mb-6 bg-gray-800/60 border border-blue-500/20 rounded-xl px-4 py-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <Lightbulb size={14} className="text-blue-400 flex-shrink-0"/>
+                    <span className="text-xs font-semibold text-blue-400">How to use this roadmap</span>
+                  </div>
+                  <button onClick={dismissTip} className="text-gray-500 hover:text-gray-300 flex-shrink-0 transition-colors" aria-label="Dismiss">
+                    <X size={14}/>
+                  </button>
+                </div>
+                <div className="mt-2.5 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {[
+                    [Check, "Check off topics", "Click any topic in the Learn tab to track your progress. It's saved in your browser."],
+                    [Layers, "Explore tabs per phase", "Each phase has Learn, Resources, and Project tabs — the project tells you what to build."],
+                    [BookOpen, "More sections above", "Use the top navigation to explore Alt Resources, Knowledge Gaps, and Prompt Engineering guides."],
+                  ].map(([Icon, title, desc]) => (
+                    <div key={title} className="flex items-start gap-2">
+                      <Icon size={12} className="text-gray-400 flex-shrink-0 mt-0.5"/>
+                      <div>
+                        <p className="text-xs font-medium text-gray-300">{title}</p>
+                        <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="relative mb-10">
               {/* Vertical timeline line */}
               <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-gradient-to-b from-green-500 via-blue-500 to-purple-500 opacity-30" />
@@ -418,6 +455,12 @@
                             <p className="text-gray-300 text-sm">{p.goal}</p>
                             {activeTab === "learn" && (
                               <ul className="space-y-1.5">
+                                {totalDone === 0 && (
+                                  <li className="flex items-center gap-1.5 text-xs text-gray-500 pb-1">
+                                    <MousePointer size={11} className="flex-shrink-0"/>
+                                    Click any topic to check it off and track your progress
+                                  </li>
+                                )}
                                 {p.topics.map((t, i) => {
                                   const checked = !!done[`${p.id}-${i}`];
                                   return (
@@ -435,14 +478,20 @@
                             )}
                             {activeTab === "resources" && (
                               <div className="space-y-1.5">
+                                <p className="text-xs text-gray-500 mb-2">Ordered by recommendation — start from the top.</p>
                                 {p.resources.map((r, i) => (
                                   <a key={i} href={r.url} target="_blank" rel="noopener noreferrer"
-                                    className="flex items-start justify-between bg-gray-800 hover:bg-gray-700 rounded-lg px-3 py-2 transition-colors group"
+                                    className={`flex items-start justify-between rounded-lg px-3 py-2.5 transition-colors group ${i === 0 ? "bg-blue-900/20 border border-blue-500/25 hover:bg-blue-900/30" : "bg-gray-800 hover:bg-gray-700"}`}
                                     onClick={e => e.stopPropagation()}>
-                                    <div className="flex items-start gap-1.5 min-w-0">
-                                      <ExternalLink size={12} className="flex-shrink-0 opacity-60 text-blue-400 mt-0.5"/>
+                                    <div className="flex items-start gap-2.5 min-w-0">
+                                      <span className={`flex-shrink-0 text-xs font-bold w-5 text-center mt-0.5 ${i === 0 ? "text-yellow-400" : "text-gray-600"}`}>
+                                        {i === 0 ? "★" : `${i + 1}`}
+                                      </span>
                                       <div>
-                                        <span className="text-sm text-blue-400 group-hover:text-blue-300">{r.label}</span>
+                                        <div className="flex items-center gap-2 flex-wrap">
+                                          <span className={`text-sm group-hover:text-blue-300 ${i === 0 ? "text-blue-300 font-medium" : "text-blue-400"}`}>{r.label}</span>
+                                          {i === 0 && <span className="text-xs bg-yellow-500/15 text-yellow-400 border border-yellow-500/25 px-1.5 py-0.5 rounded-full">Start here</span>}
+                                        </div>
                                         {r.note && <p className="text-xs text-gray-400 mt-0.5">{r.note}</p>}
                                       </div>
                                     </div>
