@@ -319,6 +319,16 @@
                   <Tag size={12} className="text-orange-400"/><strong className="text-white">Free</strong>
                 </span>
               </div>
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 mb-6 text-xs text-gray-500">
+                {[
+                  [BookOpen, "Curated resources with why-notes"],
+                  [Wrench, "Hands-on project per phase"],
+                  [Check, "Milestone to verify you're ready"],
+                  [Settings, "Hardware & setup guides"],
+                ].map(([Icon, label]) => (
+                  <span key={label} className="inline-flex items-center gap-1.5"><Icon size={11} className="text-gray-600"/>{label}</span>
+                ))}
+              </div>
               <div className="flex flex-wrap items-center justify-center gap-3">
                 <button onClick={scrollToPhase1}
                   className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">
@@ -349,14 +359,16 @@
                       className={`rounded-xl border cursor-pointer transition-all duration-200 backdrop-blur-sm ${open === p.id ? "border-blue-500/30 bg-gray-900/80 shadow-[0_0_30px_rgba(59,130,246,0.08)]" : "border-white/8 bg-gray-900/60 hover:border-white/15 hover:bg-gray-900/80"}`}
                       onClick={() => setOpen(open === p.id ? null : p.id)}
                     >
-                      <div className="flex items-center gap-3 p-4">
+                      <div className="flex items-start gap-3 p-4">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className="font-semibold text-sm">{p.title}</span>
                             <span className={`text-xs px-2 py-0.5 rounded-full ${p.tagColor}`}>{p.tag}</span>
                           </div>
-                          <div className="flex items-center gap-2 mt-1">
-                            <p className="text-gray-400 text-xs">{p.duration}</p>
+                          <div className="flex items-center gap-2 mt-1 flex-wrap">
+                            <span className="text-gray-400 text-xs">{p.duration}</span>
+                            <span className="text-gray-600 text-xs">·</span>
+                            <span className="text-gray-500 text-xs">{p.topics.length} topics · {p.resources.length} resources</span>
                             {(() => { const pg = phaseProgress(p); return pg.completed > 0 ? (
                               <span className="text-xs text-green-400 font-medium">{pg.completed}/{pg.total} done</span>
                             ) : null; })()}
@@ -366,8 +378,14 @@
                               <div className="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-300" style={{width: `${pg.pct}%`}}/>
                             </div>
                           ) : null; })()}
+                          {open !== p.id && (
+                            <div className="mt-2 flex items-start gap-1.5">
+                              <Check size={11} className="text-green-400 flex-shrink-0 mt-0.5"/>
+                              <p className="text-xs text-gray-400 italic leading-snug">{p.milestone}</p>
+                            </div>
+                          )}
                         </div>
-                        <div className="flex items-center gap-2 flex-shrink-0">
+                        <div className="flex items-center gap-2 flex-shrink-0 mt-0.5">
                           {open !== p.id && <span className="text-xs text-gray-500 hidden sm:inline">expand</span>}
                           <div className={`text-gray-400 ${open !== p.id ? "animate-bounce" : ""}`}>{open === p.id ? <ChevronUp size={14}/> : <ChevronDown size={14}/>}</div>
                         </div>
