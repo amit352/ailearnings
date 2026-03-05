@@ -299,7 +299,7 @@
                 The structured path from zero to{" "}
                 <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent font-semibold">production-ready AI</span>
               </p>
-              <p className="text-gray-500 text-sm max-w-lg mx-auto mb-6">
+              <p className="text-gray-400 text-sm max-w-lg mx-auto mb-6">
                 Curated free resources · hands-on projects · milestones at every phase
               </p>
               <div className="flex flex-wrap justify-center gap-2">
@@ -386,7 +386,7 @@
                 </a>
               </div>
 
-              <button onClick={scrollToPhase1} className="flex flex-col items-center gap-1 text-gray-500 hover:text-gray-300 transition-colors">
+              <button onClick={scrollToPhase1} className="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-200 transition-colors">
                 <span className="text-xs tracking-wider uppercase">Scroll to roadmap</span>
                 <ChevronDown size={16} className="animate-bounce"/>
               </button>
@@ -408,7 +408,7 @@
                     <Lightbulb size={14} className="text-blue-400 flex-shrink-0"/>
                     <span className="text-xs font-semibold text-blue-400">How to use this roadmap</span>
                   </div>
-                  <button onClick={dismissTip} className="text-gray-500 hover:text-gray-300 flex-shrink-0 transition-colors" aria-label="Dismiss">
+                  <button onClick={dismissTip} className="text-gray-400 hover:text-gray-300 flex-shrink-0 transition-colors" aria-label="Dismiss">
                     <X size={14}/>
                   </button>
                 </div>
@@ -475,7 +475,7 @@
                           )}
                         </div>
                         <div className="flex items-center gap-2 flex-shrink-0 mt-0.5">
-                          {open !== p.id && <span className="text-xs text-gray-500 hidden sm:inline">expand</span>}
+                          {open !== p.id && <span className="text-xs text-gray-400 hidden sm:inline">expand</span>}
                           <div className={`text-gray-400 ${open !== p.id ? "animate-bounce" : ""}`}>{open === p.id ? <ChevronUp size={14}/> : <ChevronDown size={14}/>}</div>
                         </div>
                       </div>
@@ -511,7 +511,7 @@
                                   const checked = !!done[`${p.id}-${i}`];
                                   return (
                                     <li key={i}
-                                      className={`text-sm flex gap-2 items-start cursor-pointer select-none rounded-lg px-2 py-1.5 transition-colors ${checked ? "text-gray-500 bg-green-900/10" : "text-gray-300 hover:bg-gray-800"}`}
+                                      className={`text-sm flex gap-2 items-start cursor-pointer select-none rounded-lg px-2 py-1.5 transition-colors ${checked ? "text-gray-400 bg-green-900/10" : "text-gray-300 hover:bg-gray-800"}`}
                                       onClick={e => toggleTopic(p.id, i, e)}>
                                       <span className={`flex-shrink-0 mt-0.5 w-4 h-4 rounded border flex items-center justify-center transition-colors ${checked ? "bg-green-600 border-green-600" : "border-gray-600"}`}>
                                         {checked && <Check size={10} className="text-white"/>}
@@ -530,7 +530,7 @@
                             )}
                             {activeTab === "resources" && (
                               <div className="space-y-1.5">
-                                <p className="text-xs text-gray-500 mb-2">Ordered by recommendation — start from the top.</p>
+                                <p className="text-xs text-gray-400 mb-2">Ordered by recommendation — start from the top.</p>
                                 {p.resources.map((r, i) => (
                                   <a key={i} href={r.url} target="_blank" rel="noopener noreferrer"
                                     className={`flex items-start justify-between rounded-lg px-3 py-2.5 transition-colors group ${i === 0 ? "bg-blue-900/20 border border-blue-500/25 hover:bg-blue-900/30" : "bg-gray-800 hover:bg-gray-700"}`}
@@ -878,7 +878,7 @@
             <div className="text-center mb-6">
               <h1 className="text-2xl font-bold mb-1"><BookOpen size={20} className="inline mr-2 align-middle text-green-400"/>Curated Books & Courses</h1>
               <p className="text-gray-400 text-sm max-w-lg mx-auto">Curated books and courses mapped to each phase — use these to go deeper beyond the free resources in the main roadmap.</p>
-              <p className="text-xs text-gray-500 mt-2">Each phase has a recommended book and video course. Expand a phase to see why each was chosen.</p>
+              <p className="text-xs text-gray-400 mt-2">Each phase has a recommended book and video course. Expand a phase to see why each was chosen.</p>
             </div>
 
             <div className="bg-gray-900 border border-orange-800 rounded-xl p-4 mb-6">
@@ -1134,7 +1134,7 @@
             <div className="text-center mb-8">
               <h1 className="text-2xl font-bold mb-1"><Brain size={20} className="inline mr-2 align-middle text-purple-400"/>After the Roadmap</h1>
               <p className="text-gray-400 text-sm max-w-lg mx-auto">An honest assessment of where you'll stand after completing all 7 phases — what you'll know, what gaps remain, and what roles you'll be ready for.</p>
-              <p className="text-xs text-gray-500 mt-2">This is a benchmark, not a score. Use it to set expectations and identify where to focus after the roadmap.</p>
+              <p className="text-xs text-gray-400 mt-2">This is a benchmark, not a score. Use it to set expectations and identify where to focus after the roadmap.</p>
             </div>
 
             <div className="bg-gray-900 border border-gray-700 rounded-2xl p-5 mb-6">
@@ -1426,7 +1426,7 @@ Length: [word count or structure]
             <div className="text-center mb-6">
               <h1 className="text-2xl font-bold mb-1"><Zap size={20} className="inline mr-2 align-middle text-yellow-400"/>Prompt Engineering Mastery</h1>
               <p className="text-gray-400 text-sm max-w-lg mx-auto">Master the skill that makes or breaks every AI app. Work through techniques in order — Foundation first, then Advanced.</p>
-              <p className="text-xs text-gray-500 mt-2">Use the Techniques tab to learn, Templates to copy-paste, and Plan for a structured 6-week practice schedule.</p>
+              <p className="text-xs text-gray-400 mt-2">Use the Techniques tab to learn, Templates to copy-paste, and Plan for a structured 6-week practice schedule.</p>
             </div>
 
             <div className="flex gap-1 bg-gray-900 rounded-xl p-1 mb-6 border border-gray-800">
@@ -2248,7 +2248,7 @@ function GenAIGuide() {
         <div className="text-center mb-5">
           <h1 className="text-2xl font-bold mb-1"><Cpu size={20} className="inline mr-2 align-middle text-purple-400"/>Generative AI — Complete Guide</h1>
           <p className="text-gray-400 text-sm max-w-lg mx-auto">A deep dive into how each GenAI domain works — text, code, image, audio, and tools. Use this alongside the roadmap or as a standalone reference.</p>
-          <p className="text-xs text-gray-500 mt-2">Start with the Overview tab, then explore the domain most relevant to what you're building.</p>
+          <p className="text-xs text-gray-400 mt-2">Start with the Overview tab, then explore the domain most relevant to what you're building.</p>
         </div>
 
         {/* Tab bar */}
@@ -2602,7 +2602,7 @@ function ReadinessChecker() {
         <div className="text-center mb-6">
           <h1 className="text-2xl font-bold mb-1"><CheckCircle size={20} className="inline mr-2 align-middle text-green-400"/>Phase Readiness Checker</h1>
           <p className="text-gray-400 text-sm max-w-lg mx-auto">Not sure if you're ready to move to the next phase? Use this to check — it tells you exactly what to verify before moving on.</p>
-          <p className="text-xs text-gray-500 mt-2">Pick your current phase from the list, check the green flags, and review the move-on rules.</p>
+          <p className="text-xs text-gray-400 mt-2">Pick your current phase from the list, check the green flags, and review the move-on rules.</p>
         </div>
 
         {/* Tab */}
@@ -3505,7 +3505,7 @@ function KnowledgeGaps() {
                 <h1 className="text-2xl md:text-3xl font-bold">Beyond the Roadmap</h1>
               </div>
               <p className="text-gray-400 text-sm max-w-lg mx-auto">Finished the roadmap? This section shows where you stand as an AI engineer, what gaps remain, and what to build next.</p>
-              <p className="text-xs text-gray-500 mt-2">Start with Knowledge Gaps to see what areas need more depth, then check What's Left to plan next steps.</p>
+              <p className="text-xs text-gray-400 mt-2">Start with Knowledge Gaps to see what areas need more depth, then check What's Left to plan next steps.</p>
             </div>
             <div className="flex gap-1 bg-gray-900/60 border border-white/8 rounded-xl p-1 mb-4">
               <button onClick={() => setSubTab(0)}
