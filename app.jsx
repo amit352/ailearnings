@@ -820,13 +820,9 @@
         <div className="min-h-screen text-gray-100 p-4 font-sans">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-6">
-              <h1 className="text-2xl font-bold mb-1"><BookOpen size={20} className="inline mr-2 align-middle"/>Curated Books & Courses</h1>
-              <p className="text-gray-400 text-sm">Best Books & Courses — Mapped by Phase</p>
-              <div className="flex flex-wrap justify-center gap-2 mt-3">
-                <span className="bg-green-900 text-green-300 border border-green-700 text-xs px-3 py-1 rounded-full">Free</span>
-                <span className="bg-orange-900 text-orange-300 border border-orange-700 text-xs px-3 py-1 rounded-full">O'Reilly</span>
-                <span className="bg-gray-800 text-gray-400 border border-gray-600 text-xs px-3 py-1 rounded-full">~$40–60 Book</span>
-              </div>
+              <h1 className="text-2xl font-bold mb-1"><BookOpen size={20} className="inline mr-2 align-middle text-green-400"/>Curated Books & Courses</h1>
+              <p className="text-gray-400 text-sm max-w-lg mx-auto">Curated books and courses mapped to each phase — use these to go deeper beyond the free resources in the main roadmap.</p>
+              <p className="text-xs text-gray-500 mt-2">Each phase has a recommended book and video course. Expand a phase to see why each was chosen.</p>
             </div>
 
             <div className="bg-gray-900 border border-orange-800 rounded-xl p-4 mb-6">
@@ -1080,8 +1076,9 @@
         <div className="min-h-screen text-gray-100 p-4 font-sans">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-8">
-              <h1 className="text-2xl font-bold mb-1"><Brain size={20} className="inline mr-2 align-middle"/>After the Roadmap</h1>
-              <p className="text-gray-400 text-sm">Honest assessment of where you'll stand — and where to go next</p>
+              <h1 className="text-2xl font-bold mb-1"><Brain size={20} className="inline mr-2 align-middle text-purple-400"/>After the Roadmap</h1>
+              <p className="text-gray-400 text-sm max-w-lg mx-auto">An honest assessment of where you'll stand after completing all 7 phases — what you'll know, what gaps remain, and what roles you'll be ready for.</p>
+              <p className="text-xs text-gray-500 mt-2">This is a benchmark, not a score. Use it to set expectations and identify where to focus after the roadmap.</p>
             </div>
 
             <div className="bg-gray-900 border border-gray-700 rounded-2xl p-5 mb-6">
@@ -1371,8 +1368,9 @@ Length: [word count or structure]
         <div className="min-h-screen text-gray-100 p-4 font-sans">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-6">
-              <h1 className="text-2xl font-bold mb-1"><Zap size={20} className="inline mr-2 align-middle"/>Prompt Engineering Mastery</h1>
-              <p className="text-gray-400 text-sm">For Claude + ChatGPT · All use cases · Power user → Expert</p>
+              <h1 className="text-2xl font-bold mb-1"><Zap size={20} className="inline mr-2 align-middle text-yellow-400"/>Prompt Engineering Mastery</h1>
+              <p className="text-gray-400 text-sm max-w-lg mx-auto">Master the skill that makes or breaks every AI app. Work through techniques in order — Foundation first, then Advanced.</p>
+              <p className="text-xs text-gray-500 mt-2">Use the Techniques tab to learn, Templates to copy-paste, and Plan for a structured 6-week practice schedule.</p>
             </div>
 
             <div className="flex gap-1 bg-gray-900 rounded-xl p-1 mb-6 border border-gray-800">
@@ -1678,6 +1676,10 @@ Length: [word count or structure]
                 <a href="https://bytebyteai.com" target="_blank" rel="noopener noreferrer"
                   className="text-blue-400 hover:text-blue-300 transition-colors">ByteByteAI course</a>.
               </p>
+              <div className="mt-3 inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-3 py-1">
+                <AlertTriangle size={12} className="text-orange-400"/>
+                <span className="text-xs text-orange-400">Use this if you need results fast — not a replacement for the full roadmap</span>
+              </div>
             </div>
 
             {/* Goal callout */}
@@ -2188,8 +2190,9 @@ function GenAIGuide() {
     <div className="min-h-screen text-gray-100 p-4 font-sans">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-5">
-          <h1 className="text-2xl font-bold mb-1">🧬 Generative AI — Complete Guide</h1>
-          <p className="text-gray-400 text-sm">Text · Code · Image · Audio · Roadmap · Tools</p>
+          <h1 className="text-2xl font-bold mb-1"><Cpu size={20} className="inline mr-2 align-middle text-purple-400"/>Generative AI — Complete Guide</h1>
+          <p className="text-gray-400 text-sm max-w-lg mx-auto">A deep dive into how each GenAI domain works — text, code, image, audio, and tools. Use this alongside the roadmap or as a standalone reference.</p>
+          <p className="text-xs text-gray-500 mt-2">Start with the Overview tab, then explore the domain most relevant to what you're building.</p>
         </div>
 
         {/* Tab bar */}
@@ -2541,8 +2544,9 @@ function ReadinessChecker() {
       <div className="max-w-3xl mx-auto">
 
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold mb-1">🚦 Phase Readiness Checker</h1>
-          <p className="text-gray-400 text-sm">Know exactly when to move on — not too early, not too late</p>
+          <h1 className="text-2xl font-bold mb-1"><CheckCircle size={20} className="inline mr-2 align-middle text-green-400"/>Phase Readiness Checker</h1>
+          <p className="text-gray-400 text-sm max-w-lg mx-auto">Not sure if you're ready to move to the next phase? Use this to check — it tells you exactly what to verify before moving on.</p>
+          <p className="text-xs text-gray-500 mt-2">Pick your current phase from the list, check the green flags, and review the move-on rules.</p>
         </div>
 
         {/* Tab */}
@@ -3444,7 +3448,8 @@ function KnowledgeGaps() {
                 <Compass size={20} className="text-blue-400"/>
                 <h1 className="text-2xl md:text-3xl font-bold">Beyond the Roadmap</h1>
               </div>
-              <p className="text-gray-400 text-sm">Know where you stand, and where to go next</p>
+              <p className="text-gray-400 text-sm max-w-lg mx-auto">Finished the roadmap? This section shows where you stand as an AI engineer, what gaps remain, and what to build next.</p>
+              <p className="text-xs text-gray-500 mt-2">Start with Knowledge Gaps to see what areas need more depth, then check What's Left to plan next steps.</p>
             </div>
             <div className="flex gap-1 bg-gray-900/60 border border-white/8 rounded-xl p-1 mb-4">
               <button onClick={() => setSubTab(0)}
