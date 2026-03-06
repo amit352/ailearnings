@@ -177,6 +177,12 @@ function patchSeo(html, page) {
   html = html.replace(/(<meta\s+name="twitter:description"[^>]*content=")[^"]*(")/,
     `$1${esc(page.description)}$2`);
 
+  // Restore non-blocking font loading — Puppeteer fires onload which flips media="print" → media="all"
+  html = html.replace(
+    /(<link[^>]*fonts\.bunny\.net[^>]*)\bmedia="all"([^>]*>)/,
+    '$1media="print"$2'
+  );
+
   return html;
 }
 
