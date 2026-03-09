@@ -3563,16 +3563,432 @@ function KnowledgeGaps() {
       );
     }
 
+    // ═══════════════════════════════════════════════════════════
+    // AI ROADMAP LANDING PAGE
+    // ═══════════════════════════════════════════════════════════
+    function AiRoadmapPage() {
+      useSeo(
+        "AI Roadmap 2026: Complete Guide for Developers",
+        "Follow the complete AI roadmap for developers in 2026. Our step-by-step guide covers 7 phases — from AI foundations to LLMs, RAG, Prompt Engineering, and Agentic AI."
+      );
+      const phases = [
+        { n: 1, title: "AI Foundations", time: "4–6 wks", color: "from-green-500 to-emerald-600", outcome: "Understand how neural networks, LLMs, and GenAI work — no math required." },
+        { n: 2, title: "LLM Setup & APIs", time: "2–3 wks", color: "from-slate-500 to-gray-600", outcome: "Run local models with Ollama, call OpenAI / Anthropic / Gemini APIs from code." },
+        { n: 3, title: "Prompt Engineering", time: "3–4 wks", color: "from-blue-500 to-indigo-600", outcome: "Ship your first AI-powered app using zero-shot, few-shot, and chain-of-thought." },
+        { n: 4, title: "RAG & Your Data", time: "4–5 wks", color: "from-purple-500 to-violet-600", outcome: "Build a chatbot over your own documents with vector databases and LangChain." },
+        { n: 5, title: "Agentic AI", time: "4–5 wks", color: "from-orange-500 to-amber-600", outcome: "Build agents that plan, call tools, and execute multi-step tasks autonomously." },
+        { n: 6, title: "Fine-tuning LLMs", time: "6–8 wks", color: "from-rose-500 to-pink-600", outcome: "Fine-tune Llama 3 with QLoRA on free Colab GPUs. Know when to train vs prompt vs RAG." },
+        { n: 7, title: "Ship Real Projects", time: "Ongoing", color: "from-teal-500 to-cyan-600", outcome: "Launch 2–3 public AI projects. Real mastery comes from building things people use." },
+      ];
+      return (
+        <div className="max-w-3xl mx-auto px-4 py-10 text-gray-100">
+          <div className="mb-8">
+            <span className="inline-block bg-blue-600/20 text-blue-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">AI Roadmap 2026</span>
+            <h1 className="text-3xl font-bold text-white mb-4">AI Roadmap 2026: Complete Guide for Developers</h1>
+            <p className="text-gray-400 text-lg leading-relaxed">A structured, opinionated AI learning roadmap for software developers. 7 phases, each with a clear outcome and project milestone — so you always know what to learn next and when you've actually learned it.</p>
+          </div>
+
+          {/* CTA to interactive tool */}
+          <div className="bg-blue-600/10 border border-blue-500/30 rounded-xl p-5 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <p className="text-white font-semibold text-sm mb-1">Want progress tracking + curated resources?</p>
+              <p className="text-gray-400 text-xs">The interactive roadmap has per-phase resources, topic checklists, and a progress bar.</p>
+            </div>
+            <a href="/" className="flex-shrink-0 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors whitespace-nowrap">
+              Open Interactive Roadmap →
+            </a>
+          </div>
+
+          <h2 className="text-2xl font-bold text-white mb-5">The 7 Phases at a Glance</h2>
+          <div className="space-y-3 mb-10">
+            {phases.map(({ n, title, time, color, outcome }) => (
+              <div key={n} className="flex items-start gap-4 bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}>{n}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-0.5">
+                    <span className="text-white font-semibold text-sm">{title}</span>
+                    <span className="text-xs text-gray-500">{time}</span>
+                  </div>
+                  <p className="text-gray-400 text-sm">{outcome}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Timeline */}
+          <div className="bg-gray-800/50 rounded-xl p-5 mb-8 border border-white/8">
+            <h2 className="text-lg font-semibold text-white mb-4">Timeline at 4–6 hrs / week</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[["Phases 1–3", "~3 months", "Foundations → First app"],["Phases 4–5", "~2 months", "RAG + Agents"],["Phase 6", "~2 months", "Fine-tuning"],["Phase 7", "Ongoing", "Ship & iterate"]].map(([label, time, sub]) => (
+                <div key={label} className="bg-gray-900/50 rounded-lg p-3 text-center">
+                  <div className="text-blue-400 font-semibold text-sm">{label}</div>
+                  <div className="text-white text-xs font-medium mt-1">{time}</div>
+                  <div className="text-gray-500 text-xs mt-0.5">{sub}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Frequently asked */}
+          <div className="space-y-4 mb-8">
+            <h2 className="text-xl font-semibold text-white">Common Questions</h2>
+            {[
+              ["Do I need a math background?", "No. Phases 1–5 are entirely practical — APIs, RAG, agents. Phase 6 benefits from linear algebra intuition but you can fine-tune with QLoRA without deep math."],
+              ["I already know Python. Where do I start?", "Jump to Phase 2 (LLM Setup) or even Phase 3 (Prompt Engineering) if you've already experimented with LLM APIs. Use the readiness checklist to calibrate."],
+              ["How is this different from a machine learning roadmap?", "This roadmap is LLM-application focused — building products with pre-trained models. A classical ML roadmap (scikit-learn, PyTorch, training from scratch) has more overlap with data science. See our ML roadmap for that path."],
+            ].map(([q, a]) => (
+              <div key={q} className="bg-gray-800/40 rounded-xl p-5 border border-white/8">
+                <p className="text-white font-semibold text-sm mb-2">{q}</p>
+                <p className="text-gray-400 text-sm">{a}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Related links */}
+          <div className="bg-gray-800/40 rounded-xl p-5 border border-white/8">
+            <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">Go Deeper</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                ["/", "Interactive Roadmap", "Phase-by-phase with resources, checklists, and progress tracking"],
+                ["/llm-roadmap/", "LLM Roadmap", "Focused path for learning large language models specifically"],
+                ["/rag-tutorial/", "RAG Tutorial", "Step-by-step guide to building your first RAG pipeline"],
+                ["/ai-projects/", "AI Project Ideas", "10 hands-on projects from beginner to advanced"],
+              ].map(([href, title, desc]) => (
+                <a key={href} href={href} className="block bg-gray-900/50 rounded-lg p-3 hover:bg-gray-700/50 transition-colors">
+                  <p className="text-blue-400 text-sm font-medium mb-0.5">{title} →</p>
+                  <p className="text-gray-500 text-xs">{desc}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // LLM ROADMAP LANDING PAGE
+    // ═══════════════════════════════════════════════════════════
+    function LlmRoadmapPage() {
+      useSeo(
+        "LLM Roadmap 2026: Learn Large Language Models from Scratch",
+        "The complete LLM roadmap for developers in 2026. Learn how large language models work, use them via APIs, fine-tune with LoRA, and build RAG and agentic AI applications."
+      );
+      return (
+        <div className="max-w-3xl mx-auto px-4 py-10 text-gray-100">
+          <div className="mb-8">
+            <span className="inline-block bg-purple-600/20 text-purple-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">LLM Roadmap 2026</span>
+            <h1 className="text-3xl font-bold text-white mb-4">LLM Roadmap 2026: Learn Large Language Models from Scratch</h1>
+            <p className="text-gray-400 text-lg leading-relaxed">Large language models are the core technology behind every major AI product in 2026. This LLM roadmap takes you from understanding how LLMs work internally to building production applications, fine-tuning models, and deploying them at scale.</p>
+          </div>
+
+          <div className="bg-gray-800/50 rounded-xl p-6 mb-8 border border-white/8">
+            <h2 className="text-xl font-semibold text-white mb-3">What Are Large Language Models?</h2>
+            <p className="text-gray-300 mb-3">Large language models (LLMs) are neural networks trained on massive text datasets to understand and generate human language. Models like GPT-4, Claude, and Llama 3 are trained on trillions of tokens and have billions to hundreds of billions of parameters.</p>
+            <p className="text-gray-300">LLMs work by predicting the next token in a sequence. Despite this simple objective, the ability to predict text at scale results in emergent capabilities: reasoning, coding, math, translation, and complex instruction following.</p>
+          </div>
+
+          <h2 className="text-2xl font-bold text-white mb-6">LLM Learning Roadmap: 6 Stages</h2>
+
+          <div className="space-y-4 mb-10">
+            {[
+              { n: 1, title: "How LLMs Work Internally", color: "bg-blue-600", items: ["Tokenization and vocabulary (BPE, SentencePiece)", "Transformer architecture: attention, MLP, positional encoding", "Pre-training objective: next token prediction", "Watch: Karpathy's 'Let's build GPT' (free, YouTube)"] },
+              { n: 2, title: "Using LLM APIs in Code", color: "bg-indigo-600", items: ["OpenAI, Anthropic, and Gemini Python SDKs", "Chat completions vs completions API", "Streaming responses, function calling, JSON mode", "Context window management and token counting"] },
+              { n: 3, title: "Prompt Engineering for LLMs", color: "bg-violet-600", items: ["System prompts and conversation structure", "Zero-shot, few-shot, chain-of-thought techniques", "Structured output and format control", "Production prompt versioning and testing"] },
+              { n: 4, title: "RAG: LLMs + Your Own Data", color: "bg-purple-600", items: ["Vector embeddings and semantic search", "LangChain document loaders and text splitters", "ChromaDB, Pinecone vector database setup", "Build a document Q&A chatbot from scratch"] },
+              { n: 5, title: "Fine-tuning LLMs", color: "bg-pink-600", items: ["When to fine-tune vs prompt engineer vs RAG", "Supervised Fine-Tuning (SFT) dataset format", "LoRA and QLoRA: parameter-efficient fine-tuning", "Fine-tune Llama 3 on free Google Colab GPUs"] },
+              { n: 6, title: "Deploying LLM Applications", color: "bg-rose-600", items: ["FastAPI server for LLM endpoints", "Streaming responses and server-sent events", "LLM observability with LangSmith / Langfuse", "Cost optimization: caching, batching, model selection"] },
+            ].map(({ n, title, color, items }) => (
+              <div key={n} className="bg-gray-800/40 rounded-xl p-5 border border-white/8">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className={`${color} text-white text-xs font-bold w-7 h-7 rounded-full flex items-center justify-center`}>{n}</span>
+                  <h3 className="text-white font-semibold">{title}</h3>
+                </div>
+                <ul className="space-y-1.5 ml-10">
+                  {items.map((item, i) => <li key={i} className="text-gray-300 text-sm flex items-start gap-2"><span className="text-purple-400 mt-0.5">▸</span>{item}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-gray-800/50 rounded-xl p-6 mb-8 border border-white/8">
+            <h2 className="text-xl font-semibold text-white mb-4">Open Source vs Closed Source LLMs</h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="bg-gray-900/50 rounded-lg p-4">
+                <div className="text-blue-400 font-semibold mb-2">Closed Source (API)</div>
+                <ul className="space-y-1 text-sm text-gray-300">
+                  <li>• GPT-4o, GPT-4 (OpenAI)</li>
+                  <li>• Claude 3.5 Sonnet (Anthropic)</li>
+                  <li>• Gemini 1.5 Pro (Google)</li>
+                  <li>• Best quality, paid per token</li>
+                </ul>
+              </div>
+              <div className="bg-gray-900/50 rounded-lg p-4">
+                <div className="text-green-400 font-semibold mb-2">Open Source (Run Locally)</div>
+                <ul className="space-y-1 text-sm text-gray-300">
+                  <li>• Llama 3 8B/70B (Meta)</li>
+                  <li>• Mistral 7B / Mixtral (Mistral AI)</li>
+                  <li>• Gemma 2 (Google)</li>
+                  <li>• Free, private, customizable</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 p-5 bg-gray-800/40 rounded-xl border border-white/8">
+            <h2 className="text-lg font-semibold text-white mb-3">Start Your LLM Journey</h2>
+            <p className="text-gray-400 text-sm mb-4">Our full 7-phase AI roadmap includes the complete LLM learning path with curated resources, project milestones, and an interactive progress tracker.</p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/" className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">View Full Roadmap →</a>
+              <a href="/prompt-eng/" className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">Prompt Engineering Guide →</a>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // RAG TUTORIAL LANDING PAGE
+    // ═══════════════════════════════════════════════════════════
+    function RagTutorialPage() {
+      useSeo(
+        "RAG Tutorial 2026: Build Retrieval-Augmented Generation Step by Step",
+        "Complete RAG tutorial for developers in 2026. Learn to build a Retrieval-Augmented Generation pipeline from scratch — document ingestion, vector embeddings, semantic search, and LLM generation."
+      );
+      return (
+        <div className="max-w-3xl mx-auto px-4 py-10 text-gray-100">
+          <div className="mb-8">
+            <span className="inline-block bg-violet-600/20 text-violet-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">RAG Tutorial 2026</span>
+            <h1 className="text-3xl font-bold text-white mb-4">RAG Tutorial 2026: Build Retrieval-Augmented Generation Step by Step</h1>
+            <p className="text-gray-400 text-lg leading-relaxed">Retrieval-Augmented Generation (RAG) is the most important AI architecture for building real-world applications. This tutorial walks you through building a complete RAG pipeline from scratch — document loading, vector embeddings, semantic search, and LLM-powered answer generation.</p>
+          </div>
+
+          <div className="bg-gray-800/50 rounded-xl p-6 mb-8 border border-white/8">
+            <h2 className="text-xl font-semibold text-white mb-3">What is RAG and Why Does It Matter?</h2>
+            <p className="text-gray-300 mb-3">LLMs have a fundamental problem: their knowledge is frozen at training time. They can't answer questions about your private documents, company data, or recent events. RAG solves this by retrieving relevant documents at query time and including them in the LLM's context.</p>
+            <div className="bg-gray-900/60 rounded-lg p-4 mt-4">
+              <p className="text-blue-400 font-mono text-sm mb-2">RAG Pipeline Flow:</p>
+              <p className="text-gray-300 text-sm font-mono">User Query → Embed Query → Vector Search → Retrieve Top-k Chunks → Augment Prompt → LLM Generate → Answer</p>
+            </div>
+          </div>
+
+          <h2 className="text-2xl font-bold text-white mb-6">Step-by-Step RAG Tutorial</h2>
+
+          <div className="space-y-4 mb-10">
+            {[
+              { step: 1, title: "Load and Parse Documents", color: "bg-blue-600", code: 'from langchain.document_loaders import PyPDFLoader\nloader = PyPDFLoader("document.pdf")\ndocs = loader.load()', desc: "Use LangChain document loaders to ingest PDFs, web pages, Notion exports, and text files. Each document becomes a list of Document objects with content and metadata." },
+              { step: 2, title: "Chunk Documents", color: "bg-indigo-600", code: 'from langchain.text_splitter import RecursiveCharacterTextSplitter\nsplitter = RecursiveCharacterTextSplitter(chunk_size=512, chunk_overlap=64)\nchunks = splitter.split_documents(docs)', desc: "Split documents into overlapping chunks. Smaller chunks (256–512 tokens) give precise retrieval. Larger chunks (1024+) give more context. The overlap preserves continuity across chunk boundaries." },
+              { step: 3, title: "Generate Embeddings and Store", color: "bg-violet-600", code: 'from langchain_openai import OpenAIEmbeddings\nfrom langchain.vectorstores import Chroma\n\nembeddings = OpenAIEmbeddings()\ndb = Chroma.from_documents(chunks, embeddings)', desc: "Convert text chunks to embedding vectors and store in a vector database. ChromaDB is free and runs locally. Pinecone and Weaviate are managed cloud options for production." },
+              { step: 4, title: "Build the Retriever", color: "bg-purple-600", code: 'retriever = db.as_retriever(\n  search_type="similarity",\n  search_kwargs={"k": 5}\n)', desc: "Create a retriever that returns the top-k most semantically similar chunks for a given query. The k value (3–10) controls how much context the LLM receives." },
+              { step: 5, title: "Create the RAG Chain", color: "bg-pink-600", code: 'from langchain_anthropic import ChatAnthropic\nfrom langchain.chains import RetrievalQA\n\nllm = ChatAnthropic(model="claude-3-5-sonnet-20241022")\nrag_chain = RetrievalQA.from_chain_type(\n  llm=llm, retriever=retriever\n)', desc: "Combine the retriever with an LLM using LangChain's RetrievalQA chain or LCEL. The chain retrieves relevant context and passes it to the LLM with the user's question." },
+              { step: 6, title: "Evaluate RAG Quality", color: "bg-rose-600", code: 'from ragas import evaluate\nfrom ragas.metrics import faithfulness, answer_relevancy\n\nresult = evaluate(dataset, metrics=[faithfulness, answer_relevancy])\nprint(result)', desc: "Measure RAG quality with RAGAS metrics: Faithfulness (is the answer grounded in retrieved context?), Answer Relevancy (does the answer address the question?), Context Precision (are retrieved chunks relevant?)." },
+            ].map(({ step, title, color, code, desc }) => (
+              <div key={step} className="bg-gray-800/40 rounded-xl p-5 border border-white/8">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className={`${color} text-white text-xs font-bold w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0`}>{step}</span>
+                  <h3 className="text-white font-semibold">{title}</h3>
+                </div>
+                <p className="text-gray-400 text-sm mb-3">{desc}</p>
+                <pre className="bg-gray-950/70 rounded-lg p-3 text-xs text-green-300 overflow-x-auto font-mono">{code}</pre>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-gray-800/50 rounded-xl p-6 mb-8 border border-white/8">
+            <h2 className="text-xl font-semibold text-white mb-4">RAG vs Fine-tuning: When to Use Each</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead><tr className="border-b border-white/10"><th className="text-left text-gray-400 pb-2 pr-4">Approach</th><th className="text-left text-gray-400 pb-2 pr-4">Best For</th><th className="text-left text-gray-400 pb-2">When to Use</th></tr></thead>
+                <tbody className="divide-y divide-white/5">
+                  {[["RAG", "Private / dynamic data", "Data changes often, need citations"], ["Fine-tuning", "Consistent style/format", "Lots of labeled examples, consistent task"], ["Prompting", "Simple tasks", "Start here — works 80% of the time"]].map(([a, b, c]) => (
+                    <tr key={a}><td className="text-white py-2 pr-4 font-medium">{a}</td><td className="text-gray-300 py-2 pr-4">{b}</td><td className="text-gray-300 py-2">{c}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mt-8 p-5 bg-gray-800/40 rounded-xl border border-white/8">
+            <h2 className="text-lg font-semibold text-white mb-3">Learn RAG in Our Full Roadmap</h2>
+            <p className="text-gray-400 text-sm mb-4">Phase 4 of the AI engineer roadmap covers RAG in detail — with curated courses, project milestones, and the best free resources.</p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/" className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">View AI Roadmap →</a>
+              <a href="/resources/" className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">Free Resources →</a>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // MACHINE LEARNING ROADMAP LANDING PAGE
+    // ═══════════════════════════════════════════════════════════
+    function MachineLearningRoadmapPage() {
+      useSeo(
+        "Machine Learning Roadmap 2026: From Beginner to AI Engineer",
+        "The complete machine learning roadmap for 2026. Go from absolute beginner to AI engineer — covering Python, math fundamentals, classical ML, deep learning, LLMs, and real-world ML projects."
+      );
+      return (
+        <div className="max-w-3xl mx-auto px-4 py-10 text-gray-100">
+          <div className="mb-8">
+            <span className="inline-block bg-green-600/20 text-green-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">ML Roadmap 2026</span>
+            <h1 className="text-3xl font-bold text-white mb-4">Machine Learning Roadmap 2026: From Beginner to AI Engineer</h1>
+            <p className="text-gray-400 text-lg leading-relaxed">The most complete machine learning roadmap for 2026. Whether you're starting from zero or a developer looking to move into AI engineering, this roadmap gives you a clear path — from Python basics to building and deploying production ML and LLM systems.</p>
+          </div>
+
+          <div className="bg-green-900/20 border border-green-500/20 rounded-xl p-5 mb-8">
+            <p className="text-green-300 text-sm font-semibold mb-1">Roadmap Approach</p>
+            <p className="text-gray-300 text-sm">This roadmap uses a <strong className="text-white">practical, code-first approach</strong>. You'll build working models before mastering all the theory. Each stage has a concrete project milestone so you know when you've actually learned something.</p>
+          </div>
+
+          <h2 className="text-2xl font-bold text-white mb-6">Machine Learning Roadmap: 6 Stages</h2>
+
+          <div className="space-y-4 mb-10">
+            {[
+              { n: 1, title: "Python & Math Prerequisites", time: "4–6 weeks", color: "from-green-500 to-emerald-600", items: ["Python: NumPy, Pandas, Matplotlib, scikit-learn basics", "Linear algebra: vectors, matrices, dot products, eigenvalues", "Probability: distributions, Bayes' theorem, conditional probability", "Calculus: derivatives, gradients, chain rule (intuition only)", "Resource: fast.ai Part 1 or Google ML Crash Course (free)"] },
+              { n: 2, title: "Classical Machine Learning", time: "6–8 weeks", color: "from-teal-500 to-cyan-600", items: ["Supervised learning: linear regression, logistic regression, decision trees", "Ensemble methods: random forests, gradient boosting (XGBoost)", "Unsupervised learning: k-means clustering, PCA", "Model evaluation: cross-validation, ROC-AUC, confusion matrix", "Project: Kaggle Titanic or House Prices competition"] },
+              { n: 3, title: "Deep Learning & Neural Networks", time: "6–8 weeks", color: "from-blue-500 to-indigo-600", items: ["Neural network architecture: layers, activations, backpropagation", "Convolutional Neural Networks (CNNs) for image tasks", "Recurrent Neural Networks (RNNs) and LSTMs for sequences", "Transformers: the architecture behind LLMs", "Framework: PyTorch (preferred) or TensorFlow", "Resource: Karpathy's Neural Networks: Zero to Hero (free)"] },
+              { n: 4, title: "Large Language Models", time: "4–6 weeks", color: "from-purple-500 to-violet-600", items: ["How LLMs work: tokenization, pre-training, RLHF", "Using LLM APIs: OpenAI, Anthropic, Google Gemini", "Prompt engineering: zero-shot, few-shot, chain-of-thought", "Building RAG applications with LangChain and vector databases", "Fine-tuning with LoRA/QLoRA on free Colab GPUs"] },
+              { n: 5, title: "MLOps & Production ML", time: "4–6 weeks", color: "from-orange-500 to-amber-600", items: ["Experiment tracking with Weights & Biases (free)", "Model versioning with MLflow or DVC", "Serving models with FastAPI or BentoML", "Monitoring: data drift, concept drift, model performance", "CI/CD for ML: GitHub Actions, automated retraining"] },
+              { n: 6, title: "Portfolio Projects", time: "Ongoing", color: "from-rose-500 to-pink-600", items: ["Classical ML project: Kaggle competition submission", "Deep learning project: image classifier or NLP sentiment analysis", "LLM application: RAG chatbot or document summarizer", "Open-source contribution or blog post explaining your work"] },
+            ].map(({ n, title, time, color, items }) => (
+              <div key={n} className="bg-gray-800/40 rounded-xl p-5 border border-white/8">
+                <div className="flex items-start gap-4">
+                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center text-white font-bold text-sm flex-shrink-0`}>{n}</div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-white font-semibold">{title}</h3>
+                      <span className="text-xs text-gray-500">{time}</span>
+                    </div>
+                    <ul className="space-y-1">
+                      {items.map((item, i) => <li key={i} className="text-gray-300 text-sm flex items-start gap-2"><span className="text-green-400 mt-0.5">▸</span>{item}</li>)}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-gray-800/50 rounded-xl p-6 mb-8 border border-white/8">
+            <h2 className="text-xl font-semibold text-white mb-4">ML vs AI Engineering in 2026</h2>
+            <p className="text-gray-300 mb-4">The field has split into two main tracks:</p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="bg-gray-900/50 rounded-lg p-4">
+                <div className="text-blue-400 font-semibold mb-2">ML Engineer</div>
+                <p className="text-gray-300 text-sm">Focuses on training pipelines, model optimization, feature engineering, and MLOps. Works with structured data, recommendation systems, and production ML at scale.</p>
+              </div>
+              <div className="bg-gray-900/50 rounded-lg p-4">
+                <div className="text-purple-400 font-semibold mb-2">AI Engineer</div>
+                <p className="text-gray-300 text-sm">Focuses on building applications with LLMs — RAG systems, agents, prompt pipelines, and LLM integrations. Uses ML skills but primarily works with pre-trained models via APIs.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 p-5 bg-gray-800/40 rounded-xl border border-white/8">
+            <h2 className="text-lg font-semibold text-white mb-3">Follow the Full AI Roadmap</h2>
+            <p className="text-gray-400 text-sm mb-4">Our main roadmap covers the complete ML → DL → LLM → AI engineering path with interactive progress tracking.</p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/" className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">View AI Roadmap →</a>
+              <a href="/resources/" className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">Learning Resources →</a>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // AI PROJECTS LANDING PAGE
+    // ═══════════════════════════════════════════════════════════
+    function AiProjectsPage() {
+      useSeo(
+        "AI Projects for Developers 2026: 10 Hands-On Ideas with Code",
+        "10 hands-on AI project ideas for developers in 2026 — from beginner to advanced. Build a RAG chatbot, AI agent, fine-tuned LLM, and more with free resources and tech stack guidance."
+      );
+      const projects = [
+        { n: 1, level: "Beginner", levelColor: "bg-green-600/20 text-green-400", title: "PDF Q&A Chatbot with RAG", time: "4–8 hours", tech: "LangChain · ChromaDB · Claude API", desc: "Build a chatbot that answers questions from your own PDF documents. This is the classic starter RAG project — it teaches document loading, chunking, vector embeddings, and LLM-powered retrieval in one build.", skills: ["LangChain document loaders", "Text chunking and vector embeddings", "ChromaDB vector store", "RetrievalQA chain"] },
+        { n: 2, level: "Beginner", levelColor: "bg-green-600/20 text-green-400", title: "AI Code Review CLI Tool", time: "2–4 hours", tech: "OpenAI API · Python · Few-shot prompting", desc: "Build a CLI tool that accepts a code diff or file and returns a structured code review. Uses few-shot prompting to define the review format. Great for learning structured output and system prompts.", skills: ["Few-shot prompting", "Structured JSON output", "System prompt design", "Python CLI with argparse"] },
+        { n: 3, level: "Intermediate", levelColor: "bg-blue-600/20 text-blue-400", title: "Web Research Agent", time: "1–2 days", tech: "LangChain · Tavily Search · Claude API", desc: "Build a ReACT agent that searches the web, fetches and reads pages, and writes structured research summaries. This project teaches tool use, the ReACT loop, and multi-step agent patterns.", skills: ["ReACT (Reason + Act + Observe) loop", "Tool calling and function calling", "LangGraph agent implementation", "Output structured reports"] },
+        { n: 4, level: "Intermediate", levelColor: "bg-blue-600/20 text-blue-400", title: "Voice-to-Text Meeting Summarizer", time: "4–8 hours", tech: "OpenAI Whisper · Claude API · Gradio", desc: "Combine Whisper (speech recognition) with Claude to transcribe audio files and generate structured meeting summaries with action items. Teaches multimodal pipelines.", skills: ["OpenAI Whisper transcription", "Prompt engineering for summaries", "Gradio web interface", "Audio file processing"] },
+        { n: 5, level: "Intermediate", levelColor: "bg-blue-600/20 text-blue-400", title: "Personal Knowledge Base AI", time: "1–2 days", tech: "LlamaIndex · Obsidian / Markdown · Local LLM", desc: "Build a RAG system over your own Obsidian notes or markdown files. Chat with your personal knowledge base using a local Llama model via Ollama — fully private, no API costs.", skills: ["LlamaIndex ingestion pipeline", "Markdown document processing", "Ollama local LLM integration", "Incremental document updates"] },
+        { n: 6, level: "Advanced", levelColor: "bg-orange-600/20 text-orange-400", title: "Fine-tuned Domain LLM", time: "2–3 days", tech: "Unsloth · QLoRA · Google Colab · Ollama", desc: "Fine-tune Llama 3 8B on a custom domain dataset (legal docs, medical text, code, etc.) using QLoRA on free Google Colab GPUs. Deploy locally with Ollama.", skills: ["Dataset preparation in Alpaca/ShareGPT format", "QLoRA fine-tuning with Unsloth", "LoRA adapter merging", "Evaluation with perplexity and human evals"] },
+        { n: 7, level: "Advanced", levelColor: "bg-orange-600/20 text-orange-400", title: "Multi-Agent Research System", time: "3–5 days", tech: "LangGraph · Claude API · Custom Tools", desc: "Build an orchestrator + worker multi-agent system. The planner agent breaks a complex research task into subtasks and delegates to specialized worker agents (web search, data analysis, summarization).", skills: ["LangGraph multi-agent orchestration", "Shared state and message passing", "Agent-to-agent delegation patterns", "Parallelization of agent tasks"] },
+        { n: 8, level: "Intermediate", levelColor: "bg-blue-600/20 text-blue-400", title: "Natural Language SQL Generator", time: "4–8 hours", tech: "OpenAI API · SQLite · LangChain · Gradio", desc: "Build a tool that converts natural language questions into SQL queries for a database. The LLM reads the schema and generates accurate SQL. Teaches structured output and database integration.", skills: ["Schema-aware prompting", "SQL generation and validation", "LangChain SQL toolkit", "Error recovery and query retrying"] },
+        { n: 9, level: "Intermediate", levelColor: "bg-blue-600/20 text-blue-400", title: "LLM Evaluation Dashboard", time: "1–2 days", tech: "RAGAS · Streamlit · LangChain · Any LLM", desc: "Build a dashboard to evaluate RAG pipeline quality using RAGAS metrics: faithfulness, answer relevancy, and context precision. Compare different chunking strategies and LLMs.", skills: ["RAGAS evaluation framework", "Faithfulness and relevancy metrics", "Streamlit dashboard", "A/B testing RAG configurations"] },
+        { n: 10, level: "Advanced", levelColor: "bg-orange-600/20 text-orange-400", title: "AI Coding Assistant (Cursor Clone)", time: "1–2 weeks", tech: "Claude API · AST parsing · LSP · VS Code extension", desc: "Build a VS Code extension powered by Claude that reads your codebase, understands your code with AST parsing, and suggests context-aware completions and refactors.", skills: ["VS Code extension development", "Codebase indexing and RAG over code", "AST parsing for code understanding", "Claude API streaming completions"] },
+      ];
+      return (
+        <div className="max-w-3xl mx-auto px-4 py-10 text-gray-100">
+          <div className="mb-8">
+            <span className="inline-block bg-orange-600/20 text-orange-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">AI Projects 2026</span>
+            <h1 className="text-3xl font-bold text-white mb-4">AI Projects for Developers 2026: 10 Hands-On Ideas with Code</h1>
+            <p className="text-gray-400 text-lg leading-relaxed">The fastest way to learn AI engineering is to build real projects. These 10 AI project ideas range from beginner-friendly (4 hours) to advanced (1–2 weeks), with tech stack guidance, key skills, and estimated build time for each.</p>
+          </div>
+
+          <div className="flex gap-3 mb-8 flex-wrap">
+            {[["3 Beginner", "bg-green-600/20 text-green-400"], ["4 Intermediate", "bg-blue-600/20 text-blue-400"], ["3 Advanced", "bg-orange-600/20 text-orange-400"]].map(([label, cls]) => (
+              <span key={label} className={`text-xs font-semibold px-3 py-1.5 rounded-full ${cls}`}>{label}</span>
+            ))}
+          </div>
+
+          <div className="space-y-5 mb-10">
+            {projects.map(({ n, level, levelColor, title, time, tech, desc, skills }) => (
+              <div key={n} className="bg-gray-800/40 rounded-xl p-5 border border-white/8">
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-gray-500 font-bold text-sm w-6">{n}.</span>
+                    <h3 className="text-white font-semibold">{title}</h3>
+                  </div>
+                  <span className={`text-xs font-semibold px-2 py-1 rounded-full flex-shrink-0 ${levelColor}`}>{level}</span>
+                </div>
+                <div className="ml-9">
+                  <div className="flex gap-4 mb-2 text-xs">
+                    <span className="text-gray-500">⏱ {time}</span>
+                    <span className="text-gray-500">🔧 {tech}</span>
+                  </div>
+                  <p className="text-gray-400 text-sm mb-3">{desc}</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {skills.map((s, i) => <span key={i} className="bg-gray-700/50 text-gray-300 text-xs px-2 py-0.5 rounded">{s}</span>)}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-gray-800/50 rounded-xl p-6 mb-8 border border-white/8">
+            <h2 className="text-xl font-semibold text-white mb-4">How to Build AI Projects Effectively</h2>
+            <ul className="space-y-3">
+              {["Start with the simplest version that works. Add complexity iteratively.", "Document as you go — write a README and commit history that tells the story.", "Evaluate your AI outputs systematically, not just via vibe checks.", "Deploy publicly (Hugging Face Spaces, Vercel, Railway) — real users catch real bugs.", "Write a short blog post or X/LinkedIn thread about what you built and what you learned."].map((tip, i) => (
+                <li key={i} className="text-gray-300 text-sm flex items-start gap-2"><span className="text-orange-400 mt-0.5">▸</span>{tip}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-8 p-5 bg-gray-800/40 rounded-xl border border-white/8">
+            <h2 className="text-lg font-semibold text-white mb-3">Learn the Skills to Build These Projects</h2>
+            <p className="text-gray-400 text-sm mb-4">Our AI engineer roadmap covers all the skills you need to build these projects — with curated free resources and milestone projects for each phase.</p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/" className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">View AI Roadmap →</a>
+              <a href="/rag-tutorial/" className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">RAG Tutorial →</a>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     // ─── MASTER APP ───
     const TABS = [
-      { label: "Roadmap",         slug: "roadmap",        icon: BrainCircuit, Component: Roadmap },
-      { label: "Prep Plan",       slug: "prep-plan",      icon: Calendar,     Component: PrepPlan },
-      { label: "GenAI Guide",     slug: "genai-guide",    icon: Cpu,          Component: GenAIGuide },
-      { label: "Prompt Eng",      slug: "prompt-eng",     icon: Zap,          Component: PromptEngineering },
-      { label: "Resources",       slug: "resources",      icon: BookOpen,     Component: AltResources },
-      { label: "Readiness",       slug: "readiness",      icon: CheckCircle,  Component: ReadinessChecker },
-      { label: "Beyond Roadmap",  slug: "beyond-roadmap", icon: Compass,      Component: BeyondRoadmap },
-      { label: "Assessment",      slug: "assessment",     icon: BarChart2,    Component: KnowledgeAssessment },
+      { label: "Roadmap",         slug: "roadmap",               icon: BrainCircuit, Component: Roadmap },
+      { label: "Prep Plan",       slug: "prep-plan",             icon: Calendar,     Component: PrepPlan },
+      { label: "GenAI Guide",     slug: "genai-guide",           icon: Cpu,          Component: GenAIGuide },
+      { label: "Prompt Eng",      slug: "prompt-eng",            icon: Zap,          Component: PromptEngineering },
+      { label: "Resources",       slug: "resources",             icon: BookOpen,     Component: AltResources },
+      { label: "Readiness",       slug: "readiness",             icon: CheckCircle,  Component: ReadinessChecker },
+      { label: "Beyond Roadmap",  slug: "beyond-roadmap",        icon: Compass,      Component: BeyondRoadmap },
+      { label: "Assessment",      slug: "assessment",            icon: BarChart2,    Component: KnowledgeAssessment },
+      { label: "AI Roadmap",      slug: "ai-roadmap",            icon: BrainCircuit, Component: AiRoadmapPage },
+      { label: "LLM Roadmap",     slug: "llm-roadmap",           icon: Cpu,          Component: LlmRoadmapPage },
+      { label: "RAG Tutorial",    slug: "rag-tutorial",          icon: BookOpen,     Component: RagTutorialPage },
+      { label: "ML Roadmap",      slug: "machine-learning-roadmap", icon: BarChart2, Component: MachineLearningRoadmapPage },
+      { label: "AI Projects",     slug: "ai-projects",           icon: Rocket,       Component: AiProjectsPage },
     ];
 
     function Footer() {

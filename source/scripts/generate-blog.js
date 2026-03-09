@@ -1,0 +1,170 @@
+#!/usr/bin/env node
+/**
+ * generate-blog.js
+ * Reads .md files from source/blog/posts/, converts to static HTML using
+ * the blog-post.html template, and outputs to /blog/{slug}/index.html.
+ * Also generates /blog/index.html from aggregated post metadata.
+ *
+ * Usage: node scripts/generate-blog.js
+ */
+
+const fs   = require('fs');
+const path = require('path');
+const { marked } = require('marked');
+
+const ROOT          = path.resolve(__dirname, '../..');
+const POSTS_DIR     = path.join(__dirname, '../blog/posts');
+const TEMPLATES_DIR = path.join(__dirname, '../templates');
+const BLOG_OUT      = path.join(ROOT, 'blog');
+const CSS_FILE      = path.join(ROOT, 'dist/app.css');
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+function parseFrontmatter(raw) {
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+  if (!match) return { meta: {}, content: raw };
+
+  const meta = {};
+  match[1].split('\n').forEach(line => {
+    const colonIdx = line.indexOf(':');
+    if (colonIdx === -1) return;
+    const key = line.slice(0, colonIdx).trim();
+    let val   = line.slice(colonIdx + 1).trim();
+    // Strip surrounding quotes
+    if ((val.startsWith('"') && val.endsWith('"')) ||
+        (val.startsWith("'") && val.endsWith("'"))) {
+      val = val.slice(1, -1);
+    }
+    // Parse YAML arrays: ["a", "b"]
+    if (val.startsWith('[')) {
+      try { meta[key] = JSON.parse(val.replace(/'/g, '"')); }
+      catch { meta[key] = val; }
+    } else {
+      meta[key] = val;
+    }
+  });
+
+  return { meta, content: match[2] };
+}
+
+function readTime(markdown) {
+  const words = markdown.replace(/[#*`>\[\]()-]/g, '').split(/\s+/).length;
+  return Math.max(1, Math.round(words / 220));
+}
+
+function formatDate(iso) {
+  const d = new Date(iso + 'T00:00:00Z');
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+}
+
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
+
+function main() {
+  const postTemplate  = fs.readFileSync(path.join(TEMPLATES_DIR, 'blog-post.html'), 'utf8');
+  const indexTemplate = fs.readFileSync(path.join(TEMPLATES_DIR, 'blog-index.html'), 'utf8');
+  const inlineCss     = fs.readFileSync(CSS_FILE, 'utf8');
+
+  const mdFiles = fs.readdirSync(POSTS_DIR)
+    .filter(f => f.endsWith('.md'))
+    .sort();
+
+  if (mdFiles.length === 0) {
+    console.log('No .md files found in', POSTS_DIR);
+    return;
+  }
+
+  const posts = [];
+
+  for (const file of mdFiles) {
+    const raw  = fs.readFileSync(path.join(POSTS_DIR, file), 'utf8');
+    const { meta, content } = parseFrontmatter(raw);
+
+    const slug        = meta.slug || file.replace('.md', '');
+    const title       = meta.title || slug;
+    const description = meta.description || '';
+    const date        = meta.date || '2026-03-09';
+    const canonical   = `https://ailearnings.in/blog/${slug}/`;
+    const mins        = readTime(content);
+    const htmlContent = marked.parse(content);
+
+    const articleSchema = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description: description,
+      url: canonical,
+      datePublished: date,
+      dateModified: date,
+      author: { '@type': 'Organization', name: 'AI Learning Hub', url: 'https://ailearnings.in/' },
+      publisher: { '@type': 'Organization', name: 'AI Learning Hub', url: 'https://ailearnings.in/' },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+    }, null, 2);
+
+    const breadcrumbSchema = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ailearnings.in/' },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://ailearnings.in/blog/' },
+        { '@type': 'ListItem', position: 3, name: title, item: canonical },
+      ],
+    }, null, 2);
+
+    // Fill template
+    let html = postTemplate
+      .replace(/\{\{TITLE\}\}/g,           esc(title))
+      .replace(/\{\{TITLE_SHORT\}\}/g,      esc(title.length > 50 ? title.slice(0, 47) + '…' : title))
+      .replace(/\{\{DESCRIPTION\}\}/g,      esc(description))
+      .replace(/\{\{CANONICAL\}\}/g,        canonical)
+      .replace(/\{\{DATE\}\}/g,             date)
+      .replace(/\{\{DATE_DISPLAY\}\}/g,     formatDate(date))
+      .replace(/\{\{READ_TIME\}\}/g,        String(mins))
+      .replace(/\{\{CONTENT\}\}/g,          htmlContent)
+      .replace(/\{\{INLINE_CSS\}\}/g,       inlineCss)
+      .replace(/\{\{ARTICLE_SCHEMA\}\}/g,   articleSchema)
+      .replace(/\{\{BREADCRUMB_SCHEMA\}\}/, breadcrumbSchema);
+
+    // Restore non-blocking font (same fix as generate-static.js)
+    html = html.replace(
+      /(<link[^>]*fonts\.bunny\.net[^>]*)\bmedia="all"([^>]*>)/,
+      '$1media="print"$2'
+    );
+
+    const outDir  = path.join(BLOG_OUT, slug);
+    const outFile = path.join(outDir, 'index.html');
+    fs.mkdirSync(outDir, { recursive: true });
+    fs.writeFileSync(outFile, html, 'utf8');
+
+    const kb = Math.round(Buffer.byteLength(html, 'utf8') / 1024);
+    console.log(`   ✓ Wrote blog/${slug}/index.html (${kb} KB)`);
+
+    posts.push({ slug, title, description, date });
+  }
+
+  // Sort posts newest first
+  posts.sort((a, b) => b.date.localeCompare(a.date));
+
+  // Build post list HTML for index
+  const postListHtml = posts.map(p => `      <a href="/blog/${p.slug}/" class="block bg-gray-800/40 rounded-xl p-5 border border-white/8 hover:border-blue-500/30 hover:bg-gray-800/60 transition-all">
+        <div class="text-xs text-gray-500 mb-2">${formatDate(p.date)}</div>
+        <h2 class="text-white font-semibold mb-2 leading-snug">${esc(p.title)}</h2>
+        <p class="text-gray-400 text-sm leading-relaxed">${esc(p.description)}</p>
+        <span class="inline-block mt-3 text-blue-400 text-xs">Read article →</span>
+      </a>`).join('\n');
+
+  const indexHtml = indexTemplate
+    .replace(/\{\{INLINE_CSS\}\}/, inlineCss)
+    .replace(/\{\{POST_LIST\}\}/,  postListHtml);
+
+  fs.mkdirSync(BLOG_OUT, { recursive: true });
+  fs.writeFileSync(path.join(BLOG_OUT, 'index.html'), indexHtml, 'utf8');
+  console.log(`   ✓ Wrote blog/index.html (${posts.length} posts)`);
+
+  console.log('\n✅ Blog generation complete');
+}
+
+main();
