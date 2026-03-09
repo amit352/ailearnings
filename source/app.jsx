@@ -4020,6 +4020,7 @@ function KnowledgeGaps() {
       { label: "RAG Tutorial",    slug: "rag-tutorial",          icon: BookOpen,     Component: RagTutorialPage },
       { label: "ML Roadmap",      slug: "machine-learning-roadmap", icon: BarChart2, Component: MachineLearningRoadmapPage },
       { label: "AI Projects",     slug: "ai-projects",           icon: Rocket,       Component: AiProjectsPage },
+      { label: "Blog",            slug: "blog",                  icon: BookOpen,     Component: BlogIndexPage },
     ];
 
     function Footer() {
