@@ -2,10 +2,10 @@
 <html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prompt Engineering Guide – Techniques & Templates | AI Learning Hub</title>
+  <title>Prompt Engineering Guide 2026 – 15 Techniques & Templates</title>
 
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Master prompt engineering with 15 techniques from zero-shot to tree-of-thoughts, copy-paste templates for coding, writing, and research, plus a 6-week practice plan." />
+  <meta name="description" content="Master prompt engineering with 15 techniques: zero-shot, few-shot, chain-of-thought, tree-of-thoughts, and more. Copy-paste templates for coding, writing, and research — a key skill on every AI engineer roadmap." />
   <meta name="keywords" content="AI learning, LLM roadmap, prompt engineering, RAG, agentic AI, machine learning for developers, generative AI guide, AI roadmap 2025, AI engineering course free, learn AI from scratch, AI engineer roadmap, LLM course free, agentic AI course">
   <meta name="author" content="ailearnings.in">
   <meta name="robots" content="index, follow">
@@ -15,8 +15,8 @@
   <!-- Open Graph (WhatsApp, LinkedIn, Facebook previews) -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ailearnings.in/prompt-eng/">
-  <meta property="og:title" content="Prompt Engineering Guide – Techniques & Templates | AI Learning Hub">
-  <meta property="og:description" content="Master prompt engineering with 15 techniques from zero-shot to tree-of-thoughts, copy-paste templates for coding, writing, and research, plus a 6-week practice plan.">
+  <meta property="og:title" content="Prompt Engineering Guide 2026 – 15 Techniques & Templates">
+  <meta property="og:description" content="Master prompt engineering with 15 techniques: zero-shot, few-shot, chain-of-thought, tree-of-thoughts, and more. Copy-paste templates for coding, writing, and research — a key skill on every AI engineer roadmap.">
   <meta property="og:image" content="https://ailearnings.in/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -25,8 +25,8 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://ailearnings.in/prompt-eng/">
-  <meta name="twitter:title" content="Prompt Engineering Guide – Techniques & Templates | AI Learning Hub">
-  <meta name="twitter:description" content="Master prompt engineering with 15 techniques from zero-shot to tree-of-thoughts, copy-paste templates for coding, writing, and research, plus a 6-week practice plan.">
+  <meta name="twitter:title" content="Prompt Engineering Guide 2026 – 15 Techniques & Templates">
+  <meta name="twitter:description" content="Master prompt engineering with 15 techniques: zero-shot, few-shot, chain-of-thought, tree-of-thoughts, and more. Copy-paste templates for coding, writing, and research — a key skill on every AI engineer roadmap.">
   <meta name="twitter:image" content="https://ailearnings.in/og-image.jpg">
   <meta name="twitter:image:width" content="1536">
   <meta name="twitter:image:height" content="1024">
@@ -125,6 +125,126 @@
     .md-content blockquote { border-left: 3px solid #4b5563; padding-left: 1rem; color: #9ca3af; margin: 1rem 0; font-style: italic; }
     .md-content code { background: #1f2937; color: #f87171; padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.85em; }
   </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Prompt Engineering Guide – 15 Techniques & Templates",
+  "description": "Learn 15 prompt engineering techniques from zero-shot to tree-of-thoughts. Includes copy-paste templates for coding, writing, and research tasks.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Zero-Shot Prompting",
+      "text": "Ask the model to perform a task without any examples. Best for simple, well-defined tasks."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Few-Shot Prompting",
+      "text": "Provide 2–5 input/output examples before your actual task to guide model behavior."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Chain-of-Thought (CoT)",
+      "text": "Ask the model to reason step-by-step before giving a final answer to improve accuracy."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Self-Consistency",
+      "text": "Generate multiple reasoning paths and select the most consistent answer."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 5,
+      "name": "Tree of Thoughts (ToT)",
+      "text": "Explore multiple reasoning branches and evaluate intermediate steps for complex problems."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 6,
+      "name": "Role Prompting",
+      "text": "Assign a persona or role to the model to influence its tone and expertise level."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 7,
+      "name": "ReAct (Reason + Act)",
+      "text": "Interleave reasoning and tool-use actions for agentic AI tasks."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 8,
+      "name": "Retrieval-Augmented Prompting",
+      "text": "Inject retrieved context from a knowledge base to ground model responses in facts."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 9,
+      "name": "Instruction Tuning Prompts",
+      "text": "Structure prompts as explicit instructions for models fine-tuned on instruction data."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 10,
+      "name": "Constrained Output Prompting",
+      "text": "Specify exact output format (JSON, bullet list, table) to control structure."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 11,
+      "name": "Negative Prompting",
+      "text": "Explicitly state what the model should NOT do to reduce unwanted outputs."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 12,
+      "name": "Prompt Chaining",
+      "text": "Break complex tasks into sequential prompts where each output feeds the next."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 13,
+      "name": "Meta-Prompting",
+      "text": "Ask the model to generate or refine prompts for a given task."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 14,
+      "name": "Contrastive Prompting",
+      "text": "Show good vs. bad examples to sharpen the model's understanding of quality."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 15,
+      "name": "Socratic Prompting",
+      "text": "Use a question-and-answer dialogue structure to guide the model toward a correct answer."
+    }
+  ]
+}
+</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ailearnings.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Prompt Engineering Guide",
+      "item": "https://ailearnings.in/prompt-eng/"
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!-- Tailwind safelist: all dynamic class names used in component data -->
