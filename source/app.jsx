@@ -4054,12 +4054,12 @@ function KnowledgeGaps() {
       { label: "Readiness",       slug: "readiness",             icon: CheckCircle,  Component: ReadinessChecker },
       { label: "Beyond Roadmap",  slug: "beyond-roadmap",        icon: Compass,      Component: BeyondRoadmap },
       { label: "Assessment",      slug: "assessment",            icon: BarChart2,    Component: KnowledgeAssessment },
-      { label: "AI Roadmap",      slug: "ai-roadmap",            icon: BrainCircuit, Component: AiRoadmapPage },
-      { label: "LLM Roadmap",     slug: "llm-roadmap",           icon: Cpu,          Component: LlmRoadmapPage },
-      { label: "RAG Tutorial",    slug: "rag-tutorial",          icon: BookOpen,     Component: RagTutorialPage },
-      { label: "ML Roadmap",      slug: "machine-learning-roadmap", icon: BarChart2, Component: MachineLearningRoadmapPage },
-      { label: "AI Projects",     slug: "ai-projects",           icon: Rocket,       Component: AiProjectsPage },
-      { label: "Blog",            slug: "blog",                  icon: BookOpen,     Component: BlogIndexPage },
+      { label: "AI Roadmap",      slug: "ai-roadmap",               icon: BrainCircuit, Component: AiRoadmapPage,              nav: false },
+      { label: "LLM Roadmap",     slug: "llm-roadmap",              icon: Cpu,          Component: LlmRoadmapPage,             nav: false },
+      { label: "RAG Tutorial",    slug: "rag-tutorial",             icon: BookOpen,     Component: RagTutorialPage,            nav: false },
+      { label: "ML Roadmap",      slug: "machine-learning-roadmap", icon: BarChart2,    Component: MachineLearningRoadmapPage, nav: false },
+      { label: "AI Projects",     slug: "ai-projects",              icon: Rocket,       Component: AiProjectsPage,             nav: false },
+      { label: "Blog",            slug: "blog",                     icon: BookOpen,     Component: BlogIndexPage,              nav: false },
     ];
 
     function Footer() {
@@ -4170,11 +4170,11 @@ function KnowledgeGaps() {
 
             {/* Desktop: horizontal tabs */}
             <div className="hidden md:flex max-w-full mx-auto gap-1 px-3 py-2 overflow-x-auto">
-              {TABS.map((t, i) => (
-                <a key={i} href={tabPath(t.slug)} onClick={(e) => handleTabClick(i, e)}
-                  aria-current={activeTab === i ? "page" : undefined}
+              {TABS.filter(t => t.nav !== false).map((t, i) => (
+                <a key={i} href={tabPath(t.slug)} onClick={(e) => handleTabClick(TABS.indexOf(t), e)}
+                  aria-current={activeTab === TABS.indexOf(t) ? "page" : undefined}
                   className={`text-xs px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors flex-shrink-0 flex items-center gap-1.5 ${
-                    activeTab === i
+                    activeTab === TABS.indexOf(t)
                       ? "bg-blue-600 text-white font-semibold shadow-[0_0_12px_rgba(59,130,246,0.4)]"
                       : "text-gray-400 hover:text-white hover:bg-gray-800"
                   }`}>
@@ -4201,18 +4201,21 @@ function KnowledgeGaps() {
             {/* Mobile dropdown menu */}
             {menuOpen && (
               <div className="md:hidden border-t border-white/8 bg-gray-900/95 backdrop-blur-md">
-                {TABS.map((t, i) => (
-                  <a key={i} href={tabPath(t.slug)} onClick={(e) => handleTabClick(i, e)}
-                    aria-current={activeTab === i ? "page" : undefined}
-                    className={`w-full text-left px-4 py-3 text-sm transition-colors border-b border-gray-800/50 flex items-center gap-2.5 ${
-                      activeTab === i
-                        ? "bg-blue-600/20 text-blue-400 font-semibold"
-                        : "text-gray-400 hover:text-white hover:bg-gray-800"
-                    }`}>
-                    <t.icon size={15} />
-                    {t.label}
-                  </a>
-                ))}
+                {TABS.filter(t => t.nav !== false).map((t) => {
+                  const i = TABS.indexOf(t);
+                  return (
+                    <a key={i} href={tabPath(t.slug)} onClick={(e) => handleTabClick(i, e)}
+                      aria-current={activeTab === i ? "page" : undefined}
+                      className={`w-full text-left px-4 py-3 text-sm transition-colors border-b border-gray-800/50 flex items-center gap-2.5 ${
+                        activeTab === i
+                          ? "bg-blue-600/20 text-blue-400 font-semibold"
+                          : "text-gray-400 hover:text-white hover:bg-gray-800"
+                      }`}>
+                      <t.icon size={15} />
+                      {t.label}
+                    </a>
+                  );
+                })}
               </div>
             )}
           </nav>

@@ -15,6 +15,14 @@
   <meta name="twitter:title" content="{{TITLE}}" />
   <meta name="twitter:description" content="{{DESCRIPTION}}" />
   <style>{{INLINE_CSS}}</style>
+  <!-- Dark theme base — must come after Tailwind to override any preflight resets -->
+  <style>
+    html, body { background-color: #030712 !important; color: #f3f4f6; }
+    * { box-sizing: border-box; }
+    a { color: inherit; }
+    header { background-color: rgba(17,24,39,0.7); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    footer { border-top: 1px solid rgba(255,255,255,0.08); background-color: rgba(3,7,18,0.8); }
+  </style>
   <script type="application/ld+json">
 {{ARTICLE_SCHEMA}}
   </script>
@@ -22,7 +30,7 @@
 {{BREADCRUMB_SCHEMA}}
   </script>
 </head>
-<body class="bg-gray-950 text-gray-100 font-sans">
+<body class="text-gray-100 font-sans" style="background-color:#030712;min-height:100vh;">
 
   <!-- Header -->
   <header class="sticky top-0 z-50 bg-gray-900/70 backdrop-blur-md border-b border-white/8">
@@ -73,7 +81,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-white/8 bg-gray-950/80 mt-8">
+  <footer class="border-t border-white/8 mt-8" style="background-color:rgba(3,7,18,0.8);">
     <div class="max-w-3xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div>
         <p class="text-white font-semibold text-sm mb-1">ailearnings.in</p>
