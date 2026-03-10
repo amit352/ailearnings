@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build an AI Study Planner: Personalized Learning Schedules with Spaced Repetition</title>
+  <meta name="description" content="Build an AI study planner that creates personalized schedules, generates practice questions using spaced repetition, tracks progress, and adapts the plan based on performance." />
+  <link rel="canonical" href="https://ailearnings.in/projects/ai-study-planner/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Build an AI Study Planner: Personalized Learning Schedules with Spaced Repetition" />
+  <meta property="og:description" content="Build an AI study planner that creates personalized schedules, generates practice questions using spaced repetition, tracks progress, and adapts the plan based on performance." />
+  <meta property="og:url" content="https://ailearnings.in/projects/ai-study-planner/" />
+  <meta property="og:site_name" content="AI Learning Hub" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Build an AI Study Planner: Personalized Learning Schedules with Spaced Repetition" />
+  <meta name="twitter:description" content="Build an AI study planner that creates personalized schedules, generates practice questions using spaced repetition, tracks progress, and adapts the plan based on performance." />
+  <style>*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.\!visible{visibility:visible!important}.visible{visibility:visible}.collapse{visibility:collapse}.static{position:static}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.-right-0\.5{right:-.125rem}.-top-0\.5{top:-.125rem}.bottom-6{bottom:1.5rem}.bottom-full{bottom:100%}.left-1\/2{left:50%}.left-6{left:1.5rem}.right-6{right:1.5rem}.top-0{top:0}.top-6{top:1.5rem}.z-10{z-index:10}.z-50{z-index:50}.-mx-2{margin-left:-.5rem;margin-right:-.5rem}.mx-1{margin-left:.25rem;margin-right:.25rem}.mx-auto{margin-left:auto;margin-right:auto}.my-8{margin-top:2rem;margin-bottom:2rem}.-mt-1{margin-top:-.25rem}.mb-0\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-10{margin-bottom:2.5rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-10{margin-left:2.5rem}.ml-2{margin-left:.5rem}.ml-3{margin-left:.75rem}.ml-9{margin-left:2.25rem}.ml-auto{margin-left:auto}.mr-0\.5{margin-right:.125rem}.mr-1{margin-right:.25rem}.mr-1\.5{margin-right:.375rem}.mr-2{margin-right:.5rem}.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-2\.5{margin-top:.625rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.block{display:block}.inline-block{display:inline-block}.inline{display:inline}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.hidden{display:none}.h-1{height:.25rem}.h-1\.5{height:.375rem}.h-12{height:3rem}.h-2{height:.5rem}.h-3{height:.75rem}.h-4{height:1rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-full{height:100%}.h-px{height:1px}.min-h-\[calc\(100vh-52px\)\]{min-height:calc(100vh - 52px)}.min-h-screen{min-height:100vh}.w-0\.5{width:.125rem}.w-1\.5{width:.375rem}.w-12{width:3rem}.w-2{width:.5rem}.w-20{width:5rem}.w-28{width:7rem}.w-36{width:9rem}.w-4{width:1rem}.w-40{width:10rem}.w-5{width:1.25rem}.w-56{width:14rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-full{width:100%}.min-w-0{min-width:0}.max-w-24{max-width:6rem}.max-w-3xl{max-width:48rem}.max-w-full{max-width:100%}.max-w-lg{max-width:32rem}.max-w-sm{max-width:24rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.-translate-x-1\/2{--tw-translate-x:-50%}.-translate-x-1\/2,.rotate-45{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.rotate-45{--tw-rotate:45deg}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes bounce{0%,to{transform:translateY(-25%);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-white\/5>:not([hidden])~:not([hidden]){border-color:hsla(0,0%,100%,.05)}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.whitespace-nowrap{white-space:nowrap}.whitespace-pre-wrap{white-space:pre-wrap}.rounded{border-radius:.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.rounded-l-none{border-top-left-radius:0;border-bottom-left-radius:0}.rounded-r-full{border-top-right-radius:9999px;border-bottom-right-radius:9999px}.rounded-t-lg{border-top-left-radius:.5rem;border-top-right-radius:.5rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-r{border-right-width:1px}.border-t{border-top-width:1px}.border-blue-500\/20{border-color:rgba(59,130,246,.2)}.border-blue-500\/25{border-color:rgba(59,130,246,.25)}.border-blue-500\/30{border-color:rgba(59,130,246,.3)}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-cyan-800{--tw-border-opacity:1;border-color:rgb(21 94 117/var(--tw-border-opacity,1))}.border-gray-500{--tw-border-opacity:1;border-color:rgb(107 114 128/var(--tw-border-opacity,1))}.border-gray-500\/20{border-color:hsla(220,9%,46%,.2)}.border-gray-600{--tw-border-opacity:1;border-color:rgb(75 85 99/var(--tw-border-opacity,1))}.border-gray-700{--tw-border-opacity:1;border-color:rgb(55 65 81/var(--tw-border-opacity,1))}.border-gray-800{--tw-border-opacity:1;border-color:rgb(31 41 55/var(--tw-border-opacity,1))}.border-gray-800\/50{border-color:rgba(31,41,55,.5)}.border-green-500\/20{border-color:rgba(34,197,94,.2)}.border-green-600{--tw-border-opacity:1;border-color:rgb(22 163 74/var(--tw-border-opacity,1))}.border-green-700{--tw-border-opacity:1;border-color:rgb(21 128 61/var(--tw-border-opacity,1))}.border-green-800{--tw-border-opacity:1;border-color:rgb(22 101 52/var(--tw-border-opacity,1))}.border-green-900{--tw-border-opacity:1;border-color:rgb(20 83 45/var(--tw-border-opacity,1))}.border-indigo-800{--tw-border-opacity:1;border-color:rgb(55 48 163/var(--tw-border-opacity,1))}.border-orange-500\/20{border-color:rgba(249,115,22,.2)}.border-orange-700{--tw-border-opacity:1;border-color:rgb(194 65 12/var(--tw-border-opacity,1))}.border-orange-800{--tw-border-opacity:1;border-color:rgb(154 52 18/var(--tw-border-opacity,1))}.border-pink-800{--tw-border-opacity:1;border-color:rgb(157 23 77/var(--tw-border-opacity,1))}.border-purple-500\/20{border-color:rgba(168,85,247,.2)}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-red-500\/20{border-color:rgba(239,68,68,.2)}.border-red-800{--tw-border-opacity:1;border-color:rgb(153 27 27/var(--tw-border-opacity,1))}.border-red-900{--tw-border-opacity:1;border-color:rgb(127 29 29/var(--tw-border-opacity,1))}.border-rose-500\/20{border-color:rgba(244,63,94,.2)}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-slate-500\/20{border-color:rgba(100,116,139,.2)}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-teal-700{--tw-border-opacity:1;border-color:rgb(15 118 110/var(--tw-border-opacity,1))}.border-teal-800{--tw-border-opacity:1;border-color:rgb(17 94 89/var(--tw-border-opacity,1))}.border-violet-800{--tw-border-opacity:1;border-color:rgb(91 33 182/var(--tw-border-opacity,1))}.border-white\/10{border-color:hsla(0,0%,100%,.1)}.border-yellow-500\/25{border-color:rgba(234,179,8,.25)}.border-yellow-800{--tw-border-opacity:1;border-color:rgb(133 77 14/var(--tw-border-opacity,1))}.border-yellow-900{--tw-border-opacity:1;border-color:rgb(113 63 18/var(--tw-border-opacity,1))}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-500\/10{background-color:rgba(59,130,246,.1)}.bg-blue-500\/5{background-color:rgba(59,130,246,.05)}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-600\/10{background-color:rgba(37,99,235,.1)}.bg-blue-600\/20{background-color:rgba(37,99,235,.2)}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-900\/20{background-color:rgba(30,58,138,.2)}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-gray-500{--tw-bg-opacity:1;background-color:rgb(107 114 128/var(--tw-bg-opacity,1))}.bg-gray-500\/10{background-color:hsla(220,9%,46%,.1)}.bg-gray-600{--tw-bg-opacity:1;background-color:rgb(75 85 99/var(--tw-bg-opacity,1))}.bg-gray-700{--tw-bg-opacity:1;background-color:rgb(55 65 81/var(--tw-bg-opacity,1))}.bg-gray-700\/50{background-color:rgba(55,65,81,.5)}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55/var(--tw-bg-opacity,1))}.bg-gray-800\/40{background-color:rgba(31,41,55,.4)}.bg-gray-800\/50{background-color:rgba(31,41,55,.5)}.bg-gray-800\/60{background-color:rgba(31,41,55,.6)}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39/var(--tw-bg-opacity,1))}.bg-gray-900\/50{background-color:rgba(17,24,39,.5)}.bg-gray-900\/60{background-color:rgba(17,24,39,.6)}.bg-gray-900\/70{background-color:rgba(17,24,39,.7)}.bg-gray-900\/80{background-color:rgba(17,24,39,.8)}.bg-gray-900\/95{background-color:rgba(17,24,39,.95)}.bg-gray-950\/70{background-color:rgba(3,7,18,.7)}.bg-gray-950\/80{background-color:rgba(3,7,18,.8)}.bg-green-100{--tw-bg-opacity:1;background-color:rgb(220 252 231/var(--tw-bg-opacity,1))}.bg-green-500{--tw-bg-opacity:1;background-color:rgb(34 197 94/var(--tw-bg-opacity,1))}.bg-green-500\/10{background-color:rgba(34,197,94,.1)}.bg-green-600{--tw-bg-opacity:1;background-color:rgb(22 163 74/var(--tw-bg-opacity,1))}.bg-green-600\/20{background-color:rgba(22,163,74,.2)}.bg-green-900{--tw-bg-opacity:1;background-color:rgb(20 83 45/var(--tw-bg-opacity,1))}.bg-green-900\/10{background-color:rgba(20,83,45,.1)}.bg-green-900\/20{background-color:rgba(20,83,45,.2)}.bg-green-950{--tw-bg-opacity:1;background-color:rgb(5 46 22/var(--tw-bg-opacity,1))}.bg-indigo-500{--tw-bg-opacity:1;background-color:rgb(99 102 241/var(--tw-bg-opacity,1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229/var(--tw-bg-opacity,1))}.bg-indigo-900{--tw-bg-opacity:1;background-color:rgb(49 46 129/var(--tw-bg-opacity,1))}.bg-orange-100{--tw-bg-opacity:1;background-color:rgb(255 237 213/var(--tw-bg-opacity,1))}.bg-orange-500\/10{background-color:rgba(249,115,22,.1)}.bg-orange-600{--tw-bg-opacity:1;background-color:rgb(234 88 12/var(--tw-bg-opacity,1))}.bg-orange-600\/20{background-color:rgba(234,88,12,.2)}.bg-orange-900{--tw-bg-opacity:1;background-color:rgb(124 45 18/var(--tw-bg-opacity,1))}.bg-pink-600{--tw-bg-opacity:1;background-color:rgb(219 39 119/var(--tw-bg-opacity,1))}.bg-pink-900{--tw-bg-opacity:1;background-color:rgb(131 24 67/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-500\/10{background-color:rgba(168,85,247,.1)}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-600\/20{background-color:rgba(147,51,234,.2)}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68/var(--tw-bg-opacity,1))}.bg-red-500\/10{background-color:rgba(239,68,68,.1)}.bg-red-900{--tw-bg-opacity:1;background-color:rgb(127 29 29/var(--tw-bg-opacity,1))}.bg-red-950{--tw-bg-opacity:1;background-color:rgb(69 10 10/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-500\/10{background-color:rgba(244,63,94,.1)}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-500\/10{background-color:rgba(100,116,139,.1)}.bg-teal-100{--tw-bg-opacity:1;background-color:rgb(204 251 241/var(--tw-bg-opacity,1))}.bg-teal-900{--tw-bg-opacity:1;background-color:rgb(19 78 74/var(--tw-bg-opacity,1))}.bg-violet-600{--tw-bg-opacity:1;background-color:rgb(124 58 237/var(--tw-bg-opacity,1))}.bg-violet-600\/20{background-color:rgba(124,58,237,.2)}.bg-yellow-500{--tw-bg-opacity:1;background-color:rgb(234 179 8/var(--tw-bg-opacity,1))}.bg-yellow-500\/15{background-color:rgba(234,179,8,.15)}.bg-yellow-900{--tw-bg-opacity:1;background-color:rgb(113 63 18/var(--tw-bg-opacity,1))}.bg-yellow-950{--tw-bg-opacity:1;background-color:rgb(66 32 6/var(--tw-bg-opacity,1))}.bg-gradient-to-b{background-image:linear-gradient(to bottom,var(--tw-gradient-stops))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right,var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}.from-blue-400{--tw-gradient-from:#60a5fa var(--tw-gradient-from-position);--tw-gradient-to:rgba(96,165,250,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-blue-500{--tw-gradient-from:#3b82f6 var(--tw-gradient-from-position);--tw-gradient-to:rgba(59,130,246,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-blue-600{--tw-gradient-from:#2563eb var(--tw-gradient-from-position);--tw-gradient-to:rgba(37,99,235,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-cyan-600{--tw-gradient-from:#0891b2 var(--tw-gradient-from-position);--tw-gradient-to:rgba(8,145,178,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-gray-600{--tw-gradient-from:#4b5563 var(--tw-gradient-from-position);--tw-gradient-to:rgba(75,85,99,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-green-500{--tw-gradient-from:#22c55e var(--tw-gradient-from-position);--tw-gradient-to:rgba(34,197,94,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-green-600{--tw-gradient-from:#16a34a var(--tw-gradient-from-position);--tw-gradient-to:rgba(22,163,74,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-indigo-600{--tw-gradient-from:#4f46e5 var(--tw-gradient-from-position);--tw-gradient-to:rgba(79,70,229,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-orange-500{--tw-gradient-from:#f97316 var(--tw-gradient-from-position);--tw-gradient-to:rgba(249,115,22,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-orange-600{--tw-gradient-from:#ea580c var(--tw-gradient-from-position);--tw-gradient-to:rgba(234,88,12,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-pink-600{--tw-gradient-from:#db2777 var(--tw-gradient-from-position);--tw-gradient-to:rgba(219,39,119,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-purple-400{--tw-gradient-from:#c084fc var(--tw-gradient-from-position);--tw-gradient-to:rgba(192,132,252,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-purple-500{--tw-gradient-from:#a855f7 var(--tw-gradient-from-position);--tw-gradient-to:rgba(168,85,247,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-purple-600{--tw-gradient-from:#9333ea var(--tw-gradient-from-position);--tw-gradient-to:rgba(147,51,234,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-red-600{--tw-gradient-from:#dc2626 var(--tw-gradient-from-position);--tw-gradient-to:rgba(220,38,38,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-rose-500{--tw-gradient-from:#f43f5e var(--tw-gradient-from-position);--tw-gradient-to:rgba(244,63,94,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-rose-600{--tw-gradient-from:#e11d48 var(--tw-gradient-from-position);--tw-gradient-to:rgba(225,29,72,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-slate-500{--tw-gradient-from:#64748b var(--tw-gradient-from-position);--tw-gradient-to:rgba(100,116,139,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-teal-500{--tw-gradient-from:#14b8a6 var(--tw-gradient-from-position);--tw-gradient-to:rgba(20,184,166,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-teal-600{--tw-gradient-from:#0d9488 var(--tw-gradient-from-position);--tw-gradient-to:rgba(13,148,136,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-violet-600{--tw-gradient-from:#7c3aed var(--tw-gradient-from-position);--tw-gradient-to:rgba(124,58,237,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-yellow-600{--tw-gradient-from:#ca8a04 var(--tw-gradient-from-position);--tw-gradient-to:rgba(202,138,4,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.via-blue-500{--tw-gradient-to:rgba(59,130,246,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#3b82f6 var(--tw-gradient-via-position),var(--tw-gradient-to)}.via-purple-400{--tw-gradient-to:rgba(192,132,252,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#c084fc var(--tw-gradient-via-position),var(--tw-gradient-to)}.via-purple-500{--tw-gradient-to:rgba(168,85,247,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#a855f7 var(--tw-gradient-via-position),var(--tw-gradient-to)}.to-amber-600{--tw-gradient-to:#d97706 var(--tw-gradient-to-position)}.to-amber-700{--tw-gradient-to:#b45309 var(--tw-gradient-to-position)}.to-blue-700{--tw-gradient-to:#1d4ed8 var(--tw-gradient-to-position)}.to-blue-800{--tw-gradient-to:#1e40af var(--tw-gradient-to-position)}.to-cyan-600{--tw-gradient-to:#0891b2 var(--tw-gradient-to-position)}.to-cyan-700{--tw-gradient-to:#0e7490 var(--tw-gradient-to-position)}.to-emerald-400{--tw-gradient-to:#34d399 var(--tw-gradient-to-position)}.to-emerald-600{--tw-gradient-to:#059669 var(--tw-gradient-to-position)}.to-emerald-700{--tw-gradient-to:#047857 var(--tw-gradient-to-position)}.to-gray-600{--tw-gradient-to:#4b5563 var(--tw-gradient-to-position)}.to-gray-700{--tw-gradient-to:#374151 var(--tw-gradient-to-position)}.to-indigo-600{--tw-gradient-to:#4f46e5 var(--tw-gradient-to-position)}.to-indigo-700{--tw-gradient-to:#4338ca var(--tw-gradient-to-position)}.to-orange-400{--tw-gradient-to:#fb923c var(--tw-gradient-to-position)}.to-orange-500{--tw-gradient-to:#f97316 var(--tw-gradient-to-position)}.to-pink-400{--tw-gradient-to:#f472b6 var(--tw-gradient-to-position)}.to-pink-600{--tw-gradient-to:#db2777 var(--tw-gradient-to-position)}.to-pink-700{--tw-gradient-to:#be185d var(--tw-gradient-to-position)}.to-purple-400{--tw-gradient-to:#c084fc var(--tw-gradient-to-position)}.to-purple-500{--tw-gradient-to:#a855f7 var(--tw-gradient-to-position)}.to-purple-600{--tw-gradient-to:#9333ea var(--tw-gradient-to-position)}.to-purple-700{--tw-gradient-to:#7e22ce var(--tw-gradient-to-position)}.to-purple-800{--tw-gradient-to:#6b21a8 var(--tw-gradient-to-position)}.to-red-700{--tw-gradient-to:#b91c1c var(--tw-gradient-to-position)}.to-rose-500{--tw-gradient-to:#f43f5e var(--tw-gradient-to-position)}.to-rose-700{--tw-gradient-to:#be123c var(--tw-gradient-to-position)}.to-slate-700{--tw-gradient-to:#334155 var(--tw-gradient-to-position)}.to-teal-700{--tw-gradient-to:#0f766e var(--tw-gradient-to-position)}.to-violet-600{--tw-gradient-to:#7c3aed var(--tw-gradient-to-position)}.to-violet-700{--tw-gradient-to:#6d28d9 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-1{padding:.25rem}.p-2{padding:.5rem}.p-2\.5{padding:.625rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-8{padding-left:2rem;padding-right:2rem}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-0{padding-bottom:0}.pb-1{padding-bottom:.25rem}.pb-2{padding-bottom:.5rem}.pb-6{padding-bottom:1.5rem}.pb-8{padding-bottom:2rem}.pr-3{padding-right:.75rem}.pr-4{padding-right:1rem}.pt-1{padding-top:.25rem}.pt-2{padding-top:.5rem}.pt-3{padding-top:.75rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.align-middle{vertical-align:middle}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.capitalize{text-transform:capitalize}.italic{font-style:italic}.leading-\[1\.1\]{line-height:1.1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.tracking-tight{letter-spacing:-.025em}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-gray-100{--tw-text-opacity:1;color:rgb(243 244 246/var(--tw-text-opacity,1))}.text-gray-200{--tw-text-opacity:1;color:rgb(229 231 235/var(--tw-text-opacity,1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219/var(--tw-text-opacity,1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity,1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128/var(--tw-text-opacity,1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99/var(--tw-text-opacity,1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81/var(--tw-text-opacity,1))}.text-green-300{--tw-text-opacity:1;color:rgb(134 239 172/var(--tw-text-opacity,1))}.text-green-400{--tw-text-opacity:1;color:rgb(74 222 128/var(--tw-text-opacity,1))}.text-green-700{--tw-text-opacity:1;color:rgb(21 128 61/var(--tw-text-opacity,1))}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252/var(--tw-text-opacity,1))}.text-orange-300{--tw-text-opacity:1;color:rgb(253 186 116/var(--tw-text-opacity,1))}.text-orange-400{--tw-text-opacity:1;color:rgb(251 146 60/var(--tw-text-opacity,1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22/var(--tw-text-opacity,1))}.text-orange-700{--tw-text-opacity:1;color:rgb(194 65 12/var(--tw-text-opacity,1))}.text-pink-300{--tw-text-opacity:1;color:rgb(249 168 212/var(--tw-text-opacity,1))}.text-pink-400{--tw-text-opacity:1;color:rgb(244 114 182/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-red-300{--tw-text-opacity:1;color:rgb(252 165 165/var(--tw-text-opacity,1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113/var(--tw-text-opacity,1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-teal-300{--tw-text-opacity:1;color:rgb(94 234 212/var(--tw-text-opacity,1))}.text-teal-400{--tw-text-opacity:1;color:rgb(45 212 191/var(--tw-text-opacity,1))}.text-teal-700{--tw-text-opacity:1;color:rgb(15 118 110/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-violet-400{--tw-text-opacity:1;color:rgb(167 139 250/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-yellow-300{--tw-text-opacity:1;color:rgb(253 224 71/var(--tw-text-opacity,1))}.text-yellow-400{--tw-text-opacity:1;color:rgb(250 204 21/var(--tw-text-opacity,1))}.text-yellow-500{--tw-text-opacity:1;color:rgb(234 179 8/var(--tw-text-opacity,1))}.text-opacity-70{--tw-text-opacity:0.7}.text-opacity-80{--tw-text-opacity:0.8}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.opacity-0{opacity:0}.opacity-30{opacity:.3}.opacity-60{opacity:.6}.shadow-\[0_0_12px_rgba\(59\2c 130\2c 246\2c 0\.4\)\]{--tw-shadow:0 0 12px rgba(59,130,246,.4);--tw-shadow-colored:0 0 12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_24px_rgba\(59\2c 130\2c 246\2c 0\.35\)\]{--tw-shadow:0 0 24px rgba(59,130,246,.35);--tw-shadow-colored:0 0 24px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_30px_rgba\(59\2c 130\2c 246\2c 0\.08\)\]{--tw-shadow:0 0 30px rgba(59,130,246,.08);--tw-shadow-colored:0 0 30px var(--tw-shadow-color)}.shadow-\[0_0_30px_rgba\(59\2c 130\2c 246\2c 0\.08\)\],.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-gray-900{--tw-ring-opacity:1;--tw-ring-color:rgb(17 24 39/var(--tw-ring-opacity,1))}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px)}.backdrop-blur-md,.backdrop-blur-sm{-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(.4,0,.2,1)}.duration-150,.transition-opacity{transition-duration:.15s}.duration-200{transition-duration:.2s}.duration-300{transition-duration:.3s}.duration-500{transition-duration:.5s}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.hover\:border-blue-700:hover{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.hover\:border-gray-500:hover{--tw-border-opacity:1;border-color:rgb(107 114 128/var(--tw-border-opacity,1))}.hover\:border-gray-600:hover{--tw-border-opacity:1;border-color:rgb(75 85 99/var(--tw-border-opacity,1))}.hover\:border-white\/15:hover{border-color:hsla(0,0%,100%,.15)}.hover\:bg-blue-500:hover{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.hover\:bg-blue-500\/15:hover{background-color:rgba(59,130,246,.15)}.hover\:bg-blue-600:hover{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.hover\:bg-blue-900\/30:hover{background-color:rgba(30,58,138,.3)}.hover\:bg-gray-600:hover{--tw-bg-opacity:1;background-color:rgb(75 85 99/var(--tw-bg-opacity,1))}.hover\:bg-gray-700:hover{--tw-bg-opacity:1;background-color:rgb(55 65 81/var(--tw-bg-opacity,1))}.hover\:bg-gray-700\/50:hover{background-color:rgba(55,65,81,.5)}.hover\:bg-gray-700\/60:hover{background-color:rgba(55,65,81,.6)}.hover\:bg-gray-800:hover{--tw-bg-opacity:1;background-color:rgb(31 41 55/var(--tw-bg-opacity,1))}.hover\:bg-gray-800\/80:hover{background-color:rgba(31,41,55,.8)}.hover\:bg-gray-900\/80:hover{background-color:rgba(17,24,39,.8)}.hover\:bg-green-500\/15:hover{background-color:rgba(34,197,94,.15)}.hover\:bg-orange-500:hover{--tw-bg-opacity:1;background-color:rgb(249 115 22/var(--tw-bg-opacity,1))}.hover\:bg-purple-500:hover{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.hover\:bg-violet-500:hover{--tw-bg-opacity:1;background-color:rgb(139 92 246/var(--tw-bg-opacity,1))}.hover\:text-blue-300:hover{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.hover\:text-gray-200:hover{--tw-text-opacity:1;color:rgb(229 231 235/var(--tw-text-opacity,1))}.hover\:text-gray-300:hover{--tw-text-opacity:1;color:rgb(209 213 219/var(--tw-text-opacity,1))}.hover\:text-green-300:hover{--tw-text-opacity:1;color:rgb(134 239 172/var(--tw-text-opacity,1))}.hover\:text-pink-300:hover{--tw-text-opacity:1;color:rgb(249 168 212/var(--tw-text-opacity,1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\:underline:hover{text-decoration-line:underline}.hover\:shadow-\[0_0_32px_rgba\(59\2c 130\2c 246\2c 0\.5\)\]:hover{--tw-shadow:0 0 32px rgba(59,130,246,.5);--tw-shadow-colored:0 0 32px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.group:hover .group-hover\:border-gray-400{--tw-border-opacity:1;border-color:rgb(156 163 175/var(--tw-border-opacity,1))}.group:hover .group-hover\:text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.group:hover .group-hover\:opacity-100{opacity:1}@media (min-width:640px){.sm\:inline{display:inline}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}}@media (min-width:768px){.md\:flex{display:flex}.md\:hidden{display:none}.md\:flex-row{flex-direction:row}.md\:items-end{align-items:flex-end}.md\:items-center{align-items:center}.md\:text-3xl{font-size:1.875rem;line-height:2.25rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}.md\:text-6xl{font-size:3.75rem;line-height:1}}</style>
+  <style>
+    html, body { background-color: #030712 !important; color: #f3f4f6; }
+    * { box-sizing: border-box; }
+    a { color: inherit; }
+    header { background-color: rgba(17,24,39,0.7); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    footer { border-top: 1px solid rgba(255,255,255,0.08); background-color: rgba(3,7,18,0.8); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Build an AI Study Planner: Personalized Learning Schedules with Spaced Repetition",
+  "description": "Build an AI study planner that creates personalized schedules, generates practice questions using spaced repetition, tracks progress, and adapts the plan based on performance.",
+  "url": "https://ailearnings.in/projects/ai-study-planner/",
+  "datePublished": "2026-03-10",
+  "dateModified": "2026-03-10",
+  "author": {
+    "@type": "Organization",
+    "name": "AI Learning Hub",
+    "url": "https://ailearnings.in/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Learning Hub",
+    "url": "https://ailearnings.in/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ailearnings.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Projects",
+      "item": "https://ailearnings.in/projects/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Build an AI Study Planner: Personalized Learning Schedules with Spaced Repetition",
+      "item": "https://ailearnings.in/projects/ai-study-planner/"
+    }
+  ]
+}
+  </script>
+</head>
+<body class="text-gray-100 font-sans" style="background-color:#030712;min-height:100vh;">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-gray-900/70 backdrop-blur-md border-b border-white/8">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="text-white font-semibold text-sm hover:text-blue-400 transition-colors">
+        AI Learning Hub
+      </a>
+      <a href="/projects/" class="text-gray-400 hover:text-white text-xs transition-colors flex items-center gap-1">
+        ← All Projects
+      </a>
+    </div>
+  </header>
+
+  <!-- Breadcrumbs -->
+  <div class="max-w-3xl mx-auto px-4 pt-5 pb-2">
+    <nav class="flex items-center gap-2 text-xs text-gray-500" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-gray-300 transition-colors">Home</a>
+      <span>›</span>
+      <a href="/projects/" class="hover:text-gray-300 transition-colors">Projects</a>
+      <span>›</span>
+      <span class="text-gray-400">Build an AI Study Planner: Personalized Learnin…</span>
+    </nav>
+  </div>
+
+  <!-- Project header badge -->
+  <div class="max-w-3xl mx-auto px-4 pt-2">
+    <div class="flex items-center gap-3">
+      <span class="inline-block bg-green-600/20 text-green-400 text-xs font-semibold px-3 py-1 rounded-full">Advanced</span>
+      <span class="text-gray-500 text-xs">8–10 hours</span>
+      <span class="text-gray-500 text-xs">·</span>
+      <span class="text-gray-500 text-xs">Python, OpenAI API, SQLite, Streamlit, schedule</span>
+    </div>
+  </div>
+
+  <!-- Article -->
+  <main class="max-w-3xl mx-auto px-4 py-8">
+    <article>
+      <header class="mb-8">
+        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">Build an AI Study Planner: Personalized Learning Schedules with Spaced Repetition</h1>
+        <div class="flex items-center gap-4 text-sm text-gray-400">
+          <time datetime="2026-03-10">March 10, 2026</time>
+          <span>·</span>
+          <span>7 min read</span>
+          <span>·</span>
+          <span>AI Learning Hub</span>
+        </div>
+      </header>
+
+      <div class="prose">
+        <h2>Project Overview</h2>
+<p>An AI-powered study planner that takes a learning goal and deadline, creates a week-by-week curriculum, generates practice questions with spaced repetition scheduling, tracks performance, and adapts the plan based on what&#39;s working.</p>
+<hr>
+<h2>Learning Goals</h2>
+<ul>
+<li>Implement a spaced repetition algorithm (SM-2)</li>
+<li>Design adaptive AI prompts that use performance data</li>
+<li>Build a complete study session management system</li>
+<li>Use SQLite for persistent learning state</li>
+</ul>
+<hr>
+<h2>Architecture</h2>
+<pre><code>Learning goal + deadline input
+        ↓
+Curriculum generator (LLM)
+  → topics, subtopics, resources per week
+        ↓
+Session scheduler (SM-2 spaced repetition)
+  → what to study today
+        ↓
+Question generator (LLM)
+  → practice questions + answers per topic
+        ↓
+Performance tracker → adapts schedule
+        ↓
+Streamlit dashboard
+</code></pre>
+<hr>
+<h2>Implementation</h2>
+<h3>Step 1: Setup</h3>
+<pre><code class="language-bash">pip install openai streamlit schedule
+</code></pre>
+<h3>Step 2: Database</h3>
+<pre><code class="language-python"># database.py
+import sqlite3
+import json
+from datetime import datetime, timedelta
+from contextlib import contextmanager
+
+DB_PATH = &quot;study.db&quot;
+
+
+def init_db():
+    with get_conn() as conn:
+        conn.executescript(&quot;&quot;&quot;
+            CREATE TABLE IF NOT EXISTS goals (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                description TEXT,
+                deadline TEXT,
+                status TEXT DEFAULT &#39;active&#39;,
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE TABLE IF NOT EXISTS topics (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                goal_id INTEGER,
+                week INTEGER,
+                title TEXT NOT NULL,
+                description TEXT,
+                priority INTEGER DEFAULT 5,
+                FOREIGN KEY (goal_id) REFERENCES goals(id)
+            );
+            CREATE TABLE IF NOT EXISTS cards (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                topic_id INTEGER,
+                question TEXT NOT NULL,
+                answer TEXT NOT NULL,
+                difficulty TEXT DEFAULT &#39;medium&#39;,
+                interval INTEGER DEFAULT 1,
+                repetitions INTEGER DEFAULT 0,
+                ease_factor REAL DEFAULT 2.5,
+                next_review TEXT,
+                FOREIGN KEY (topic_id) REFERENCES topics(id)
+            );
+            CREATE TABLE IF NOT EXISTS reviews (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                card_id INTEGER,
+                quality INTEGER,
+                reviewed_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (card_id) REFERENCES cards(id)
+            );
+        &quot;&quot;&quot;)
+
+
+@contextmanager
+def get_conn():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    try:
+        yield conn
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def save_goal(title: str, description: str, deadline: str) -&gt; int:
+    with get_conn() as conn:
+        cursor = conn.execute(
+            &quot;INSERT INTO goals (title, description, deadline) VALUES (?,?,?)&quot;,
+            (title, description, deadline)
+        )
+        return cursor.lastrowid
+
+
+def save_topic(goal_id: int, week: int, title: str, description: str = &quot;&quot;) -&gt; int:
+    with get_conn() as conn:
+        cursor = conn.execute(
+            &quot;INSERT INTO topics (goal_id, week, title, description) VALUES (?,?,?,?)&quot;,
+            (goal_id, week, title, description)
+        )
+        return cursor.lastrowid
+
+
+def save_card(topic_id: int, question: str, answer: str, difficulty: str = &quot;medium&quot;) -&gt; int:
+    next_review = datetime.now().isoformat()
+    with get_conn() as conn:
+        cursor = conn.execute(
+            &quot;INSERT INTO cards (topic_id, question, answer, difficulty, next_review) VALUES (?,?,?,?,?)&quot;,
+            (topic_id, question, answer, difficulty, next_review)
+        )
+        return cursor.lastrowid
+
+
+def get_due_cards(limit: int = 20) -&gt; list[dict]:
+    now = datetime.now().isoformat()
+    with get_conn() as conn:
+        rows = conn.execute(&quot;&quot;&quot;
+            SELECT c.*, t.title as topic_title
+            FROM cards c JOIN topics t ON c.topic_id = t.id
+            WHERE c.next_review &lt;= ? ORDER BY c.next_review ASC LIMIT ?
+        &quot;&quot;&quot;, (now, limit)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def update_card_sm2(card_id: int, quality: int):
+    &quot;&quot;&quot;Update card using SM-2 spaced repetition algorithm. Quality: 0-5.&quot;&quot;&quot;
+    with get_conn() as conn:
+        card = dict(conn.execute(&quot;SELECT * FROM cards WHERE id=?&quot;, (card_id,)).fetchone())
+
+    ef = card[&quot;ease_factor&quot;]
+    reps = card[&quot;repetitions&quot;]
+    interval = card[&quot;interval&quot;]
+
+    if quality &gt;= 3:  # Correct response
+        if reps == 0:
+            interval = 1
+        elif reps == 1:
+            interval = 6
+        else:
+            interval = round(interval * ef)
+        reps += 1
+        ef = max(1.3, ef + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02))
+    else:  # Wrong answer — reset
+        reps = 0
+        interval = 1
+
+    next_review = (datetime.now() + timedelta(days=interval)).isoformat()
+
+    with get_conn() as conn:
+        conn.execute(
+            &quot;UPDATE cards SET interval=?, repetitions=?, ease_factor=?, next_review=? WHERE id=?&quot;,
+            (interval, reps, ef, next_review, card_id)
+        )
+        conn.execute(
+            &quot;INSERT INTO reviews (card_id, quality) VALUES (?,?)&quot;,
+            (card_id, quality)
+        )
+
+
+init_db()
+</code></pre>
+<h3>Step 3: Curriculum Generator</h3>
+<pre><code class="language-python"># curriculum.py
+import json
+from openai import OpenAI
+from database import save_goal, save_topic
+
+client = OpenAI()
+
+CURRICULUM_PROMPT = &quot;&quot;&quot;Create a comprehensive study curriculum for this learning goal.
+
+Goal: {goal}
+Deadline: {deadline} ({weeks} weeks available)
+Current level: {level}
+
+Create a week-by-week curriculum. Return JSON:
+{{
+  &quot;overview&quot;: &quot;2-3 sentence description of the learning path&quot;,
+  &quot;weeks&quot;: [
+    {{
+      &quot;week&quot;: 1,
+      &quot;theme&quot;: &quot;Week theme/focus&quot;,
+      &quot;topics&quot;: [
+        {{
+          &quot;title&quot;: &quot;Topic name&quot;,
+          &quot;description&quot;: &quot;What to learn and why&quot;,
+          &quot;time_hours&quot;: 2,
+          &quot;resources&quot;: [&quot;resource suggestion 1&quot;, &quot;resource suggestion 2&quot;]
+        }}
+      ]
+    }}
+  ]
+}}
+
+Make it practical and progressive. Focus on building skills week by week.&quot;&quot;&quot;
+
+QUESTIONS_PROMPT = &quot;&quot;&quot;Generate practice questions for this study topic.
+
+Topic: {topic}
+Description: {description}
+Difficulty: {difficulty}
+
+Generate {n} questions. Return JSON:
+{{
+  &quot;questions&quot;: [
+    {{
+      &quot;question&quot;: &quot;Question text&quot;,
+      &quot;answer&quot;: &quot;Comprehensive answer&quot;,
+      &quot;difficulty&quot;: &quot;easy&quot; | &quot;medium&quot; | &quot;hard&quot;,
+      &quot;type&quot;: &quot;conceptual&quot; | &quot;practical&quot; | &quot;recall&quot;
+    }}
+  ]
+}}&quot;&quot;&quot;
+
+
+def generate_curriculum(goal: str, deadline: str, level: str = &quot;intermediate&quot;, weeks: int = 8) -&gt; int:
+    &quot;&quot;&quot;Generate a curriculum and save to database.&quot;&quot;&quot;
+    response = client.chat.completions.create(
+        model=&quot;gpt-4o-mini&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: CURRICULUM_PROMPT.format(
+            goal=goal, deadline=deadline, level=level, weeks=weeks
+        )}],
+        response_format={&quot;type&quot;: &quot;json_object&quot;},
+        temperature=0.4,
+    )
+    data = json.loads(response.choices[0].message.content)
+
+    goal_id = save_goal(goal, data.get(&quot;overview&quot;, &quot;&quot;), deadline)
+    for week_data in data.get(&quot;weeks&quot;, []):
+        for topic in week_data.get(&quot;topics&quot;, []):
+            save_topic(goal_id, week_data[&quot;week&quot;], topic[&quot;title&quot;], topic[&quot;description&quot;])
+
+    print(f&quot;Created curriculum: {len(data.get(&#39;weeks&#39;, []))} weeks, goal_id={goal_id}&quot;)
+    return goal_id
+
+
+def generate_questions_for_topic(topic_id: int, topic_title: str, description: str, n: int = 5):
+    &quot;&quot;&quot;Generate practice questions for a topic and save as cards.&quot;&quot;&quot;
+    from database import save_card
+    response = client.chat.completions.create(
+        model=&quot;gpt-4o-mini&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: QUESTIONS_PROMPT.format(
+            topic=topic_title, description=description, difficulty=&quot;mixed&quot;, n=n
+        )}],
+        response_format={&quot;type&quot;: &quot;json_object&quot;},
+        temperature=0.5,
+    )
+    data = json.loads(response.choices[0].message.content)
+    count = 0
+    for q in data.get(&quot;questions&quot;, []):
+        save_card(topic_id, q[&quot;question&quot;], q[&quot;answer&quot;], q.get(&quot;difficulty&quot;, &quot;medium&quot;))
+        count += 1
+    return count
+</code></pre>
+<h3>Step 4: Adaptive Planner</h3>
+<pre><code class="language-python"># planner.py
+from openai import OpenAI
+from database import get_conn
+
+client = OpenAI()
+
+ADAPT_PROMPT = &quot;&quot;&quot;You are an AI tutor reviewing a student&#39;s study progress.
+
+Goal: {goal}
+Recent performance data:
+{performance}
+
+Based on the performance data, suggest specific adaptations:
+1. Topics that need more review (low scores)
+2. Topics ready to advance (high scores)
+3. Recommended focus for the next 3 days
+4. Any curriculum adjustments
+
+Keep suggestions specific and actionable.&quot;&quot;&quot;
+
+
+def get_performance_summary(goal_id: int) -&gt; dict:
+    with get_conn() as conn:
+        stats = conn.execute(&quot;&quot;&quot;
+            SELECT t.title, t.week,
+                COUNT(r.id) as reviews,
+                AVG(r.quality) as avg_quality,
+                MIN(r.quality) as min_quality
+            FROM topics t
+            JOIN cards c ON c.topic_id = t.id
+            LEFT JOIN reviews r ON r.card_id = c.id
+            WHERE t.goal_id = ?
+            GROUP BY t.id
+        &quot;&quot;&quot;, (goal_id,)).fetchall()
+
+        due_count = conn.execute(&quot;&quot;&quot;
+            SELECT COUNT(*) FROM cards c
+            JOIN topics t ON c.topic_id = t.id
+            WHERE t.goal_id = ? AND c.next_review &lt;= datetime(&#39;now&#39;)
+        &quot;&quot;&quot;, (goal_id,)).fetchone()[0]
+
+    return {
+        &quot;topic_stats&quot;: [dict(r) for r in stats],
+        &quot;due_cards&quot;: due_count,
+    }
+
+
+def get_adaptive_advice(goal_id: int, goal_title: str) -&gt; str:
+    perf = get_performance_summary(goal_id)
+    perf_text = f&quot;Due cards: {perf[&#39;due_cards&#39;]}\n\nTopic performance:\n&quot;
+    for t in perf[&quot;topic_stats&quot;]:
+        avg = t[&quot;avg_quality&quot;] or 0
+        perf_text += f&quot;- Week {t[&#39;week&#39;]}: {t[&#39;title&#39;]} — {t[&#39;reviews&#39;]} reviews, avg quality: {avg:.1f}/5\n&quot;
+
+    response = client.chat.completions.create(
+        model=&quot;gpt-4o-mini&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: ADAPT_PROMPT.format(
+            goal=goal_title, performance=perf_text
+        )}],
+        max_tokens=400,
+        temperature=0.4,
+    )
+    return response.choices[0].message.content
+</code></pre>
+<h3>Step 5: Streamlit App</h3>
+<pre><code class="language-python"># app.py
+import streamlit as st
+from curriculum import generate_curriculum, generate_questions_for_topic
+from planner import get_performance_summary, get_adaptive_advice
+from database import get_conn, get_due_cards, update_card_sm2, save_goal
+
+st.set_page_config(page_title=&quot;AI Study Planner&quot;, page_icon=&quot;📚&quot;, layout=&quot;wide&quot;)
+st.title(&quot;📚 AI Study Planner&quot;)
+
+tab1, tab2, tab3, tab4 = st.tabs([&quot;🎯 Goals&quot;, &quot;📖 Study Session&quot;, &quot;📊 Progress&quot;, &quot;🤖 AI Advice&quot;])
+
+with tab1:
+    st.subheader(&quot;Create New Learning Goal&quot;)
+    col1, col2 = st.columns(2)
+    with col1:
+        goal_title = st.text_input(&quot;What do you want to learn?&quot;, placeholder=&quot;Master LLM fine-tuning&quot;)
+        level = st.selectbox(&quot;Current level&quot;, [&quot;Beginner&quot;, &quot;Intermediate&quot;, &quot;Advanced&quot;])
+    with col2:
+        deadline = st.date_input(&quot;Target completion date&quot;)
+        weeks = st.number_input(&quot;Study weeks&quot;, min_value=1, max_value=52, value=8)
+
+    if st.button(&quot;Generate Curriculum&quot;, type=&quot;primary&quot;) and goal_title:
+        with st.spinner(&quot;Generating personalized curriculum...&quot;):
+            goal_id = generate_curriculum(goal_title, str(deadline), level.lower(), int(weeks))
+            st.session_state[&quot;active_goal_id&quot;] = goal_id
+            st.session_state[&quot;active_goal_title&quot;] = goal_title
+        st.success(f&quot;Curriculum created! Goal ID: {goal_id}&quot;)
+
+    # List existing goals
+    st.subheader(&quot;Your Goals&quot;)
+    with get_conn() as conn:
+        goals = conn.execute(&quot;SELECT * FROM goals ORDER BY created_at DESC&quot;).fetchall()
+    for g in goals:
+        if st.button(f&quot;📌 {g[&#39;title&#39;]} (due: {g[&#39;deadline&#39;]})&quot;, key=f&quot;goal_{g[&#39;id&#39;]}&quot;):
+            st.session_state[&quot;active_goal_id&quot;] = g[&quot;id&quot;]
+            st.session_state[&quot;active_goal_title&quot;] = g[&quot;title&quot;]
+
+with tab2:
+    due = get_due_cards(10)
+    st.subheader(f&quot;Study Session — {len(due)} cards due&quot;)
+
+    if not due:
+        st.success(&quot;🎉 No cards due! All caught up.&quot;)
+    elif &quot;card_idx&quot; not in st.session_state:
+        st.session_state.card_idx = 0
+        st.session_state.show_answer = False
+
+    if due and st.session_state.get(&quot;card_idx&quot;, 0) &lt; len(due):
+        card = due[st.session_state.card_idx]
+        st.progress(st.session_state.card_idx / len(due))
+        st.write(f&quot;**Topic:** {card[&#39;topic_title&#39;]} | Card {st.session_state.card_idx + 1}/{len(due)}&quot;)
+        st.markdown(f&quot;### {card[&#39;question&#39;]}&quot;)
+
+        if not st.session_state.get(&quot;show_answer&quot;):
+            if st.button(&quot;Show Answer&quot;):
+                st.session_state.show_answer = True
+                st.rerun()
+        else:
+            st.info(f&quot;**Answer:** {card[&#39;answer&#39;]}&quot;)
+            st.write(&quot;How well did you know this?&quot;)
+            cols = st.columns(5)
+            labels = [&quot;0 - Blackout&quot;, &quot;1 - Wrong&quot;, &quot;2 - Hard&quot;, &quot;3 - OK&quot;, &quot;4 - Easy&quot;, &quot;5 - Perfect&quot;]
+            for i, (col, label) in enumerate(zip(cols, labels[1:])):
+                if col.button(label, key=f&quot;q_{i+1}&quot;):
+                    update_card_sm2(card[&quot;id&quot;], i + 1)
+                    st.session_state.card_idx += 1
+                    st.session_state.show_answer = False
+                    st.rerun()
+
+with tab3:
+    goal_id = st.session_state.get(&quot;active_goal_id&quot;)
+    if goal_id:
+        perf = get_performance_summary(goal_id)
+        st.metric(&quot;Cards Due Now&quot;, perf[&quot;due_cards&quot;])
+        st.subheader(&quot;Topic Performance&quot;)
+        for t in perf[&quot;topic_stats&quot;]:
+            avg = t[&quot;avg_quality&quot;] or 0
+            col1, col2 = st.columns([3, 1])
+            col1.write(f&quot;Week {t[&#39;week&#39;]}: {t[&#39;title&#39;]}&quot;)
+            col2.progress(avg / 5, text=f&quot;{avg:.1f}/5&quot;)
+
+with tab4:
+    goal_id = st.session_state.get(&quot;active_goal_id&quot;)
+    goal_title = st.session_state.get(&quot;active_goal_title&quot;, &quot;&quot;)
+    if goal_id and st.button(&quot;Get AI Advice&quot;, type=&quot;primary&quot;):
+        with st.spinner(&quot;Analyzing your progress...&quot;):
+            advice = get_adaptive_advice(goal_id, goal_title)
+        st.markdown(advice)
+</code></pre>
+<h3>Step 6: Run</h3>
+<pre><code class="language-bash">streamlit run app.py
+</code></pre>
+<hr>
+<h2>Extension Ideas</h2>
+<ol>
+<li><strong>Anki sync</strong> — export/import cards from Anki for existing decks</li>
+<li><strong>Resource integration</strong> — auto-fetch YouTube videos and articles for each topic</li>
+<li><strong>Study streak tracking</strong> — GitHub-style contribution calendar for study activity</li>
+<li><strong>Exam simulator</strong> — timed exam mode with randomized questions</li>
+<li><strong>Social study groups</strong> — share decks with friends and compare performance</li>
+</ol>
+<hr>
+<h2>What to Learn Next</h2>
+<ul>
+<li><strong>AI agents</strong> → <a href="/blog/ai-agent-fundamentals/">AI Agent Fundamentals</a></li>
+<li><strong>Structured outputs</strong> → <a href="/blog/openai-api-complete-guide/">OpenAI API Complete Guide</a></li>
+</ul>
+
+      </div>
+    </article>
+
+    <!-- Back link -->
+    <div class="mt-12 pt-8 border-t border-white/8">
+      <a href="/projects/" class="text-green-400 hover:text-green-300 text-sm transition-colors">← Back to all projects</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/8 mt-8" style="background-color:rgba(3,7,18,0.8);">
+    <div class="max-w-3xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div>
+        <p class="text-white font-semibold text-sm mb-1">ailearnings.in</p>
+        <p class="text-gray-400 text-xs">Free AI roadmap for software developers</p>
+      </div>
+      <div class="flex flex-wrap gap-4 text-xs text-gray-400">
+        <a href="/" class="hover:text-white transition-colors">Roadmap</a>
+        <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
+        <a href="/projects/" class="hover:text-white transition-colors">Projects</a>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    .prose h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin: 2rem 0 0.75rem; }
+    .prose h3 { font-size: 1.125rem; font-weight: 600; color: #e5e7eb; margin: 1.5rem 0 0.5rem; }
+    .prose p  { color: #d1d5db; line-height: 1.75; margin-bottom: 1rem; }
+    .prose ul, .prose ol { color: #d1d5db; padding-left: 1.5rem; margin-bottom: 1rem; }
+    .prose li { margin-bottom: 0.375rem; line-height: 1.7; }
+    .prose strong { color: #fff; font-weight: 600; }
+    .prose a  { color: #34d399; text-decoration: none; }
+    .prose a:hover { text-decoration: underline; }
+    .prose code { background: #1f2937; color: #a5f3fc; padding: 0.15em 0.4em; border-radius: 0.25rem; font-size: 0.875em; font-family: monospace; }
+    .prose pre  { background: #111827; border-radius: 0.5rem; padding: 1rem; overflow-x: auto; margin-bottom: 1rem; }
+    .prose pre code { background: none; padding: 0; font-size: 0.8rem; color: #86efac; }
+    .prose blockquote { border-left: 3px solid #10b981; padding-left: 1rem; color: #9ca3af; margin: 1rem 0; }
+    .prose hr { border-color: rgba(255,255,255,0.08); margin: 2rem 0; }
+    .prose table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.875rem; }
+    .prose th { text-align: left; color: #9ca3af; padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .prose td { color: #d1d5db; padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  </style>
+</body>
+</html>

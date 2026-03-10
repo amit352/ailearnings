@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build an AI Research Assistant: Summarize Papers and Extract Insights</title>
+  <meta name="description" content="Build an AI tool that reads academic papers and web pages, extracts key findings, compares multiple sources, and generates research summaries with citations." />
+  <link rel="canonical" href="https://ailearnings.in/projects/ai-research-assistant/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Build an AI Research Assistant: Summarize Papers and Extract Insights" />
+  <meta property="og:description" content="Build an AI tool that reads academic papers and web pages, extracts key findings, compares multiple sources, and generates research summaries with citations." />
+  <meta property="og:url" content="https://ailearnings.in/projects/ai-research-assistant/" />
+  <meta property="og:site_name" content="AI Learning Hub" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Build an AI Research Assistant: Summarize Papers and Extract Insights" />
+  <meta name="twitter:description" content="Build an AI tool that reads academic papers and web pages, extracts key findings, compares multiple sources, and generates research summaries with citations." />
+  <style>*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.\!visible{visibility:visible!important}.visible{visibility:visible}.collapse{visibility:collapse}.static{position:static}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.-right-0\.5{right:-.125rem}.-top-0\.5{top:-.125rem}.bottom-6{bottom:1.5rem}.bottom-full{bottom:100%}.left-1\/2{left:50%}.left-6{left:1.5rem}.right-6{right:1.5rem}.top-0{top:0}.top-6{top:1.5rem}.z-10{z-index:10}.z-50{z-index:50}.-mx-2{margin-left:-.5rem;margin-right:-.5rem}.mx-1{margin-left:.25rem;margin-right:.25rem}.mx-auto{margin-left:auto;margin-right:auto}.my-8{margin-top:2rem;margin-bottom:2rem}.-mt-1{margin-top:-.25rem}.mb-0\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-10{margin-bottom:2.5rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-10{margin-left:2.5rem}.ml-2{margin-left:.5rem}.ml-3{margin-left:.75rem}.ml-9{margin-left:2.25rem}.ml-auto{margin-left:auto}.mr-0\.5{margin-right:.125rem}.mr-1{margin-right:.25rem}.mr-1\.5{margin-right:.375rem}.mr-2{margin-right:.5rem}.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-2\.5{margin-top:.625rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.block{display:block}.inline-block{display:inline-block}.inline{display:inline}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.hidden{display:none}.h-1{height:.25rem}.h-1\.5{height:.375rem}.h-12{height:3rem}.h-2{height:.5rem}.h-3{height:.75rem}.h-4{height:1rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-full{height:100%}.h-px{height:1px}.min-h-\[calc\(100vh-52px\)\]{min-height:calc(100vh - 52px)}.min-h-screen{min-height:100vh}.w-0\.5{width:.125rem}.w-1\.5{width:.375rem}.w-12{width:3rem}.w-2{width:.5rem}.w-20{width:5rem}.w-28{width:7rem}.w-36{width:9rem}.w-4{width:1rem}.w-40{width:10rem}.w-5{width:1.25rem}.w-56{width:14rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-full{width:100%}.min-w-0{min-width:0}.max-w-24{max-width:6rem}.max-w-3xl{max-width:48rem}.max-w-full{max-width:100%}.max-w-lg{max-width:32rem}.max-w-sm{max-width:24rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.-translate-x-1\/2{--tw-translate-x:-50%}.-translate-x-1\/2,.rotate-45{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.rotate-45{--tw-rotate:45deg}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes bounce{0%,to{transform:translateY(-25%);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-white\/5>:not([hidden])~:not([hidden]){border-color:hsla(0,0%,100%,.05)}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.whitespace-nowrap{white-space:nowrap}.whitespace-pre-wrap{white-space:pre-wrap}.rounded{border-radius:.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.rounded-l-none{border-top-left-radius:0;border-bottom-left-radius:0}.rounded-r-full{border-top-right-radius:9999px;border-bottom-right-radius:9999px}.rounded-t-lg{border-top-left-radius:.5rem;border-top-right-radius:.5rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-r{border-right-width:1px}.border-t{border-top-width:1px}.border-blue-500\/20{border-color:rgba(59,130,246,.2)}.border-blue-500\/25{border-color:rgba(59,130,246,.25)}.border-blue-500\/30{border-color:rgba(59,130,246,.3)}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-cyan-800{--tw-border-opacity:1;border-color:rgb(21 94 117/var(--tw-border-opacity,1))}.border-gray-500{--tw-border-opacity:1;border-color:rgb(107 114 128/var(--tw-border-opacity,1))}.border-gray-500\/20{border-color:hsla(220,9%,46%,.2)}.border-gray-600{--tw-border-opacity:1;border-color:rgb(75 85 99/var(--tw-border-opacity,1))}.border-gray-700{--tw-border-opacity:1;border-color:rgb(55 65 81/var(--tw-border-opacity,1))}.border-gray-800{--tw-border-opacity:1;border-color:rgb(31 41 55/var(--tw-border-opacity,1))}.border-gray-800\/50{border-color:rgba(31,41,55,.5)}.border-green-500\/20{border-color:rgba(34,197,94,.2)}.border-green-600{--tw-border-opacity:1;border-color:rgb(22 163 74/var(--tw-border-opacity,1))}.border-green-700{--tw-border-opacity:1;border-color:rgb(21 128 61/var(--tw-border-opacity,1))}.border-green-800{--tw-border-opacity:1;border-color:rgb(22 101 52/var(--tw-border-opacity,1))}.border-green-900{--tw-border-opacity:1;border-color:rgb(20 83 45/var(--tw-border-opacity,1))}.border-indigo-800{--tw-border-opacity:1;border-color:rgb(55 48 163/var(--tw-border-opacity,1))}.border-orange-500\/20{border-color:rgba(249,115,22,.2)}.border-orange-700{--tw-border-opacity:1;border-color:rgb(194 65 12/var(--tw-border-opacity,1))}.border-orange-800{--tw-border-opacity:1;border-color:rgb(154 52 18/var(--tw-border-opacity,1))}.border-pink-800{--tw-border-opacity:1;border-color:rgb(157 23 77/var(--tw-border-opacity,1))}.border-purple-500\/20{border-color:rgba(168,85,247,.2)}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-red-500\/20{border-color:rgba(239,68,68,.2)}.border-red-800{--tw-border-opacity:1;border-color:rgb(153 27 27/var(--tw-border-opacity,1))}.border-red-900{--tw-border-opacity:1;border-color:rgb(127 29 29/var(--tw-border-opacity,1))}.border-rose-500\/20{border-color:rgba(244,63,94,.2)}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-slate-500\/20{border-color:rgba(100,116,139,.2)}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-teal-700{--tw-border-opacity:1;border-color:rgb(15 118 110/var(--tw-border-opacity,1))}.border-teal-800{--tw-border-opacity:1;border-color:rgb(17 94 89/var(--tw-border-opacity,1))}.border-violet-800{--tw-border-opacity:1;border-color:rgb(91 33 182/var(--tw-border-opacity,1))}.border-white\/10{border-color:hsla(0,0%,100%,.1)}.border-yellow-500\/25{border-color:rgba(234,179,8,.25)}.border-yellow-800{--tw-border-opacity:1;border-color:rgb(133 77 14/var(--tw-border-opacity,1))}.border-yellow-900{--tw-border-opacity:1;border-color:rgb(113 63 18/var(--tw-border-opacity,1))}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-500\/10{background-color:rgba(59,130,246,.1)}.bg-blue-500\/5{background-color:rgba(59,130,246,.05)}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-600\/10{background-color:rgba(37,99,235,.1)}.bg-blue-600\/20{background-color:rgba(37,99,235,.2)}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-900\/20{background-color:rgba(30,58,138,.2)}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-gray-500{--tw-bg-opacity:1;background-color:rgb(107 114 128/var(--tw-bg-opacity,1))}.bg-gray-500\/10{background-color:hsla(220,9%,46%,.1)}.bg-gray-600{--tw-bg-opacity:1;background-color:rgb(75 85 99/var(--tw-bg-opacity,1))}.bg-gray-700{--tw-bg-opacity:1;background-color:rgb(55 65 81/var(--tw-bg-opacity,1))}.bg-gray-700\/50{background-color:rgba(55,65,81,.5)}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55/var(--tw-bg-opacity,1))}.bg-gray-800\/40{background-color:rgba(31,41,55,.4)}.bg-gray-800\/50{background-color:rgba(31,41,55,.5)}.bg-gray-800\/60{background-color:rgba(31,41,55,.6)}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39/var(--tw-bg-opacity,1))}.bg-gray-900\/50{background-color:rgba(17,24,39,.5)}.bg-gray-900\/60{background-color:rgba(17,24,39,.6)}.bg-gray-900\/70{background-color:rgba(17,24,39,.7)}.bg-gray-900\/80{background-color:rgba(17,24,39,.8)}.bg-gray-900\/95{background-color:rgba(17,24,39,.95)}.bg-gray-950\/70{background-color:rgba(3,7,18,.7)}.bg-gray-950\/80{background-color:rgba(3,7,18,.8)}.bg-green-100{--tw-bg-opacity:1;background-color:rgb(220 252 231/var(--tw-bg-opacity,1))}.bg-green-500{--tw-bg-opacity:1;background-color:rgb(34 197 94/var(--tw-bg-opacity,1))}.bg-green-500\/10{background-color:rgba(34,197,94,.1)}.bg-green-600{--tw-bg-opacity:1;background-color:rgb(22 163 74/var(--tw-bg-opacity,1))}.bg-green-600\/20{background-color:rgba(22,163,74,.2)}.bg-green-900{--tw-bg-opacity:1;background-color:rgb(20 83 45/var(--tw-bg-opacity,1))}.bg-green-900\/10{background-color:rgba(20,83,45,.1)}.bg-green-900\/20{background-color:rgba(20,83,45,.2)}.bg-green-950{--tw-bg-opacity:1;background-color:rgb(5 46 22/var(--tw-bg-opacity,1))}.bg-indigo-500{--tw-bg-opacity:1;background-color:rgb(99 102 241/var(--tw-bg-opacity,1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229/var(--tw-bg-opacity,1))}.bg-indigo-900{--tw-bg-opacity:1;background-color:rgb(49 46 129/var(--tw-bg-opacity,1))}.bg-orange-100{--tw-bg-opacity:1;background-color:rgb(255 237 213/var(--tw-bg-opacity,1))}.bg-orange-500\/10{background-color:rgba(249,115,22,.1)}.bg-orange-600{--tw-bg-opacity:1;background-color:rgb(234 88 12/var(--tw-bg-opacity,1))}.bg-orange-600\/20{background-color:rgba(234,88,12,.2)}.bg-orange-900{--tw-bg-opacity:1;background-color:rgb(124 45 18/var(--tw-bg-opacity,1))}.bg-pink-600{--tw-bg-opacity:1;background-color:rgb(219 39 119/var(--tw-bg-opacity,1))}.bg-pink-900{--tw-bg-opacity:1;background-color:rgb(131 24 67/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-500\/10{background-color:rgba(168,85,247,.1)}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-600\/20{background-color:rgba(147,51,234,.2)}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68/var(--tw-bg-opacity,1))}.bg-red-500\/10{background-color:rgba(239,68,68,.1)}.bg-red-900{--tw-bg-opacity:1;background-color:rgb(127 29 29/var(--tw-bg-opacity,1))}.bg-red-950{--tw-bg-opacity:1;background-color:rgb(69 10 10/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-500\/10{background-color:rgba(244,63,94,.1)}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-500\/10{background-color:rgba(100,116,139,.1)}.bg-teal-100{--tw-bg-opacity:1;background-color:rgb(204 251 241/var(--tw-bg-opacity,1))}.bg-teal-900{--tw-bg-opacity:1;background-color:rgb(19 78 74/var(--tw-bg-opacity,1))}.bg-violet-600{--tw-bg-opacity:1;background-color:rgb(124 58 237/var(--tw-bg-opacity,1))}.bg-violet-600\/20{background-color:rgba(124,58,237,.2)}.bg-yellow-500{--tw-bg-opacity:1;background-color:rgb(234 179 8/var(--tw-bg-opacity,1))}.bg-yellow-500\/15{background-color:rgba(234,179,8,.15)}.bg-yellow-900{--tw-bg-opacity:1;background-color:rgb(113 63 18/var(--tw-bg-opacity,1))}.bg-yellow-950{--tw-bg-opacity:1;background-color:rgb(66 32 6/var(--tw-bg-opacity,1))}.bg-gradient-to-b{background-image:linear-gradient(to bottom,var(--tw-gradient-stops))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right,var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}.from-blue-400{--tw-gradient-from:#60a5fa var(--tw-gradient-from-position);--tw-gradient-to:rgba(96,165,250,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-blue-500{--tw-gradient-from:#3b82f6 var(--tw-gradient-from-position);--tw-gradient-to:rgba(59,130,246,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-blue-600{--tw-gradient-from:#2563eb var(--tw-gradient-from-position);--tw-gradient-to:rgba(37,99,235,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-cyan-600{--tw-gradient-from:#0891b2 var(--tw-gradient-from-position);--tw-gradient-to:rgba(8,145,178,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-gray-600{--tw-gradient-from:#4b5563 var(--tw-gradient-from-position);--tw-gradient-to:rgba(75,85,99,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-green-500{--tw-gradient-from:#22c55e var(--tw-gradient-from-position);--tw-gradient-to:rgba(34,197,94,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-green-600{--tw-gradient-from:#16a34a var(--tw-gradient-from-position);--tw-gradient-to:rgba(22,163,74,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-indigo-600{--tw-gradient-from:#4f46e5 var(--tw-gradient-from-position);--tw-gradient-to:rgba(79,70,229,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-orange-500{--tw-gradient-from:#f97316 var(--tw-gradient-from-position);--tw-gradient-to:rgba(249,115,22,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-orange-600{--tw-gradient-from:#ea580c var(--tw-gradient-from-position);--tw-gradient-to:rgba(234,88,12,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-pink-600{--tw-gradient-from:#db2777 var(--tw-gradient-from-position);--tw-gradient-to:rgba(219,39,119,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-purple-400{--tw-gradient-from:#c084fc var(--tw-gradient-from-position);--tw-gradient-to:rgba(192,132,252,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-purple-500{--tw-gradient-from:#a855f7 var(--tw-gradient-from-position);--tw-gradient-to:rgba(168,85,247,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-purple-600{--tw-gradient-from:#9333ea var(--tw-gradient-from-position);--tw-gradient-to:rgba(147,51,234,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-red-600{--tw-gradient-from:#dc2626 var(--tw-gradient-from-position);--tw-gradient-to:rgba(220,38,38,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-rose-500{--tw-gradient-from:#f43f5e var(--tw-gradient-from-position);--tw-gradient-to:rgba(244,63,94,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-rose-600{--tw-gradient-from:#e11d48 var(--tw-gradient-from-position);--tw-gradient-to:rgba(225,29,72,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-slate-500{--tw-gradient-from:#64748b var(--tw-gradient-from-position);--tw-gradient-to:rgba(100,116,139,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-teal-500{--tw-gradient-from:#14b8a6 var(--tw-gradient-from-position);--tw-gradient-to:rgba(20,184,166,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-teal-600{--tw-gradient-from:#0d9488 var(--tw-gradient-from-position);--tw-gradient-to:rgba(13,148,136,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-violet-600{--tw-gradient-from:#7c3aed var(--tw-gradient-from-position);--tw-gradient-to:rgba(124,58,237,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-yellow-600{--tw-gradient-from:#ca8a04 var(--tw-gradient-from-position);--tw-gradient-to:rgba(202,138,4,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.via-blue-500{--tw-gradient-to:rgba(59,130,246,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#3b82f6 var(--tw-gradient-via-position),var(--tw-gradient-to)}.via-purple-400{--tw-gradient-to:rgba(192,132,252,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#c084fc var(--tw-gradient-via-position),var(--tw-gradient-to)}.via-purple-500{--tw-gradient-to:rgba(168,85,247,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#a855f7 var(--tw-gradient-via-position),var(--tw-gradient-to)}.to-amber-600{--tw-gradient-to:#d97706 var(--tw-gradient-to-position)}.to-amber-700{--tw-gradient-to:#b45309 var(--tw-gradient-to-position)}.to-blue-700{--tw-gradient-to:#1d4ed8 var(--tw-gradient-to-position)}.to-blue-800{--tw-gradient-to:#1e40af var(--tw-gradient-to-position)}.to-cyan-600{--tw-gradient-to:#0891b2 var(--tw-gradient-to-position)}.to-cyan-700{--tw-gradient-to:#0e7490 var(--tw-gradient-to-position)}.to-emerald-400{--tw-gradient-to:#34d399 var(--tw-gradient-to-position)}.to-emerald-600{--tw-gradient-to:#059669 var(--tw-gradient-to-position)}.to-emerald-700{--tw-gradient-to:#047857 var(--tw-gradient-to-position)}.to-gray-600{--tw-gradient-to:#4b5563 var(--tw-gradient-to-position)}.to-gray-700{--tw-gradient-to:#374151 var(--tw-gradient-to-position)}.to-indigo-600{--tw-gradient-to:#4f46e5 var(--tw-gradient-to-position)}.to-indigo-700{--tw-gradient-to:#4338ca var(--tw-gradient-to-position)}.to-orange-400{--tw-gradient-to:#fb923c var(--tw-gradient-to-position)}.to-orange-500{--tw-gradient-to:#f97316 var(--tw-gradient-to-position)}.to-pink-400{--tw-gradient-to:#f472b6 var(--tw-gradient-to-position)}.to-pink-600{--tw-gradient-to:#db2777 var(--tw-gradient-to-position)}.to-pink-700{--tw-gradient-to:#be185d var(--tw-gradient-to-position)}.to-purple-400{--tw-gradient-to:#c084fc var(--tw-gradient-to-position)}.to-purple-500{--tw-gradient-to:#a855f7 var(--tw-gradient-to-position)}.to-purple-600{--tw-gradient-to:#9333ea var(--tw-gradient-to-position)}.to-purple-700{--tw-gradient-to:#7e22ce var(--tw-gradient-to-position)}.to-purple-800{--tw-gradient-to:#6b21a8 var(--tw-gradient-to-position)}.to-red-700{--tw-gradient-to:#b91c1c var(--tw-gradient-to-position)}.to-rose-500{--tw-gradient-to:#f43f5e var(--tw-gradient-to-position)}.to-rose-700{--tw-gradient-to:#be123c var(--tw-gradient-to-position)}.to-slate-700{--tw-gradient-to:#334155 var(--tw-gradient-to-position)}.to-teal-700{--tw-gradient-to:#0f766e var(--tw-gradient-to-position)}.to-violet-600{--tw-gradient-to:#7c3aed var(--tw-gradient-to-position)}.to-violet-700{--tw-gradient-to:#6d28d9 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-1{padding:.25rem}.p-2{padding:.5rem}.p-2\.5{padding:.625rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-8{padding-left:2rem;padding-right:2rem}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-0{padding-bottom:0}.pb-1{padding-bottom:.25rem}.pb-2{padding-bottom:.5rem}.pb-6{padding-bottom:1.5rem}.pb-8{padding-bottom:2rem}.pr-3{padding-right:.75rem}.pr-4{padding-right:1rem}.pt-1{padding-top:.25rem}.pt-2{padding-top:.5rem}.pt-3{padding-top:.75rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.align-middle{vertical-align:middle}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.capitalize{text-transform:capitalize}.italic{font-style:italic}.leading-\[1\.1\]{line-height:1.1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.tracking-tight{letter-spacing:-.025em}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-gray-100{--tw-text-opacity:1;color:rgb(243 244 246/var(--tw-text-opacity,1))}.text-gray-200{--tw-text-opacity:1;color:rgb(229 231 235/var(--tw-text-opacity,1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219/var(--tw-text-opacity,1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity,1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128/var(--tw-text-opacity,1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99/var(--tw-text-opacity,1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81/var(--tw-text-opacity,1))}.text-green-300{--tw-text-opacity:1;color:rgb(134 239 172/var(--tw-text-opacity,1))}.text-green-400{--tw-text-opacity:1;color:rgb(74 222 128/var(--tw-text-opacity,1))}.text-green-700{--tw-text-opacity:1;color:rgb(21 128 61/var(--tw-text-opacity,1))}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252/var(--tw-text-opacity,1))}.text-orange-300{--tw-text-opacity:1;color:rgb(253 186 116/var(--tw-text-opacity,1))}.text-orange-400{--tw-text-opacity:1;color:rgb(251 146 60/var(--tw-text-opacity,1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22/var(--tw-text-opacity,1))}.text-orange-700{--tw-text-opacity:1;color:rgb(194 65 12/var(--tw-text-opacity,1))}.text-pink-300{--tw-text-opacity:1;color:rgb(249 168 212/var(--tw-text-opacity,1))}.text-pink-400{--tw-text-opacity:1;color:rgb(244 114 182/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-red-300{--tw-text-opacity:1;color:rgb(252 165 165/var(--tw-text-opacity,1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113/var(--tw-text-opacity,1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-teal-300{--tw-text-opacity:1;color:rgb(94 234 212/var(--tw-text-opacity,1))}.text-teal-400{--tw-text-opacity:1;color:rgb(45 212 191/var(--tw-text-opacity,1))}.text-teal-700{--tw-text-opacity:1;color:rgb(15 118 110/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-violet-400{--tw-text-opacity:1;color:rgb(167 139 250/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-yellow-300{--tw-text-opacity:1;color:rgb(253 224 71/var(--tw-text-opacity,1))}.text-yellow-400{--tw-text-opacity:1;color:rgb(250 204 21/var(--tw-text-opacity,1))}.text-yellow-500{--tw-text-opacity:1;color:rgb(234 179 8/var(--tw-text-opacity,1))}.text-opacity-70{--tw-text-opacity:0.7}.text-opacity-80{--tw-text-opacity:0.8}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.opacity-0{opacity:0}.opacity-30{opacity:.3}.opacity-60{opacity:.6}.shadow-\[0_0_12px_rgba\(59\2c 130\2c 246\2c 0\.4\)\]{--tw-shadow:0 0 12px rgba(59,130,246,.4);--tw-shadow-colored:0 0 12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_24px_rgba\(59\2c 130\2c 246\2c 0\.35\)\]{--tw-shadow:0 0 24px rgba(59,130,246,.35);--tw-shadow-colored:0 0 24px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_30px_rgba\(59\2c 130\2c 246\2c 0\.08\)\]{--tw-shadow:0 0 30px rgba(59,130,246,.08);--tw-shadow-colored:0 0 30px var(--tw-shadow-color)}.shadow-\[0_0_30px_rgba\(59\2c 130\2c 246\2c 0\.08\)\],.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-gray-900{--tw-ring-opacity:1;--tw-ring-color:rgb(17 24 39/var(--tw-ring-opacity,1))}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px)}.backdrop-blur-md,.backdrop-blur-sm{-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(.4,0,.2,1)}.duration-150,.transition-opacity{transition-duration:.15s}.duration-200{transition-duration:.2s}.duration-300{transition-duration:.3s}.duration-500{transition-duration:.5s}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.hover\:border-blue-700:hover{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.hover\:border-gray-500:hover{--tw-border-opacity:1;border-color:rgb(107 114 128/var(--tw-border-opacity,1))}.hover\:border-gray-600:hover{--tw-border-opacity:1;border-color:rgb(75 85 99/var(--tw-border-opacity,1))}.hover\:border-white\/15:hover{border-color:hsla(0,0%,100%,.15)}.hover\:bg-blue-500:hover{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.hover\:bg-blue-500\/15:hover{background-color:rgba(59,130,246,.15)}.hover\:bg-blue-600:hover{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.hover\:bg-blue-900\/30:hover{background-color:rgba(30,58,138,.3)}.hover\:bg-gray-600:hover{--tw-bg-opacity:1;background-color:rgb(75 85 99/var(--tw-bg-opacity,1))}.hover\:bg-gray-700:hover{--tw-bg-opacity:1;background-color:rgb(55 65 81/var(--tw-bg-opacity,1))}.hover\:bg-gray-700\/50:hover{background-color:rgba(55,65,81,.5)}.hover\:bg-gray-700\/60:hover{background-color:rgba(55,65,81,.6)}.hover\:bg-gray-800:hover{--tw-bg-opacity:1;background-color:rgb(31 41 55/var(--tw-bg-opacity,1))}.hover\:bg-gray-800\/80:hover{background-color:rgba(31,41,55,.8)}.hover\:bg-gray-900\/80:hover{background-color:rgba(17,24,39,.8)}.hover\:bg-green-500\/15:hover{background-color:rgba(34,197,94,.15)}.hover\:bg-orange-500:hover{--tw-bg-opacity:1;background-color:rgb(249 115 22/var(--tw-bg-opacity,1))}.hover\:bg-purple-500:hover{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.hover\:bg-violet-500:hover{--tw-bg-opacity:1;background-color:rgb(139 92 246/var(--tw-bg-opacity,1))}.hover\:text-blue-300:hover{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.hover\:text-gray-200:hover{--tw-text-opacity:1;color:rgb(229 231 235/var(--tw-text-opacity,1))}.hover\:text-gray-300:hover{--tw-text-opacity:1;color:rgb(209 213 219/var(--tw-text-opacity,1))}.hover\:text-green-300:hover{--tw-text-opacity:1;color:rgb(134 239 172/var(--tw-text-opacity,1))}.hover\:text-pink-300:hover{--tw-text-opacity:1;color:rgb(249 168 212/var(--tw-text-opacity,1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\:underline:hover{text-decoration-line:underline}.hover\:shadow-\[0_0_32px_rgba\(59\2c 130\2c 246\2c 0\.5\)\]:hover{--tw-shadow:0 0 32px rgba(59,130,246,.5);--tw-shadow-colored:0 0 32px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.group:hover .group-hover\:border-gray-400{--tw-border-opacity:1;border-color:rgb(156 163 175/var(--tw-border-opacity,1))}.group:hover .group-hover\:text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.group:hover .group-hover\:opacity-100{opacity:1}@media (min-width:640px){.sm\:inline{display:inline}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}}@media (min-width:768px){.md\:flex{display:flex}.md\:hidden{display:none}.md\:flex-row{flex-direction:row}.md\:items-end{align-items:flex-end}.md\:items-center{align-items:center}.md\:text-3xl{font-size:1.875rem;line-height:2.25rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}.md\:text-6xl{font-size:3.75rem;line-height:1}}</style>
+  <style>
+    html, body { background-color: #030712 !important; color: #f3f4f6; }
+    * { box-sizing: border-box; }
+    a { color: inherit; }
+    header { background-color: rgba(17,24,39,0.7); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    footer { border-top: 1px solid rgba(255,255,255,0.08); background-color: rgba(3,7,18,0.8); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Build an AI Research Assistant: Summarize Papers and Extract Insights",
+  "description": "Build an AI tool that reads academic papers and web pages, extracts key findings, compares multiple sources, and generates research summaries with citations.",
+  "url": "https://ailearnings.in/projects/ai-research-assistant/",
+  "datePublished": "2026-03-10",
+  "dateModified": "2026-03-10",
+  "author": {
+    "@type": "Organization",
+    "name": "AI Learning Hub",
+    "url": "https://ailearnings.in/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Learning Hub",
+    "url": "https://ailearnings.in/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://ailearnings.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Projects",
+      "item": "https://ailearnings.in/projects/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Build an AI Research Assistant: Summarize Papers and Extract Insights",
+      "item": "https://ailearnings.in/projects/ai-research-assistant/"
+    }
+  ]
+}
+  </script>
+</head>
+<body class="text-gray-100 font-sans" style="background-color:#030712;min-height:100vh;">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-gray-900/70 backdrop-blur-md border-b border-white/8">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="text-white font-semibold text-sm hover:text-blue-400 transition-colors">
+        AI Learning Hub
+      </a>
+      <a href="/projects/" class="text-gray-400 hover:text-white text-xs transition-colors flex items-center gap-1">
+        ← All Projects
+      </a>
+    </div>
+  </header>
+
+  <!-- Breadcrumbs -->
+  <div class="max-w-3xl mx-auto px-4 pt-5 pb-2">
+    <nav class="flex items-center gap-2 text-xs text-gray-500" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-gray-300 transition-colors">Home</a>
+      <span>›</span>
+      <a href="/projects/" class="hover:text-gray-300 transition-colors">Projects</a>
+      <span>›</span>
+      <span class="text-gray-400">Build an AI Research Assistant: Summarize Paper…</span>
+    </nav>
+  </div>
+
+  <!-- Project header badge -->
+  <div class="max-w-3xl mx-auto px-4 pt-2">
+    <div class="flex items-center gap-3">
+      <span class="inline-block bg-green-600/20 text-green-400 text-xs font-semibold px-3 py-1 rounded-full">Intermediate</span>
+      <span class="text-gray-500 text-xs">4–5 hours</span>
+      <span class="text-gray-500 text-xs">·</span>
+      <span class="text-gray-500 text-xs">Python, OpenAI API, requests, BeautifulSoup, Streamlit</span>
+    </div>
+  </div>
+
+  <!-- Article -->
+  <main class="max-w-3xl mx-auto px-4 py-8">
+    <article>
+      <header class="mb-8">
+        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">Build an AI Research Assistant: Summarize Papers and Extract Insights</h1>
+        <div class="flex items-center gap-4 text-sm text-gray-400">
+          <time datetime="2026-03-10">March 10, 2026</time>
+          <span>·</span>
+          <span>4 min read</span>
+          <span>·</span>
+          <span>AI Learning Hub</span>
+        </div>
+      </header>
+
+      <div class="prose">
+        <h2>Project Overview</h2>
+<p>A research assistant that fetches papers from URLs (arXiv, PDFs, web pages), extracts key findings, methodology, and limitations, and synthesizes multiple papers into a comparative literature review.</p>
+<hr>
+<h2>Learning Goals</h2>
+<ul>
+<li>Scrape and clean academic content from the web</li>
+<li>Design prompts for structured academic extraction</li>
+<li>Synthesize insights across multiple sources</li>
+<li>Generate properly cited Markdown research reports</li>
+</ul>
+<hr>
+<h2>Architecture</h2>
+<pre><code>URLs (arXiv / PDF / web page)
+        ↓
+Text extraction + cleaning
+        ↓
+Per-paper: findings, methods, limitations, key terms
+        ↓
+Cross-paper synthesis
+        ↓
+Research report with citations
+</code></pre>
+<hr>
+<h2>Implementation</h2>
+<h3>Step 1: Setup</h3>
+<pre><code class="language-bash">pip install openai requests beautifulsoup4 pypdf streamlit
+</code></pre>
+<h3>Step 2: Content Fetcher</h3>
+<pre><code class="language-python"># fetcher.py
+import re
+import requests
+from pathlib import Path
+from bs4 import BeautifulSoup
+from pypdf import PdfReader
+import tempfile, os
+
+
+def fetch_url(url: str) -&gt; str:
+    &quot;&quot;&quot;Fetch and extract clean text from a URL.&quot;&quot;&quot;
+    headers = {&quot;User-Agent&quot;: &quot;Mozilla/5.0 (research-tool)&quot;}
+    response = requests.get(url, headers=headers, timeout=20)
+    response.raise_for_status()
+
+    content_type = response.headers.get(&quot;content-type&quot;, &quot;&quot;)
+    if &quot;pdf&quot; in content_type or url.endswith(&quot;.pdf&quot;):
+        return _extract_pdf_from_bytes(response.content)
+
+    soup = BeautifulSoup(response.text, &quot;html.parser&quot;)
+    for tag in soup([&quot;script&quot;, &quot;style&quot;, &quot;nav&quot;, &quot;footer&quot;, &quot;header&quot;, &quot;aside&quot;, &quot;form&quot;]):
+        tag.decompose()
+
+    article = soup.find(&quot;article&quot;) or soup.find(id=&quot;content&quot;) or soup.find(&quot;main&quot;) or soup.body
+    text = article.get_text(separator=&quot;\n&quot;) if article else soup.get_text(separator=&quot;\n&quot;)
+    return _clean(text)
+
+
+def fetch_arxiv(arxiv_id: str) -&gt; str:
+    &quot;&quot;&quot;Fetch paper from arXiv (e.g., &#39;2303.08774&#39;).&quot;&quot;&quot;
+    url = f&quot;https://arxiv.org/abs/{arxiv_id}&quot;
+    return fetch_url(url)
+
+
+def fetch_local_pdf(path: str) -&gt; str:
+    reader = PdfReader(path)
+    text = &quot;\n\n&quot;.join(page.extract_text() or &quot;&quot; for page in reader.pages)
+    return _clean(text)
+
+
+def _extract_pdf_from_bytes(data: bytes) -&gt; str:
+    with tempfile.NamedTemporaryFile(delete=False, suffix=&quot;.pdf&quot;) as tmp:
+        tmp.write(data)
+        tmp_path = tmp.name
+    try:
+        text = fetch_local_pdf(tmp_path)
+    finally:
+        os.unlink(tmp_path)
+    return text
+
+
+def _clean(text: str) -&gt; str:
+    text = re.sub(r&#39;\n{3,}&#39;, &#39;\n\n&#39;, text)
+    text = re.sub(r&#39;[ \t]+&#39;, &#39; &#39;, text)
+    return text.strip()
+</code></pre>
+<h3>Step 3: Paper Analyzer</h3>
+<pre><code class="language-python"># analyzer.py
+import json
+from openai import OpenAI
+
+client = OpenAI()
+
+EXTRACT_PROMPT = &quot;&quot;&quot;Analyze this academic/research text and extract structured information.
+
+Return JSON:
+{{
+  &quot;title&quot;: &quot;paper/article title&quot;,
+  &quot;authors&quot;: [&quot;author1&quot;, &quot;author2&quot;],
+  &quot;year&quot;: &quot;publication year or &#39;unknown&#39;&quot;,
+  &quot;problem_statement&quot;: &quot;what problem does this address?&quot;,
+  &quot;methodology&quot;: &quot;what approach/methods were used?&quot;,
+  &quot;key_findings&quot;: [&quot;finding 1&quot;, &quot;finding 2&quot;, &quot;finding 3&quot;],
+  &quot;contributions&quot;: [&quot;contribution 1&quot;, &quot;contribution 2&quot;],
+  &quot;limitations&quot;: [&quot;limitation 1&quot;, &quot;limitation 2&quot;],
+  &quot;key_terms&quot;: [&quot;term1&quot;, &quot;term2&quot;, &quot;term3&quot;],
+  &quot;tldr&quot;: &quot;one sentence summary&quot;
+}}
+
+Text (first 6000 chars):
+{text}&quot;&quot;&quot;
+
+SYNTHESIS_PROMPT = &quot;&quot;&quot;You are a research synthesizer. Given analyses of {n} papers on the topic &quot;{topic}&quot;, write a literature review.
+
+Structure:
+1. **Overview** — what is this field about, why does it matter (2-3 sentences)
+2. **Common Themes** — what do the papers agree on (bullet points)
+3. **Contrasting Approaches** — where do the papers differ in methodology or findings
+4. **Key Insights** — the most important findings across all papers
+5. **Research Gaps** — what questions remain unanswered
+6. **Conclusion** — synthesis in 2-3 sentences
+
+Papers analyzed:
+{papers_json}
+
+Write in academic but accessible style. Use author/year citations like (Smith, 2023).&quot;&quot;&quot;
+
+
+def analyze_paper(text: str) -&gt; dict:
+    response = client.chat.completions.create(
+        model=&quot;gpt-4o-mini&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: EXTRACT_PROMPT.format(text=text[:6000])}],
+        response_format={&quot;type&quot;: &quot;json_object&quot;},
+        temperature=0.2,
+    )
+    return json.loads(response.choices[0].message.content)
+
+
+def synthesize_papers(analyses: list[dict], topic: str) -&gt; str:
+    papers_summary = json.dumps([{
+        &quot;title&quot;: a.get(&quot;title&quot;, &quot;Unknown&quot;),
+        &quot;authors&quot;: a.get(&quot;authors&quot;, []),
+        &quot;year&quot;: a.get(&quot;year&quot;, &quot;unknown&quot;),
+        &quot;key_findings&quot;: a.get(&quot;key_findings&quot;, []),
+        &quot;methodology&quot;: a.get(&quot;methodology&quot;, &quot;&quot;),
+        &quot;limitations&quot;: a.get(&quot;limitations&quot;, []),
+        &quot;tldr&quot;: a.get(&quot;tldr&quot;, &quot;&quot;),
+    } for a in analyses], indent=2)
+
+    response = client.chat.completions.create(
+        model=&quot;gpt-4o-mini&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: SYNTHESIS_PROMPT.format(
+            n=len(analyses), topic=topic, papers_json=papers_summary
+        )}],
+        max_tokens=1500,
+        temperature=0.4,
+    )
+    return response.choices[0].message.content
+</code></pre>
+<h3>Step 4: Streamlit App</h3>
+<pre><code class="language-python"># app.py
+import streamlit as st
+from fetcher import fetch_url, fetch_local_pdf
+from analyzer import analyze_paper, synthesize_papers
+
+st.set_page_config(page_title=&quot;AI Research Assistant&quot;, page_icon=&quot;🔬&quot;, layout=&quot;wide&quot;)
+st.title(&quot;🔬 AI Research Assistant&quot;)
+st.caption(&quot;Summarize papers and synthesize literature reviews&quot;)
+
+topic = st.text_input(&quot;Research topic (for synthesis)&quot;, placeholder=&quot;e.g., RAG for question answering&quot;)
+
+papers_data = []
+urls_input = st.text_area(&quot;Paper URLs (one per line)&quot;, height=150,
+    placeholder=&quot;https://arxiv.org/abs/2403.01234\nhttps://example.com/paper.pdf&quot;)
+uploaded_pdfs = st.file_uploader(&quot;Or upload PDFs&quot;, type=[&quot;pdf&quot;], accept_multiple_files=True)
+
+if st.button(&quot;Analyze Papers&quot;, type=&quot;primary&quot;):
+    urls = [u.strip() for u in urls_input.strip().splitlines() if u.strip()]
+
+    # Process URLs
+    for url in urls:
+        with st.spinner(f&quot;Fetching {url[:50]}...&quot;):
+            try:
+                text = fetch_url(url)
+                analysis = analyze_paper(text)
+                analysis[&quot;url&quot;] = url
+                papers_data.append(analysis)
+                st.success(f&quot;✓ {analysis.get(&#39;title&#39;, url[:50])}&quot;)
+            except Exception as e:
+                st.error(f&quot;Failed to fetch {url}: {e}&quot;)
+
+    # Process uploaded PDFs
+    import tempfile, os
+    for f in uploaded_pdfs or []:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=&quot;.pdf&quot;) as tmp:
+            tmp.write(f.read())
+            tmp_path = tmp.name
+        try:
+            text = fetch_local_pdf(tmp_path)
+            analysis = analyze_paper(text)
+            analysis[&quot;url&quot;] = f.name
+            papers_data.append(analysis)
+            st.success(f&quot;✓ {analysis.get(&#39;title&#39;, f.name)}&quot;)
+        finally:
+            os.unlink(tmp_path)
+
+    st.session_state[&quot;papers&quot;] = papers_data
+
+if &quot;papers&quot; in st.session_state and st.session_state[&quot;papers&quot;]:
+    papers = st.session_state[&quot;papers&quot;]
+
+    # Individual paper summaries
+    st.divider()
+    st.subheader(f&quot;Individual Papers ({len(papers)})&quot;)
+    for paper in papers:
+        with st.expander(paper.get(&quot;title&quot;, &quot;Unknown title&quot;)):
+            st.markdown(f&quot;**TL;DR:** {paper.get(&#39;tldr&#39;, &#39;&#39;)}&quot;)
+            st.markdown(f&quot;**Authors:** {&#39;, &#39;.join(paper.get(&#39;authors&#39;, []))}&quot;)
+            st.markdown(&quot;**Key Findings:**&quot;)
+            for f in paper.get(&quot;key_findings&quot;, []):
+                st.markdown(f&quot;- {f}&quot;)
+            st.markdown(f&quot;**Limitations:** {&#39;, &#39;.join(paper.get(&#39;limitations&#39;, []))}&quot;)
+
+    # Synthesis
+    if len(papers) &gt; 1 and topic:
+        st.divider()
+        if st.button(&quot;Generate Literature Review&quot;):
+            with st.spinner(&quot;Synthesizing...&quot;):
+                review = synthesize_papers(papers, topic)
+            st.subheader(&quot;Literature Review&quot;)
+            st.markdown(review)
+            st.download_button(&quot;Download Review (.md)&quot;, review, &quot;literature_review.md&quot;, &quot;text/markdown&quot;)
+</code></pre>
+<h3>Step 5: Run</h3>
+<pre><code class="language-bash">streamlit run app.py
+</code></pre>
+<hr>
+<h2>Extension Ideas</h2>
+<ol>
+<li><strong>Citation graph</strong> — build a graph of which papers cite which</li>
+<li><strong>Gap finder</strong> — identify specific unanswered research questions</li>
+<li><strong>Automatic arXiv search</strong> — search by keyword, not just manual URL entry</li>
+<li><strong>Notion/Obsidian export</strong> — save research notes directly to your PKM system</li>
+<li><strong>Follow-up questions</strong> — ask questions about specific papers in a chat interface</li>
+</ol>
+<hr>
+<h2>What to Learn Next</h2>
+<ul>
+<li><strong>Personal knowledge base</strong> → <a href="/projects/ai-personal-knowledge-base/">AI Personal Knowledge Base</a></li>
+<li><strong>RAG deep dive</strong> → <a href="/projects/rag-document-assistant/">RAG Document Assistant</a></li>
+</ul>
+
+      </div>
+    </article>
+
+    <!-- Back link -->
+    <div class="mt-12 pt-8 border-t border-white/8">
+      <a href="/projects/" class="text-green-400 hover:text-green-300 text-sm transition-colors">← Back to all projects</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/8 mt-8" style="background-color:rgba(3,7,18,0.8);">
+    <div class="max-w-3xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div>
+        <p class="text-white font-semibold text-sm mb-1">ailearnings.in</p>
+        <p class="text-gray-400 text-xs">Free AI roadmap for software developers</p>
+      </div>
+      <div class="flex flex-wrap gap-4 text-xs text-gray-400">
+        <a href="/" class="hover:text-white transition-colors">Roadmap</a>
+        <a href="/blog/" class="hover:text-white transition-colors">Blog</a>
+        <a href="/projects/" class="hover:text-white transition-colors">Projects</a>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    .prose h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin: 2rem 0 0.75rem; }
+    .prose h3 { font-size: 1.125rem; font-weight: 600; color: #e5e7eb; margin: 1.5rem 0 0.5rem; }
+    .prose p  { color: #d1d5db; line-height: 1.75; margin-bottom: 1rem; }
+    .prose ul, .prose ol { color: #d1d5db; padding-left: 1.5rem; margin-bottom: 1rem; }
+    .prose li { margin-bottom: 0.375rem; line-height: 1.7; }
+    .prose strong { color: #fff; font-weight: 600; }
+    .prose a  { color: #34d399; text-decoration: none; }
+    .prose a:hover { text-decoration: underline; }
+    .prose code { background: #1f2937; color: #a5f3fc; padding: 0.15em 0.4em; border-radius: 0.25rem; font-size: 0.875em; font-family: monospace; }
+    .prose pre  { background: #111827; border-radius: 0.5rem; padding: 1rem; overflow-x: auto; margin-bottom: 1rem; }
+    .prose pre code { background: none; padding: 0; font-size: 0.8rem; color: #86efac; }
+    .prose blockquote { border-left: 3px solid #10b981; padding-left: 1rem; color: #9ca3af; margin: 1rem 0; }
+    .prose hr { border-color: rgba(255,255,255,0.08); margin: 2rem 0; }
+    .prose table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.875rem; }
+    .prose th { text-align: left; color: #9ca3af; padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .prose td { color: #d1d5db; padding: 0.5rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  </style>
+</body>
+</html>

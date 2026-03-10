@@ -6,7 +6,8 @@
     "build": "npm run build:js && npm run build:css && npm run build:inline",
     "generate": "npm run build && node scripts/generate-static.js",
     "generate:blog": "node scripts/generate-blog.js",
-    "generate:all": "npm run generate && npm run generate:blog",
+    "generate:projects": "node scripts/generate-projects.js",
+    "generate:all": "npm run generate && npm run generate:blog && npm run generate:projects",
     "deploy": "cd .. && git add -A && git diff --cached --quiet && echo 'nothing to commit' || git commit -m 'build: auto-deploy [skip ci]' && git push",
     "dev": "chokidar '**/*.tsx' '**/*.jsx' 'tailwind.css' 'tailwind.config.js' 'scripts/inline.js' --ignore 'node_modules/**' --debounce 500 -c 'npm run build && npm run deploy'"
   },
