@@ -4220,16 +4220,6 @@ function KnowledgeGaps() {
                   {t.label}
                 </a>
               ))}
-              <span className="flex-shrink-0 text-gray-700 px-1">|</span>
-              <a href="/blog/" className="text-xs px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors flex-shrink-0 text-gray-400 hover:text-white hover:bg-gray-800">
-                Blog
-              </a>
-              <a href="/projects/" className="text-xs px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors flex-shrink-0 text-gray-400 hover:text-white hover:bg-gray-800">
-                Projects
-              </a>
-              <a href="/paths/" className="text-xs px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors flex-shrink-0 text-gray-400 hover:text-white hover:bg-gray-800">
-                Paths
-              </a>
             </div>
 
             {/* Mobile: current tab + hamburger */}
@@ -4264,18 +4254,6 @@ function KnowledgeGaps() {
                     </a>
                   );
                 })}
-                <a href="/blog/" className="w-full text-left px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors flex items-center gap-2.5 border-b border-gray-800/50">
-                  <BookOpen size={15} />
-                  Blog
-                </a>
-                <a href="/projects/" className="w-full text-left px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors flex items-center gap-2.5 border-b border-gray-800/50">
-                  <Wrench size={15} />
-                  Projects
-                </a>
-                <a href="/paths/" className="w-full text-left px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors flex items-center gap-2.5">
-                  <Layers size={15} />
-                  Paths
-                </a>
               </div>
             )}
           </nav>
