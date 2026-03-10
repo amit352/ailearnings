@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build:js": "cat src/icons.jsx app.jsx > ../dist/combined.jsx && babel ../dist/combined.jsx --presets @babel/preset-react -o ../dist/app.js && terser ../dist/app.js -o ../dist/app.js --compress --mangle && rm ../dist/combined.jsx",
+    "generate:content-data": "node scripts/generate-content-data.js",
+    "build:js": "node scripts/generate-content-data.js && cat src/icons.jsx src/content-data.js app.jsx > ../dist/combined.jsx && babel ../dist/combined.jsx --presets @babel/preset-react -o ../dist/app.js && terser ../dist/app.js -o ../dist/app.js --compress --mangle && rm ../dist/combined.jsx",
     "build:css": "tailwindcss -i tailwind.css -o ../dist/app.css --minify",
     "build:inline": "node scripts/inline.js",
     "build": "npm run build:js && npm run build:css && npm run build:inline",
@@ -8,7 +9,7 @@
     "generate:blog": "node scripts/generate-blog.js",
     "generate:projects": "node scripts/generate-projects.js",
     "generate:paths": "node scripts/generate-paths.js",
-    "generate:all": "npm run generate && npm run generate:blog && npm run generate:projects && npm run generate:paths",
+    "generate:all": "npm run build && npm run generate:blog && npm run generate:projects && npm run generate:paths && node scripts/generate-static.js",
     "deploy": "cd .. && git add -A && git diff --cached --quiet && echo 'nothing to commit' || git commit -m 'build: auto-deploy [skip ci]' && git push",
     "dev": "chokidar '**/*.tsx' '**/*.jsx' 'tailwind.css' 'tailwind.config.js' 'scripts/inline.js' --ignore 'node_modules/**' --debounce 500 -c 'npm run build && npm run deploy'"
   },
