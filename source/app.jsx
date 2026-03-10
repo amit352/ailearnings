@@ -320,27 +320,6 @@
             </button>
           </div>
 
-          {/* ── ROADMAP OVERVIEW IMAGE ── */}
-          <div className="px-4 pb-8 max-w-2xl mx-auto">
-            <img
-              src="/assets/ai-roadmap-overview-2026.png"
-              alt="AI Engineering Roadmap 2026 — 7 phases from AI Foundations to Ship Projects, with career paths, projects, and resources"
-              className="w-full rounded-2xl border border-white/8 shadow-2xl"
-              loading="lazy"
-            />
-            <div className="flex items-center justify-center gap-4 mt-3">
-              <a href="/assets/ai-roadmap-overview-2026.png" download
-                className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-300 transition-colors">
-                <ArrowRight size={11} className="rotate-90"/> Download PNG
-              </a>
-              <span className="text-gray-700">·</span>
-              <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://ailearnings.in" target="_blank" rel="noopener noreferrer"
-                className="text-xs text-gray-500 hover:text-gray-300 transition-colors">
-                Share on LinkedIn
-              </a>
-            </div>
-          </div>
-
           {/* ── ROADMAP SECTION ── */}
           <div id="roadmap-start" className="px-4 pb-8 max-w-3xl mx-auto">
 
