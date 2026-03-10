@@ -407,6 +407,23 @@
               <div className="flex-1 h-px bg-gray-800"/>
             </div>
 
+            {/* ── Quick tools strip ── */}
+            <div className="flex flex-wrap gap-2 mb-5">
+              {[
+                { slug: "prep-plan",      icon: Calendar,    color: "text-orange-400", label: "Prep Plan" },
+                { slug: "readiness",      icon: CheckCircle, color: "text-green-400",  label: "Readiness Check" },
+                { slug: "assessment",     icon: BarChart2,   color: "text-pink-400",   label: "Assessment" },
+                { slug: "prompt-eng",     icon: Zap,         color: "text-yellow-400", label: "Prompt Eng" },
+                { slug: "genai-guide",    icon: Cpu,         color: "text-purple-400", label: "GenAI Guide" },
+                { slug: "beyond-roadmap", icon: Compass,     color: "text-teal-400",   label: "Beyond Roadmap" },
+              ].map(({ slug, icon: Icon, color, label }) => (
+                <a key={slug} href={tabPath(slug)}
+                  className="inline-flex items-center gap-1.5 bg-gray-800/60 hover:bg-gray-700/60 border border-white/8 hover:border-white/15 text-gray-300 hover:text-white text-xs px-3 py-1.5 rounded-full transition-colors">
+                  <Icon size={11} className={color}/>{label}
+                </a>
+              ))}
+            </div>
+
             {!tipDismissed && (
               <div className="mb-6 bg-gray-800/60 border border-blue-500/20 rounded-xl px-4 py-3">
                 <div className="flex items-start justify-between gap-3">
@@ -422,7 +439,7 @@
                   {[
                     [Check, "Check off topics", "Click any topic in the Learn tab to track your progress. It's saved in your browser."],
                     [Layers, "Explore tabs per phase", "Each phase has Learn, Resources, and Project tabs — the project tells you what to build."],
-                    [BookOpen, "More sections above", "Use the top navigation to explore Alt Resources, Knowledge Gaps, and Prompt Engineering guides."],
+                    [BookOpen, "More tools below", "Use the tool links above to check readiness, run an assessment, or explore guides — all free."],
                   ].map(([Icon, title, desc]) => (
                     <div key={title} className="flex items-start gap-2">
                       <Icon size={12} className="text-gray-400 flex-shrink-0 mt-0.5"/>
@@ -4067,13 +4084,13 @@ function KnowledgeGaps() {
     // ─── MASTER APP ───
     const TABS = [
       { label: "Roadmap",         slug: "roadmap",               icon: BrainCircuit, Component: Roadmap },
-      { label: "Prep Plan",       slug: "prep-plan",             icon: Calendar,     Component: PrepPlan },
-      { label: "GenAI Guide",     slug: "genai-guide",           icon: Cpu,          Component: GenAIGuide },
-      { label: "Prompt Eng",      slug: "prompt-eng",            icon: Zap,          Component: PromptEngineering },
       { label: "Resources",       slug: "resources",             icon: BookOpen,     Component: AltResources },
-      { label: "Readiness",       slug: "readiness",             icon: CheckCircle,  Component: ReadinessChecker },
-      { label: "Beyond Roadmap",  slug: "beyond-roadmap",        icon: Compass,      Component: BeyondRoadmap },
-      { label: "Assessment",      slug: "assessment",            icon: BarChart2,    Component: KnowledgeAssessment },
+      { label: "Prep Plan",       slug: "prep-plan",             icon: Calendar,     Component: PrepPlan,             nav: false },
+      { label: "GenAI Guide",     slug: "genai-guide",           icon: Cpu,          Component: GenAIGuide,           nav: false },
+      { label: "Prompt Eng",      slug: "prompt-eng",            icon: Zap,          Component: PromptEngineering,    nav: false },
+      { label: "Readiness",       slug: "readiness",             icon: CheckCircle,  Component: ReadinessChecker,     nav: false },
+      { label: "Beyond Roadmap",  slug: "beyond-roadmap",        icon: Compass,      Component: BeyondRoadmap,        nav: false },
+      { label: "Assessment",      slug: "assessment",            icon: BarChart2,    Component: KnowledgeAssessment,  nav: false },
       { label: "AI Roadmap",      slug: "ai-roadmap",               icon: BrainCircuit, Component: AiRoadmapPage,              nav: false },
       { label: "LLM Roadmap",     slug: "llm-roadmap",              icon: Cpu,          Component: LlmRoadmapPage,             nav: false },
       { label: "RAG Tutorial",    slug: "rag-tutorial",             icon: BookOpen,     Component: RagTutorialPage,            nav: false },
@@ -4110,14 +4127,15 @@ function KnowledgeGaps() {
               </div>
               <div className="flex flex-col items-start md:items-end gap-3">
                 <div className="flex flex-wrap gap-3">
-                  {["Roadmap","Prep Plan","Resources","Readiness","Blog"].map((label) => {
+                  {["Roadmap","Resources","Blog","Projects","Paths"].map((label) => {
                     const tab = TABS.find(t => t.label === label);
-                    return tab ? (
-                      <a key={label} href={tabPath(tab.slug)}
+                    const href = tab ? tabPath(tab.slug) : `/${label.toLowerCase()}/`;
+                    return (
+                      <a key={label} href={href}
                         className="text-xs text-gray-400 hover:text-white transition-colors">
                         {label}
                       </a>
-                    ) : null;
+                    );
                   })}
                 </div>
                 <p className="text-gray-400 text-xs">Last updated: March 2026 · © 2026 ailearnings.in</p>
