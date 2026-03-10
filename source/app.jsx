@@ -312,7 +312,7 @@
                 <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent font-semibold">production-ready AI</span>
               </p>
               <p className="text-gray-400 text-sm max-w-lg mx-auto mb-6">
-                Curated free resources · hands-on projects · milestones at every phase
+                Roadmap · guides · projects · career paths — all free for developers
               </p>
               <div className="flex flex-wrap justify-center gap-2">
                 {[[Layers,"blue","7","Phases"],[Clock,"purple","~14","months"],[BookOpen,"green","50+","Free resources"],[Wrench,"orange","7","Projects"]].map(([Icon,color,val,label]) => (
@@ -340,34 +340,28 @@
                 ))}
               </div>
 
-              {/* Section links — pills with hover tooltip */}
+              {/* Platform cards — surfaced early */}
               <div>
-                <p className="text-xs text-gray-400 uppercase tracking-wider mb-3 text-center">Also inside this tool</p>
-                <div className="flex flex-wrap justify-center gap-2">
+                <p className="text-xs text-gray-400 uppercase tracking-wider mb-3 text-center">Everything on this platform</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
-                    { slug: "prep-plan",      icon: Calendar,    color: "text-orange-400", label: "Prep Plan",       when: "Already know some AI basics?", why: "A focused 6-week sprint to go from zero to building your first AI app — faster than the full roadmap." },
-                    { slug: "prompt-eng",     icon: Zap,         color: "text-yellow-400", label: "Prompt Eng",      when: "Starting Phase 3?",            why: "Master techniques, templates, and a 6-week plan to become genuinely good at prompting — the skill every AI app depends on." },
-                    { slug: "genai-guide",    icon: Cpu,         color: "text-purple-400", label: "GenAI Guide",     when: "Curious how AI actually works?", why: "A deep dive into text, code, image, and audio AI — how each domain works under the hood, with tools to explore." },
-                    { slug: "readiness",      icon: CheckCircle, color: "text-green-400",  label: "Readiness Check", when: "About to move phases?",        why: "Before moving on, check the green flags and move-on rules to make sure you're actually ready — not just rushed." },
-                    { slug: "resources",      icon: BookOpen,    color: "text-blue-400",   label: "Books & Courses", when: "Want to go deeper?",            why: "The best books and paid/free courses mapped to each phase — for when the free resources aren't enough." },
-                    { slug: "assessment",     icon: BarChart2,   color: "text-pink-400",   label: "Assessment",      when: "Planning your journey?",       why: "See exactly where you'll stand as an AI engineer after completing the roadmap — what roles you'll be ready for." },
-                    { slug: "beyond-roadmap", icon: Compass,     color: "text-teal-400",   label: "Beyond Roadmap",  when: "Finished the roadmap?",        why: "What to learn next, what gaps remain, and what projects will take you from competent to expert." },
-                  ].map(({ slug, icon: Icon, color, label, when, why }) => (
-                    <div key={slug} className="relative group">
-                      <a href={tabPath(slug)}
-                        className="inline-flex items-center gap-1.5 bg-gray-800/60 hover:bg-gray-700/60 border border-white/8 hover:border-white/15 text-gray-300 hover:text-white text-xs px-3 py-1.5 rounded-full transition-colors">
-                        <Icon size={11} className={color}/>{label}
-                      </a>
-                      {/* Tooltip */}
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-50">
-                        <div className="bg-gray-900 border border-white/10 rounded-xl px-3 py-2.5 shadow-xl">
-                          <p className="text-xs font-semibold text-white mb-0.5">{label}</p>
-                          <p className="text-xs text-blue-400 mb-1">{when}</p>
-                          <p className="text-xs text-gray-400 leading-relaxed">{why}</p>
-                        </div>
-                        <div className="w-2 h-2 bg-gray-900 border-r border-b border-white/10 rotate-45 mx-auto -mt-1"/>
+                    { href: "/blog/",     icon: BookOpen, color: "text-blue-400",   border: "hover:border-blue-500/40",   bg: "hover:bg-blue-500/5",   title: "Developer Guides", meta: "28 guides",   desc: "Deep-dives on ML, LLMs, RAG, prompt engineering, and AI agents." },
+                    { href: "/projects/", icon: Wrench,   color: "text-green-400",  border: "hover:border-green-500/40",  bg: "hover:bg-green-500/5",  title: "AI Projects",      meta: "20 projects", desc: "Hands-on builds from beginner chatbots to multi-agent systems." },
+                    { href: "/paths/",    icon: Layers,   color: "text-purple-400", border: "hover:border-purple-500/40", bg: "hover:bg-purple-500/5", title: "Career Paths",     meta: "5 paths",     desc: "Role-based paths for AI Engineer, ML Engineer, LLM Engineer." },
+                  ].map(({ href, icon: Icon, color, border, bg, title, meta, desc }) => (
+                    <a key={href} href={href}
+                      className={`block rounded-xl border border-white/8 ${border} ${bg} px-4 py-4 transition-all`}
+                      style={{textDecoration:"none"}}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Icon size={14} className={color}/>
+                        <span className={`text-xs font-semibold ${color}`}>{meta}</span>
                       </div>
-                    </div>
+                      <p className="text-sm font-bold text-white mb-1">{title}</p>
+                      <p className="text-xs text-gray-400 leading-relaxed">{desc}</p>
+                      <div className="mt-2 flex items-center gap-1 text-xs text-gray-500">
+                        <span>Explore</span><ArrowRight size={10}/>
+                      </div>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -794,63 +788,6 @@
 
             <p className="text-center text-gray-400 text-xs mt-6">Click each phase to expand · Use tabs to navigate sections</p>
 
-            {/* ── Explore the Platform ── */}
-            <div className="mt-10 mb-2">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="flex-1 h-px bg-gray-800"/>
-                <span className="text-xs text-gray-400 uppercase tracking-widest font-medium">Explore the Platform</span>
-                <div className="flex-1 h-px bg-gray-800"/>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {[
-                  {
-                    href: "/blog/",
-                    icon: BookOpen,
-                    color: "text-blue-400",
-                    border: "hover:border-blue-500/40",
-                    bg: "hover:bg-blue-500/5",
-                    title: "Developer Guides",
-                    desc: "Deep-dive articles on ML, LLMs, RAG, prompt engineering, and AI agents.",
-                    meta: "28 guides",
-                  },
-                  {
-                    href: "/projects/",
-                    icon: Wrench,
-                    color: "text-green-400",
-                    border: "hover:border-green-500/40",
-                    bg: "hover:bg-green-500/5",
-                    title: "AI Projects",
-                    desc: "Hands-on project guides from beginner chatbots to advanced multi-agent systems.",
-                    meta: "20 projects",
-                  },
-                  {
-                    href: "/paths/",
-                    icon: Layers,
-                    color: "text-purple-400",
-                    border: "hover:border-purple-500/40",
-                    bg: "hover:bg-purple-500/5",
-                    title: "Career Paths",
-                    desc: "Role-based learning paths for AI Engineer, ML Engineer, LLM Engineer, and more.",
-                    meta: "5 paths",
-                  },
-                ].map(({ href, icon: Icon, color, border, bg, title, desc, meta }) => (
-                  <a key={href} href={href}
-                    className={`block rounded-xl border border-white/8 ${border} ${bg} p-5 transition-all`}
-                    style={{textDecoration:"none"}}>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Icon size={16} className={color}/>
-                      <span className={`text-xs font-semibold ${color}`}>{meta}</span>
-                    </div>
-                    <h3 className="text-sm font-bold text-white mb-1.5">{title}</h3>
-                    <p className="text-xs text-gray-400 leading-relaxed">{desc}</p>
-                    <div className="mt-3 flex items-center gap-1 text-xs text-gray-500">
-                      <span>Explore</span>
-                      <ArrowRight size={11}/>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
 
           </div>
         </div>
