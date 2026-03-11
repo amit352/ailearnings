@@ -158,13 +158,13 @@ const PAGES = [
     ],
   },
   {
-    slug:        'prompt-eng',
-    outDir:      'prompt-eng',
-    url:         'http://localhost:3131/prompt-eng/',
+    slug:        'prompt-engineering',
+    outDir:      'prompt-engineering',
+    url:         'http://localhost:3131/prompt-engineering/',
     title:       'Prompt Engineering Guide 2026 – 15 Techniques & Templates',
     description: 'Master prompt engineering with 15 techniques: zero-shot, few-shot, chain-of-thought, tree-of-thoughts, and more. Copy-paste templates for coding, writing, and research — a key skill on every AI engineer roadmap.',
-    canonical:   'https://ailearnings.in/prompt-eng/',
-    ogUrl:       'https://ailearnings.in/prompt-eng/',
+    canonical:   'https://ailearnings.in/prompt-engineering/',
+    ogUrl:       'https://ailearnings.in/prompt-engineering/',
     schema: [
       {
         '@context': 'https://schema.org',
@@ -194,7 +194,7 @@ const PAGES = [
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ailearnings.in/' },
-          { '@type': 'ListItem', position: 2, name: 'Prompt Engineering Guide', item: 'https://ailearnings.in/prompt-eng/' },
+          { '@type': 'ListItem', position: 2, name: 'Prompt Engineering Guide', item: 'https://ailearnings.in/prompt-engineering/' },
         ],
       },
       {
@@ -382,13 +382,13 @@ const PAGES = [
     ],
   },
   {
-    slug:        'ai-roadmap',
-    outDir:      'ai-roadmap',
-    url:         'http://localhost:3131/ai-roadmap/',
+    slug:        'ai-roadmap-for-developers',
+    outDir:      'ai-roadmap-for-developers',
+    url:         'http://localhost:3131/ai-roadmap-for-developers/',
     title:       'AI Roadmap 2026: Complete Guide for Developers',
     description: 'Follow the complete AI roadmap for developers in 2026. Our step-by-step guide covers 7 phases — from AI foundations to LLMs, RAG, Prompt Engineering, and Agentic AI — with free resources and project milestones.',
-    canonical:   'https://ailearnings.in/ai-roadmap/',
-    ogUrl:       'https://ailearnings.in/ai-roadmap/',
+    canonical:   'https://ailearnings.in/ai-roadmap-for-developers/',
+    ogUrl:       'https://ailearnings.in/ai-roadmap-for-developers/',
     schema: [
       {
         '@context': 'https://schema.org',
@@ -411,7 +411,7 @@ const PAGES = [
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ailearnings.in/' },
-          { '@type': 'ListItem', position: 2, name: 'AI Roadmap', item: 'https://ailearnings.in/ai-roadmap/' },
+          { '@type': 'ListItem', position: 2, name: 'AI Roadmap', item: 'https://ailearnings.in/ai-roadmap-for-developers/' },
         ],
       },
       {
@@ -688,6 +688,217 @@ const PAGES = [
     ogUrl:       'https://ailearnings.in/paths/',
     schema: [
       { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'AI Engineering Learning Paths', url: 'https://ailearnings.in/paths/', description: 'Structured learning paths for AI engineers, ML engineers, and LLM engineers.' },
+    ],
+  },
+  {
+    slug:        'how-long-to-learn-ai',
+    outDir:      'how-long-to-learn-ai',
+    url:         'http://localhost:3131/how-long-to-learn-ai/',
+    title:       'How Long Does It Take to Learn AI? (2026 Honest Guide)',
+    description: 'Honest answer: 3–12 months depending on your background. Python developers can be job-ready in 3–4 months. Non-programmers need 8–12 months. See the month-by-month breakdown and tips to learn faster.',
+    canonical:   'https://ailearnings.in/how-long-to-learn-ai/',
+    ogUrl:       'https://ailearnings.in/how-long-to-learn-ai/',
+    schema: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: 'How to Learn AI: Month-by-Month Breakdown',
+        description: 'A 4-phase roadmap to learn AI from scratch — from Python basics to building real AI projects.',
+        totalTime: 'P6M',
+        step: [
+          { '@type': 'HowToStep', position: 1, name: 'Python + Math basics (Weeks 1–4)', text: 'Learn Python variables, functions, NumPy, Pandas, and linear algebra intuition.' },
+          { '@type': 'HowToStep', position: 2, name: 'ML basics (Weeks 5–10)', text: 'Scikit-learn, supervised learning, model evaluation, and classical algorithms.' },
+          { '@type': 'HowToStep', position: 3, name: 'Deep learning & LLMs (Weeks 11–20)', text: 'PyTorch, transformers, HuggingFace, and calling LLM APIs.' },
+          { '@type': 'HowToStep', position: 4, name: 'Build projects (Month 5+)', text: 'RAG chatbot, AI agent, fine-tuned model for your portfolio.' },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: 'Time to Learn AI by Background',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Python developer — 3–4 months to job-ready' },
+          { '@type': 'ListItem', position: 2, name: 'Non-programmer — 8–12 months to job-ready' },
+          { '@type': 'ListItem', position: 3, name: 'Data scientist — 2–3 months to job-ready' },
+          { '@type': 'ListItem', position: 4, name: 'CS graduate — 2–3 months to job-ready' },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ailearnings.in/' },
+          { '@type': 'ListItem', position: 2, name: 'How Long to Learn AI', item: 'https://ailearnings.in/how-long-to-learn-ai/' },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          { '@type': 'Question', name: 'Can I learn AI in 3 months?', acceptedAnswer: { '@type': 'Answer', text: 'Yes — if you already know Python and can study 2+ hours daily. In 3 months you can build real LLM-powered apps, complete a RAG project, and understand the core concepts. Without a programming background, 3 months is enough to grasp the fundamentals but not yet job-ready.' } },
+          { '@type': 'Question', name: 'Do I need a degree to learn AI?', acceptedAnswer: { '@type': 'Answer', text: 'No. Many AI engineers are self-taught developers. What matters is your portfolio — specifically, 2–3 working AI projects on GitHub. Hiring managers care about what you can build, not where you studied.' } },
+          { '@type': 'Question', name: 'How many hours per day should I study AI?', acceptedAnswer: { '@type': 'Answer', text: '1–2 hours daily (consistent) beats 8-hour weekend sessions. At 1 hour/day you can complete the core AI roadmap in 6–8 months. At 2 hours/day, 3–4 months for the essentials. The key is building something every week, not just watching videos.' } },
+          { '@type': 'Question', name: 'Is AI hard to learn for beginners?', acceptedAnswer: { '@type': 'Answer', text: 'The concepts are learnable but the breadth can be overwhelming. The best approach: follow a structured roadmap, learn by building projects, and focus on LLM APIs first (they give you quick wins). The math gets easier once you understand what problem it is solving.' } },
+          { '@type': 'Question', name: 'What should I learn first for AI?', acceptedAnswer: { '@type': 'Answer', text: 'Start with Python basics (2–3 weeks), then move to calling LLM APIs (OpenAI or Anthropic). You can build your first AI app in under a month without any math. Follow our AI roadmap for the full sequence.' } },
+        ],
+      },
+    ],
+  },
+  {
+    slug:        'do-you-need-math-for-ai',
+    outDir:      'do-you-need-math-for-ai',
+    url:         'http://localhost:3131/do-you-need-math-for-ai/',
+    title:       'Do You Need Math for AI? What Actually Matters in 2026',
+    description: 'Short answer: less than you think to get started. See which math topics matter for AI, when you can skip them, and what you can build without deep math knowledge.',
+    canonical:   'https://ailearnings.in/do-you-need-math-for-ai/',
+    ogUrl:       'https://ailearnings.in/do-you-need-math-for-ai/',
+    schema: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ailearnings.in/' },
+          { '@type': 'ListItem', position: 2, name: 'Do You Need Math for AI', item: 'https://ailearnings.in/do-you-need-math-for-ai/' },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          { '@type': 'Question', name: 'Can I learn AI without knowing calculus?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Calculus matters if you are training neural networks from scratch — but most AI engineers use pre-trained models and never backpropagate manually. Frameworks like PyTorch handle the calculus automatically. Focus on understanding what gradients do conceptually, not computing them by hand.' } },
+          { '@type': 'Question', name: 'Do I need linear algebra for AI?', acceptedAnswer: { '@type': 'Answer', text: 'Basic linear algebra helps — understanding that matrix multiplication is how layers transform data, and that embeddings are vectors in high-dimensional space. But you do not need to compute eigenvalues by hand. Khan Academy\'s linear algebra course (free) gives you enough intuition in 10–15 hours.' } },
+          { '@type': 'Question', name: 'Is statistics required for machine learning?', acceptedAnswer: { '@type': 'Answer', text: 'Practical statistics yes — understanding mean/variance, distributions, confidence intervals, and correlation will help you evaluate models. Advanced statistics only matters if you go into research or data science specifically.' } },
+          { '@type': 'Question', name: 'How much math do AI engineers use day-to-day?', acceptedAnswer: { '@type': 'Answer', text: 'In practice, AI engineers spend more time on Python code, API integration, prompt design, and evaluation pipelines than on math. The math becomes relevant when debugging why a model performs badly or when reading research papers. Most day-to-day AI engineering is software engineering with ML libraries.' } },
+        ],
+      },
+    ],
+  },
+  {
+    slug:        'best-language-for-ai',
+    outDir:      'best-language-for-ai',
+    url:         'http://localhost:3131/best-language-for-ai/',
+    title:       'Best Programming Language for AI in 2026 (Python vs Others)',
+    description: 'Python dominates AI in 2026 — by a landslide. Learn why Python wins, when JavaScript makes sense, and exactly which Python libraries you need for AI development.',
+    canonical:   'https://ailearnings.in/best-language-for-ai/',
+    ogUrl:       'https://ailearnings.in/best-language-for-ai/',
+    schema: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: 'Best Programming Languages for AI in 2026',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Python — #1 choice. Best AI ecosystem: PyTorch, HuggingFace, LangChain.' },
+          { '@type': 'ListItem', position: 2, name: 'JavaScript — Good for web devs. Vercel AI SDK, LangChain.js.' },
+          { '@type': 'ListItem', position: 3, name: 'Rust — Niche. Performance-critical inference.' },
+          { '@type': 'ListItem', position: 4, name: 'Julia — Academia and math/research.' },
+          { '@type': 'ListItem', position: 5, name: 'R — Declining. Statistical data science.' },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ailearnings.in/' },
+          { '@type': 'ListItem', position: 2, name: 'Best Language for AI', item: 'https://ailearnings.in/best-language-for-ai/' },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          { '@type': 'Question', name: 'Should I learn Python or JavaScript for AI?', acceptedAnswer: { '@type': 'Answer', text: 'Python if you are starting from scratch — the entire AI ecosystem (PyTorch, HuggingFace, LangChain, scikit-learn) is Python-first. JavaScript if you are already a strong JS developer who wants to build AI-powered web apps — the Vercel AI SDK and LangChain.js let you build quickly without switching languages.' } },
+          { '@type': 'Question', name: 'Is Python required for machine learning?', acceptedAnswer: { '@type': 'Answer', text: 'In practice, yes. All major ML frameworks — TensorFlow, PyTorch, scikit-learn, HuggingFace Transformers — have their primary interfaces in Python. While some have bindings for other languages, documentation, tutorials, and community support assume Python.' } },
+          { '@type': 'Question', name: 'Can I do AI without Python?', acceptedAnswer: { '@type': 'Answer', text: 'You can call LLM APIs from any language with an HTTP client. But for machine learning, data preprocessing, fine-tuning, and working with model files, you will hit walls quickly without Python. Learning basic Python takes 2–4 weeks and unlocks the entire AI ecosystem.' } },
+          { '@type': 'Question', name: 'What Python libraries do I need for AI?', acceptedAnswer: { '@type': 'Answer', text: 'Core libraries: NumPy and Pandas (data), scikit-learn (classical ML), PyTorch (deep learning), transformers (HuggingFace models), langchain (RAG & agents), chromadb (vector store), and fastapi or gradio (building AI apps). Start with pandas, scikit-learn, and the OpenAI SDK for your first projects.' } },
+        ],
+      },
+    ],
+  },
+  {
+    slug:        'openai-api-tutorial',
+    outDir:      'openai-api-tutorial',
+    url:         'http://localhost:3131/openai-api-tutorial/',
+    title:       'OpenAI API Tutorial: Build Your First AI App (2026)',
+    description: 'Step-by-step OpenAI API tutorial for Python developers. Get your API key, make your first chat completion, understand models and tokens, and build a real AI app with cost management tips.',
+    canonical:   'https://ailearnings.in/openai-api-tutorial/',
+    ogUrl:       'https://ailearnings.in/openai-api-tutorial/',
+    schema: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ailearnings.in/' },
+          { '@type': 'ListItem', position: 2, name: 'OpenAI API Tutorial', item: 'https://ailearnings.in/openai-api-tutorial/' },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          { '@type': 'Question', name: 'How do I get an OpenAI API key?', acceptedAnswer: { '@type': 'Answer', text: 'Sign up at platform.openai.com, go to the API Keys section, and click Create new secret key. You will need to add a payment method and purchase at least $5 of credits to start. Keep your key secret — never commit it to Git or expose it in client-side code.' } },
+          { '@type': 'Question', name: 'Is the OpenAI API free?', acceptedAnswer: { '@type': 'Answer', text: 'There is no permanent free tier, but new accounts get $5 in free credits to start. After that, you pay per token. GPT-4o-mini is very affordable (around $0.15 per million input tokens). For development, $5–10 goes a long way if you use the mini models and cache responses.' } },
+          { '@type': 'Question', name: 'What\'s the difference between GPT-4o and GPT-4o-mini?', acceptedAnswer: { '@type': 'Answer', text: 'GPT-4o is the flagship model — best quality, higher cost. GPT-4o-mini is much cheaper (about 15x) and suitable for most production use cases: summarization, classification, chat, code generation. Use GPT-4o for complex reasoning tasks, GPT-4o-mini for everything else.' } },
+          { '@type': 'Question', name: 'How do I reduce OpenAI API costs?', acceptedAnswer: { '@type': 'Answer', text: 'Use GPT-4o-mini instead of GPT-4o for most tasks. Set max_tokens limits to prevent runaway responses. Cache responses for repeated queries using Redis or a simple dict. Use system prompts efficiently. Batch requests where possible.' } },
+        ],
+      },
+    ],
+  },
+  {
+    slug:        'ollama-local-llm-guide',
+    outDir:      'ollama-local-llm-guide',
+    url:         'http://localhost:3131/ollama-local-llm-guide/',
+    title:       'Ollama Guide: Run LLMs Locally in 2026 (Setup + Best Models)',
+    description: 'Run Llama, Mistral, Gemma, and Qwen locally for free with Ollama. Step-by-step setup for Mac/Linux/Windows, best models by hardware, Python integration, and Open WebUI browser interface.',
+    canonical:   'https://ailearnings.in/ollama-local-llm-guide/',
+    ogUrl:       'https://ailearnings.in/ollama-local-llm-guide/',
+    schema: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ailearnings.in/' },
+          { '@type': 'ListItem', position: 2, name: 'Ollama Local LLM Guide', item: 'https://ailearnings.in/ollama-local-llm-guide/' },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          { '@type': 'Question', name: 'What hardware do I need for Ollama?', acceptedAnswer: { '@type': 'Answer', text: 'Any modern Mac, Windows PC, or Linux machine with at least 8GB RAM can run 7B models. 16GB RAM is comfortable for 13B models. An Apple Silicon Mac (M1/M2/M3) with unified memory is the best consumer hardware for local LLMs — the GPU and CPU share the same memory pool, making 7B models fast without a discrete GPU.' } },
+          { '@type': 'Question', name: 'Is Ollama free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, completely free and open-source. There are no API costs, no tokens to buy, and no rate limits. The only cost is electricity and the initial model download (2–8GB per model). Models are stored locally and can be used offline.' } },
+          { '@type': 'Question', name: 'Can I use Ollama with LangChain?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. LangChain has first-class Ollama support via the ChatOllama and OllamaEmbeddings classes. This lets you build RAG pipelines and agents that run entirely locally — no API keys or costs required.' } },
+          { '@type': 'Question', name: 'What\'s the best model to run with Ollama?', acceptedAnswer: { '@type': 'Answer', text: 'For general use: llama3.1:8b (best quality/speed balance). For coding: qwen2.5-coder or mistral:7b. For low-end hardware (8GB RAM): llama3.2:3b. For the best quality with 16GB+ RAM: llama3.1:13b or gemma2:9b.' } },
+        ],
+      },
+    ],
+  },
+  {
+    slug:        'langchain-tutorial',
+    outDir:      'langchain-tutorial',
+    url:         'http://localhost:3131/langchain-tutorial/',
+    title:       'LangChain Tutorial: Build LLM Apps in Python (2026)',
+    description: 'Learn LangChain from scratch. Build RAG pipelines, AI agents, and LLM-powered apps in Python. Covers core concepts, installation, a complete RAG example, and LangChain vs alternatives.',
+    canonical:   'https://ailearnings.in/langchain-tutorial/',
+    ogUrl:       'https://ailearnings.in/langchain-tutorial/',
+    schema: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ailearnings.in/' },
+          { '@type': 'ListItem', position: 2, name: 'LangChain Tutorial', item: 'https://ailearnings.in/langchain-tutorial/' },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          { '@type': 'Question', name: 'Is LangChain still worth learning in 2026?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. LangChain remains the most widely-used framework for building LLM applications. While alternatives like LlamaIndex (for RAG) and raw API calls (for simplicity) have their place, LangChain has the largest ecosystem, most integrations, and best community support. Most AI engineering job descriptions mention it.' } },
+          { '@type': 'Question', name: 'Do I need to know LangChain for AI jobs?', acceptedAnswer: { '@type': 'Answer', text: 'Knowing LangChain is a strong signal to employers. Most AI engineering teams use LangChain or LangGraph (its agent framework). Understanding the underlying concepts (RAG, chains, agents) matters more than any specific library — if you understand the patterns, switching frameworks is straightforward.' } },
+          { '@type': 'Question', name: 'LangChain vs LlamaIndex — which should I use?', acceptedAnswer: { '@type': 'Answer', text: 'LangChain for agent-heavy apps and broad LLM integrations. LlamaIndex for complex document ingestion and multi-document RAG — it has more sophisticated indexing strategies. For beginners, start with LangChain; it has better documentation and a larger community.' } },
+          { '@type': 'Question', name: 'Can I use LangChain with local models?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. LangChain has first-class Ollama support via ChatOllama and OllamaEmbeddings. This lets you build fully local RAG pipelines with no API costs. See our Ollama guide for setup instructions.' } },
+        ],
+      },
     ],
   },
 ];

@@ -828,7 +828,7 @@
                   { slug: "prep-plan",      icon: Calendar,    color: "text-orange-400", label: "Prep Plan" },
                   { slug: "readiness",      icon: CheckCircle, color: "text-green-400",  label: "Readiness Check" },
                   { slug: "assessment",     icon: BarChart2,   color: "text-pink-400",   label: "Assessment" },
-                  { slug: "prompt-eng",     icon: Zap,         color: "text-yellow-400", label: "Prompt Eng" },
+                  { slug: "prompt-engineering", icon: Zap,      color: "text-yellow-400", label: "Prompt Eng" },
                   { slug: "genai-guide",    icon: Cpu,         color: "text-purple-400", label: "GenAI Guide" },
                   { slug: "beyond-roadmap", icon: Compass,     color: "text-teal-400",   label: "Beyond Roadmap" },
                 ].map(({ slug, icon: Icon, color, label }) => (
@@ -3951,7 +3951,7 @@ function KnowledgeGaps() {
             <p className="text-gray-400 text-sm mb-4">Our full 7-phase AI roadmap includes the complete LLM learning path with curated resources, project milestones, and an interactive progress tracker.</p>
             <div className="flex flex-wrap gap-3">
               <a href="/" className="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">View Full Roadmap →</a>
-              <a href="/prompt-eng/" className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">Prompt Engineering Guide →</a>
+              <a href="/prompt-engineering/" className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">Prompt Engineering Guide →</a>
             </div>
           </div>
         </div>
@@ -4063,7 +4063,7 @@ function KnowledgeGaps() {
                 </ul>
               </div>
               <div className="bg-blue-900/20 border border-blue-500/20 rounded-lg p-4">
-                <p className="text-blue-400 font-semibold text-sm mb-2"><a href="/ai-roadmap/" className="hover:underline">AI Engineer Roadmap →</a></p>
+                <p className="text-blue-400 font-semibold text-sm mb-2"><a href="/ai-roadmap-for-developers/" className="hover:underline">AI Engineer Roadmap →</a></p>
                 <ul className="space-y-1 text-xs text-gray-300">
                   <li>▸ Starts from LLM APIs (faster ramp-up)</li>
                   <li>▸ Prompt engineering, RAG, agents</li>
@@ -4122,7 +4122,7 @@ function KnowledgeGaps() {
             <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-4">Related</h2>
             <div className="grid sm:grid-cols-2 gap-3">
               {[
-                ["/ai-roadmap/", "AI Engineer Roadmap", "Faster path focused on LLM apps, RAG, and agents"],
+                ["/ai-roadmap-for-developers/", "AI Engineer Roadmap", "Faster path focused on LLM apps, RAG, and agents"],
                 ["/llm-roadmap/", "LLM Roadmap", "Deep dive into large language models specifically"],
                 ["/resources/", "Learning Resources", "Best free books and courses by phase"],
                 ["/ai-projects/", "AI Project Ideas", "10 projects to build your ML/AI portfolio"],
@@ -4500,17 +4500,849 @@ function KnowledgeGaps() {
       );
     }
 
+    // ═══════════════════════════════════════════════════════════
+    // HOW LONG TO LEARN AI PAGE
+    // ═══════════════════════════════════════════════════════════
+    function HowLongToLearnAIPage() {
+      useSeo(
+        "How Long Does It Take to Learn AI? (2026 Honest Guide)",
+        "Honest answer: 3–12 months depending on your background. See month-by-month breakdown, timeline by background, and tips to learn AI faster."
+      );
+      const timelines = [
+        { background: "Python developer",  time: "3–4 months" },
+        { background: "Non-programmer",    time: "8–12 months" },
+        { background: "Data scientist",    time: "2–3 months" },
+        { background: "CS graduate",       time: "2–3 months" },
+      ];
+      const phases = [
+        { n:1, label:"Python + Math basics",      duration:"Weeks 1–4",   desc:"Variables, functions, NumPy, Pandas, linear algebra intuition." },
+        { n:2, label:"ML basics",                 duration:"Weeks 5–10",  desc:"Scikit-learn, supervised learning, model evaluation, classical algorithms." },
+        { n:3, label:"Deep learning & LLMs",      duration:"Weeks 11–20", desc:"PyTorch, transformers, HuggingFace, calling LLM APIs." },
+        { n:4, label:"Build projects",            duration:"Month 5+",    desc:"RAG chatbot, AI agent, fine-tuned model for your portfolio." },
+      ];
+      const faqs = [
+        ["Can I learn AI in 3 months?", "Yes — if you already know Python and can study 2+ hours daily. In 3 months you can build real LLM-powered apps, complete a RAG project, and understand the core concepts. Without a programming background, 3 months is enough to grasp the fundamentals but not yet job-ready."],
+        ["Do I need a degree to learn AI?", "No. Many AI engineers are self-taught developers. What matters is your portfolio — specifically, 2–3 working AI projects on GitHub. Hiring managers care about what you can build, not where you studied."],
+        ["How many hours per day should I study AI?", "1–2 hours daily (consistent) beats 8-hour weekend sessions. At 1 hour/day you can complete the core AI roadmap in 6–8 months. At 2 hours/day, 3–4 months for the essentials. The key is building something every week, not just watching videos."],
+        ["Is AI hard to learn for beginners?", "The concepts are learnable but the breadth can be overwhelming. The best approach: follow a structured roadmap, learn by building projects, and focus on LLM APIs first (they give you quick wins). The math gets easier once you understand what problem it's solving."],
+        ["What should I learn first for AI?", "Start with Python basics (2–3 weeks), then move to calling LLM APIs (OpenAI or Anthropic). You can build your first AI app in under a month without any math. Follow our AI roadmap for the full sequence."],
+      ];
+      return (
+        <div className="max-w-3xl mx-auto px-4 py-10 text-gray-100">
+          <div className="mb-10">
+            <span className="inline-block bg-green-600/20 text-green-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">2026 Honest Guide</span>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">How Long Does It Take to Learn AI?</h1>
+            <p className="text-gray-400 text-lg leading-relaxed mb-6">Short answer: <strong className="text-white">3–12 months</strong>, depending on your background. Python developers can be building real AI apps in 3–4 months. Non-programmers need 8–12 months to get job-ready. Here's the honest breakdown.</p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/how-to-learn-ai/" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-[0_0_18px_rgba(59,130,246,0.3)]">How to Learn AI →</a>
+              <a href="/paths/" className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-200 text-sm font-medium px-5 py-2.5 rounded-xl border border-white/8 transition-all">Learning Paths →</a>
+            </div>
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-white mb-4">Time to Job-Ready by Background</h2>
+            <div className="overflow-x-auto rounded-xl border border-white/8">
+              <table className="w-full text-sm">
+                <thead><tr className="border-b border-white/8 bg-gray-800/60"><th className="text-left px-4 py-3 text-gray-300 font-semibold">Your Background</th><th className="text-left px-4 py-3 text-gray-300 font-semibold">Time to Job-Ready</th></tr></thead>
+                <tbody>
+                  {timelines.map(({ background, time }) => (
+                    <tr key={background} className="border-b border-white/5 hover:bg-gray-800/30 transition-colors">
+                      <td className="px-4 py-3 text-gray-200">{background}</td>
+                      <td className="px-4 py-3 text-green-400 font-semibold">{time}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-4">
+            <h2 className="text-xl font-bold text-white">What Affects Your Timeline?</h2>
+            {[
+              ["Prior coding experience", "The biggest factor. Python developers skip 2–3 months of prerequisites. If you can already write loops and functions, you're ready to start calling LLM APIs immediately."],
+              ["Math comfort", "High school algebra is enough for 80% of practical AI work. Linear algebra helps for understanding neural networks but you can build RAG systems and agents without it."],
+              ["Hours per week", "4 hours/week → 12 months. 10 hours/week → 5 months. 20 hours/week → 3 months. Consistency matters more than marathon sessions."],
+              ["Learning style", "Project-based learners progress faster. Building a real app every 2–3 weeks keeps skills fresh and builds portfolio simultaneously."],
+            ].map(([factor, detail]) => (
+              <div key={factor} className="bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                <p className="text-white font-semibold text-sm mb-1">{factor}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{detail}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-white mb-2">Month-by-Month Breakdown</h2>
+            <p className="text-gray-400 text-sm mb-5">Estimated at 8–10 hours per week. Adjust based on your background.</p>
+            <div className="space-y-3">
+              {phases.map(({ n, label, duration, desc }) => (
+                <div key={n} className="flex items-start gap-4 bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                  <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">{n}</div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <span className="text-white font-semibold text-sm">{label}</span>
+                      <span className="text-xs text-gray-500 bg-gray-900 px-2 py-0.5 rounded-full">{duration}</span>
+                    </div>
+                    <p className="text-gray-400 text-sm">{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">How to Learn Faster</h2>
+            {[
+              ["Build one project per phase", "Projects force you to debug real problems. A working RAG chatbot teaches you more than 10 hours of video."],
+              ["Use real datasets", "Kaggle, HuggingFace Datasets, and your own documents make learning concrete. Abstract examples don't stick."],
+              ["Build publicly", "Post your projects on GitHub with READMEs. Explaining your code to others deepens understanding and builds your portfolio simultaneously."],
+            ].map(([tip, detail]) => (
+              <div key={tip} className="flex items-start gap-3 bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                <span className="text-green-400 text-lg flex-shrink-0">✓</span>
+                <div>
+                  <p className="text-white font-semibold text-sm mb-0.5">{tip}</p>
+                  <p className="text-gray-400 text-sm leading-relaxed">{detail}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">Frequently Asked Questions</h2>
+            {faqs.map(([q, a]) => (
+              <div key={q} className="bg-gray-800/40 rounded-xl p-5 border border-white/8">
+                <p className="text-white font-semibold text-sm mb-2">{q}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{a}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-8 space-y-2">
+            <h2 className="text-lg font-bold text-white mb-3">Continue Your Learning Journey</h2>
+            <div className="flex flex-wrap gap-2">
+              {[
+                ["/blog/ai-roadmap-for-developers/","AI Roadmap Guide"],
+                ["/how-to-learn-ai/","How to Learn AI"],
+                ["/paths/","Learning Paths"],
+                ["/blog/python-for-machine-learning/","Python for ML"],
+                ["/blog/machine-learning-basics-for-developers/","ML Basics"],
+              ].map(([href, label]) => (
+                <a key={href} href={href} className="inline-flex items-center bg-gray-800/60 hover:bg-gray-700/60 border border-white/8 text-gray-300 hover:text-white text-xs px-3 py-1.5 rounded-full transition-colors">{label} →</a>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-blue-600/10 border border-blue-500/30 rounded-xl p-6 text-center">
+            <p className="text-white font-bold text-lg mb-2">Ready to start?</p>
+            <p className="text-gray-400 text-sm mb-5">Follow our structured AI roadmap and go from zero to building real AI apps.</p>
+            <a href="/" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.35)]">Open the Interactive Roadmap →</a>
+          </div>
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // DO YOU NEED MATH FOR AI PAGE
+    // ═══════════════════════════════════════════════════════════
+    function DoYouNeedMathForAIPage() {
+      useSeo(
+        "Do You Need Math for AI? What Actually Matters in 2026",
+        "Short answer: less than you think to get started. See exactly which math topics matter for AI, when you can skip them, and what you can build without deep math."
+      );
+      const mathTable = [
+        { topic:"Linear algebra",  neededFor:"Neural nets, embeddings",     level:"Basic understanding" },
+        { topic:"Calculus",        neededFor:"Training from scratch",        level:"Optional for practitioners" },
+        { topic:"Statistics",      neededFor:"ML evaluation, data",          level:"Practical stats only" },
+        { topic:"Probability",     neededFor:"Bayesian methods, LLMs",       level:"Basic concepts" },
+      ];
+      const faqs = [
+        ["Can I learn AI without knowing calculus?", "Yes. Calculus matters if you're training neural networks from scratch — but most AI engineers use pre-trained models (GPT-4, Llama, Claude) and never backpropagate manually. Frameworks like PyTorch handle the calculus automatically. Focus on understanding what gradients do conceptually, not computing them by hand."],
+        ["Do I need linear algebra for AI?", "Basic linear algebra helps — understanding that matrix multiplication is how layers transform data, and that embeddings are vectors in high-dimensional space. But you don't need to compute eigenvalues by hand. Khan Academy's linear algebra course (free) gives you enough intuition in 10–15 hours."],
+        ["Is statistics required for machine learning?", "Practical statistics yes — understanding mean/variance, distributions, confidence intervals, and correlation will help you evaluate models and understand your data. Advanced statistics (Bayesian inference, hypothesis testing) only matters if you go into research or data science specifically."],
+        ["How much math do AI engineers use day-to-day?", "In practice, AI engineers spend more time on Python code, API integration, prompt design, and evaluation pipelines than on math. The math becomes relevant when debugging why a model performs badly or when reading research papers. Most day-to-day AI engineering is software engineering with ML libraries."],
+      ];
+      return (
+        <div className="max-w-3xl mx-auto px-4 py-10 text-gray-100">
+          <div className="mb-10">
+            <span className="inline-block bg-purple-600/20 text-purple-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">2026 Guide</span>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">Do You Need Math for AI?</h1>
+            <p className="text-gray-400 text-lg leading-relaxed mb-6">Short answer: <strong className="text-white">less than you think</strong> to get started. You can build LLM apps, RAG systems, and AI agents with minimal math. Here's what actually matters and when.</p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/how-to-learn-ai/" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-[0_0_18px_rgba(59,130,246,0.3)]">How to Learn AI →</a>
+              <a href="/blog/ai-roadmap-for-developers/" className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-200 text-sm font-medium px-5 py-2.5 rounded-xl border border-white/8 transition-all">AI Roadmap →</a>
+            </div>
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-white mb-4">Math Topics vs. How Much You Actually Need</h2>
+            <div className="overflow-x-auto rounded-xl border border-white/8">
+              <table className="w-full text-sm">
+                <thead><tr className="border-b border-white/8 bg-gray-800/60">
+                  <th className="text-left px-4 py-3 text-gray-300 font-semibold">Topic</th>
+                  <th className="text-left px-4 py-3 text-gray-300 font-semibold">Needed For</th>
+                  <th className="text-left px-4 py-3 text-gray-300 font-semibold">Level Required</th>
+                </tr></thead>
+                <tbody>
+                  {mathTable.map(({ topic, neededFor, level }) => (
+                    <tr key={topic} className="border-b border-white/5 hover:bg-gray-800/30 transition-colors">
+                      <td className="px-4 py-3 text-white font-medium">{topic}</td>
+                      <td className="px-4 py-3 text-gray-300">{neededFor}</td>
+                      <td className="px-4 py-3 text-blue-400 text-xs font-semibold">{level}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-4">
+            <h2 className="text-xl font-bold text-white">What You Can Build Without Deep Math</h2>
+            {[
+              ["LLM applications", "Chat assistants, summarizers, classifiers, code review tools — all built using LLM APIs (OpenAI, Anthropic). Zero math required."],
+              ["RAG systems", "Retrieval-augmented generation over your documents. You need to understand vector similarity conceptually, but the libraries (LangChain, ChromaDB) handle all the math."],
+              ["Fine-tuning with frameworks", "Tools like Unsloth and Axolotl let you fine-tune Llama 3 with config files. QLoRA makes it accessible on consumer hardware without understanding the math deeply."],
+              ["AI agents", "LangGraph, CrewAI, and similar frameworks let you build agents that use tools and plan multi-step tasks. It's software engineering, not math."],
+            ].map(([item, detail]) => (
+              <div key={item} className="flex items-start gap-3 bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                <span className="text-green-400 text-lg flex-shrink-0">✓</span>
+                <div>
+                  <p className="text-white font-semibold text-sm mb-0.5">{item}</p>
+                  <p className="text-gray-400 text-sm leading-relaxed">{detail}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">When Math Does Matter</h2>
+            {[
+              ["ML research", "If you want to design new architectures, propose training improvements, or publish papers — yes, you need linear algebra, calculus, probability, and statistics deeply."],
+              ["Custom architectures", "Building attention mechanisms, custom layers, or new model types from scratch requires solid linear algebra and calculus."],
+              ["Optimization at scale", "Distributed training, quantization strategies, and inference optimization at scale requires understanding gradients and hardware memory math."],
+            ].map(([item, detail]) => (
+              <div key={item} className="bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                <p className="text-white font-semibold text-sm mb-1">{item}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{detail}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-white mb-4">Practical Math Resources (Free)</h2>
+            <div className="space-y-2">
+              {[
+                { name:"fast.ai", desc:"Top-down, code-first deep learning. Math is introduced as needed.", url:"https://www.fast.ai/" },
+                { name:"3Blue1Brown", desc:"Best visual explanations of linear algebra and neural networks on YouTube.", url:"https://www.3blue1brown.com/" },
+                { name:"Khan Academy", desc:"Free, structured math from algebra through calculus and statistics.", url:"https://www.khanacademy.org/" },
+              ].map(({ name, desc, url }) => (
+                <div key={name} className="flex items-start gap-3 bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                  <div>
+                    <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 font-semibold text-sm">{name} ↗</a>
+                    <p className="text-gray-400 text-sm mt-0.5">{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">Frequently Asked Questions</h2>
+            {faqs.map(([q, a]) => (
+              <div key={q} className="bg-gray-800/40 rounded-xl p-5 border border-white/8">
+                <p className="text-white font-semibold text-sm mb-2">{q}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{a}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-8 flex flex-wrap gap-2">
+            {[
+              ["/how-to-learn-ai/","How to Learn AI"],
+              ["/blog/machine-learning-basics-for-developers/","ML Basics"],
+              ["/blog/transformer-architecture-explained/","Transformer Architecture"],
+              ["/blog/ai-roadmap-for-developers/","AI Roadmap"],
+            ].map(([href, label]) => (
+              <a key={href} href={href} className="inline-flex items-center bg-gray-800/60 hover:bg-gray-700/60 border border-white/8 text-gray-300 hover:text-white text-xs px-3 py-1.5 rounded-full transition-colors">{label} →</a>
+            ))}
+          </div>
+
+          <div className="bg-blue-600/10 border border-blue-500/30 rounded-xl p-6 text-center">
+            <p className="text-white font-bold text-lg mb-2">Start building AI apps today — no math required</p>
+            <p className="text-gray-400 text-sm mb-5">Follow our structured roadmap to go from zero to shipping real AI projects.</p>
+            <a href="/" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.35)]">Open the Interactive Roadmap →</a>
+          </div>
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // BEST LANGUAGE FOR AI PAGE
+    // ═══════════════════════════════════════════════════════════
+    function BestLanguageForAIPage() {
+      useSeo(
+        "Best Programming Language for AI in 2026 (Python vs Others)",
+        "Python dominates AI in 2026 — but here's why, and when JavaScript, Rust, or Julia might make sense. Includes what Python libraries to learn for AI."
+      );
+      const langTable = [
+        { lang:"Python",     ecosystem:"Excellent", bestFor:"Everything AI",          verdict:"#1 choice",    color:"text-green-400" },
+        { lang:"JavaScript", ecosystem:"Growing",   bestFor:"LLM apps, agents",        verdict:"Good for web devs", color:"text-blue-400" },
+        { lang:"Rust",       ecosystem:"Emerging",  bestFor:"Performance-critical",    verdict:"Niche",        color:"text-gray-400" },
+        { lang:"Julia",      ecosystem:"Strong",    bestFor:"Math/research",           verdict:"Academia",     color:"text-gray-400" },
+        { lang:"R",          ecosystem:"Statistical",bestFor:"Data science",           verdict:"Declining",    color:"text-gray-500" },
+      ];
+      const faqs = [
+        ["Should I learn Python or JavaScript for AI?", "Python if you're starting from scratch — the entire AI ecosystem (PyTorch, HuggingFace, LangChain, scikit-learn) is Python-first. JavaScript if you're already a strong JS developer who wants to build AI-powered web apps — the Vercel AI SDK and LangChain.js let you build quickly without switching languages."],
+        ["Is Python required for machine learning?", "In practice, yes. All major ML frameworks — TensorFlow, PyTorch, scikit-learn, HuggingFace Transformers — have their primary interfaces in Python. While some have bindings for other languages, the documentation, tutorials, and community support assume Python."],
+        ["Can I do AI without Python?", "You can call LLM APIs (OpenAI, Anthropic) from any language with an HTTP client. But for machine learning, data preprocessing, fine-tuning, and working with model files, you'll hit walls quickly without Python. Learning basic Python takes 2–4 weeks and unlocks the entire AI ecosystem."],
+        ["What Python libraries do I need for AI?", "Core libraries: NumPy and Pandas (data), scikit-learn (classical ML), PyTorch (deep learning), transformers (HuggingFace models), langchain (RAG & agents), chromadb (vector store), and fastapi or gradio (building AI apps). Start with pandas, scikit-learn, and the OpenAI SDK for your first projects."],
+      ];
+      return (
+        <div className="max-w-3xl mx-auto px-4 py-10 text-gray-100">
+          <div className="mb-10">
+            <span className="inline-block bg-blue-600/20 text-blue-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">2026 Guide</span>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">Best Programming Language for AI in 2026</h1>
+            <p className="text-gray-400 text-lg leading-relaxed mb-6">Python wins — by a landslide. But here's the full picture: why Python dominates, when JavaScript makes sense, and exactly what Python libraries you need to learn for AI.</p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/blog/python-for-machine-learning/" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-[0_0_18px_rgba(59,130,246,0.3)]">Python for ML →</a>
+              <a href="/how-to-learn-ai/" className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-200 text-sm font-medium px-5 py-2.5 rounded-xl border border-white/8 transition-all">How to Learn AI →</a>
+            </div>
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-white mb-4">Language Comparison for AI</h2>
+            <div className="overflow-x-auto rounded-xl border border-white/8">
+              <table className="w-full text-sm">
+                <thead><tr className="border-b border-white/8 bg-gray-800/60">
+                  <th className="text-left px-4 py-3 text-gray-300 font-semibold">Language</th>
+                  <th className="text-left px-4 py-3 text-gray-300 font-semibold">AI Ecosystem</th>
+                  <th className="text-left px-4 py-3 text-gray-300 font-semibold">Best For</th>
+                  <th className="text-left px-4 py-3 text-gray-300 font-semibold">Verdict</th>
+                </tr></thead>
+                <tbody>
+                  {langTable.map(({ lang, ecosystem, bestFor, verdict, color }) => (
+                    <tr key={lang} className="border-b border-white/5 hover:bg-gray-800/30 transition-colors">
+                      <td className="px-4 py-3 text-white font-semibold">{lang}</td>
+                      <td className="px-4 py-3 text-gray-300">{ecosystem}</td>
+                      <td className="px-4 py-3 text-gray-300">{bestFor}</td>
+                      <td className={`px-4 py-3 font-semibold text-xs ${color}`}>{verdict}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-4">
+            <h2 className="text-xl font-bold text-white">Why Python Dominates AI</h2>
+            <p className="text-gray-400 text-sm leading-relaxed">Every major AI framework is Python-first: PyTorch, TensorFlow, HuggingFace Transformers, LangChain, scikit-learn, Ollama SDK. The research community writes papers with PyTorch. The tooling, documentation, Stack Overflow answers, and job postings assume Python. This creates a self-reinforcing ecosystem that's impossible to dethrone.</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {["PyTorch","TensorFlow","HuggingFace","LangChain","scikit-learn","Ollama SDK","FastAPI","Gradio","Unsloth"].map(lib => (
+                <span key={lib} className="text-xs text-gray-400 bg-gray-800/60 border border-white/8 px-3 py-2 rounded-lg text-center">{lib}</span>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">JavaScript for AI</h2>
+            <p className="text-gray-400 text-sm leading-relaxed">If you're a JavaScript developer, you can build LLM-powered apps without switching to Python. The ecosystem has matured significantly in 2025–2026.</p>
+            {[
+              ["Vercel AI SDK", "The best JS framework for streaming LLM responses in Next.js apps. First-class support for OpenAI, Anthropic, and Google."],
+              ["LangChain.js", "Port of LangChain for TypeScript. Chains, RAG, and agents — though slightly behind the Python version."],
+              ["Ollama JavaScript library", "Run local models from Node.js. Same API as the Python library."],
+            ].map(([tool, detail]) => (
+              <div key={tool} className="bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                <p className="text-blue-400 font-semibold text-sm mb-1">{tool}</p>
+                <p className="text-gray-400 text-sm">{detail}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-white mb-4">What to Learn in Python for AI</h2>
+            <div className="space-y-2">
+              {[
+                { lib:"numpy + pandas", use:"Data manipulation and analysis — the foundation of all ML work" },
+                { lib:"scikit-learn",   use:"Classical ML: regression, classification, clustering, evaluation" },
+                { lib:"torch",          use:"Deep learning: neural networks, training loops, GPU computation" },
+                { lib:"transformers",   use:"Load and fine-tune any HuggingFace model in a few lines" },
+                { lib:"langchain",      use:"Build RAG pipelines and agents with any LLM API" },
+              ].map(({ lib, use }) => (
+                <div key={lib} className="flex items-start gap-3 bg-gray-800/40 rounded-xl p-3 border border-white/8">
+                  <code className="text-green-400 font-mono text-xs w-36 flex-shrink-0 mt-0.5">{lib}</code>
+                  <p className="text-gray-400 text-sm">{use}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">Frequently Asked Questions</h2>
+            {faqs.map(([q, a]) => (
+              <div key={q} className="bg-gray-800/40 rounded-xl p-5 border border-white/8">
+                <p className="text-white font-semibold text-sm mb-2">{q}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{a}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-8 flex flex-wrap gap-2">
+            {[
+              ["/blog/python-for-machine-learning/","Python for ML"],
+              ["/how-to-learn-ai/","How to Learn AI"],
+              ["/blog/ai-roadmap-for-developers/","AI Roadmap"],
+              ["/best-ai-tools-for-developers/","Best AI Tools"],
+            ].map(([href, label]) => (
+              <a key={href} href={href} className="inline-flex items-center bg-gray-800/60 hover:bg-gray-700/60 border border-white/8 text-gray-300 hover:text-white text-xs px-3 py-1.5 rounded-full transition-colors">{label} →</a>
+            ))}
+          </div>
+
+          <div className="bg-blue-600/10 border border-blue-500/30 rounded-xl p-6 text-center">
+            <p className="text-white font-bold text-lg mb-2">Learn Python + AI together</p>
+            <p className="text-gray-400 text-sm mb-5">Our roadmap teaches Python in the context of building real AI projects — the fastest way to learn both simultaneously.</p>
+            <a href="/" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.35)]">Open the Roadmap →</a>
+          </div>
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // OPENAI API TUTORIAL PAGE
+    // ═══════════════════════════════════════════════════════════
+    function OpenAIAPITutorialPage() {
+      useSeo(
+        "OpenAI API Tutorial: Build Your First AI App (2026)",
+        "Step-by-step OpenAI API tutorial for developers. Get your API key, make your first chat completion call, and build a real AI app — with code examples and cost tips."
+      );
+      const faqs = [
+        ["How do I get an OpenAI API key?", "Sign up at platform.openai.com, go to the API Keys section, and click 'Create new secret key'. You'll need to add a payment method and purchase at least $5 of credits to start. Keep your key secret — never commit it to Git or expose it in client-side code."],
+        ["Is the OpenAI API free?", "There's no permanent free tier, but new accounts get $5 in free credits to start. After that, you pay per token. GPT-4o-mini is very affordable (around $0.15 per million input tokens). For development, $5–10 goes a long way if you use the mini models and cache responses."],
+        ["What's the difference between GPT-4o and GPT-4o-mini?", "GPT-4o is the flagship model — best quality, higher cost. GPT-4o-mini is much cheaper (about 15x) and suitable for most production use cases: summarization, classification, chat, code generation. Use GPT-4o for complex reasoning tasks, GPT-4o-mini for everything else."],
+        ["How do I reduce OpenAI API costs?", "Use GPT-4o-mini instead of GPT-4o for most tasks. Set max_tokens limits to prevent runaway responses. Cache responses for repeated queries using Redis or a simple dict. Use system prompts efficiently (don't repeat context on every call). Batch requests where possible."],
+      ];
+      return (
+        <div className="max-w-3xl mx-auto px-4 py-10 text-gray-100">
+          <div className="mb-10">
+            <span className="inline-block bg-emerald-600/20 text-emerald-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">Tutorial · 2026</span>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">OpenAI API Tutorial: Build Your First AI App</h1>
+            <p className="text-gray-400 text-lg leading-relaxed mb-6">Step-by-step guide to using the OpenAI API in Python. Get from zero to a working AI app in under an hour — with real code, cost tips, and next steps.</p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/blog/openai-api-complete-guide/" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-[0_0_18px_rgba(59,130,246,0.3)]">Full OpenAI Guide →</a>
+              <a href="/projects/" className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-200 text-sm font-medium px-5 py-2.5 rounded-xl border border-white/8 transition-all">AI Projects →</a>
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-4">
+            <h2 className="text-xl font-bold text-white">Getting Started</h2>
+            <p className="text-gray-400 text-sm leading-relaxed">First, get your API key from <a href="https://platform.openai.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">platform.openai.com</a>, then install the SDK:</p>
+            <div className="bg-gray-950 rounded-xl border border-white/8 p-4">
+              <code className="text-green-400 font-mono text-sm">pip install openai</code>
+            </div>
+            <p className="text-gray-400 text-sm">Set your API key as an environment variable (never hardcode it):</p>
+            <div className="bg-gray-950 rounded-xl border border-white/8 p-4">
+              <code className="text-green-400 font-mono text-sm">export OPENAI_API_KEY="sk-..."</code>
+            </div>
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-white mb-4">Your First API Call</h2>
+            <div className="bg-gray-950 rounded-xl border border-white/8 p-5">
+              <pre className="text-green-400 font-mono text-sm overflow-x-auto whitespace-pre">{`from openai import OpenAI
+
+client = OpenAI()  # uses OPENAI_API_KEY env var
+
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user",   "content": "Explain RAG in one paragraph."},
+    ],
+    max_tokens=200,
+)
+
+print(response.choices[0].message.content)`}</pre>
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">Key Concepts</h2>
+            {[
+              ["Models", "gpt-4o is the flagship. gpt-4o-mini is cheaper and good enough for most tasks. Use gpt-4o for complex reasoning, gpt-4o-mini for everything else."],
+              ["Tokens", "LLMs process text as tokens (~¾ of a word each). You pay per token. Use max_tokens to cap output length and prevent surprises."],
+              ["Temperature", "Controls randomness. 0 = deterministic, 1 = creative. Use 0–0.3 for factual tasks, 0.7–1.0 for creative writing."],
+              ["System prompt", "Sets the model's persona and behavior for the whole conversation. This is where you inject instructions, context, and output format requirements."],
+            ].map(([concept, detail]) => (
+              <div key={concept} className="bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                <p className="text-blue-400 font-semibold text-sm mb-1">{concept}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{detail}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">Common Use Cases</h2>
+            {[
+              ["Chatbots", "Multi-turn conversations using the messages array. Add assistant messages to maintain history."],
+              ["Summarization", "Send a long document in the user message. Prompt: 'Summarize this in 3 bullet points'."],
+              ["Classification", "Ask the model to classify text into categories. Works best with few-shot examples in the prompt."],
+              ["Embeddings", "Use text-embedding-3-small to turn text into vectors for semantic search and RAG."],
+              ["Function calling", "Structured outputs — get JSON back from the model. Define a schema and the API returns data matching it."],
+            ].map(([use, detail]) => (
+              <div key={use} className="flex items-start gap-3 bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                <span className="text-yellow-400 text-sm font-bold w-4 flex-shrink-0">▸</span>
+                <div>
+                  <p className="text-white font-semibold text-sm mb-0.5">{use}</p>
+                  <p className="text-gray-400 text-sm">{detail}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">Cost Management Tips</h2>
+            {[
+              "Use gpt-4o-mini for development — it's ~15x cheaper than gpt-4o and good enough for most tasks",
+              "Set max_tokens limits on every call to cap output length",
+              "Cache responses for identical queries using a simple dict or Redis",
+              "Use streaming for long outputs (better UX and fails gracefully)",
+              "Batch similar requests instead of one-at-a-time API calls",
+            ].map((tip) => (
+              <div key={tip} className="flex items-start gap-2 bg-gray-800/40 rounded-xl p-3 border border-white/8">
+                <span className="text-green-400 flex-shrink-0 mt-0.5">✓</span>
+                <p className="text-gray-400 text-sm">{tip}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">Frequently Asked Questions</h2>
+            {faqs.map(([q, a]) => (
+              <div key={q} className="bg-gray-800/40 rounded-xl p-5 border border-white/8">
+                <p className="text-white font-semibold text-sm mb-2">{q}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{a}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-8 flex flex-wrap gap-2">
+            {[
+              ["/blog/openai-api-complete-guide/","Full OpenAI API Guide"],
+              ["/projects/","AI Projects"],
+              ["/ai-projects-for-beginners/","Beginner AI Projects"],
+              ["/best-ai-tools-for-developers/","Best AI Tools"],
+            ].map(([href, label]) => (
+              <a key={href} href={href} className="inline-flex items-center bg-gray-800/60 hover:bg-gray-700/60 border border-white/8 text-gray-300 hover:text-white text-xs px-3 py-1.5 rounded-full transition-colors">{label} →</a>
+            ))}
+          </div>
+
+          <div className="bg-blue-600/10 border border-blue-500/30 rounded-xl p-6 text-center">
+            <p className="text-white font-bold text-lg mb-2">What to build next?</p>
+            <p className="text-gray-400 text-sm mb-5">Explore 20+ AI project tutorials — from RAG chatbots to AI agents, all with step-by-step code.</p>
+            <a href="/projects/" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-xl transition-all shadow-[0_0_20px_rgba(59,130,246,0.35)]">Browse AI Projects →</a>
+          </div>
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // OLLAMA LOCAL LLM GUIDE PAGE
+    // ═══════════════════════════════════════════════════════════
+    function OllamaLocalLLMPage() {
+      useSeo(
+        "Ollama Guide: Run LLMs Locally in 2026 (Setup + Best Models)",
+        "Run Llama, Mistral, Gemma, and Qwen locally for free with Ollama. Step-by-step setup guide, best models to run, Python integration, and Open WebUI setup."
+      );
+      const models = [
+        { model:"llama3.2:3b",      size:"2GB RAM",  bestFor:"Fast, low-end hardware" },
+        { model:"llama3.1:8b",      size:"5GB RAM",  bestFor:"Good balance of quality/speed" },
+        { model:"mistral:7b",       size:"4GB RAM",  bestFor:"Coding + chat" },
+        { model:"qwen2.5-coder",    size:"4GB RAM",  bestFor:"Code generation" },
+        { model:"gemma2:9b",        size:"6GB RAM",  bestFor:"Multimodal tasks" },
+      ];
+      const faqs = [
+        ["What hardware do I need for Ollama?", "Any modern Mac, Windows PC, or Linux machine with at least 8GB RAM can run 7B models. 16GB RAM is comfortable for 13B models. An Apple Silicon Mac (M1/M2/M3) with unified memory is the best consumer hardware for local LLMs — the GPU and CPU share the same memory pool, making 7B models fast without a discrete GPU."],
+        ["Is Ollama free?", "Yes, completely free and open-source. There are no API costs, no tokens to buy, and no rate limits. The only cost is your electricity and the initial model download (2–8GB per model). Models are stored locally and can be used offline."],
+        ["Can I use Ollama with LangChain?", "Yes. LangChain has first-class Ollama support via the ChatOllama and OllamaEmbeddings classes. This lets you build RAG pipelines and agents that run entirely locally — no API keys or costs required. See our LangChain tutorial for a full example."],
+        ["What's the best model to run with Ollama?", "For general use: llama3.1:8b (best quality/speed balance on most hardware). For coding: qwen2.5-coder or mistral:7b. For low-end hardware (8GB RAM): llama3.2:3b. For the best quality if you have 16GB+ RAM: llama3.1:13b or gemma2:9b."],
+      ];
+      return (
+        <div className="max-w-3xl mx-auto px-4 py-10 text-gray-100">
+          <div className="mb-10">
+            <span className="inline-block bg-orange-600/20 text-orange-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">Local LLM Guide · 2026</span>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">Ollama Guide: Run LLMs Locally</h1>
+            <p className="text-gray-400 text-lg leading-relaxed mb-6">Run Llama, Mistral, Gemma, and more on your own hardware — free, private, offline, no API costs. This guide covers installation, the best models to run, Python integration, and a browser UI.</p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/blog/open-source-llms-guide/" className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-500 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all">Open Source LLMs →</a>
+              <a href="/best-ai-tools-for-developers/" className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-200 text-sm font-medium px-5 py-2.5 rounded-xl border border-white/8 transition-all">Best AI Tools →</a>
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-4">
+            <h2 className="text-xl font-bold text-white">Why Run LLMs Locally?</h2>
+            {[
+              ["Privacy", "Your data never leaves your machine. Essential for sensitive documents, legal text, medical records, or proprietary code."],
+              ["No cost", "Zero API fees. Run as many queries as you want with no rate limits or pay-per-token billing."],
+              ["Offline", "Works without internet. Useful for air-gapped environments or unreliable connections."],
+              ["Customization", "Fine-tune models locally, swap them instantly, and integrate with any tool without API restrictions."],
+            ].map(([reason, detail]) => (
+              <div key={reason} className="flex items-start gap-3 bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                <span className="text-orange-400 font-bold text-sm w-4 flex-shrink-0">▸</span>
+                <div>
+                  <p className="text-white font-semibold text-sm mb-0.5">{reason}</p>
+                  <p className="text-gray-400 text-sm">{detail}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-white mb-4">Installing Ollama</h2>
+            <div className="space-y-3">
+              {[
+                { os:"macOS / Linux", cmd:"curl -fsSL https://ollama.com/install.sh | sh" },
+                { os:"Windows", cmd:"Download installer from ollama.com/download" },
+              ].map(({ os, cmd }) => (
+                <div key={os} className="bg-gray-950 rounded-xl border border-white/8 p-4">
+                  <p className="text-gray-500 text-xs mb-2">{os}</p>
+                  <code className="text-green-400 font-mono text-sm">{cmd}</code>
+                </div>
+              ))}
+              <p className="text-gray-400 text-sm">Then pull and run a model:</p>
+              <div className="bg-gray-950 rounded-xl border border-white/8 p-4">
+                <code className="text-green-400 font-mono text-sm">ollama run llama3.1:8b</code>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-white mb-4">Best Models to Run Locally</h2>
+            <div className="overflow-x-auto rounded-xl border border-white/8">
+              <table className="w-full text-sm">
+                <thead><tr className="border-b border-white/8 bg-gray-800/60">
+                  <th className="text-left px-4 py-3 text-gray-300 font-semibold">Model</th>
+                  <th className="text-left px-4 py-3 text-gray-300 font-semibold">RAM Required</th>
+                  <th className="text-left px-4 py-3 text-gray-300 font-semibold">Best For</th>
+                </tr></thead>
+                <tbody>
+                  {models.map(({ model, size, bestFor }) => (
+                    <tr key={model} className="border-b border-white/5 hover:bg-gray-800/30 transition-colors">
+                      <td className="px-4 py-3 font-mono text-green-400 text-xs">{model}</td>
+                      <td className="px-4 py-3 text-gray-300">{size}</td>
+                      <td className="px-4 py-3 text-gray-400">{bestFor}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-white mb-4">Using Ollama with Python</h2>
+            <div className="bg-gray-950 rounded-xl border border-white/8 p-5 mb-3">
+              <code className="text-green-400 font-mono text-sm">pip install ollama</code>
+            </div>
+            <div className="bg-gray-950 rounded-xl border border-white/8 p-5">
+              <pre className="text-green-400 font-mono text-sm overflow-x-auto whitespace-pre">{`import ollama
+
+response = ollama.chat(
+    model="llama3.1:8b",
+    messages=[
+        {"role": "user", "content": "Explain transformers in 2 sentences."},
+    ],
+)
+
+print(response["message"]["content"])`}</pre>
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">Ollama + Open WebUI</h2>
+            <p className="text-gray-400 text-sm leading-relaxed">Open WebUI gives you a ChatGPT-style browser interface over your local Ollama models. Install with Docker:</p>
+            <div className="bg-gray-950 rounded-xl border border-white/8 p-4">
+              <pre className="text-green-400 font-mono text-xs overflow-x-auto whitespace-pre">{`docker run -d -p 3000:8080 \\
+  -v open-webui:/app/backend/data \\
+  --name open-webui \\
+  ghcr.io/open-webui/open-webui:main`}</pre>
+            </div>
+            <p className="text-gray-400 text-sm">Then visit <code className="text-blue-400">http://localhost:3000</code> for a full chat UI with model switching, history, and file uploads.</p>
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">Frequently Asked Questions</h2>
+            {faqs.map(([q, a]) => (
+              <div key={q} className="bg-gray-800/40 rounded-xl p-5 border border-white/8">
+                <p className="text-white font-semibold text-sm mb-2">{q}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{a}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-8 flex flex-wrap gap-2">
+            {[
+              ["/blog/open-source-llms-guide/","Open Source LLMs Guide"],
+              ["/best-ai-tools-for-developers/","Best AI Tools"],
+              ["/blog/langchain-rag-tutorial/","LangChain RAG Tutorial"],
+              ["/projects/","AI Projects"],
+            ].map(([href, label]) => (
+              <a key={href} href={href} className="inline-flex items-center bg-gray-800/60 hover:bg-gray-700/60 border border-white/8 text-gray-300 hover:text-white text-xs px-3 py-1.5 rounded-full transition-colors">{label} →</a>
+            ))}
+          </div>
+
+          <div className="bg-orange-600/10 border border-orange-500/30 rounded-xl p-6 text-center">
+            <p className="text-white font-bold text-lg mb-2">Build with local LLMs + LangChain</p>
+            <p className="text-gray-400 text-sm mb-5">Combine Ollama with LangChain to build fully local RAG pipelines and agents — no API costs, complete privacy.</p>
+            <a href="/langchain-tutorial/" className="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-500 text-white font-bold px-6 py-3 rounded-xl transition-all">LangChain Tutorial →</a>
+          </div>
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // LANGCHAIN TUTORIAL PAGE
+    // ═══════════════════════════════════════════════════════════
+    function LangChainTutorialPage() {
+      useSeo(
+        "LangChain Tutorial: Build LLM Apps in Python (2026)",
+        "Learn LangChain from scratch. Build RAG pipelines, AI agents, and LLM-powered apps in Python. Covers chains, retrievers, agents, memory, and a complete RAG example."
+      );
+      const concepts = [
+        { concept:"LLM/Chat models",  desc:"Call any LLM API (OpenAI, Anthropic, Gemini, Ollama) with a unified interface" },
+        { concept:"Prompts",          desc:"Reusable prompt templates with variables — build consistent, maintainable prompts" },
+        { concept:"Chains",           desc:"Combine LLMs, prompts, and tools into reusable processing pipelines" },
+        { concept:"Retrievers",       desc:"Fetch semantically relevant documents from vector stores for RAG" },
+        { concept:"Agents",           desc:"LLMs that decide which tools to use and in what order — autonomous reasoning" },
+        { concept:"Memory",           desc:"Persist and retrieve conversation history across turns" },
+      ];
+      const faqs = [
+        ["Is LangChain still worth learning in 2026?", "Yes. LangChain remains the most widely-used framework for building LLM applications. While alternatives like LlamaIndex (for RAG) and raw API calls (for simplicity) have their place, LangChain has the largest ecosystem, most integrations, and best community support. Most AI engineering job descriptions mention it."],
+        ["Do I need to know LangChain for AI jobs?", "Knowing LangChain is a strong signal to employers. Most AI engineering teams use LangChain or LangGraph (its agent framework). That said, understanding the underlying concepts (RAG, chains, agents) matters more than knowing any specific library — if you understand the patterns, switching frameworks is straightforward."],
+        ["LangChain vs LlamaIndex — which should I use?", "LangChain for agent-heavy apps and when you need broad LLM integrations. LlamaIndex for complex document ingestion and multi-document RAG — it has more sophisticated indexing strategies and query engines. For beginners, start with LangChain; it has better documentation and a larger community."],
+        ["Can I use LangChain with local models?", "Yes. LangChain has first-class Ollama support via ChatOllama and OllamaEmbeddings. This lets you build fully local RAG pipelines with no API costs. See our Ollama guide for setup instructions."],
+      ];
+      return (
+        <div className="max-w-3xl mx-auto px-4 py-10 text-gray-100">
+          <div className="mb-10">
+            <span className="inline-block bg-teal-600/20 text-teal-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">Tutorial · 2026</span>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">LangChain Tutorial: Build LLM Apps in Python</h1>
+            <p className="text-gray-400 text-lg leading-relaxed mb-6">LangChain is the most popular framework for building LLM applications — RAG pipelines, agents, chatbots, and more. This tutorial covers the core concepts and walks you through building a complete RAG app.</p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/blog/langchain-rag-tutorial/" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all">Full RAG Tutorial →</a>
+              <a href="/projects/" className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-200 text-sm font-medium px-5 py-2.5 rounded-xl border border-white/8 transition-all">AI Projects →</a>
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">What is LangChain?</h2>
+            <p className="text-gray-400 text-sm leading-relaxed">LangChain is an open-source Python framework for building applications powered by large language models. It provides abstractions for prompts, chains (sequences of LLM calls), retrievers (semantic search), agents (autonomous tool use), and memory (conversation history) — making it fast to build complex LLM pipelines without boilerplate.</p>
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-white mb-4">Installation & Setup</h2>
+            <div className="bg-gray-950 rounded-xl border border-white/8 p-4 mb-3">
+              <code className="text-green-400 font-mono text-sm">pip install langchain langchain-openai</code>
+            </div>
+            <p className="text-gray-400 text-sm">For local models with Ollama:</p>
+            <div className="bg-gray-950 rounded-xl border border-white/8 p-4">
+              <code className="text-green-400 font-mono text-sm">pip install langchain langchain-ollama</code>
+            </div>
+          </div>
+
+          <div className="mb-10">
+            <h2 className="text-xl font-bold text-white mb-4">Core Concepts</h2>
+            <div className="overflow-x-auto rounded-xl border border-white/8">
+              <table className="w-full text-sm">
+                <thead><tr className="border-b border-white/8 bg-gray-800/60">
+                  <th className="text-left px-4 py-3 text-gray-300 font-semibold">Concept</th>
+                  <th className="text-left px-4 py-3 text-gray-300 font-semibold">What It Does</th>
+                </tr></thead>
+                <tbody>
+                  {concepts.map(({ concept, desc }) => (
+                    <tr key={concept} className="border-b border-white/5 hover:bg-gray-800/30 transition-colors">
+                      <td className="px-4 py-3 text-teal-400 font-semibold text-sm">{concept}</td>
+                      <td className="px-4 py-3 text-gray-300 text-sm">{desc}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mb-10 space-y-4">
+            <h2 className="text-xl font-bold text-white">Build a Simple RAG App</h2>
+            <p className="text-gray-400 text-sm leading-relaxed">RAG (Retrieval-Augmented Generation) lets you answer questions from your own documents. Here's the full pipeline in 6 steps:</p>
+            {[
+              ["1. Load documents", "Use LangChain's document loaders (PyPDFLoader, WebBaseLoader, TextLoader) to ingest your data."],
+              ["2. Split into chunks", "RecursiveCharacterTextSplitter breaks documents into ~500-token chunks with overlap for better retrieval."],
+              ["3. Generate embeddings", "OpenAIEmbeddings or OllamaEmbeddings converts each chunk into a vector representation."],
+              ["4. Store in vector DB", "ChromaDB stores the vectors locally (free). Pinecone for managed production storage."],
+              ["5. Retrieve relevant chunks", "Given a user query, retrieve the top-k most similar chunks using cosine similarity."],
+              ["6. Generate answer", "Pass the retrieved chunks as context to the LLM and generate a grounded answer."],
+            ].map(([step, detail]) => (
+              <div key={step} className="flex items-start gap-3 bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                <span className="text-teal-400 font-bold text-xs flex-shrink-0 mt-0.5 w-24">{step}</span>
+                <p className="text-gray-400 text-sm leading-relaxed">{detail}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">LangChain vs Alternatives</h2>
+            {[
+              { name:"LangChain", verdict:"Best for agents + broad integrations", tag:"Most popular" },
+              { name:"LlamaIndex", verdict:"Best for complex document RAG and indexing", tag:"RAG specialist" },
+              { name:"Raw API calls", verdict:"Best for simple, performance-critical apps", tag:"No abstractions" },
+            ].map(({ name, verdict, tag }) => (
+              <div key={name} className="flex items-center gap-3 bg-gray-800/40 rounded-xl p-4 border border-white/8">
+                <div className="flex-1">
+                  <span className="text-white font-semibold text-sm">{name}</span>
+                  <p className="text-gray-400 text-xs mt-0.5">{verdict}</p>
+                </div>
+                <span className="text-xs text-gray-500 bg-gray-900 border border-white/8 px-2 py-0.5 rounded-full">{tag}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-10 space-y-3">
+            <h2 className="text-xl font-bold text-white">Frequently Asked Questions</h2>
+            {faqs.map(([q, a]) => (
+              <div key={q} className="bg-gray-800/40 rounded-xl p-5 border border-white/8">
+                <p className="text-white font-semibold text-sm mb-2">{q}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{a}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mb-8 flex flex-wrap gap-2">
+            {[
+              ["/blog/langchain-rag-tutorial/","LangChain RAG Tutorial"],
+              ["/blog/vector-database-guide/","Vector Database Guide"],
+              ["/best-ai-tools-for-developers/","Best AI Tools"],
+              ["/ollama-local-llm-guide/","Ollama Guide"],
+              ["/projects/","AI Projects"],
+            ].map(([href, label]) => (
+              <a key={href} href={href} className="inline-flex items-center bg-gray-800/60 hover:bg-gray-700/60 border border-white/8 text-gray-300 hover:text-white text-xs px-3 py-1.5 rounded-full transition-colors">{label} →</a>
+            ))}
+          </div>
+
+          <div className="bg-teal-600/10 border border-teal-500/30 rounded-xl p-6 text-center">
+            <p className="text-white font-bold text-lg mb-2">Ready to build your first RAG app?</p>
+            <p className="text-gray-400 text-sm mb-5">Follow our full step-by-step LangChain RAG tutorial — from document loading to a working Q&A chatbot.</p>
+            <a href="/blog/langchain-rag-tutorial/" className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white font-bold px-6 py-3 rounded-xl transition-all">Read the Full Tutorial →</a>
+          </div>
+        </div>
+      );
+    }
+
     // ─── MASTER APP ───
     const TABS = [
       { label: "Roadmap",         slug: "roadmap",               icon: BrainCircuit, Component: Roadmap },
       { label: "Resources",       slug: "resources",             icon: BookOpen,     Component: AltResources },
       { label: "Prep Plan",       slug: "prep-plan",             icon: Calendar,     Component: PrepPlan,             nav: false },
       { label: "GenAI Guide",     slug: "genai-guide",           icon: Cpu,          Component: GenAIGuide,           nav: false },
-      { label: "Prompt Eng",      slug: "prompt-eng",            icon: Zap,          Component: PromptEngineering,    nav: false },
+      { label: "Prompt Eng",      slug: "prompt-engineering",    icon: Zap,          Component: PromptEngineering,    nav: false },
       { label: "Readiness",       slug: "readiness",             icon: CheckCircle,  Component: ReadinessChecker,     nav: false },
       { label: "Beyond Roadmap",  slug: "beyond-roadmap",        icon: Compass,      Component: BeyondRoadmap,        nav: false },
       { label: "Assessment",      slug: "assessment",            icon: BarChart2,    Component: KnowledgeAssessment,  nav: false },
-      { label: "AI Roadmap",            slug: "ai-roadmap",               icon: BrainCircuit, Component: AiRoadmapPage,              nav: false },
+      { label: "AI Roadmap",            slug: "ai-roadmap-for-developers", icon: BrainCircuit, Component: AiRoadmapPage,              nav: false },
       { label: "AI Engineering Roadmap", slug: "ai-engineering-roadmap",   icon: BrainCircuit, Component: AiEngineeringRoadmapPage,   nav: false },
       { label: "LLM Roadmap",     slug: "llm-roadmap",              icon: Cpu,          Component: LlmRoadmapPage,             nav: false },
       { label: "RAG Tutorial",    slug: "rag-tutorial",             icon: BookOpen,     Component: RagTutorialPage,            nav: false },
@@ -4519,6 +5351,12 @@ function KnowledgeGaps() {
       { label: "Blog",            slug: "blog",     icon: BookOpen, Component: BlogIndexPage     },
       { label: "Projects",        slug: "projects", icon: Wrench,    Component: ProjectsIndexPage },
       { label: "Paths",           slug: "paths",    icon: Layers,    Component: PathsIndexPage    },
+      { label: "How Long to Learn AI", slug: "how-long-to-learn-ai",  icon: BrainCircuit, Component: HowLongToLearnAIPage,  nav: false },
+      { label: "Math for AI",          slug: "do-you-need-math-for-ai", icon: BrainCircuit, Component: DoYouNeedMathForAIPage, nav: false },
+      { label: "Best Language for AI", slug: "best-language-for-ai",  icon: Cpu,          Component: BestLanguageForAIPage, nav: false },
+      { label: "OpenAI API Tutorial",  slug: "openai-api-tutorial",   icon: Zap,          Component: OpenAIAPITutorialPage, nav: false },
+      { label: "Ollama Guide",         slug: "ollama-local-llm-guide", icon: Cpu,          Component: OllamaLocalLLMPage,    nav: false },
+      { label: "LangChain Tutorial",   slug: "langchain-tutorial",    icon: BookOpen,     Component: LangChainTutorialPage, nav: false },
     ];
 
     function Footer() {
