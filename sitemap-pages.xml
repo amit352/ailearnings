@@ -26,6 +26,11 @@
   <url><loc>https://ailearnings.in/ai-agents/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://ailearnings.in/fine-tuning-llms/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
 
+  <!-- Phase 7 intent-based landing pages -->
+  <url><loc>https://ailearnings.in/how-to-learn-ai/</loc><lastmod>2026-03-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ailearnings.in/ai-projects-for-beginners/</loc><lastmod>2026-03-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ailearnings.in/best-ai-tools-for-developers/</loc><lastmod>2026-03-11</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+
   <!-- New high-traffic landing pages -->
   <url><loc>https://ailearnings.in/how-long-to-learn-ai/</loc><lastmod>2026-03-11</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ailearnings.in/do-you-need-math-for-ai/</loc><lastmod>2026-03-11</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
