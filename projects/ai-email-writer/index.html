@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Build an AI Email Writer: Draft Professional Emails in Seconds | AI Learning Hub</title>
   <meta name="description" content="Build an AI tool that drafts professional emails from bullet points or brief descriptions. Supports multiple tones, templates, and a Streamlit web UI." />

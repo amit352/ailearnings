@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Build an AI Study Planner: Personalized Learning Schedules with Spaced Repetition | AI Learning Hub</title>
   <meta name="description" content="Build an AI study planner that creates personalized schedules, generates practice questions using spaced repetition, tracks progress, and adapts the plan based on performance." />

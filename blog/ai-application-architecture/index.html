@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Application Architecture: Designing Production-Ready LLM Systems | AI Learning Hub</title>
   <meta name="description" content="Architectural patterns for production AI applications — prompt management, context windows, fallback strategies, observability, cost control, and testing LLM systems." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -52,10 +95,10 @@
   "image": "https://ailearnings.in/og-image.jpg",
   "url": "https://ailearnings.in/blog/ai-application-architecture/",
   "datePublished": "2026-03-10",
-  "dateModified": "2026-03-10",
+  "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,27 +217,45 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">AI Application Architecture: Designing Production-Ready LLM Systems</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-10">March 10, 2026</time>
-          <span>·</span>
-          <span>5 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">AI Application Architecture: Designing Production-Ready LLM Systems</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-10">March 10, 2026</time></span>
+              <span class="sep">·</span><span>Updated <time datetime="2026-03-13">March 13, 2026</time></span>
+              <span class="sep">·</span>
+              <span>6 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
-        <h2>Learning Objectives</h2>
-<ul>
-<li>Apply proven architectural patterns for LLM applications</li>
-<li>Design for reliability with fallbacks and retries</li>
-<li>Manage prompts as versioned, testable artifacts</li>
-<li>Implement observability and cost controls</li>
-<li>Test LLM applications effectively</li>
-</ul>
+        <h1>AI Application Architecture: Designing Production-Ready LLM Systems</h1>
+<p>The hardest part of building an AI application is not getting it to work in a demo — it is making it work reliably at 3 AM on a Tuesday when the primary model is rate-limited, a user sends a 20,000-token document, and you have no idea which prompt is producing the wrong output. Good architecture prevents those crises. This guide covers the patterns that matter in production.</p>
 <hr>
-<h2>The Four Layers of an AI Application</h2>
+<h2>What is AI Application Architecture</h2>
+<p>AI application architecture is the set of design decisions that determine how your LLM application is structured, how it handles failures, how you observe its behavior, and how it scales. It covers everything from how you store and version prompts to how you manage token budgets and degrade gracefully under load.</p>
+<p>The core principle is that LLMs are probabilistic components with external dependencies. They can fail, return unexpected formats, hallucinate, or run slow. Good architecture treats LLMs like any other unreliable service: with retry logic, fallbacks, observability, and contracts.</p>
+<hr>
+<h2>Why Architecture Matters for AI Applications</h2>
+<p>A poorly architected AI application works fine in testing and breaks in production. The failure modes are specific:</p>
+<ul>
+<li>Prompts embedded in strings get changed by accident and nobody notices</li>
+<li>Token limits get hit silently and outputs get truncated</li>
+<li>API rate limits cause silent failures with no retry logic</li>
+<li>Cost exceeds budget because nobody measured how many tokens each feature consumes</li>
+<li>A bug happens and you cannot debug it because you did not log intermediate results</li>
+</ul>
+<p>Good architecture prevents each of these. It makes your application observable, testable, and resilient.</p>
+<hr>
+<h2>How AI Application Architecture Works</h2>
+<h3>The Four Layers</h3>
+<p>A well-designed AI application separates concerns across four layers:</p>
 <pre><code>┌─────────────────────────────────────────┐
 │  4. Application Layer                   │
 │     (FastAPI, Next.js, CLI)             │
@@ -209,14 +270,14 @@
 │     (Documents, DB, Cache, Storage)     │
 └─────────────────────────────────────────┘
 </code></pre>
-<p>Each layer should be independently testable and replaceable.</p>
+<p>Each layer should be independently testable and replaceable. You should be able to swap from OpenAI to Anthropic in the AI services layer without touching the application layer.</p>
 <hr>
-<h2>Prompt Management</h2>
-<p>Prompts are code. Treat them as versioned, testable artifacts.</p>
+<h2>Practical Example</h2>
+<h3>Prompt Management</h3>
+<p>Prompts are code. Treat them as versioned, testable artifacts with clearly defined contracts.</p>
 <pre><code class="language-python">from dataclasses import dataclass
-from typing import Optional
-import json
 from pathlib import Path
+import json
 
 @dataclass
 class PromptTemplate:
@@ -231,7 +292,7 @@ class PromptTemplate:
     def format(self, **kwargs) -&gt; list[dict]:
         return [
             {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: self.system},
-            {&quot;role&quot;: &quot;user&quot;,   &quot;content&quot;: self.user_template.format(**kwargs)},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: self.user_template.format(**kwargs)},
         ]
 
     def to_dict(self) -&gt; dict:
@@ -242,10 +303,10 @@ class PromptTemplate:
         return cls(**json.loads(Path(path).read_text()))
 
 
-# prompts/summarize_v2.json
+# Store prompts as structured objects, not inline strings
 SUMMARIZE_PROMPT = PromptTemplate(
     name=&quot;summarize&quot;,
-    version=&quot;2.0&quot;,
+    version=&quot;2.1&quot;,
     system=(
         &quot;You are a technical documentation specialist. &quot;
         &quot;Produce concise summaries that preserve key technical details. &quot;
@@ -263,31 +324,7 @@ messages = SUMMARIZE_PROMPT.format(
     content=&quot;Long article text here...&quot;
 )
 </code></pre>
-<h3>Prompt Registry</h3>
-<pre><code class="language-python">class PromptRegistry:
-    def __init__(self, prompts_dir: str = &quot;./prompts&quot;):
-        self.prompts: dict[str, PromptTemplate] = {}
-        self._load_from_dir(prompts_dir)
-
-    def _load_from_dir(self, dir_path: str):
-        for path in Path(dir_path).glob(&quot;*.json&quot;):
-            pt = PromptTemplate.from_json(str(path))
-            self.prompts[pt.name] = pt
-
-    def get(self, name: str) -&gt; PromptTemplate:
-        if name not in self.prompts:
-            raise KeyError(f&quot;Prompt &#39;{name}&#39; not found&quot;)
-        return self.prompts[name]
-
-    def list_prompts(self) -&gt; list[str]:
-        return list(self.prompts.keys())
-
-
-registry = PromptRegistry()
-prompt = registry.get(&quot;summarize&quot;)
-</code></pre>
-<hr>
-<h2>Resilient LLM Client</h2>
+<h3>Resilient LLM Client with Retries and Fallback</h3>
 <pre><code class="language-python">import time
 import logging
 from openai import OpenAI, RateLimitError, APIConnectionError, APIStatusError
@@ -295,15 +332,13 @@ from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
-
 @dataclass
 class LLMConfig:
     primary_model: str = &quot;gpt-4o-mini&quot;
-    fallback_model: str = &quot;gpt-4o-mini&quot;  # could be a different provider
+    fallback_model: str = &quot;gpt-4o-mini&quot;
     max_retries: int = 3
     timeout: float = 30.0
     base_delay: float = 1.0
-
 
 class ResilientLLMClient:
     def __init__(self, config: LLMConfig = LLMConfig()):
@@ -325,18 +360,17 @@ class ResilientLLMClient:
 
             except RateLimitError as e:
                 delay = self.config.base_delay * (2 ** attempt)
-                logger.warning(f&quot;Rate limit (attempt {attempt+1}). Waiting {delay}s...&quot;)
+                logger.warning(f&quot;Rate limited (attempt {attempt+1}). Waiting {delay}s...&quot;)
                 time.sleep(delay)
                 last_error = e
 
             except APIConnectionError as e:
-                delay = self.config.base_delay
-                logger.warning(f&quot;Connection error (attempt {attempt+1}). Waiting {delay}s...&quot;)
-                time.sleep(delay)
+                logger.warning(f&quot;Connection error (attempt {attempt+1}).&quot;)
+                time.sleep(self.config.base_delay)
                 last_error = e
 
             except APIStatusError as e:
-                if e.status_code &gt;= 500:  # server error — retry
+                if e.status_code &gt;= 500:
                     time.sleep(self.config.base_delay)
                     last_error = e
                 else:
@@ -357,239 +391,82 @@ class ResilientLLMClient:
 
         raise Exception(f&quot;All retries exhausted: {last_error}&quot;)
 
-
 llm = ResilientLLMClient()
 </code></pre>
 <hr>
-<h2>Context Window Management</h2>
-<p>LLMs have token limits. Manage context carefully:</p>
-<pre><code class="language-python">import tiktoken
-
-class ContextManager:
-    def __init__(self, model: str = &quot;gpt-4o-mini&quot;, max_tokens: int = 4096):
-        self.enc = tiktoken.encoding_for_model(model)
-        self.max_tokens = max_tokens
-        self.safety_margin = 512  # reserve for output
-
-    def count_tokens(self, text: str) -&gt; int:
-        return len(self.enc.encode(text))
-
-    def count_messages_tokens(self, messages: list) -&gt; int:
-        total = 3  # message overhead
-        for msg in messages:
-            total += 4 + self.count_tokens(msg.get(&quot;content&quot;, &quot;&quot;))
-        return total
-
-    def truncate_to_fit(self, text: str, max_chars: int) -&gt; str:
-        tokens = self.enc.encode(text)
-        if len(tokens) &lt;= max_chars:
-            return text
-        truncated = self.enc.decode(tokens[:max_chars])
-        return truncated + &quot;\n[...truncated...]&quot;
-
-    def trim_history(self, messages: list, system_prompt: str) -&gt; list:
-        &quot;&quot;&quot;Remove oldest messages until history fits in context window.&quot;&quot;&quot;
-        budget = self.max_tokens - self.safety_margin
-        system_tokens = self.count_tokens(system_prompt) + 10
-
-        result = [m for m in messages if m[&quot;role&quot;] == &quot;system&quot;]
-        non_system = [m for m in messages if m[&quot;role&quot;] != &quot;system&quot;]
-
-        # Add messages from most recent, working backward
-        current_tokens = system_tokens
-        kept_messages = []
-        for msg in reversed(non_system):
-            msg_tokens = self.count_tokens(msg[&quot;content&quot;]) + 4
-            if current_tokens + msg_tokens &gt; budget:
-                break
-            kept_messages.insert(0, msg)
-            current_tokens += msg_tokens
-
-        return result + kept_messages
-
-
-ctx_mgr = ContextManager(max_tokens=8192)
-</code></pre>
+<h2>Real-World Applications</h2>
+<p>These patterns are used in production AI systems across every category:</p>
+<p><strong>Document Q&amp;A systems</strong> — Need token management (documents exceed context), caching (same queries repeat), and observability (know which chunks were retrieved).</p>
+<p><strong>AI code assistants</strong> — Need streaming for perceived responsiveness, retry logic for API stability, and prompt versioning so you can test changes against a regression suite.</p>
+<p><strong>Customer support chatbots</strong> — Need fallback logic (if the primary model fails, return a human-agent handoff), session management, and cost controls per conversation.</p>
+<p><strong>RAG pipelines</strong> — Need hybrid search (vector + keyword), re-ranking, and context compression to fit relevant chunks into the context window.</p>
+<p><strong>Multi-tenant SaaS AI features</strong> — Need per-customer rate limiting, cost attribution, and the ability to tune prompts for specific customer segments independently.</p>
 <hr>
-<h2>Caching Strategy</h2>
-<pre><code class="language-python">import hashlib
-import json
-import time
-from functools import wraps
-
-class LLMCache:
-    def __init__(self, ttl: int = 3600):
-        self._store: dict = {}
-        self.ttl = ttl
-        self.hits = 0
-        self.misses = 0
-
-    def _key(self, messages: list, model: str, **kwargs) -&gt; str:
-        payload = json.dumps({&quot;messages&quot;: messages, &quot;model&quot;: model, **kwargs}, sort_keys=True)
-        return hashlib.sha256(payload.encode()).hexdigest()
-
-    def get(self, messages: list, model: str, **kwargs) -&gt; str | None:
-        key = self._key(messages, model, **kwargs)
-        entry = self._store.get(key)
-        if entry and time.time() - entry[&quot;ts&quot;] &lt; self.ttl:
-            self.hits += 1
-            return entry[&quot;value&quot;]
-        self.misses += 1
-        return None
-
-    def set(self, messages: list, model: str, value: str, **kwargs):
-        key = self._key(messages, model, **kwargs)
-        self._store[key] = {&quot;value&quot;: value, &quot;ts&quot;: time.time()}
-
-    @property
-    def hit_rate(self) -&gt; float:
-        total = self.hits + self.misses
-        return self.hits / total if total &gt; 0 else 0.0
-
-
-cache = LLMCache(ttl=3600)
-
-def cached_complete(messages: list, model: str = &quot;gpt-4o-mini&quot;, **kwargs) -&gt; str:
-    # Check cache first
-    cached = cache.get(messages, model, **kwargs)
-    if cached:
-        return cached
-
-    # Call LLM
-    response = llm.complete(messages, model=model, **kwargs)
-    cache.set(messages, model, response, **kwargs)
-    return response
-</code></pre>
+<h2>Common Mistakes Developers Make</h2>
+<ol>
+<li><p><strong>Embedding prompts as inline strings</strong> — Prompts get changed accidentally, are hard to test, and cannot be version-controlled independently. Store prompts as structured objects or files.</p>
+</li>
+<li><p><strong>No retry logic on API calls</strong> — LLM APIs fail transiently. Without retry with exponential backoff, every rate limit event surfaces as a user-facing error.</p>
+</li>
+<li><p><strong>Ignoring token management</strong> — Sending 100,000-token documents to models with 16K context windows silently truncates content. Measure and manage tokens explicitly.</p>
+</li>
+<li><p><strong>No observability</strong> — Without logging prompt inputs, outputs, latencies, and token counts, you cannot measure cost, detect quality regressions, or debug production failures.</p>
+</li>
+<li><p><strong>Evaluating only on happy paths</strong> — Test what happens when the model returns unexpected formats, when retrieval returns no results, and when the user sends adversarial inputs.</p>
+</li>
+</ol>
 <hr>
-<h2>Observability</h2>
-<pre><code class="language-python">import logging
-import time
-from contextlib import contextmanager
-from dataclasses import dataclass, field
-from datetime import datetime
-
-@dataclass
-class LLMCallLog:
-    timestamp: str
-    model: str
-    prompt_tokens: int
-    completion_tokens: int
-    latency_ms: float
-    cost_usd: float
-    cached: bool = False
-    error: str = None
-
-COSTS = {
-    &quot;gpt-4o-mini&quot;: {&quot;input&quot;: 0.00015, &quot;output&quot;: 0.0006},
-    &quot;gpt-4o&quot;:      {&quot;input&quot;: 0.0025,  &quot;output&quot;: 0.01},
-}
-
-class LLMObserver:
-    def __init__(self):
-        self.calls: list[LLMCallLog] = []
-        self.logger = logging.getLogger(&quot;llm_observer&quot;)
-
-    @contextmanager
-    def track(self, model: str):
-        start = time.perf_counter()
-        log = LLMCallLog(
-            timestamp=datetime.utcnow().isoformat(),
-            model=model,
-            prompt_tokens=0,
-            completion_tokens=0,
-            latency_ms=0,
-            cost_usd=0,
-        )
-        try:
-            yield log
-        finally:
-            log.latency_ms = round((time.perf_counter() - start) * 1000, 1)
-            costs = COSTS.get(model, {&quot;input&quot;: 0, &quot;output&quot;: 0})
-            log.cost_usd = round(
-                log.prompt_tokens / 1000 * costs[&quot;input&quot;]
-                + log.completion_tokens / 1000 * costs[&quot;output&quot;],
-                6,
-            )
-            self.calls.append(log)
-            self.logger.info(f&quot;LLM call: {log}&quot;)
-
-    def summary(self) -&gt; dict:
-        if not self.calls:
-            return {}
-        return {
-            &quot;total_calls&quot;: len(self.calls),
-            &quot;total_cost_usd&quot;: round(sum(c.cost_usd for c in self.calls), 4),
-            &quot;avg_latency_ms&quot;: round(sum(c.latency_ms for c in self.calls) / len(self.calls), 1),
-            &quot;total_tokens&quot;: sum(c.prompt_tokens + c.completion_tokens for c in self.calls),
-        }
-
-
-observer = LLMObserver()
-
-def observed_complete(messages: list, model: str = &quot;gpt-4o-mini&quot;) -&gt; str:
-    from openai import OpenAI
-    client = OpenAI()
-
-    with observer.track(model) as log:
-        response = client.chat.completions.create(model=model, messages=messages)
-        log.prompt_tokens = response.usage.prompt_tokens
-        log.completion_tokens = response.usage.completion_tokens
-        return response.choices[0].message.content
-</code></pre>
-<hr>
-<h2>Testing LLM Applications</h2>
-<pre><code class="language-python">import pytest
-
-class TestSummarizer:
-    def setup_method(self):
-        self.summarizer = YourSummarizer()
-
-    def test_returns_non_empty_string(self):
-        result = self.summarizer.summarize(&quot;The quick brown fox...&quot;)
-        assert isinstance(result, str)
-        assert len(result) &gt; 10
-
-    def test_output_shorter_than_input(self):
-        long_text = &quot;This is a long document. &quot; * 100
-        summary = self.summarizer.summarize(long_text)
-        assert len(summary) &lt; len(long_text)
-
-    def test_contains_key_concepts(self):
-        text = &quot;LangChain is a framework for building LLM-powered applications.&quot;
-        summary = self.summarizer.summarize(text)
-        # Check that key concepts are preserved
-        assert any(kw in summary.lower() for kw in [&quot;langchain&quot;, &quot;llm&quot;, &quot;framework&quot;])
-
-    def test_handles_empty_input(self):
-        with pytest.raises(ValueError):
-            self.summarizer.summarize(&quot;&quot;)
-
-    def test_format_compliance(self):
-        result = self.summarizer.summarize(&quot;Some text...&quot;)
-        lines = result.strip().split(&#39;\n&#39;)
-        # Check expected format: bullet points
-        bullet_lines = [l for l in lines if l.strip().startswith(&#39;-&#39;) or l.strip().startswith(&#39;•&#39;)]
-        assert len(bullet_lines) &gt;= 2
-</code></pre>
+<h2>Best Practices</h2>
+<ul>
+<li><strong>Version prompts in source control</strong> — Each prompt has a name and version. Changes are tracked with git. You can always roll back a prompt change independently of code changes.</li>
+<li><strong>Log every LLM call with full context</strong> — Log prompt, response, token counts, latency, and cost. This data powers both debugging and cost optimization.</li>
+<li><strong>Set hard token budgets</strong> — Measure token usage per feature and set hard limits. Unbounded generation is expensive and slow.</li>
+<li><strong>Design for graceful degradation</strong> — If the primary model is unavailable, return a simplified response or route to a fallback model. Never surface raw API errors to users.</li>
+<li><strong>Test with a regression suite</strong> — Maintain 20–50 test cases per prompt. Run them automatically when a prompt changes.</li>
+<li><strong>Separate staging and production environments</strong> — Run different prompt versions and models in each. Never test changes live on production traffic.</li>
+</ul>
 <hr>
 <h2>FAQ</h2>
 <p><strong>Should I use LangChain or build from scratch?</strong>
-LangChain for rapid prototyping. Custom for production (simpler dependency tree, easier debugging, full control). Many teams start with LangChain and gradually replace components.</p>
-<p><strong>How do I prevent prompt injection?</strong>
+LangChain for rapid prototyping. Custom for production when you need a simpler dependency tree, easier debugging, and full control. Many teams start with LangChain and gradually replace components as they understand the requirements better.</p>
+<p><strong>How do I prevent prompt injection attacks?</strong>
 Separate system prompts from user input clearly. Sanitize user input. Use structured outputs instead of free-form responses where possible. Never execute code from LLM output without sandboxing.</p>
+<p><strong>How should I handle very long documents?</strong>
+Chunk and retrieve with RAG rather than stuffing the entire document into context. This produces better results and costs less. See <a href="/blog/rag-explained/">RAG explained</a> for the architecture.</p>
+<p><strong>What observability tools work for LLM applications?</strong>
+LangSmith for LangChain applications. Helicone or Langfuse as API proxies for any provider. Weights &amp; Biases for tracking prompt experiments systematically.</p>
+<hr>
+<h2>Further Reading</h2>
+<ul>
+<li><a href="https://python.langchain.com/docs/concepts/lcel/">LangChain LCEL Documentation</a></li>
+<li><a href="https://platform.openai.com/docs/guides/rate-limits">OpenAI API Rate Limits and Retries</a></li>
+<li><a href="https://docs.smith.langchain.com/">LangSmith Observability</a></li>
+<li><a href="https://www.anthropic.com/research/responsible-development">Anthropic Responsible Development Guide</a></li>
+<li><a href="https://github.com/openai/tiktoken">tiktoken Token Counter</a></li>
+</ul>
 <hr>
 <h2>What to Learn Next</h2>
 <ul>
-<li><strong>Deploying AI applications</strong> → <a href="/blog/deploying-ai-applications/">Deploying AI Applications</a></li>
-<li><strong>LangChain patterns</strong> → <a href="/blog/langchain-tutorial-complete/">LangChain Complete Tutorial</a></li>
-<li><strong>Building chatbots</strong> → <a href="/blog/building-ai-chatbots/">Building AI Chatbots</a></li>
+<li><a href="/blog/langchain-tutorial-complete/">LangChain Complete Tutorial</a> — the orchestration layer in practice</li>
+<li><a href="/blog/building-ai-chatbots/">Building AI Chatbots</a> — applying these patterns to a complete conversational application</li>
+<li><a href="/blog/rag-system-architecture/">RAG System Architecture</a> — architecture patterns specifically for retrieval-augmented systems</li>
 </ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -633,6 +510,34 @@ Separate system prompts from user input clearly. Sanitize user input. Use struct
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

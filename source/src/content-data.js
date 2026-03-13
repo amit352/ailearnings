@@ -6,7 +6,7 @@ const BLOG_POSTS = [
     "description": "Learn advanced prompt engineering strategies including prompt chaining and tool use.",
     "date": "2026-03-13",
     "date_display": "March 13, 2026",
-    "mins": 5
+    "mins": 8
   },
   {
     "slug": "ai-agents-guide",
@@ -14,7 +14,7 @@ const BLOG_POSTS = [
     "description": "Learn what AI agents are and how developers build autonomous AI systems.",
     "date": "2026-03-13",
     "date_display": "March 13, 2026",
-    "mins": 5
+    "mins": 7
   },
   {
     "slug": "ai-learning-roadmap",
@@ -22,7 +22,7 @@ const BLOG_POSTS = [
     "description": "A step-by-step roadmap for developers to learn AI and build AI applications.",
     "date": "2026-03-13",
     "date_display": "March 13, 2026",
-    "mins": 5
+    "mins": 8
   },
   {
     "slug": "ai-tools-for-developers",
@@ -30,7 +30,7 @@ const BLOG_POSTS = [
     "description": "Explore the best AI tools developers use to build modern AI applications.",
     "date": "2026-03-13",
     "date_display": "March 13, 2026",
-    "mins": 5
+    "mins": 7
   },
   {
     "slug": "attention-mechanism-explained",
@@ -38,7 +38,7 @@ const BLOG_POSTS = [
     "description": "Understand how attention mechanisms allow AI models to focus on relevant context.",
     "date": "2026-03-13",
     "date_display": "March 13, 2026",
-    "mins": 5
+    "mins": 7
   },
   {
     "slug": "build-ai-agents",
@@ -46,7 +46,7 @@ const BLOG_POSTS = [
     "description": "Learn how developers build AI agents using LLM frameworks.",
     "date": "2026-03-13",
     "date_display": "March 13, 2026",
-    "mins": 5
+    "mins": 6
   },
   {
     "slug": "build-ai-app",
@@ -54,7 +54,7 @@ const BLOG_POSTS = [
     "description": "A practical guide for developers building AI-powered applications.",
     "date": "2026-03-13",
     "date_display": "March 13, 2026",
-    "mins": 5
+    "mins": 7
   },
   {
     "slug": "build-rag-app",
@@ -62,7 +62,7 @@ const BLOG_POSTS = [
     "description": "Learn how to build a Retrieval-Augmented Generation app using vector databases and LLMs.",
     "date": "2026-03-13",
     "date_display": "March 13, 2026",
-    "mins": 5
+    "mins": 6
   },
   {
     "slug": "chain-of-thought-prompting",
@@ -110,7 +110,7 @@ const BLOG_POSTS = [
     "description": "Learn how to use LangChain to build AI applications with LLMs.",
     "date": "2026-03-13",
     "date_display": "March 13, 2026",
-    "mins": 4
+    "mins": 7
   },
   {
     "slug": "llm-fine-tuning-guide",
@@ -134,7 +134,7 @@ const BLOG_POSTS = [
     "description": "Learn how to use the OpenAI API to build AI-powered applications.",
     "date": "2026-03-13",
     "date_display": "March 13, 2026",
-    "mins": 4
+    "mins": 7
   },
   {
     "slug": "openai-python-client-guide",
@@ -166,7 +166,7 @@ const BLOG_POSTS = [
     "description": "Learn how QLoRA reduces memory requirements when fine-tuning LLMs.",
     "date": "2026-03-13",
     "date_display": "March 13, 2026",
-    "mins": 4
+    "mins": 6
   },
   {
     "slug": "rag-explained",
@@ -206,7 +206,7 @@ const BLOG_POSTS = [
     "description": "Learn the building blocks of AI agents — ReAct loops, tool use, planning, memory, and multi-agent coordination. Includes hands-on examples with LangChain and OpenAI.",
     "date": "2026-03-10",
     "date_display": "March 10, 2026",
-    "mins": 5
+    "mins": 7
   },
   {
     "slug": "ai-application-architecture",
@@ -214,7 +214,7 @@ const BLOG_POSTS = [
     "description": "Architectural patterns for production AI applications — prompt management, context windows, fallback strategies, observability, cost control, and testing LLM systems.",
     "date": "2026-03-10",
     "date_display": "March 10, 2026",
-    "mins": 5
+    "mins": 6
   },
   {
     "slug": "building-ai-chatbots",
@@ -230,7 +230,7 @@ const BLOG_POSTS = [
     "description": "Step-by-step guide to deploying AI applications — FastAPI serving, Docker containers, cloud deployment on AWS/GCP, model caching, rate limiting, and monitoring.",
     "date": "2026-03-10",
     "date_display": "March 10, 2026",
-    "mins": 4
+    "mins": 7
   },
   {
     "slug": "document-chunking-strategies",
@@ -254,7 +254,7 @@ const BLOG_POSTS = [
     "description": "Learn how to fine-tune large language models — full fine-tuning vs LoRA vs QLoRA, dataset preparation, training with Hugging Face, and avoiding common pitfalls.",
     "date": "2026-03-10",
     "date_display": "March 10, 2026",
-    "mins": 4
+    "mins": 7
   },
   {
     "slug": "langchain-rag-tutorial",
@@ -262,7 +262,7 @@ const BLOG_POSTS = [
     "description": "Build a complete RAG pipeline with LangChain — document loading, text splitting, vector store indexing, retrieval chains, and conversational Q&A with memory.",
     "date": "2026-03-10",
     "date_display": "March 10, 2026",
-    "mins": 4
+    "mins": 7
   },
   {
     "slug": "langchain-tutorial-complete",
@@ -286,7 +286,7 @@ const BLOG_POSTS = [
     "description": "A developer-first introduction to machine learning — core concepts, types of ML, hands-on Python workflow, and how to go from data to a working model.",
     "date": "2026-03-10",
     "date_display": "March 10, 2026",
-    "mins": 4
+    "mins": 7
   },
   {
     "slug": "model-evaluation-and-metrics",
@@ -342,7 +342,7 @@ const BLOG_POSTS = [
     "description": "Deep dive into supervised learning — regression and classification algorithms, evaluation metrics, cross-validation, and how to pick the right model for your problem.",
     "date": "2026-03-10",
     "date_display": "March 10, 2026",
-    "mins": 4
+    "mins": 7
   },
   {
     "slug": "tool-use-and-function-calling",
@@ -366,7 +366,7 @@ const BLOG_POSTS = [
     "description": "The definitive AI learning roadmap for software developers in 2026. Follow 7 phases from AI foundations to building and shipping real AI projects — with free resources and milestone projects.",
     "date": "2026-03-09",
     "date_display": "March 9, 2026",
-    "mins": 5
+    "mins": 7
   },
   {
     "slug": "how-to-become-ai-engineer",

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Foundations for Developers: Core Concepts You Must Know | AI Learning Hub</title>
   <meta name="description" content="A developer-focused introduction to AI fundamentals: what AI, ML, and deep learning actually are, how they differ, and the mental models you need before writing your first AI application." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -53,7 +96,7 @@
   "datePublished": "2026-03-10",
   "dateModified": "2026-03-10",
   "author": {
-    "@type": "Organization",
+    "@type": "Person",
     "name": "AI Learning Hub",
     "url": "https://ailearnings.in/"
   },
@@ -179,13 +222,20 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">AI Foundations for Developers: Core Concepts You Must Know</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-10">March 10, 2026</time>
-          <span>·</span>
-          <span>5 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">AI Foundations for Developers: Core Concepts You Must Know</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AL</div>
+          <div class="author-info">
+            <div class="author-name">AI Learning Hub</div>
+            <div class="author-title">AI Learning Hub</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-10">March 10, 2026</time></span>
+              
+              <span class="sep">·</span>
+              <span>5 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -313,8 +363,18 @@ For training: yes, expensive. For inference via API: no — the cloud provider h
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AL</div>
+      <div>
+        <div class="bio-name">AI Learning Hub</div>
+        <div class="bio-title">AI Learning Hub</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -358,6 +418,34 @@ For training: yes, expensive. For inference via API: no — the cloud provider h
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

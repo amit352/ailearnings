@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LangChain Tutorial – Build AI Applications with LLMs | AI Learning Hub</title>
   <meta name="description" content="Learn how to use LangChain to build AI applications with LLMs." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -54,8 +97,8 @@
   "datePublished": "2026-03-13",
   "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,90 +217,160 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">LangChain Tutorial – Build AI Applications with LLMs</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-13">March 13, 2026</time>
-          <span>·</span>
-          <span>4 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">LangChain Tutorial – Build AI Applications with LLMs</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-13">March 13, 2026</time></span>
+              
+              <span class="sep">·</span>
+              <span>7 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
         <h1>LangChain Tutorial – Build AI Applications with LLMs</h1>
-<p>LangChain is the most widely used framework for building LLM-powered applications. It provides abstractions for chaining prompts, connecting to data sources, integrating tools, and orchestrating agents. This tutorial covers the core concepts and patterns developers use most in production.</p>
+<p>Every LLM application eventually runs into the same wall: raw API calls get messy fast. You need prompt templates, context retrieval, output parsing, memory across turns, and tool use — and wiring those together yourself produces fragile glue code that breaks every time the underlying model changes. LangChain exists to solve exactly this problem. It is the most widely adopted framework for building production LLM applications, and this tutorial shows you how to use it correctly from day one.</p>
 <hr>
 <h2>What is LangChain</h2>
-<p>LangChain is an open-source Python (and JavaScript) framework that simplifies building applications with large language models. It provides:</p>
+<p>LangChain is an open-source Python (and JavaScript) framework that provides composable abstractions for building LLM-powered applications. Rather than working with raw API calls and string concatenation, you work with typed components that plug together.</p>
+<p>Its core building blocks are:</p>
 <ul>
-<li><strong>Model wrappers</strong> — Unified interface for OpenAI, Anthropic, Gemini, and local models</li>
-<li><strong>Prompt templates</strong> — Parameterized, reusable prompt structures</li>
-<li><strong>Chains</strong> — Sequences of operations connecting prompts, models, and data</li>
-<li><strong>Retrievers</strong> — Components that fetch relevant documents for RAG</li>
-<li><strong>Agents</strong> — LLMs that decide which tools to call and in what order</li>
-<li><strong>Memory</strong> — Conversation history management</li>
+<li><strong>Model wrappers</strong> — A unified interface for OpenAI, Anthropic, Gemini, and local models via Ollama or HuggingFace</li>
+<li><strong>Prompt templates</strong> — Parameterized, reusable prompt structures with typed inputs</li>
+<li><strong>Chains</strong> — Sequences of operations connecting prompts, models, parsers, and data</li>
+<li><strong>Retrievers</strong> — Components that fetch relevant documents for RAG applications</li>
+<li><strong>Agents</strong> — LLMs that decide which tools to call, in what order, and when to stop</li>
+<li><strong>Memory</strong> — Abstractions for managing conversation history across turns</li>
 </ul>
-<p>LangChain handles the boilerplate so you focus on application logic.</p>
+<p>LangChain handles the boilerplate. You focus on application logic and prompt quality.</p>
 <hr>
 <h2>Why LangChain Matters for Developers</h2>
-<p>Building AI applications requires connecting many moving parts: prompt management, API calls, context retrieval, output parsing, and error handling. LangChain provides tested abstractions for each of these, reducing the amount of glue code you write.</p>
-<p>Key benefits:</p>
+<p>The practical value of LangChain shows up most clearly when your application needs to do more than one thing. A single-turn Q&amp;A call needs almost no framework. But a multi-turn assistant that retrieves documents, formats structured output, and calls external APIs suddenly has ten moving parts. LangChain&#39;s composable design handles this without requiring you to write custom orchestration logic.</p>
+<p>Key practical benefits:</p>
 <ul>
-<li><strong>Model-agnostic</strong> — Swap OpenAI for Claude or a local model with one line change</li>
-<li><strong>Built-in integrations</strong> — 100+ document loaders, vector stores, and tool connectors</li>
-<li><strong>LCEL (LangChain Expression Language)</strong> — Composable, pipeable syntax for building chains</li>
-<li><strong>LangSmith integration</strong> — Observability and debugging built in</li>
+<li><strong>Model-agnostic</strong> — Swap OpenAI for Claude or a local model with a single line change. Your chains work unchanged.</li>
+<li><strong>Built-in integrations</strong> — 100+ document loaders, vector store connectors, and tool integrations maintained by the community</li>
+<li><strong>LCEL (LangChain Expression Language)</strong> — A declarative, pipeable syntax for building chains that is more readable than nested callbacks</li>
+<li><strong>LangSmith integration</strong> — Every step of every chain can be traced, logged, and debugged without additional instrumentation</li>
 </ul>
-<p>For RAG specifically, LangChain is the most common choice. See <a href="/blog/rag-explained/">RAG explained</a> for the underlying pattern.</p>
+<p>For RAG specifically, LangChain is the dominant choice in production because it handles the entire pipeline from document loading to answer generation. See <a href="/blog/rag-explained/">RAG explained</a> for the underlying architecture.</p>
 <hr>
-<h2>How LangChain Works</h2>
-<h3>Installation</h3>
+<h2>Installation and Setup</h2>
 <pre><code class="language-bash">pip install langchain langchain-openai langchain-community
+export OPENAI_API_KEY=&quot;sk-...&quot;
 </code></pre>
 <h3>Basic LLM Call</h3>
+<p>The simplest possible LangChain usage: wrap a model and call it.</p>
 <pre><code class="language-python">from langchain_openai import ChatOpenAI
 
 llm = ChatOpenAI(model=&quot;gpt-4o-mini&quot;, temperature=0)
 response = llm.invoke(&quot;What is the difference between RAG and fine-tuning?&quot;)
 print(response.content)
 </code></pre>
-<h3>Prompt Templates</h3>
+<p>This already gives you more than a raw API call — the response is a typed <code>AIMessage</code> object with metadata, and you can swap <code>ChatOpenAI</code> for <code>ChatAnthropic</code> or <code>ChatOllama</code> without changing the rest of your code.</p>
+<hr>
+<h2>Prompt Templates and LCEL</h2>
+<p>Hardcoded prompt strings are the first thing you should replace. Prompt templates make prompts reusable, testable, and version-controlled.</p>
 <pre><code class="language-python">from langchain.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+from langchain_core.output_parsers import StrOutputParser
+
+llm = ChatOpenAI(model=&quot;gpt-4o-mini&quot;, temperature=0)
 
 prompt = ChatPromptTemplate.from_messages([
     (&quot;system&quot;, &quot;You are a helpful assistant that explains {topic} to developers.&quot;),
     (&quot;human&quot;, &quot;{question}&quot;)
 ])
 
-chain = prompt | llm
+# LCEL: pipe components together with |
+chain = prompt | llm | StrOutputParser()
 
 response = chain.invoke({
     &quot;topic&quot;: &quot;machine learning&quot;,
     &quot;question&quot;: &quot;What is gradient descent?&quot;
 })
-print(response.content)
+print(response)
 </code></pre>
-<p>The <code>|</code> operator is LCEL — it pipes the output of one component as input to the next.</p>
-<h3>Output Parsers</h3>
-<pre><code class="language-python">from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
-from pydantic import BaseModel
-
-# String output
-chain = prompt | llm | StrOutputParser()
-result = chain.invoke({&quot;topic&quot;: &quot;AI&quot;, &quot;question&quot;: &quot;What is RAG?&quot;})
-
-# Structured JSON output
-class Summary(BaseModel):
-    key_points: list[str]
-    difficulty: str
-    one_liner: str
-
-parser = JsonOutputParser(pydantic_object=Summary)
-json_chain = prompt | llm | parser
-</code></pre>
+<p>The <code>|</code> operator is LangChain Expression Language (LCEL). It passes the output of the left side as input to the right side. The pipeline above: formats the prompt → sends it to the model → parses the response to a plain string.</p>
+<p>This is more readable than the equivalent nested function calls, and it integrates automatically with LangSmith tracing.</p>
 <hr>
-<h2>Practical Examples</h2>
+<h2>Output Parsers and Structured Data</h2>
+<p>Raw string output from LLMs is hard to work with programmatically. Output parsers give you typed, structured results.</p>
+<pre><code class="language-python">from langchain_core.output_parsers import JsonOutputParser
+from pydantic import BaseModel, Field
+from typing import List
+
+class ContentSummary(BaseModel):
+    key_points: List[str] = Field(description=&quot;The 3 most important takeaways&quot;)
+    difficulty: str = Field(description=&quot;beginner, intermediate, or advanced&quot;)
+    one_liner: str = Field(description=&quot;One sentence describing the topic&quot;)
+
+parser = JsonOutputParser(pydantic_object=ContentSummary)
+
+prompt = ChatPromptTemplate.from_messages([
+    (&quot;system&quot;, &quot;You are a content analyst. Respond with valid JSON only.&quot;),
+    (&quot;human&quot;, &quot;Summarize this topic: {topic}\n\n{format_instructions}&quot;),
+])
+
+chain = prompt | llm | parser
+
+result = chain.invoke({
+    &quot;topic&quot;: &quot;vector databases in AI applications&quot;,
+    &quot;format_instructions&quot;: parser.get_format_instructions()
+})
+
+print(result[&quot;key_points&quot;])  # List[str] — typed output
+print(result[&quot;difficulty&quot;])  # &#39;intermediate&#39;
+</code></pre>
+<p>For stricter guarantees, use <code>with_structured_output</code> directly on the model — it uses OpenAI&#39;s JSON mode under the hood and retries automatically on malformed responses.</p>
+<hr>
+<h2>Building Chains with LCEL</h2>
+<h3>Multi-Step Processing Pipeline</h3>
+<p>LCEL lets you compose multi-step pipelines declaratively. Here is a two-stage pipeline: extract key facts, then summarize them.</p>
+<pre><code class="language-python">from langchain.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+
+llm = ChatOpenAI(model=&quot;gpt-4o-mini&quot;, temperature=0)
+parser = StrOutputParser()
+
+# Stage 1: Extract facts
+extract_prompt = PromptTemplate.from_template(
+    &quot;Extract the 3 most important facts from this text:\n\n{text}&quot;
+)
+
+# Stage 2: Summarize from facts
+summarize_prompt = PromptTemplate.from_template(
+    &quot;Write a 2-sentence executive summary based on these facts:\n\n{facts}&quot;
+)
+
+# Wire stages together — lambda bridges the two prompts
+pipeline = (
+    extract_prompt
+    | llm
+    | parser
+    | (lambda facts: {&quot;facts&quot;: facts})
+    | summarize_prompt
+    | llm
+    | parser
+)
+
+long_article = &quot;&quot;&quot;
+Large language models have fundamentally changed how developers build software.
+They can generate code, summarize documents, answer questions, and reason across
+complex problems. The cost per token has dropped 100x since 2020, making AI
+features economically viable for most applications...
+&quot;&quot;&quot;
+
+result = pipeline.invoke({&quot;text&quot;: long_article})
+print(result)
+</code></pre>
 <h3>Simple RAG Chain</h3>
 <pre><code class="language-python">from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import Chroma
@@ -274,79 +387,75 @@ qa_chain = RetrievalQA.from_chain_type(
     return_source_documents=True
 )
 
-result = qa_chain.invoke({&quot;query&quot;: &quot;How do I reset my password?&quot;})
+result = qa_chain.invoke({&quot;query&quot;: &quot;What is the company&#39;s vacation policy?&quot;})
 print(result[&quot;result&quot;])
+for doc in result[&quot;source_documents&quot;]:
+    print(f&quot;  Source: {doc.metadata.get(&#39;source&#39;)} page {doc.metadata.get(&#39;page&#39;)}&quot;)
 </code></pre>
-<h3>Conversational Chain with Memory</h3>
-<pre><code class="language-python">from langchain.memory import ConversationBufferMemory
+<h3>Conversational Memory</h3>
+<pre><code class="language-python">from langchain.memory import ConversationBufferWindowMemory
 from langchain.chains import ConversationChain
 
-memory = ConversationBufferMemory()
+# Keep only the last 5 turns to control context size
+memory = ConversationBufferWindowMemory(k=5)
 conversation = ConversationChain(llm=llm, memory=memory)
 
-conversation.predict(input=&quot;My name is Alex.&quot;)
-response = conversation.predict(input=&quot;What&#39;s my name?&quot;)
-print(response)  # Remembers &quot;Alex&quot;
-</code></pre>
-<h3>Multi-Step Processing Chain</h3>
-<pre><code class="language-python">from langchain.prompts import PromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-
-# Step 1: Extract facts
-extract_prompt = PromptTemplate.from_template(
-    &quot;Extract the 3 most important facts from this text:\n{text}&quot;
-)
-
-# Step 2: Summarize from facts
-summarize_prompt = PromptTemplate.from_template(
-    &quot;Write a 2-sentence summary based on these facts:\n{facts}&quot;
-)
-
-parser = StrOutputParser()
-
-# Chain steps together with LCEL
-pipeline = (
-    extract_prompt | llm | parser
-    | (lambda facts: {&quot;facts&quot;: facts})
-    | summarize_prompt | llm | parser
-)
-
-result = pipeline.invoke({&quot;text&quot;: long_article})
-print(result)
+conversation.predict(input=&quot;My name is Alex and I&#39;m building a RAG app.&quot;)
+response = conversation.predict(input=&quot;What should I focus on first?&quot;)
+print(response)  # Model knows your name is Alex and your project context
 </code></pre>
 <hr>
-<h2>Tools and Frameworks</h2>
-<p><strong>LangSmith</strong> — The observability and debugging companion to LangChain. Traces every prompt, intermediate step, and response. Essential for production debugging and prompt iteration.</p>
-<p><strong>LangGraph</strong> — Graph-based agent orchestration built on top of LangChain. Enables stateful, multi-step agents with cycles and conditional routing. Best for complex agent workflows.</p>
-<p><strong>LangServe</strong> — Deployment layer for LangChain applications. Exposes chains as REST APIs with auto-generated docs.</p>
-<p><strong>Chroma / FAISS / Pinecone</strong> — Vector stores used with LangChain&#39;s retriever interface. For details, see <a href="/blog/vector-database-explained/">vector databases explained</a>.</p>
+<h2>Tools and the LangChain Ecosystem</h2>
+<p><strong>LangSmith</strong> — The observability and debugging companion. It traces every prompt, intermediate output, and response in your chains. Essential for debugging why a retrieval chain returns wrong answers. Set it up by adding two environment variables:</p>
+<pre><code class="language-bash">export LANGCHAIN_TRACING_V2=true
+export LANGCHAIN_API_KEY=&quot;ls__...&quot;
+</code></pre>
+<p>Every chain invocation then appears in the LangSmith UI with full input/output visibility for each step.</p>
+<p><strong>LangGraph</strong> — Graph-based agent orchestration built on LangChain. Enables stateful, multi-step agents with cycles, conditional routing, and human-in-the-loop checkpoints. The right choice when your agent needs to loop, branch, or maintain complex state.</p>
+<p><strong>LangServe</strong> — Deployment layer for LangChain applications. Exposes any chain as a REST API with auto-generated OpenAPI docs and a built-in playground UI.</p>
+<p><strong>Chroma / FAISS / Pinecone</strong> — Vector stores used with LangChain&#39;s retriever interface. For a comparison of options, see <a href="/blog/vector-database-explained/">vector databases explained</a>.</p>
 <hr>
 <h2>Common Mistakes</h2>
-<p><strong>Hardcoding model names</strong> — Store model names in config or environment variables. Switching models should be a one-line change, not a refactor.</p>
-<p><strong>Not using LCEL</strong> — The older <code>LLMChain</code> and <code>SequentialChain</code> APIs are verbose and harder to extend. LCEL is more composable and better supported.</p>
-<p><strong>Ignoring token limits</strong> — LangChain does not automatically handle context overflow. Track token counts manually or use <code>ConversationSummaryMemory</code> for long conversations.</p>
-<p><strong>Skipping LangSmith</strong> — Running production chains without observability makes debugging extremely difficult. Set up LangSmith tracing from the start.</p>
-<p><strong>Treating the framework as magic</strong> — LangChain simplifies the boilerplate but does not fix bad prompts or wrong retrieval. Understand what each component does before using it.</p>
+<p><strong>Hardcoding model names in chains</strong> — Store model names in environment variables or config files. Switching from <code>gpt-4o-mini</code> to <code>gpt-4o</code> should be a one-line change in configuration, not a hunt through your codebase.</p>
+<p><strong>Using the legacy chain classes</strong> — The older <code>LLMChain</code>, <code>SequentialChain</code>, and <code>ConversationChain</code> APIs still work but are being phased out. LCEL is more composable, better integrated with LangSmith, and actively maintained. New code should use LCEL.</p>
+<p><strong>Ignoring token limits</strong> — LangChain does not automatically truncate inputs that exceed the model&#39;s context window. For long conversations, switch from <code>ConversationBufferMemory</code> to <code>ConversationSummaryMemory</code>, which summarizes older turns instead of keeping all of them verbatim.</p>
+<p><strong>Skipping LangSmith for development</strong> — It takes two minutes to enable and saves hours of debugging. When a chain returns a wrong answer, LangSmith shows you exactly which step produced bad output.</p>
+<p><strong>Treating the framework as magic</strong> — LangChain reduces boilerplate but does not fix bad prompts or poor retrieval quality. If your RAG application gives wrong answers, the problem is almost always in chunking strategy, retrieval parameters, or prompt quality — not in LangChain itself.</p>
+<p><strong>Not pinning the version</strong> — LangChain releases breaking changes frequently. Pin the version in your <code>requirements.txt</code> and upgrade deliberately. Running <code>pip install --upgrade langchain</code> in production can break your application.</p>
 <hr>
 <h2>Best Practices</h2>
-<ul>
-<li><strong>Use LCEL for all new chains</strong> — It is cleaner, more composable, and better integrated with LangSmith tracing than the legacy chain classes.</li>
-<li><strong>Test each component independently</strong> — Prompt templates, retrievers, and output parsers can each be tested in isolation before wiring them together.</li>
-<li><strong>Set <code>temperature=0</code> for deterministic tasks</strong> — Extraction, classification, and structured output should be deterministic. Use higher temperature only for generative tasks.</li>
-<li><strong>Use streaming for long responses</strong> — LangChain supports streaming out of the box. For user-facing applications, stream responses to reduce perceived latency.</li>
-<li><strong>Pin LangChain versions</strong> — LangChain evolves rapidly. Pin the version in your requirements file and upgrade deliberately.</li>
-</ul>
+<ol>
+<li><strong>Start with LCEL for all new chains</strong> — It is more readable, better tested, and integrates with all modern LangChain features.</li>
+<li><strong>Test each component in isolation</strong> — A prompt template, a retriever, and an output parser can each be unit-tested independently before wiring them together.</li>
+<li><strong>Set <code>temperature=0</code> for structured tasks</strong> — Extraction, classification, and JSON output should be deterministic. Use higher temperatures only when you actually want creative variation.</li>
+<li><strong>Use streaming for user-facing applications</strong> — LangChain supports streaming with <code>.stream()</code> instead of <code>.invoke()</code>. Users perceive streamed responses as faster, even when total latency is the same.</li>
+<li><strong>Log token usage per chain</strong> — Track which chains consume the most tokens. The cost profile of a production application is rarely what you expect at design time.</li>
+<li><strong>Use <code>RunnableParallel</code> for concurrent steps</strong> — If two retrieval steps are independent, run them in parallel with <code>RunnableParallel</code> to reduce total latency.</li>
+</ol>
 <hr>
-<h2>Summary</h2>
-<p>LangChain provides the building blocks for production LLM applications: prompt templates, model wrappers, chains, retrievers, agents, and memory. The LCEL syntax makes composing these components declarative and readable.</p>
-<p>Start with simple chains using LCEL. Add retrieval for document Q&amp;A. Graduate to agents when your application needs to decide which tools to call. Use LangSmith for observability throughout.</p>
-<p>For building a complete retrieval application, see <a href="/blog/build-rag-app/">build a RAG app</a>. For agent-specific patterns, see <a href="/blog/langchain-agents/">LangChain agents</a>. For deploying what you build, see <a href="/blog/build-ai-app/">how to build your first AI app</a>.</p>
+<h2>What to Learn Next</h2>
+<p>LangChain is a means to an end. Once you understand how chains and retrievers work, apply them to real problems:</p>
+<ul>
+<li><strong>Build a complete retrieval app end-to-end</strong> → <a href="/blog/build-rag-app/">How to Build a RAG Application</a></li>
+<li><strong>Go deeper on the RAG architecture</strong> → <a href="/blog/rag-explained/">RAG Explained</a></li>
+<li><strong>Connect an LLM to your own data with OpenAI directly</strong> → <a href="/blog/openai-api-tutorial/">OpenAI API Tutorial</a></li>
+</ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -390,6 +499,34 @@ print(result)
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

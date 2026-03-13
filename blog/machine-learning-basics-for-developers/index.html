@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Machine Learning Basics for Developers: A Practical Introduction | AI Learning Hub</title>
   <meta name="description" content="A developer-first introduction to machine learning — core concepts, types of ML, hands-on Python workflow, and how to go from data to a working model." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -52,10 +95,10 @@
   "image": "https://ailearnings.in/og-image.jpg",
   "url": "https://ailearnings.in/blog/machine-learning-basics-for-developers/",
   "datePublished": "2026-03-10",
-  "dateModified": "2026-03-10",
+  "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,134 +217,160 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">Machine Learning Basics for Developers: A Practical Introduction</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-10">March 10, 2026</time>
-          <span>·</span>
-          <span>4 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">Machine Learning Basics for Developers: A Practical Introduction</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-10">March 10, 2026</time></span>
+              <span class="sep">·</span><span>Updated <time datetime="2026-03-13">March 13, 2026</time></span>
+              <span class="sep">·</span>
+              <span>7 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
-        <h2>Learning Objectives</h2>
-<p>By the end of this guide you will be able to:</p>
-<ul>
-<li>Explain what machine learning is and how it differs from traditional programming</li>
-<li>Identify the three main types of ML and when to use each</li>
-<li>Set up a Python ML environment and run a complete training pipeline</li>
-<li>Understand the train/validate/test workflow</li>
-<li>Know where to go next on the ML path</li>
-</ul>
+        <h1>Machine Learning Basics for Developers: A Practical Introduction</h1>
+<p>You already know how to write software. You know how to tell a computer exactly what to do. Machine learning asks you to unlearn that instinct — instead of writing rules, you show the system examples and let it discover the rules itself. That mental shift is the hardest part of learning ML. The code is actually straightforward, especially with Python&#39;s ecosystem. This guide gets you from zero to a working trained model with a complete understanding of what each step does.</p>
 <hr>
 <h2>What Is Machine Learning?</h2>
-<p>In traditional programming you write explicit rules: <strong>if X then Y</strong>. Machine learning flips that model. Instead of writing rules, you feed the system examples (data) and let it discover the rules itself.</p>
-<pre><code>Traditional: Input + Rules → Output
-Machine Learning: Input + Output → Rules (model)
+<p>In traditional programming, the developer is the rule-maker:</p>
+<pre><code>Traditional:       Input + Rules → Output
+Machine Learning:  Input + Output → Rules (model)
 </code></pre>
-<p>The &quot;rules&quot; learned by the model are represented as numeric parameters — millions or billions of numbers that encode patterns from training data.</p>
+<p>You feed labeled examples to a training algorithm. The algorithm adjusts millions of internal numeric parameters until the model&#39;s predictions match the labels as closely as possible. Those parameters — collectively called the model — encode the patterns the algorithm discovered.</p>
+<p>At inference time, you feed new inputs to the trained model and it applies those learned patterns to produce predictions. No explicit rules. No <code>if/else</code> chains. The rules are implicit in the weights.</p>
+<p>This matters for developers because it means ML is the right tool for problems where the rules are too complex, too numerous, or too variable to write by hand: image recognition, language understanding, fraud detection, recommendation systems.</p>
 <hr>
 <h2>Three Types of Machine Learning</h2>
 <h3>1. Supervised Learning</h3>
 <p>You provide labeled examples. The model learns to map inputs to outputs.</p>
 <ul>
-<li><strong>Regression</strong> — predict a continuous value (e.g., house price)</li>
-<li><strong>Classification</strong> — predict a category (e.g., spam / not spam)</li>
+<li><strong>Regression</strong> — predict a continuous value (house price, temperature, stock change)</li>
+<li><strong>Classification</strong> — predict a category (spam/not spam, disease positive/negative, digit 0–9)</li>
 </ul>
-<p>Most production ML is supervised learning.</p>
+<p>This is the dominant type in production systems. If you have labeled data, you probably want supervised learning.</p>
 <h3>2. Unsupervised Learning</h3>
 <p>No labels. The model finds structure in raw data.</p>
 <ul>
-<li><strong>Clustering</strong> — group similar items (K-Means, DBSCAN)</li>
-<li><strong>Dimensionality reduction</strong> — compress high-dimensional data (PCA, t-SNE)</li>
+<li><strong>Clustering</strong> — group similar items (K-Means, DBSCAN). Used for customer segmentation, topic modeling, anomaly detection.</li>
+<li><strong>Dimensionality reduction</strong> — compress high-dimensional data into fewer dimensions (PCA, t-SNE, UMAP). Used for visualization and feature engineering.</li>
 </ul>
-<p>Useful for customer segmentation, anomaly detection, data exploration.</p>
+<p>Unsupervised learning is useful for data exploration when you do not have labels or do not know what you are looking for yet.</p>
 <h3>3. Reinforcement Learning</h3>
-<p>An agent takes actions in an environment and receives rewards or penalties. It learns a policy that maximizes cumulative reward.</p>
-<p>Used in game-playing AI, robotics, and recommendation systems.</p>
+<p>An agent takes actions in an environment, receives rewards or penalties, and learns a policy that maximizes cumulative reward. Used in game-playing AI (AlphaGo), robotics, and increasingly in training LLMs via RLHF.</p>
+<p>Most developers working on applications use supervised learning. Reinforcement learning has a steep learning curve and is typically reserved for specialized research or control problems.</p>
 <hr>
 <h2>Core Concepts Every Developer Needs</h2>
 <h3>Features and Labels</h3>
 <ul>
-<li><strong>Feature</strong> — an input variable (e.g., number of bedrooms, user age)</li>
-<li><strong>Label</strong> — the target you are predicting (e.g., sale price, churn = yes/no)</li>
+<li><strong>Feature</strong> — an input variable (number of bedrooms, user age, word frequency, pixel value)</li>
+<li><strong>Label</strong> — the target you are predicting (sale price, churn yes/no, sentiment score)</li>
 </ul>
-<h3>Training vs Inference</h3>
+<p>The quality of your features determines the ceiling of your model&#39;s performance. Garbage in, garbage out applies here more than anywhere.</p>
+<h3>Training, Validation, and Test Sets</h3>
 <ul>
-<li><strong>Training</strong> — the process of fitting model parameters on labeled data</li>
-<li><strong>Inference</strong> — using a trained model to make predictions on new data</li>
+<li><strong>Training set</strong> — the data the model learns from</li>
+<li><strong>Validation set</strong> — used during development to measure performance and tune hyperparameters</li>
+<li><strong>Test set</strong> — held out completely until final evaluation; simulates real-world performance</li>
 </ul>
+<p>The cardinal rule: never touch the test set until you are done experimenting. Using it to make decisions inflates your reported performance estimate.</p>
 <h3>Overfitting and Underfitting</h3>
 <ul>
-<li><strong>Overfitting</strong> — model memorizes training data, performs poorly on new data</li>
-<li><strong>Underfitting</strong> — model is too simple, misses patterns in training data</li>
-<li><strong>Sweet spot</strong> — good generalization: performs well on unseen data</li>
+<li><strong>Overfitting</strong> — the model memorizes training data, including noise. High training accuracy, low test accuracy.</li>
+<li><strong>Underfitting</strong> — the model is too simple to capture the patterns. Low accuracy on both training and test sets.</li>
+<li><strong>Good generalization</strong> — performs well on training data and on unseen test data.</li>
 </ul>
 <h3>Hyperparameters vs Parameters</h3>
 <ul>
-<li><strong>Parameters</strong> — learned from data (weights in a neural network)</li>
-<li><strong>Hyperparameters</strong> — set by you before training (learning rate, number of trees)</li>
+<li><strong>Parameters</strong> — learned from data (weights in a neural network, thresholds in a decision tree). You do not set these; training does.</li>
+<li><strong>Hyperparameters</strong> — set by you before training (learning rate, number of trees, regularization strength, tree depth). These control the training process itself.</li>
 </ul>
 <hr>
 <h2>Step-by-Step: Your First ML Model in Python</h2>
-<h3>Step 1 — Install Dependencies</h3>
+<p>This walkthrough trains a real model on real data and evaluates it properly.</p>
+<h3>Step 1: Install Dependencies</h3>
 <pre><code class="language-bash">pip install scikit-learn pandas numpy matplotlib
 </code></pre>
-<h3>Step 2 — Load and Explore Data</h3>
+<h3>Step 2: Load and Explore Data</h3>
 <pre><code class="language-python">import pandas as pd
 from sklearn.datasets import load_iris
 
+# The Iris dataset: 150 flowers, 4 measurements each, 3 species
 data = load_iris(as_frame=True)
 df = data.frame
+
 print(df.head())
 print(df.describe())
-print(df[&#39;target&#39;].value_counts())
+print(df[&#39;target&#39;].value_counts())  # Check class balance
 </code></pre>
-<h3>Step 3 — Split Data</h3>
+<p>Always look at your data before training. Check for missing values, class imbalance, and outliers. Surprises in data cause more production failures than model code bugs.</p>
+<h3>Step 3: Split Data</h3>
 <pre><code class="language-python">from sklearn.model_selection import train_test_split
 
 X = df.drop(&#39;target&#39;, axis=1)
 y = df[&#39;target&#39;]
 
+# 80% train, 20% test — stratify preserves class proportions
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
+    X, y, test_size=0.2, random_state=42, stratify=y
 )
-print(f&quot;Train: {len(X_train)}, Test: {len(X_test)}&quot;)
+print(f&quot;Train: {len(X_train)} samples, Test: {len(X_test)} samples&quot;)
 </code></pre>
-<h3>Step 4 — Train a Model</h3>
+<p>The <code>stratify=y</code> argument ensures each split has the same class proportions as the full dataset. For imbalanced classification problems, this is critical.</p>
+<h3>Step 4: Train a Model</h3>
 <pre><code class="language-python">from sklearn.ensemble import RandomForestClassifier
 
-model = RandomForestClassifier(n_estimators=100, random_state=42)
+model = RandomForestClassifier(
+    n_estimators=100,  # number of trees
+    max_depth=None,    # grow trees until leaves are pure
+    random_state=42
+)
 model.fit(X_train, y_train)
 </code></pre>
-<h3>Step 5 — Evaluate</h3>
-<pre><code class="language-python">from sklearn.metrics import accuracy_score, classification_report
+<h3>Step 5: Evaluate</h3>
+<pre><code class="language-python">from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 y_pred = model.predict(X_test)
+
 print(f&quot;Accuracy: {accuracy_score(y_test, y_pred):.3f}&quot;)
+print()
 print(classification_report(y_test, y_pred, target_names=data.target_names))
+print()
+print(&quot;Confusion Matrix:&quot;)
+print(confusion_matrix(y_test, y_pred))
 </code></pre>
-<h3>Step 6 — Make Predictions</h3>
+<p>The classification report shows precision, recall, and F1 score per class — much more informative than a single accuracy number, especially when classes are imbalanced.</p>
+<h3>Step 6: Make Predictions on New Data</h3>
 <pre><code class="language-python">import numpy as np
 
-sample = np.array([[5.1, 3.5, 1.4, 0.2]])  # one flower measurement
+# One flower measurement: [sepal_length, sepal_width, petal_length, petal_width]
+sample = np.array([[5.1, 3.5, 1.4, 0.2]])
 prediction = model.predict(sample)
+probabilities = model.predict_proba(sample)
+
 print(f&quot;Predicted class: {data.target_names[prediction[0]]}&quot;)
+print(f&quot;Confidence: {probabilities.max():.1%}&quot;)
 </code></pre>
 <hr>
 <h2>The ML Workflow at a Glance</h2>
-<pre><code>1. Define the problem
-2. Collect and label data
-3. Explore and clean data (EDA)
-4. Engineer features
-5. Select and train a model
-6. Evaluate on validation set
-7. Tune hyperparameters
-8. Final test on held-out test set
-9. Deploy and monitor
-</code></pre>
-<p>Never touch the test set until you are ready for final evaluation. Treat it as a proxy for production data.</p>
+<p>A production ML project follows this sequence. Each step has failure modes; do not skip any.</p>
+<ol>
+<li><strong>Define the problem</strong> — What exactly are you predicting? What does success look like numerically?</li>
+<li><strong>Collect and label data</strong> — Data quality determines the performance ceiling.</li>
+<li><strong>Exploratory Data Analysis (EDA)</strong> — Understand distributions, missing values, correlations.</li>
+<li><strong>Feature engineering</strong> — Transform raw data into signals the model can use.</li>
+<li><strong>Select a baseline model</strong> — Always start simple (logistic regression, decision tree).</li>
+<li><strong>Train and validate</strong> — Use cross-validation, not a single split.</li>
+<li><strong>Tune hyperparameters</strong> — Grid search or random search on the validation set.</li>
+<li><strong>Final test evaluation</strong> — Run on the held-out test set once.</li>
+<li><strong>Deploy and monitor</strong> — Track prediction distribution and model performance over time.</li>
+</ol>
 <hr>
 <h2>Essential Algorithms to Know</h2>
 <table>
@@ -309,97 +378,95 @@ print(f&quot;Predicted class: {data.target_names[prediction[0]]}&quot;)
 <tr>
 <th>Algorithm</th>
 <th>Type</th>
-<th>Good For</th>
+<th>Best For</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>Linear/Logistic Regression</td>
-<td>Supervised</td>
-<td>Baselines, interpretability</td>
+<td>Linear Regression</td>
+<td>Supervised / Regression</td>
+<td>Interpretable baselines, linear relationships</td>
+</tr>
+<tr>
+<td>Logistic Regression</td>
+<td>Supervised / Classification</td>
+<td>Fast baseline, probability estimates</td>
 </tr>
 <tr>
 <td>Decision Tree</td>
 <td>Supervised</td>
-<td>Tabular data, explainability</td>
+<td>Interpretability, non-linear patterns</td>
 </tr>
 <tr>
 <td>Random Forest</td>
 <td>Supervised</td>
-<td>Robust tabular predictions</td>
+<td>Robust tabular predictions, feature importance</td>
 </tr>
 <tr>
 <td>Gradient Boosting (XGBoost)</td>
 <td>Supervised</td>
-<td>Winning Kaggle competitions</td>
+<td>Best performance on tabular data</td>
 </tr>
 <tr>
 <td>K-Means</td>
 <td>Unsupervised</td>
-<td>Clustering</td>
+<td>Customer segmentation, clustering</td>
 </tr>
 <tr>
 <td>PCA</td>
 <td>Unsupervised</td>
-<td>Dimensionality reduction</td>
+<td>Dimensionality reduction, visualization</td>
 </tr>
 <tr>
 <td>Neural Networks</td>
 <td>Supervised</td>
-<td>Images, text, audio</td>
+<td>Images, text, audio, any unstructured data</td>
 </tr>
 </tbody></table>
-<p>Always start with a simple baseline (logistic regression or a decision tree) before reaching for deep learning.</p>
+<p><strong>The most important advice in this table</strong>: always start with a simple baseline before reaching for neural networks. A logistic regression trained in seconds often beats a neural network trained for hours when the dataset is small or the features are already informative.</p>
 <hr>
-<h2>Troubleshooting Common Issues</h2>
-<p><strong>Low accuracy on training data (underfitting)</strong></p>
-<ul>
-<li>Try a more complex model</li>
-<li>Add more features</li>
-<li>Reduce regularization</li>
-</ul>
-<p><strong>High training accuracy, low test accuracy (overfitting)</strong></p>
-<ul>
-<li>Get more data</li>
-<li>Add regularization (L1/L2, dropout)</li>
-<li>Reduce model complexity</li>
-<li>Use cross-validation</li>
-</ul>
-<p><strong>Training is very slow</strong></p>
-<ul>
-<li>Use vectorized operations (NumPy/pandas), not Python loops</li>
-<li>Reduce dataset size for prototyping</li>
-<li>Use GPU acceleration for deep learning</li>
-</ul>
-<p><strong>Class imbalance</strong></p>
-<ul>
-<li>Use <code>class_weight=&#39;balanced&#39;</code> in scikit-learn</li>
-<li>Oversample the minority class (SMOTE)</li>
-<li>Choose appropriate metrics (F1, AUC-ROC instead of accuracy)</li>
-</ul>
+<h2>Cross-Validation: Why a Single Split is Not Enough</h2>
+<p>A single train/test split gives you one performance estimate. That estimate depends heavily on which samples ended up in the test set. Cross-validation averages over multiple splits for a more reliable estimate.</p>
+<pre><code class="language-python">from sklearn.model_selection import cross_val_score, StratifiedKFold
+
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+scores = cross_val_score(model, X, y, cv=cv, scoring=&#39;accuracy&#39;)
+
+print(f&quot;CV Accuracy: {scores.mean():.3f} ± {scores.std():.3f}&quot;)
+# e.g., CV Accuracy: 0.967 ± 0.021
+</code></pre>
+<p>The standard deviation tells you how stable the model is across different data splits. High variance (±0.10 or more) suggests overfitting or an insufficiently large dataset.</p>
 <hr>
-<h2>FAQ</h2>
-<p><strong>Do I need a math degree to learn ML?</strong>
-No, but you need to be comfortable with: basic linear algebra (vectors, matrices), statistics (mean, variance, probability), and calculus concepts (derivatives, gradients). You can learn these as you go.</p>
-<p><strong>Python or R?</strong>
-Python. The ecosystem (scikit-learn, PyTorch, TensorFlow, LangChain) is vastly larger and it&#39;s what industry uses.</p>
-<p><strong>How much data do I need?</strong>
-For classical ML (random forests, XGBoost), hundreds to thousands of labeled examples can work. For deep learning, typically tens of thousands or more.</p>
-<p><strong>What is the difference between ML and deep learning?</strong>
-Deep learning is a subset of ML that uses multi-layer neural networks. It excels at unstructured data (images, text, audio) but requires more data and compute than classical ML.</p>
+<h2>Common Mistakes</h2>
+<p><strong>Leaking the test set</strong> — Using test data to make any decision during development inflates your performance estimate and makes your evaluation meaningless. The test set is sacred. Look at it once, at the very end.</p>
+<p><strong>Treating accuracy as the only metric</strong> — On a dataset where 95% of examples are class A, a model that always predicts A has 95% accuracy and zero usefulness. Always check precision, recall, and F1 for classification problems.</p>
+<p><strong>Forgetting to scale features for linear models</strong> — Logistic regression, SVM, and neural networks are sensitive to feature scale. Use <code>StandardScaler</code> in a <code>Pipeline</code> to prevent data leakage when scaling.</p>
+<p><strong>Not setting a random seed</strong> — Results that cannot be reproduced are hard to debug and hard to trust. Always set <code>random_state</code> on train/test splits and models.</p>
+<p><strong>Reaching for deep learning too early</strong> — For tabular data with fewer than 100,000 rows, gradient boosting (XGBoost, LightGBM) almost always outperforms neural networks with far less compute and tuning effort.</p>
+<p><strong>Optimizing hyperparameters before fixing data quality</strong> — A model trained on bad data with perfect hyperparameters still performs poorly. Fix data quality issues first.</p>
 <hr>
 <h2>What to Learn Next</h2>
+<p>Machine learning is a broad field. After completing your first model, go deeper in the direction that matches your goals:</p>
 <ul>
-<li><strong>Supervised learning in depth</strong> → <a href="/blog/machine-learning-roadmap/">Machine Learning Roadmap</a></li>
-<li><strong>Model evaluation and metrics</strong> → model-evaluation-and-metrics guide</li>
-<li><strong>Feature engineering</strong> → feature-engineering-guide</li>
-<li><strong>Become an AI engineer</strong> → <a href="/blog/how-to-become-ai-engineer/">How to Become an AI Engineer</a></li>
+<li><strong>Supervised learning algorithms in depth</strong> → <a href="/blog/supervised-learning-guide/">Supervised Learning Guide</a></li>
+<li><strong>How LLMs are built on these foundations</strong> → <a href="/blog/how-llms-work/">How LLMs Work</a></li>
+<li><strong>The full AI learning path</strong> → <a href="/blog/ai-learning-roadmap/">AI Learning Roadmap</a></li>
 </ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -443,6 +510,34 @@ Deep learning is a subset of ML that uses multi-layer neural networks. It excels
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How to Build Your First AI Application | AI Learning Hub</title>
   <meta name="description" content="A practical guide for developers building AI-powered applications." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -54,8 +97,8 @@
   "datePublished": "2026-03-13",
   "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,92 +217,142 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">How to Build Your First AI Application</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-13">March 13, 2026</time>
-          <span>·</span>
-          <span>5 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">How to Build Your First AI Application</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-13">March 13, 2026</time></span>
+              
+              <span class="sep">·</span>
+              <span>7 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
         <h1>How to Build Your First AI Application</h1>
-<p>Building an AI application in 2026 is faster than ever. The APIs are mature, the frameworks are stable, and the patterns are well-established. This guide walks through building a complete AI-powered application — a document Q&amp;A assistant — from scratch, covering every layer of the stack.</p>
+<p>The hardest part of building your first AI application is not the AI — it is figuring out what to actually build and how the pieces connect. The APIs are mature, the frameworks are stable, and the patterns repeat across nearly every production AI product. What is missing for most developers is a concrete example of the full stack working together: document loading, embedding, retrieval, LLM generation, a REST API, and basic error handling. This guide builds all of it, step by step, explaining the decision at each layer.</p>
 <hr>
-<h2>What is Building an AI Application</h2>
-<p>Building an AI application means integrating language model capabilities into a software product. The application takes user input, processes it with an LLM (directly or through a retrieval pipeline), and returns a useful response.</p>
-<p>Common types of AI applications developers build:</p>
+<h2>What You Will Build</h2>
+<p>A document Q&amp;A assistant with a FastAPI backend. Users can ask questions about a collection of PDFs and receive grounded answers with source citations. This is the canonical first AI application because it touches every important layer of the stack:</p>
 <ul>
-<li><strong>Document Q&amp;A</strong> — Answer questions about PDFs, docs, or internal knowledge bases</li>
-<li><strong>Code assistants</strong> — Generate, review, or explain code</li>
-<li><strong>Data analysis agents</strong> — Query and summarize structured data</li>
-<li><strong>Chat interfaces</strong> — Conversational UIs with memory and context</li>
-<li><strong>Automation pipelines</strong> — AI-driven workflows that process documents, emails, or data</li>
+<li><strong>Data layer</strong> — Documents ingested, chunked, and embedded into a vector store</li>
+<li><strong>Retrieval layer</strong> — Semantic search to find relevant passages at query time</li>
+<li><strong>LLM layer</strong> — Language model that synthesizes answers from retrieved passages</li>
+<li><strong>Application layer</strong> — FastAPI REST API with request validation, error handling, and logging</li>
+<li><strong>Memory layer</strong> — Conversation history for multi-turn interactions</li>
 </ul>
 <hr>
-<h2>Why Building AI Apps Matters for Developers</h2>
-<p>AI APIs are commodity infrastructure now. The skill that differentiates products is not access to models — everyone has that. It is the application architecture: how well you design prompts, retrieval pipelines, agent workflows, and user interfaces.</p>
-<p>Developers who understand the full stack — from embedding models to vector databases to LLM APIs to front-end UX — build AI features that actually work in production.</p>
-<hr>
-<h2>How to Build an AI Application</h2>
-<h3>The Core Stack</h3>
-<p>A basic AI application has three layers:</p>
+<h2>The Core Architecture</h2>
+<p>Every AI application has the same three fundamental layers:</p>
 <ol>
-<li><strong>LLM layer</strong> — The model that generates responses (OpenAI, Anthropic, local)</li>
-<li><strong>Data layer</strong> — Documents, databases, or APIs the model can access</li>
-<li><strong>Application layer</strong> — The interface, routing, memory, and business logic</li>
+<li><strong>LLM layer</strong> — The model that generates responses (OpenAI GPT-4o-mini, Anthropic Claude, or a local model via Ollama)</li>
+<li><strong>Data layer</strong> — The documents, databases, or APIs the model can access at query time</li>
+<li><strong>Application layer</strong> — Interface, routing, memory, validation, and business logic</li>
 </ol>
-<p>For document-based applications, you need a fourth layer: the retrieval system (vector database + embeddings).</p>
+<p>For document-based applications, add a fourth layer: the retrieval system (vector database + embedding model). This is the layer that converts your private data into something the model can reason about.</p>
 <hr>
-<h2>Practical Examples</h2>
-<h3>Project: Document Q&amp;A Assistant</h3>
-<p>This is the most common first AI application. It lets users ask questions about a collection of documents.</p>
-<h4>Step 1: Set Up the Environment</h4>
+<h2>Step 1: Set Up the Environment</h2>
 <pre><code class="language-bash">pip install openai langchain langchain-openai langchain-community \
-            chromadb pypdf python-dotenv fastapi uvicorn
+            chromadb pypdf python-dotenv fastapi uvicorn httpx
 </code></pre>
-<pre><code class="language-python"># .env file
-OPENAI_API_KEY=sk-...
+<p>Create a <code>.env</code> file in your project root. Never commit this file.</p>
+<pre><code class="language-bash"># .env
+OPENAI_API_KEY=sk-your-key-here
 </code></pre>
-<h4>Step 2: Index Documents</h4>
-<pre><code class="language-python">from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader
+<pre><code class="language-python"># config.py — central configuration
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+OPENAI_API_KEY = os.getenv(&quot;OPENAI_API_KEY&quot;)
+EMBEDDING_MODEL = &quot;text-embedding-3-small&quot;
+CHAT_MODEL = &quot;gpt-4o-mini&quot;
+VECTOR_STORE_DIR = &quot;./chroma_db&quot;
+DOCS_DIR = &quot;./docs&quot;
+CHUNK_SIZE = 500
+CHUNK_OVERLAP = 50
+RETRIEVAL_K = 4
+</code></pre>
+<p>Centralizing configuration means you change model names, chunk sizes, and paths in one place.</p>
+<hr>
+<h2>Step 2: Build the Document Indexing Pipeline</h2>
+<p>The indexing pipeline runs once (or whenever documents change). It loads documents, splits them into chunks, embeds each chunk, and persists the vectors to disk.</p>
+<pre><code class="language-python"># indexer.py
+from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
+from config import EMBEDDING_MODEL, VECTOR_STORE_DIR, DOCS_DIR, CHUNK_SIZE, CHUNK_OVERLAP
 
-def index_documents(docs_dir: str, persist_dir: str):
-    # Load
+
+def index_documents(docs_dir: str = DOCS_DIR, persist_dir: str = VECTOR_STORE_DIR) -&gt; int:
+    &quot;&quot;&quot;Load, chunk, embed, and persist all PDF documents. Returns number of chunks indexed.&quot;&quot;&quot;
+
+    # Load all PDFs from the directory
     loader = DirectoryLoader(docs_dir, glob=&quot;**/*.pdf&quot;, loader_cls=PyPDFLoader)
     documents = loader.load()
-    print(f&quot;Loaded {len(documents)} pages&quot;)
+    print(f&quot;Loaded {len(documents)} pages from {docs_dir}&quot;)
 
-    # Split
-    splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    if not documents:
+        raise ValueError(f&quot;No PDF files found in {docs_dir}&quot;)
+
+    # Split into overlapping chunks
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=CHUNK_SIZE,
+        chunk_overlap=CHUNK_OVERLAP,
+        separators=[&quot;\n\n&quot;, &quot;\n&quot;, &quot; &quot;, &quot;&quot;]
+    )
     chunks = splitter.split_documents(documents)
     print(f&quot;Created {len(chunks)} chunks&quot;)
 
-    # Embed and store
+    # Embed and index
+    embeddings = OpenAIEmbeddings(model=EMBEDDING_MODEL)
     vectorstore = Chroma.from_documents(
         documents=chunks,
-        embedding=OpenAIEmbeddings(model=&quot;text-embedding-3-small&quot;),
-        persist_directory=persist_dir
+        embedding=embeddings,
+        persist_directory=persist_dir,
+        collection_name=&quot;documents&quot;
     )
-    print(f&quot;Indexed {len(chunks)} chunks to {persist_dir}&quot;)
-    return vectorstore
 
-index_documents(&quot;./docs&quot;, &quot;./chroma_db&quot;)
+    count = vectorstore._collection.count()
+    print(f&quot;Indexed {count} chunks to {persist_dir}&quot;)
+    return count
+
+
+if __name__ == &quot;__main__&quot;:
+    index_documents()
 </code></pre>
-<h4>Step 3: Build the Query Interface</h4>
-<pre><code class="language-python">from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+<p>Run this script once after placing your PDFs in the <code>./docs/</code> directory:</p>
+<pre><code class="language-bash">mkdir docs
+cp your-documents/*.pdf docs/
+python indexer.py
+# Loaded 42 pages
+# Created 187 chunks
+# Indexed 187 chunks to ./chroma_db
+</code></pre>
+<hr>
+<h2>Step 3: Build the Query Interface</h2>
+<p>The query module loads the persisted vector store and builds a retrieval chain. It is separate from the indexer — the application server should never re-index at startup.</p>
+<pre><code class="language-python"># qa_engine.py
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
+from config import CHAT_MODEL, EMBEDDING_MODEL, VECTOR_STORE_DIR, RETRIEVAL_K
 
-PROMPT = PromptTemplate(
-    template=&quot;&quot;&quot;Answer the question based only on the provided context.
-If the context doesn&#39;t contain the answer, say &quot;I don&#39;t have that information.&quot;
+GROUNDING_PROMPT = PromptTemplate(
+    template=&quot;&quot;&quot;Answer the question using ONLY the information in the context below.
+If the context does not contain the answer, respond with:
+&quot;I don&#39;t have that information in the available documents.&quot;
+
+Never invent facts or use knowledge outside the provided context.
 
 Context:
 {context}
@@ -270,113 +363,218 @@ Answer:&quot;&quot;&quot;,
     input_variables=[&quot;context&quot;, &quot;question&quot;]
 )
 
-def build_qa_chain(persist_dir: str):
+
+def build_qa_chain():
+    &quot;&quot;&quot;Load the persisted vector store and build the retrieval QA chain.&quot;&quot;&quot;
+    embeddings = OpenAIEmbeddings(model=EMBEDDING_MODEL)
     vectorstore = Chroma(
-        persist_directory=persist_dir,
-        embedding_function=OpenAIEmbeddings(model=&quot;text-embedding-3-small&quot;)
+        persist_directory=VECTOR_STORE_DIR,
+        embedding_function=embeddings,
+        collection_name=&quot;documents&quot;
     )
+
+    retriever = vectorstore.as_retriever(
+        search_type=&quot;similarity&quot;,
+        search_kwargs={&quot;k&quot;: RETRIEVAL_K}
+    )
+
     return RetrievalQA.from_chain_type(
-        llm=ChatOpenAI(model=&quot;gpt-4o-mini&quot;, temperature=0),
-        retriever=vectorstore.as_retriever(search_kwargs={&quot;k&quot;: 4}),
-        chain_type_kwargs={&quot;prompt&quot;: PROMPT},
+        llm=ChatOpenAI(model=CHAT_MODEL, temperature=0),
+        chain_type=&quot;stuff&quot;,
+        retriever=retriever,
+        chain_type_kwargs={&quot;prompt&quot;: GROUNDING_PROMPT},
+        return_source_documents=True
+    )
+</code></pre>
+<hr>
+<h2>Step 4: Build the FastAPI Backend</h2>
+<pre><code class="language-python"># main.py
+import logging
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+from qa_engine import build_qa_chain
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = FastAPI(title=&quot;Document Q&amp;A API&quot;, version=&quot;1.0.0&quot;)
+
+# Build once at startup — not on every request
+try:
+    qa_chain = build_qa_chain()
+    logger.info(&quot;QA chain initialized successfully&quot;)
+except Exception as e:
+    logger.error(f&quot;Failed to initialize QA chain: {e}&quot;)
+    qa_chain = None
+
+
+class QuestionRequest(BaseModel):
+    question: str = Field(..., min_length=3, max_length=2000,
+                          description=&quot;The question to ask about your documents&quot;)
+
+
+class SourceReference(BaseModel):
+    source: str
+    page: int | str
+
+
+class AnswerResponse(BaseModel):
+    answer: str
+    sources: list[SourceReference]
+    question: str
+
+
+@app.get(&quot;/health&quot;)
+def health_check():
+    return {
+        &quot;status&quot;: &quot;healthy&quot; if qa_chain is not None else &quot;degraded&quot;,
+        &quot;qa_chain&quot;: &quot;ready&quot; if qa_chain is not None else &quot;not initialized&quot;
+    }
+
+
+@app.post(&quot;/ask&quot;, response_model=AnswerResponse)
+def ask_question(request: QuestionRequest):
+    if qa_chain is None:
+        raise HTTPException(status_code=503, detail=&quot;QA service not available&quot;)
+
+    logger.info(f&quot;Question received: {request.question[:100]}&quot;)
+
+    try:
+        result = qa_chain.invoke({&quot;query&quot;: request.question})
+    except Exception as e:
+        logger.error(f&quot;QA chain error: {e}&quot;)
+        raise HTTPException(status_code=500, detail=&quot;Failed to process question&quot;)
+
+    sources = [
+        SourceReference(
+            source=doc.metadata.get(&quot;source&quot;, &quot;unknown&quot;),
+            page=doc.metadata.get(&quot;page&quot;, &quot;?&quot;)
+        )
+        for doc in result.get(&quot;source_documents&quot;, [])
+    ]
+
+    logger.info(f&quot;Answer generated. Sources: {len(sources)}&quot;)
+    return AnswerResponse(
+        answer=result[&quot;result&quot;],
+        sources=sources,
+        question=request.question
+    )
+</code></pre>
+<h3>Run the Server</h3>
+<pre><code class="language-bash">uvicorn main:app --reload --host 0.0.0.0 --port 8000
+</code></pre>
+<h3>Test with a Request</h3>
+<pre><code class="language-python">import httpx
+
+# Test the API
+response = httpx.post(
+    &quot;http://localhost:8000/ask&quot;,
+    json={&quot;question&quot;: &quot;What is the company&#39;s vacation policy?&quot;}
+)
+data = response.json()
+print(data[&quot;answer&quot;])
+print(&quot;\nSources:&quot;)
+for src in data[&quot;sources&quot;]:
+    print(f&quot;  {src[&#39;source&#39;]} — page {src[&#39;page&#39;]}&quot;)
+</code></pre>
+<hr>
+<h2>Step 5: Add Conversation Memory</h2>
+<p>A stateless Q&amp;A endpoint is useful, but users naturally ask follow-up questions. Multi-turn conversations require memory — the ability to understand &quot;What are its limitations?&quot; when the previous question was &quot;What is the main topic?&quot;.</p>
+<pre><code class="language-python"># In main.py — add a conversational endpoint
+from langchain.memory import ConversationBufferWindowMemory
+from langchain.chains import ConversationalRetrievalChain
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_core.messages import HumanMessage, AIMessage
+from typing import Optional
+
+# Maintain one memory object per conversation session
+conversation_sessions: dict[str, list] = {}
+
+
+class ConversationRequest(BaseModel):
+    question: str = Field(..., min_length=3, max_length=2000)
+    session_id: str = Field(default=&quot;default&quot;, max_length=100)
+
+
+@app.post(&quot;/chat&quot;)
+def chat(request: ConversationRequest):
+    if qa_chain is None:
+        raise HTTPException(status_code=503, detail=&quot;QA service not available&quot;)
+
+    # Get or create history for this session
+    history = conversation_sessions.setdefault(request.session_id, [])
+
+    # Build a fresh conversational chain with the session&#39;s history
+    embeddings = OpenAIEmbeddings(model=EMBEDDING_MODEL)
+    vectorstore = Chroma(
+        persist_directory=VECTOR_STORE_DIR,
+        embedding_function=embeddings,
+        collection_name=&quot;documents&quot;
+    )
+
+    conv_chain = ConversationalRetrievalChain.from_llm(
+        llm=ChatOpenAI(model=CHAT_MODEL, temperature=0),
+        retriever=vectorstore.as_retriever(search_kwargs={&quot;k&quot;: RETRIEVAL_K}),
         return_source_documents=True
     )
 
-qa = build_qa_chain(&quot;./chroma_db&quot;)
+    result = conv_chain.invoke({
+        &quot;question&quot;: request.question,
+        &quot;chat_history&quot;: history
+    })
+
+    # Append this turn to history
+    history.append(HumanMessage(content=request.question))
+    history.append(AIMessage(content=result[&quot;answer&quot;]))
+
+    # Keep last 10 turns to control context size
+    if len(history) &gt; 20:
+        conversation_sessions[request.session_id] = history[-20:]
+
+    return {&quot;answer&quot;: result[&quot;answer&quot;], &quot;session_id&quot;: request.session_id}
 </code></pre>
-<h4>Step 4: Add a FastAPI Backend</h4>
-<pre><code class="language-python">from fastapi import FastAPI
-from pydantic import BaseModel
-
-app = FastAPI()
-qa_chain = build_qa_chain(&quot;./chroma_db&quot;)
-
-class Question(BaseModel):
-    text: str
-
-class Answer(BaseModel):
-    answer: str
-    sources: list[dict]
-
-@app.post(&quot;/ask&quot;, response_model=Answer)
-def ask_question(question: Question):
-    result = qa_chain.invoke({&quot;query&quot;: question.text})
-    sources = [
-        {&quot;page&quot;: doc.metadata.get(&quot;page&quot;), &quot;source&quot;: doc.metadata.get(&quot;source&quot;)}
-        for doc in result[&quot;source_documents&quot;]
-    ]
-    return Answer(answer=result[&quot;result&quot;], sources=sources)
-
-@app.get(&quot;/health&quot;)
-def health():
-    return {&quot;status&quot;: &quot;ok&quot;}
-</code></pre>
-<h4>Step 5: Run and Test</h4>
-<pre><code class="language-bash">uvicorn main:app --reload
-</code></pre>
-<pre><code class="language-python">import httpx
-
-response = httpx.post(&quot;http://localhost:8000/ask&quot;,
-    json={&quot;text&quot;: &quot;What is the refund policy?&quot;})
-print(response.json())
-</code></pre>
-<h3>Adding Conversation Memory</h3>
-<pre><code class="language-python">from langchain.memory import ConversationBufferWindowMemory
-from langchain.chains import ConversationalRetrievalChain
-
-memory = ConversationBufferWindowMemory(
-    memory_key=&quot;chat_history&quot;,
-    output_key=&quot;answer&quot;,
-    return_messages=True,
-    k=5
-)
-
-conv_chain = ConversationalRetrievalChain.from_llm(
-    llm=ChatOpenAI(model=&quot;gpt-4o-mini&quot;, temperature=0),
-    retriever=vectorstore.as_retriever(search_kwargs={&quot;k&quot;: 4}),
-    memory=memory,
-    return_source_documents=True
-)
-
-# First turn
-result = conv_chain.invoke({&quot;question&quot;: &quot;What are the main product features?&quot;})
-# Second turn — model remembers context
-result = conv_chain.invoke({&quot;question&quot;: &quot;Which of those is most popular?&quot;})
-</code></pre>
-<hr>
-<h2>Tools and Frameworks</h2>
-<p><strong>LangChain</strong> — Chains, retrievers, memory, and agents. The most complete framework for building AI applications. See <a href="/blog/langchain-tutorial/">LangChain tutorial</a>.</p>
-<p><strong>FastAPI</strong> — The standard Python framework for building AI APIs. Fast, typed, and async-compatible.</p>
-<p><strong>Streamlit / Gradio</strong> — Rapid UI prototyping for AI applications. Build a working web UI in 20 lines of Python.</p>
-<p><strong>Chroma / Pinecone</strong> — Vector databases for the retrieval layer. For details, see the <a href="/blog/langchain-tutorial/">LangChain tutorial</a>.</p>
-<p><strong>OpenAI API</strong> — See <a href="/blog/openai-api-tutorial/">OpenAI API tutorial</a> for the LLM layer.</p>
 <hr>
 <h2>Common Mistakes</h2>
-<p><strong>No error handling on the API layer</strong> — LLM calls fail. Always wrap calls in try/except and return meaningful error messages to clients.</p>
-<p><strong>Re-indexing documents on every startup</strong> — Index once, persist, and load. Re-indexing on every restart wastes time and money.</p>
-<p><strong>No request validation</strong> — Validate user input before sending it to the LLM. Reject empty queries, excessively long inputs, and obviously invalid requests early.</p>
-<p><strong>Hardcoding model names</strong> — Store model names in configuration. You will want to upgrade models without code changes.</p>
-<p><strong>No logging</strong> — Log every LLM call with tokens used, latency, and model. You cannot optimize what you cannot measure.</p>
+<p><strong>Re-indexing on every server startup</strong> — The vector store is built once and persisted. Loading it from disk takes under a second. Re-indexing takes 30–60 seconds and costs API money. Never do this on startup.</p>
+<p><strong>No error handling on LLM calls</strong> — OpenAI API calls fail for rate limits, timeouts, and server errors. Every LLM call must be wrapped in a try/except block with meaningful error propagation to the caller.</p>
+<p><strong>No input validation</strong> — Without length limits and format checks, a single malformed request can cause an error that is hard to debug. Pydantic validation in FastAPI handles this automatically — use <code>Field(..., min_length=1, max_length=2000)</code>.</p>
+<p><strong>Hardcoding configuration</strong> — Model names, chunk sizes, retrieval K, and API keys should be in config or environment variables. You will tune these parameters as you improve the application; hardcoded values make this painful.</p>
+<p><strong>No logging</strong> — Log every question received, the number of sources retrieved, and any errors. Without logs, you cannot debug production failures or understand usage patterns.</p>
+<p><strong>Not testing the failure modes</strong> — Test that questions outside your document scope return &quot;I don&#39;t have that information.&quot; Test that the API returns proper 4xx/5xx responses for invalid inputs. Test with a vector store that does not exist yet.</p>
 <hr>
 <h2>Best Practices</h2>
-<ul>
-<li><strong>Build an MVP first</strong> — Get a working end-to-end application before optimizing. A simple RAG pipeline with one document type is a good starting point.</li>
-<li><strong>Make the LLM the last thing you debug</strong> — If the application is not working, check data quality, retrieval quality, and prompt format before assuming the model is the problem.</li>
-<li><strong>Version your prompts</strong> — Store prompts as named constants, not inline strings. Track changes with git.</li>
-<li><strong>Test with realistic data</strong> — The most important testing is with real documents and real queries, not synthetic examples.</li>
-<li><strong>Add observability from day one</strong> — Log LLM calls, latency, and errors. You will need this data when debugging production issues.</li>
-</ul>
+<ol>
+<li><strong>Build end-to-end before optimizing</strong> — Get a working pipeline from document to answer before tuning chunk size, retrieval K, or prompt wording. Optimization without a working baseline is premature.</li>
+<li><strong>Separate indexing from serving</strong> — The indexer script and the API server are separate processes. The API never re-indexes; the indexer never starts a server.</li>
+<li><strong>Test with real documents and real questions</strong> — Synthetic test data hides the messiness of real PDFs: inconsistent formatting, tables, headers, and footnotes. Get real documents early.</li>
+<li><strong>Version your prompts</strong> — The grounding prompt is business logic. Store it as a named constant, not an inline string. Track changes in git. Run regression tests when you modify it.</li>
+<li><strong>Add observability from day one</strong> — Log at minimum: question text (or a hash if sensitive), number of sources retrieved, answer length, and any errors. These logs become invaluable for debugging and improving the application.</li>
+</ol>
 <hr>
-<h2>Summary</h2>
-<p>Building an AI application requires a clear stack: an LLM layer, a data/retrieval layer, and an application layer. For document-based applications, add a vector database for semantic retrieval.</p>
-<p>Start with a simple FastAPI backend and a LangChain retrieval chain. Get end-to-end functionality working before adding features. Invest in logging and error handling early — they pay off disproportionately in production.</p>
-<p>For detailed guides on each component: <a href="/blog/langchain-tutorial/">LangChain tutorial</a>, <a href="/blog/openai-api-tutorial/">OpenAI API tutorial</a>, <a href="/blog/build-ai-agents/">building AI agents</a>.</p>
+<h2>What to Learn Next</h2>
+<p>This application gives you a working foundation. The natural next steps are deeper understanding of each layer and more advanced application patterns:</p>
+<ul>
+<li><strong>Go deeper on RAG architecture and retrieval quality</strong> → <a href="/blog/build-rag-app/">How to Build a RAG Application</a></li>
+<li><strong>Master the OpenAI API powering this application</strong> → <a href="/blog/openai-api-tutorial/">OpenAI API Tutorial</a></li>
+<li><strong>Build more complex agent workflows</strong> → <a href="/blog/build-ai-agents/">Build AI Agents</a></li>
+</ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -420,6 +618,34 @@ result = conv_chain.invoke({&quot;question&quot;: &quot;Which of those is most p
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

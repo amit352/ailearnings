@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QLoRA Explained – Efficient LLM Fine-Tuning | AI Learning Hub</title>
   <meta name="description" content="Learn how QLoRA reduces memory requirements when fine-tuning LLMs." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -54,8 +97,8 @@
   "datePublished": "2026-03-13",
   "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,82 +217,141 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">QLoRA Explained – Efficient LLM Fine-Tuning</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-13">March 13, 2026</time>
-          <span>·</span>
-          <span>4 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">QLoRA Explained – Efficient LLM Fine-Tuning</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-13">March 13, 2026</time></span>
+              
+              <span class="sep">·</span>
+              <span>6 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
         <h1>QLoRA Explained – Efficient LLM Fine-Tuning</h1>
-<p>Fine-tuning a 70B parameter model once required 8x A100 GPUs — hardware most developers cannot access. QLoRA (Quantized Low-Rank Adaptation) changed this by combining 4-bit quantization with LoRA adapters, enabling fine-tuning of large models on a single consumer GPU. This guide explains what QLoRA is, how it works, and how to use it.</p>
+<p>Before 2023, fine-tuning a 70B parameter language model was a six-figure infrastructure project. You needed a cluster of A100 GPUs, deep familiarity with distributed training, and a dataset large enough to justify the cost. Then Tim Dettmers and colleagues published the QLoRA paper, and the economics collapsed. A 7B model now fine-tunes on a single RTX 3090. A 70B model fits on one A100. The technique is precise, principled, and available in open-source tooling today. This guide explains exactly how it works and how to use it.</p>
 <hr>
-<h2>What is QLoRA</h2>
-<p>QLoRA combines two techniques:</p>
-<p><strong>NF4 Quantization</strong> — The pre-trained model weights are quantized from 32-bit or 16-bit floats to 4-bit NormalFloat (NF4) format. This reduces model size by 4–8x with minimal quality loss.</p>
-<p><strong>LoRA</strong> — Small trainable adapter matrices are added to the quantized model&#39;s layers. Only these adapters are updated during training; the quantized base model is frozen.</p>
-<p><strong>Double quantization</strong> — The quantization constants are themselves quantized, saving an additional 0.37 bits per parameter.</p>
-<p><strong>Paged optimizers</strong> — NVIDIA&#39;s unified memory allows optimizer states to page to CPU RAM when GPU memory is full, preventing out-of-memory errors during training spikes.</p>
-<p>The result: a 65B parameter model that normally requires ~130GB VRAM can be fine-tuned on a single 48GB GPU. A 7B model fine-tunes on a 16GB GPU.</p>
+<h2>What QLoRA Does</h2>
+<p>QLoRA combines three ideas to dramatically reduce the GPU memory required for fine-tuning:</p>
+<p><strong>1. NF4 Quantization</strong> — The pre-trained model weights are compressed from 16-bit or 32-bit floats to 4-bit NormalFloat (NF4) format. NF4 is designed specifically for normally distributed weights (which neural network weights are, after training). This reduces the model&#39;s memory footprint by 4–8x with minimal quality loss.</p>
+<p><strong>2. LoRA Adapters</strong> — Instead of updating the quantized base model&#39;s weights (which would require dequantizing them), small trainable adapter matrices are added on top of specific layers. During training, only these adapters are updated. The quantized base model is completely frozen.</p>
+<p><strong>3. Paged Optimizers</strong> — Optimizer states (the momentum and variance terms tracked by Adam) consume roughly 2x the parameter memory. QLoRA uses NVIDIA&#39;s unified memory to page optimizer states to CPU RAM when GPU memory is full, preventing out-of-memory errors during training spikes.</p>
+<p>A fourth technique, <strong>double quantization</strong>, quantizes the quantization constants themselves, saving an additional ~0.37 bits per parameter — roughly 400MB for a 7B model.</p>
+<p>The result:</p>
+<table>
+<thead>
+<tr>
+<th>Model Size</th>
+<th>Standard Fine-Tuning</th>
+<th>QLoRA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>7B</td>
+<td>~56GB VRAM</td>
+<td>~10GB VRAM</td>
+</tr>
+<tr>
+<td>13B</td>
+<td>~104GB VRAM</td>
+<td>~16GB VRAM</td>
+</tr>
+<tr>
+<td>33B</td>
+<td>~264GB VRAM</td>
+<td>~24GB VRAM</td>
+</tr>
+<tr>
+<td>70B</td>
+<td>~560GB VRAM</td>
+<td>~48GB VRAM</td>
+</tr>
+</tbody></table>
 <hr>
-<h2>Why QLoRA Matters for Developers</h2>
-<p>Before QLoRA (2023), fine-tuning large models was restricted to teams with GPU clusters. QLoRA democratized access to model customization:</p>
-<ul>
-<li><strong>7B model</strong> → fine-tunes on a single RTX 3090 (24GB)</li>
-<li><strong>13B model</strong> → fine-tunes on a single A100 (40GB)</li>
-<li><strong>33B model</strong> → fine-tunes on a single A100 (80GB)</li>
-<li><strong>70B model</strong> → fine-tunes on 2x A100 (80GB)</li>
-</ul>
-<p>For developers, this means model customization is now accessible on cloud instances like Google Colab Pro+ or a single rented GPU, rather than requiring expensive multi-GPU setups.</p>
-<p>For the LoRA fundamentals that QLoRA builds on, see <a href="/blog/lora-fine-tuning-explained/">LoRA fine-tuning explained</a>.</p>
+<h2>How LoRA Works (the Foundation)</h2>
+<p>LoRA — Low-Rank Adaptation — is the adapter technique QLoRA builds on. Understanding it makes QLoRA&#39;s design immediately clear.</p>
+<p>In a transformer layer, weight matrices like the query and value projection matrices are large: a Llama 3 8B model has attention weight matrices of shape <code>[4096, 4096]</code>. Updating all of these during fine-tuning is expensive.</p>
+<p>LoRA&#39;s insight: the weight updates needed for fine-tuning tend to be low-rank. Instead of updating the full 4096×4096 matrix, LoRA adds two small matrices A (4096×r) and B (r×4096) where r is the rank (typically 8–64). The effective weight update is A×B, but you only train 2×4096×r parameters instead of 4096×4096.</p>
+<p>At rank 16, this is 2×4096×16 = 131,072 parameters instead of 16,777,216 — a 128x reduction in trainable parameters for that layer.</p>
 <hr>
-<h2>How QLoRA Works</h2>
-<h3>Step 1: Quantize the Base Model to 4-bit</h3>
-<p>The pre-trained model&#39;s weight matrices are converted to NF4 format. NF4 is designed to minimize quantization error for normally distributed weights — which most neural network weights are.</p>
+<h2>Step-by-Step: QLoRA Fine-Tuning</h2>
+<h3>Step 1: Install Dependencies</h3>
+<pre><code class="language-bash">pip install transformers peft trl bitsandbytes accelerate datasets
+</code></pre>
+<h3>Step 2: Load the Base Model in 4-bit</h3>
 <pre><code class="language-python">from transformers import AutoModelForCausalLM, BitsAndBytesConfig
 import torch
 
 quantization_config = BitsAndBytesConfig(
-    load_in_4bit=True,                        # Enable 4-bit loading
-    bnb_4bit_quant_type=&quot;nf4&quot;,               # NormalFloat4 quantization
-    bnb_4bit_compute_dtype=torch.float16,     # Compute in fp16 during forward pass
-    bnb_4bit_use_double_quant=True,           # Double quantization
+    load_in_4bit=True,
+    bnb_4bit_quant_type=&quot;nf4&quot;,              # NormalFloat4 — optimal for neural networks
+    bnb_4bit_compute_dtype=torch.float16,   # Computation happens in fp16
+    bnb_4bit_use_double_quant=True,         # Double quantization saves ~400MB on 7B models
 )
 
 model = AutoModelForCausalLM.from_pretrained(
     &quot;meta-llama/Meta-Llama-3-8B-Instruct&quot;,
     quantization_config=quantization_config,
-    device_map=&quot;auto&quot;
+    device_map=&quot;auto&quot;   # automatically places layers across available GPUs/CPU
 )
+
+print(f&quot;Memory footprint: {model.get_memory_footprint() / 1e9:.2f} GB&quot;)
 </code></pre>
-<h3>Step 2: Add LoRA Adapters</h3>
-<p>LoRA adapters are added on top of the quantized model. The quantized weights are frozen; only the adapters are trainable.</p>
+<h3>Step 3: Prepare the Model and Add LoRA Adapters</h3>
 <pre><code class="language-python">from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training, TaskType
 
-# Prepare the quantized model for training
+# This step is required for quantized models — it handles gradient checkpointing setup
 model = prepare_model_for_kbit_training(model)
 
 lora_config = LoraConfig(
     task_type=TaskType.CAUSAL_LM,
-    r=64,
-    lora_alpha=16,
+    r=64,               # rank — higher gives more adapter capacity
+    lora_alpha=16,      # scaling factor: effective lr = lr * (lora_alpha / r)
     target_modules=[
-        &quot;q_proj&quot;, &quot;k_proj&quot;, &quot;v_proj&quot;, &quot;o_proj&quot;,
-        &quot;gate_proj&quot;, &quot;up_proj&quot;, &quot;down_proj&quot;
+        &quot;q_proj&quot;, &quot;k_proj&quot;, &quot;v_proj&quot;, &quot;o_proj&quot;,    # attention layers
+        &quot;gate_proj&quot;, &quot;up_proj&quot;, &quot;down_proj&quot;          # MLP layers
     ],
     lora_dropout=0.05,
-    bias=&quot;none&quot;,
+    bias=&quot;none&quot;,        # don&#39;t train bias terms
 )
 
 model = get_peft_model(model, lora_config)
 model.print_trainable_parameters()
 # trainable params: 41,943,040 || all params: 8,072,884,224 || trainable%: 0.52%
 </code></pre>
-<h3>Step 3: Train with Paged Optimizers</h3>
+<p>Only 0.52% of the model&#39;s parameters are being trained. The quantized base model is frozen; only the 42M adapter parameters update during training.</p>
+<h3>Step 4: Prepare Training Data</h3>
+<p>QLoRA requires instruction-following data in a chat template format. Each example is a conversation with system/user/assistant turns.</p>
+<pre><code class="language-python">from datasets import load_dataset
+from transformers import AutoTokenizer
+
+tokenizer = AutoTokenizer.from_pretrained(&quot;meta-llama/Meta-Llama-3-8B-Instruct&quot;)
+tokenizer.pad_token = tokenizer.eos_token
+
+def format_example(sample):
+    &quot;&quot;&quot;Format each training example using the model&#39;s chat template.&quot;&quot;&quot;
+    messages = [
+        {&quot;role&quot;: &quot;system&quot;,    &quot;content&quot;: sample.get(&quot;system&quot;, &quot;You are a helpful assistant.&quot;)},
+        {&quot;role&quot;: &quot;user&quot;,      &quot;content&quot;: sample[&quot;input&quot;]},
+        {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: sample[&quot;output&quot;]},
+    ]
+    return {&quot;text&quot;: tokenizer.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=False
+    )}
+
+dataset = load_dataset(&quot;json&quot;, data_files=&quot;train.jsonl&quot;, split=&quot;train&quot;)
+dataset = dataset.map(format_example)
+print(f&quot;Training examples: {len(dataset)}&quot;)
+print(dataset[0][&quot;text&quot;][:500])  # Verify format
+</code></pre>
+<h3>Step 5: Train</h3>
 <pre><code class="language-python">from transformers import TrainingArguments
 from trl import SFTTrainer
 
@@ -257,32 +359,17 @@ training_args = TrainingArguments(
     output_dir=&quot;./qlora-output&quot;,
     num_train_epochs=2,
     per_device_train_batch_size=2,
-    gradient_accumulation_steps=8,
-    optim=&quot;paged_adamw_32bit&quot;,    # Paged optimizer — critical for QLoRA
+    gradient_accumulation_steps=8,     # effective batch size = 16
+    optim=&quot;paged_adamw_32bit&quot;,         # paged optimizer — critical for QLoRA
     learning_rate=2e-4,
-    bf16=True,
+    bf16=True,                         # bfloat16 for forward pass computation
     max_grad_norm=0.3,
     warmup_ratio=0.03,
     lr_scheduler_type=&quot;cosine&quot;,
     logging_steps=25,
     save_strategy=&quot;epoch&quot;,
+    report_to=&quot;none&quot;,
 )
-</code></pre>
-<hr>
-<h2>Practical Examples</h2>
-<h3>Full QLoRA Training Pipeline</h3>
-<pre><code class="language-python">from datasets import load_dataset
-from transformers import AutoTokenizer
-
-tokenizer = AutoTokenizer.from_pretrained(&quot;meta-llama/Meta-Llama-3-8B-Instruct&quot;)
-tokenizer.pad_token = tokenizer.eos_token
-
-# Format training data
-def format_prompt(sample):
-    return f&quot;&lt;|system|&gt;\n{sample[&#39;system&#39;]}\n&lt;|user|&gt;\n{sample[&#39;input&#39;]}\n&lt;|assistant|&gt;\n{sample[&#39;output&#39;]}&quot;
-
-dataset = load_dataset(&quot;json&quot;, data_files=&quot;train.jsonl&quot;, split=&quot;train&quot;)
-dataset = dataset.map(lambda x: {&quot;text&quot;: format_prompt(x)})
 
 trainer = SFTTrainer(
     model=model,
@@ -295,54 +382,80 @@ trainer = SFTTrainer(
 
 trainer.train()
 
-# Save only the LoRA adapter (small, portable)
+# Save only the LoRA adapter — small (50–200MB) and portable
 trainer.model.save_pretrained(&quot;./qlora-adapter&quot;)
 tokenizer.save_pretrained(&quot;./qlora-adapter&quot;)
+print(&quot;Adapter saved.&quot;)
 </code></pre>
-<h3>Running on Google Colab</h3>
-<pre><code class="language-python"># Install in Colab
+<hr>
+<h2>Merging and Deploying the Adapter</h2>
+<p>For inference, you can either load the adapter on top of the base model (adds ~50ms overhead per request) or merge the adapter weights into the base model for production.</p>
+<pre><code class="language-python">from peft import PeftModel
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+
+# Load base model in full precision for clean merging
+base_model = AutoModelForCausalLM.from_pretrained(
+    &quot;meta-llama/Meta-Llama-3-8B-Instruct&quot;,
+    torch_dtype=torch.bfloat16,
+    device_map=&quot;auto&quot;
+)
+
+# Load and merge the adapter
+model = PeftModel.from_pretrained(base_model, &quot;./qlora-adapter&quot;)
+merged_model = model.merge_and_unload()
+merged_model.save_pretrained(&quot;./merged-model&quot;)
+
+tokenizer = AutoTokenizer.from_pretrained(&quot;./qlora-adapter&quot;)
+tokenizer.save_pretrained(&quot;./merged-model&quot;)
+print(&quot;Merged model saved. Ready for deployment.&quot;)
+</code></pre>
+<hr>
+<h2>Running on Google Colab</h2>
+<p>If you do not have a local GPU, Google Colab provides free T4 GPUs (16GB VRAM) that are sufficient for QLoRA on 7B models. Colab Pro+ provides A100 access for 13B–33B models.</p>
+<pre><code class="language-python"># In a Colab cell — install required libraries
 # !pip install -q transformers peft trl bitsandbytes accelerate datasets
 
-# Check GPU memory
 import torch
 print(f&quot;GPU: {torch.cuda.get_device_name()}&quot;)
 print(f&quot;Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB&quot;)
-# Colab Pro+ T4: 16GB — sufficient for QLoRA on 7B models
+# T4: 16GB — fine for 7B with QLoRA
+# A100 40GB: fine for 13B with QLoRA
+# A100 80GB: fine for 33B with QLoRA
 </code></pre>
-<hr>
-<h2>Tools and Frameworks</h2>
-<p><strong>bitsandbytes</strong> — The library that implements NF4 quantization and paged optimizers. Required for QLoRA. Maintained by Tim Dettmers (original QLoRA author).</p>
-<p><strong>Hugging Face PEFT</strong> — Provides <code>LoraConfig</code>, <code>get_peft_model</code>, and <code>prepare_model_for_kbit_training</code>.</p>
-<p><strong>TRL</strong> — <code>SFTTrainer</code> provides a high-level training loop compatible with QLoRA.</p>
-<p><strong>Unsloth</strong> — Dramatically faster QLoRA training (2–5x speed, 60% less memory). Recommended for production fine-tuning workflows.</p>
-<p><strong>Google Colab / Kaggle</strong> — Free tier GPUs (T4) can run QLoRA on 7B models. Colab Pro+ gives A100 access for larger models.</p>
+<p>For production fine-tuning runs, use cloud GPU providers like Lambda Labs, RunPod, or Vast.ai — they offer A100 access at $1–3/hour, which is far cheaper than a dedicated cluster for occasional fine-tuning.</p>
 <hr>
 <h2>Common Mistakes</h2>
-<p><strong>Forgetting <code>prepare_model_for_kbit_training</code></strong> — Quantized models need this preparation step before LoRA is applied. Skipping it leads to errors or poor training quality.</p>
-<p><strong>Using AdamW without paged optimizer</strong> — Standard AdamW requires gradient states for all parameters. With a large quantized model, this overflows GPU memory. Always use <code>paged_adamw_32bit</code> or <code>paged_adamw_8bit</code>.</p>
-<p><strong>Low rank for large models</strong> — For 70B models, use r=64 or higher. Lower ranks may underfit when adapting large models.</p>
-<p><strong>Not using double quantization</strong> — <code>bnb_4bit_use_double_quant=True</code> saves an additional ~0.4GB per 7B parameters at almost no quality cost. Always enable it.</p>
-<p><strong>Merging before evaluating</strong> — Evaluate the adapter before merging with the base model. Merging is irreversible without keeping both checkpoints.</p>
+<p><strong>Forgetting <code>prepare_model_for_kbit_training</code></strong> — Quantized models need this step before LoRA is applied. It sets up gradient checkpointing correctly for quantized weights. Skipping it causes errors or silent training quality degradation.</p>
+<p><strong>Using standard AdamW</strong> — Standard AdamW optimizer states require as much memory as the model parameters. With a large quantized base model, this causes out-of-memory errors. Always use <code>paged_adamw_32bit</code> or <code>paged_adamw_8bit</code>.</p>
+<p><strong>Too low a rank for large models</strong> — For 70B models, r=8 or r=16 likely underfit. Use r=64 for general fine-tuning on large models; r=16 is sufficient for simple task adaptation on small models.</p>
+<p><strong>Disabling double quantization</strong> — <code>bnb_4bit_use_double_quant=True</code> saves ~400MB on a 7B model at almost no quality cost. Always enable it — there is no good reason not to.</p>
+<p><strong>Merging before validating</strong> — Merging is not reversible unless you keep both the base model and adapter checkpoints. Evaluate your adapter on a test set before merging and deleting the adapter files.</p>
+<p><strong>Training on too few epochs</strong> — With a small dataset (under 1,000 examples), 2–3 epochs is typically appropriate. With larger datasets, monitor validation loss and stop when it plateaus.</p>
 <hr>
-<h2>Best Practices</h2>
+<h2>What to Learn Next</h2>
+<p>QLoRA is one technique in the broader fine-tuning toolkit. Understanding when to use it — and what alternatives exist — is as important as knowing how to use it:</p>
 <ul>
-<li><strong>Use Unsloth for training speed</strong> — It is a drop-in replacement for PEFT+TRL that is significantly faster with less memory.</li>
-<li><strong>Start with a smaller model to iterate fast</strong> — Validate your training data and pipeline on a 7B model before scaling to 70B.</li>
-<li><strong>Save the adapter, not the merged model</strong> — The adapter is small (50–200MB) and portable. The merged model is as large as the base model (4–8GB quantized).</li>
-<li><strong>Monitor training loss carefully</strong> — QLoRA is more sensitive to learning rate than standard LoRA. If loss spikes, reduce the learning rate.</li>
-<li><strong>Use gradient checkpointing</strong> — <code>model.enable_input_require_grads()</code> and <code>gradient_checkpointing_enable()</code> trade compute for memory, enabling larger batch sizes.</li>
+<li><strong>Full fine-tuning guide with LoRA and QLoRA</strong> → <a href="/blog/fine-tuning-llms-guide/">Fine-Tuning LLMs Guide</a></li>
+<li><strong>Prompt engineering as an alternative to fine-tuning</strong> → <a href="/blog/prompt-engineering-guide/">Prompt Engineering Guide</a></li>
+<li><strong>Building AI projects to practice these skills</strong> → <a href="/projects/">Projects</a></li>
 </ul>
-<hr>
-<h2>Summary</h2>
-<p>QLoRA makes fine-tuning large language models accessible on consumer hardware by combining 4-bit quantization of the base model with small LoRA adapters. The base model is frozen in NF4 format; only the LoRA adapters are trained.</p>
-<p>The technique reduces VRAM requirements by 4–8x compared to standard LoRA fine-tuning, enabling 7B models on 16GB GPUs and 70B models on a single 80GB GPU.</p>
-<p>For the LoRA fundamentals QLoRA builds on, see <a href="/blog/lora-fine-tuning-explained/">LoRA fine-tuning explained</a>. For when fine-tuning is the right choice, see <a href="/blog/llm-fine-tuning-guide/">LLM fine-tuning guide</a>.</p>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -386,6 +499,34 @@ print(f&quot;Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

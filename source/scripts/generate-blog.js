@@ -88,9 +88,22 @@ function main() {
     const title       = meta.title || slug;
     const description = meta.description || '';
     const date        = meta.date || '2026-03-09';
+    const updatedAt   = meta.updatedAt || meta.updated_at || date;
+    const authorName  = meta.author || 'AI Learning Hub';
+    const authorTitle = meta.authorTitle || meta.author_title || 'AI Learning Hub';
     const canonical   = `https://ailearnings.in/blog/${slug}/`;
     const mins        = readTime(content);
     const htmlContent = marked.parse(content);
+
+    // Author initials (up to 2 chars)
+    const authorInitials = authorName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    const authorBio = meta.authorBio || meta.author_bio ||
+      'Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.';
+
+    // Updated meta snippet — only shown if updatedAt differs from date
+    const updatedMeta = updatedAt !== date
+      ? `<span class="sep">·</span><span>Updated <time datetime="${updatedAt}">${formatDate(updatedAt)}</time></span>`
+      : '';
 
     const articleSchema = JSON.stringify({
       '@context': 'https://schema.org',
@@ -100,8 +113,8 @@ function main() {
       image: 'https://ailearnings.in/og-image.jpg',
       url: canonical,
       datePublished: date,
-      dateModified: date,
-      author: { '@type': 'Organization', name: 'AI Learning Hub', url: 'https://ailearnings.in/' },
+      dateModified: updatedAt,
+      author: { '@type': 'Person', name: authorName, url: 'https://ailearnings.in/' },
       publisher: { '@type': 'Organization', name: 'AI Learning Hub', url: 'https://ailearnings.in/' },
       mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
     }, null, 2);
@@ -125,6 +138,11 @@ function main() {
       .replace(/\{\{DATE\}\}/g,             date)
       .replace(/\{\{DATE_DISPLAY\}\}/g,     formatDate(date))
       .replace(/\{\{READ_TIME\}\}/g,        String(mins))
+      .replace(/\{\{AUTHOR_NAME\}\}/g,      esc(authorName))
+      .replace(/\{\{AUTHOR_TITLE\}\}/g,     esc(authorTitle))
+      .replace(/\{\{AUTHOR_INITIALS\}\}/g,  authorInitials)
+      .replace(/\{\{UPDATED_META\}\}/g,     updatedMeta)
+      .replace(/\{\{AUTHOR_BIO\}\}/g,       esc(authorBio))
       .replace(/\{\{CONTENT\}\}/g,          htmlContent)
       .replace(/\{\{INLINE_CSS\}\}/g,       inlineCss)
       .replace(/\{\{ARTICLE_SCHEMA\}\}/g,   articleSchema)
@@ -190,9 +208,19 @@ function main() {
       const title       = meta.title || slug;
       const description = meta.description || '';
       const date        = meta.date || '2026-03-10';
+      const updatedAt   = meta.updatedAt || meta.updated_at || date;
+      const authorName  = meta.author || 'AI Learning Hub';
+      const authorTitle = meta.authorTitle || meta.author_title || 'AI Learning Hub';
       const canonical   = `https://ailearnings.in/blog/roadmap-guides/${slug}/`;
       const mins        = readTime(content);
       const htmlContent = marked.parse(content);
+
+      const authorInitials = authorName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+      const authorBio = meta.authorBio || meta.author_bio ||
+        'Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.';
+      const updatedMeta = updatedAt !== date
+        ? `<span class="sep">·</span><span>Updated <time datetime="${updatedAt}">${formatDate(updatedAt)}</time></span>`
+        : '';
 
       const articleSchema = JSON.stringify({
         '@context': 'https://schema.org',
@@ -201,8 +229,8 @@ function main() {
         description: description,
         url: canonical,
         datePublished: date,
-        dateModified: date,
-        author: { '@type': 'Organization', name: 'AI Learning Hub', url: 'https://ailearnings.in/' },
+        dateModified: updatedAt,
+        author: { '@type': 'Person', name: authorName, url: 'https://ailearnings.in/' },
         publisher: { '@type': 'Organization', name: 'AI Learning Hub', url: 'https://ailearnings.in/' },
         mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
       }, null, 2);
@@ -226,6 +254,11 @@ function main() {
         .replace(/\{\{DATE\}\}/g,             date)
         .replace(/\{\{DATE_DISPLAY\}\}/g,     formatDate(date))
         .replace(/\{\{READ_TIME\}\}/g,        String(mins))
+        .replace(/\{\{AUTHOR_NAME\}\}/g,      esc(authorName))
+        .replace(/\{\{AUTHOR_TITLE\}\}/g,     esc(authorTitle))
+        .replace(/\{\{AUTHOR_INITIALS\}\}/g,  authorInitials)
+        .replace(/\{\{UPDATED_META\}\}/g,     updatedMeta)
+        .replace(/\{\{AUTHOR_BIO\}\}/g,       esc(authorBio))
         .replace(/\{\{CONTENT\}\}/g,          htmlContent)
         .replace(/\{\{INLINE_CSS\}\}/g,       inlineCss)
         .replace(/\{\{ARTICLE_SCHEMA\}\}/g,   articleSchema)

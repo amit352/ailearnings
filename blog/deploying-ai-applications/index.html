@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Deploying AI Applications: From Local Dev to Production | AI Learning Hub</title>
   <meta name="description" content="Step-by-step guide to deploying AI applications — FastAPI serving, Docker containers, cloud deployment on AWS/GCP, model caching, rate limiting, and monitoring." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -52,10 +95,10 @@
   "image": "https://ailearnings.in/og-image.jpg",
   "url": "https://ailearnings.in/blog/deploying-ai-applications/",
   "datePublished": "2026-03-10",
-  "dateModified": "2026-03-10",
+  "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,47 +217,51 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">Deploying AI Applications: From Local Dev to Production</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-10">March 10, 2026</time>
-          <span>·</span>
-          <span>4 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">Deploying AI Applications: From Local Dev to Production</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-10">March 10, 2026</time></span>
+              <span class="sep">·</span><span>Updated <time datetime="2026-03-13">March 13, 2026</time></span>
+              <span class="sep">·</span>
+              <span>7 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
-        <h2>Learning Objectives</h2>
-<ul>
-<li>Build a production-ready AI API with FastAPI</li>
-<li>Containerize with Docker</li>
-<li>Deploy to cloud (AWS, GCP, or Railway)</li>
-<li>Implement caching, rate limiting, and error handling</li>
-<li>Monitor AI app performance and costs</li>
-</ul>
+        <h1>Deploying AI Applications: From Local Dev to Production</h1>
+<p>Getting an AI application to work on your laptop is the easy part. The hard part is deploying it so it handles real traffic, fails gracefully, does not burn through your API budget on repeated identical requests, and gives you the observability to debug what goes wrong at 2am. This guide walks through the complete production stack: API layer, caching, rate limiting, containerization, cloud deployment, and monitoring.</p>
 <hr>
 <h2>Architecture Overview</h2>
-<pre><code>Client
-  ↓  HTTPS
+<p>A production AI application has more layers than a simple web API. Each layer solves a specific failure mode.</p>
+<pre><code>Client (browser, mobile, other service)
+        ↓  HTTPS
 Load Balancer / CDN
-  ↓
-FastAPI Server (multiple replicas)
-  ↓              ↓              ↓
-LLM API    Vector DB      Cache (Redis)
-(OpenAI)   (Qdrant)       (Redis)
+        ↓
+FastAPI Server (multiple replicas for availability)
+   ↓          ↓          ↓
+LLM API   Vector DB   Cache (Redis)
+(OpenAI)  (Qdrant)    (identical request deduplication)
                 ↓
           Monitoring
-        (Prometheus/Grafana)
+        (logs + metrics)
 </code></pre>
+<p>The LLM API call is the most expensive and slowest operation in the chain — typically 1–5 seconds and $0.0001–0.001 per request. Everything else in this architecture exists to make that call less frequent, more reliable, and more observable.</p>
 <hr>
 <h2>Step 1: Build the API with FastAPI</h2>
+<p>FastAPI is the standard for Python AI APIs. It is async-native (important for non-blocking LLM calls), generates OpenAPI documentation automatically, and has built-in request validation via Pydantic.</p>
 <pre><code class="language-bash">pip install fastapi uvicorn pydantic openai python-dotenv
 </code></pre>
 <pre><code class="language-python"># main.py
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from openai import OpenAI, RateLimitError
 from typing import Optional
 import os
@@ -224,7 +271,7 @@ load_dotenv()
 
 app = FastAPI(title=&quot;AI Assistant API&quot;, version=&quot;1.0.0&quot;)
 
-# CORS — restrict in production
+# Restrict CORS in production — never use allow_origins=[&quot;*&quot;] in production
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[&quot;https://yourdomain.com&quot;],
@@ -236,9 +283,9 @@ client = OpenAI(api_key=os.getenv(&quot;OPENAI_API_KEY&quot;))
 
 
 class ChatRequest(BaseModel):
-    message: str
+    message: str = Field(..., min_length=1, max_length=4000)
     conversation_id: Optional[str] = None
-    max_tokens: int = 512
+    max_tokens: int = Field(default=512, ge=1, le=4096)
 
 
 class ChatResponse(BaseModel):
@@ -254,12 +301,6 @@ async def health():
 
 @app.post(&quot;/chat&quot;, response_model=ChatResponse)
 async def chat(req: ChatRequest):
-    if not req.message.strip():
-        raise HTTPException(status_code=400, detail=&quot;Message cannot be empty&quot;)
-
-    if len(req.message) &gt; 4000:
-        raise HTTPException(status_code=400, detail=&quot;Message too long (max 4000 chars)&quot;)
-
     try:
         response = client.chat.completions.create(
             model=&quot;gpt-4o-mini&quot;,
@@ -268,6 +309,7 @@ async def chat(req: ChatRequest):
                 {&quot;role&quot;: &quot;user&quot;,   &quot;content&quot;: req.message},
             ],
             max_tokens=req.max_tokens,
+            temperature=0,
         )
         return ChatResponse(
             answer=response.choices[0].message.content,
@@ -276,7 +318,7 @@ async def chat(req: ChatRequest):
         )
     except RateLimitError:
         raise HTTPException(status_code=429, detail=&quot;Rate limit exceeded. Try again later.&quot;)
-    except Exception as e:
+    except Exception:
         raise HTTPException(status_code=500, detail=&quot;Internal error&quot;)
 
 
@@ -285,8 +327,8 @@ if __name__ == &quot;__main__&quot;:
     uvicorn.run(&quot;main:app&quot;, host=&quot;0.0.0.0&quot;, port=8000, reload=True)
 </code></pre>
 <h3>Streaming Endpoint</h3>
+<p>For chat UIs, expose a streaming endpoint using Server-Sent Events (SSE). The browser receives tokens as they are generated rather than waiting for the full response.</p>
 <pre><code class="language-python">from fastapi.responses import StreamingResponse
-import asyncio
 
 @app.post(&quot;/chat/stream&quot;)
 async def chat_stream(req: ChatRequest):
@@ -305,7 +347,7 @@ async def chat_stream(req: ChatRequest):
 </code></pre>
 <hr>
 <h2>Step 2: Add Caching with Redis</h2>
-<p>Cache identical requests to save money and reduce latency.</p>
+<p>LLM calls are expensive and slow. When users ask the same question repeatedly (common in support bots and FAQ assistants), caching the response saves both money and latency.</p>
 <pre><code class="language-bash">pip install redis
 docker run -d -p 6379:6379 redis:alpine
 </code></pre>
@@ -313,41 +355,53 @@ docker run -d -p 6379:6379 redis:alpine
 import hashlib
 import json
 
-cache = redis.Redis(host=os.getenv(&quot;REDIS_HOST&quot;, &quot;localhost&quot;), port=6379, decode_responses=True)
-CACHE_TTL = 3600  # 1 hour
+cache = redis.Redis(
+    host=os.getenv(&quot;REDIS_HOST&quot;, &quot;localhost&quot;),
+    port=6379,
+    decode_responses=True
+)
+CACHE_TTL = 3600  # Cache responses for 1 hour
 
-def get_cache_key(message: str) -&gt; str:
-    return f&quot;chat:{hashlib.sha256(message.encode()).hexdigest()}&quot;
+def get_cache_key(message: str, model: str) -&gt; str:
+    content = f&quot;{model}:{message}&quot;
+    return f&quot;chat:{hashlib.sha256(content.encode()).hexdigest()}&quot;
 
-@app.post(&quot;/chat&quot;, response_model=ChatResponse)
+
+@app.post(&quot;/chat/cached&quot;, response_model=ChatResponse)
 async def chat_with_cache(req: ChatRequest):
-    cache_key = get_cache_key(req.message)
+    cache_key = get_cache_key(req.message, &quot;gpt-4o-mini&quot;)
 
-    # Check cache
+    # Check cache first
     cached = cache.get(cache_key)
     if cached:
         data = json.loads(cached)
-        return ChatResponse(**data, tokens_used=0)
+        return ChatResponse(answer=data[&quot;answer&quot;],
+                           conversation_id=req.conversation_id or &quot;cached&quot;,
+                           tokens_used=0)
 
-    # Call LLM
+    # Call LLM on cache miss
     response = client.chat.completions.create(
         model=&quot;gpt-4o-mini&quot;,
         messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: req.message}],
         max_tokens=req.max_tokens,
     )
 
-    result = ChatResponse(
-        answer=response.choices[0].message.content,
+    answer = response.choices[0].message.content
+    result = {&quot;answer&quot;: answer, &quot;tokens_used&quot;: response.usage.total_tokens}
+
+    # Cache the result with TTL
+    cache.setex(cache_key, CACHE_TTL, json.dumps(result))
+
+    return ChatResponse(
+        answer=answer,
         conversation_id=req.conversation_id or &quot;new&quot;,
         tokens_used=response.usage.total_tokens,
     )
-
-    # Cache the result
-    cache.setex(cache_key, CACHE_TTL, json.dumps(result.dict()))
-    return result
 </code></pre>
+<p>Cache hits are instant and cost nothing. For applications with repetitive queries (customer support bots, FAQ systems), cache hit rates of 30–60% are common, cutting LLM costs proportionally.</p>
 <hr>
 <h2>Step 3: Rate Limiting</h2>
+<p>Without rate limiting, a single client can exhaust your OpenAI budget or bring down your server. Rate limiting per IP prevents both abuse and accidental denial-of-service from buggy clients.</p>
 <pre><code class="language-bash">pip install slowapi
 </code></pre>
 <pre><code class="language-python">from slowapi import Limiter
@@ -361,36 +415,42 @@ app.state.limiter = limiter
 
 @app.exception_handler(RateLimitExceeded)
 async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
-    return JSONResponse(status_code=429, content={&quot;detail&quot;: &quot;Too many requests&quot;})
+    return JSONResponse(
+        status_code=429,
+        content={&quot;detail&quot;: &quot;Too many requests. Please slow down.&quot;}
+    )
 
 @app.post(&quot;/chat&quot;, response_model=ChatResponse)
-@limiter.limit(&quot;20/minute&quot;)  # 20 requests per minute per IP
-async def chat(request: Request, req: ChatRequest):
-    ...
+@limiter.limit(&quot;20/minute&quot;)  # 20 requests per minute per IP address
+async def chat_rate_limited(request: Request, req: ChatRequest):
+    # ... same logic as above
+    pass
 </code></pre>
+<p>Set limits appropriate to your use case. A public API might allow 10 requests/minute per anonymous IP. An authenticated API might allow 100 requests/minute per user token.</p>
 <hr>
-<h2>Step 4: Dockerize</h2>
+<h2>Step 4: Containerize with Docker</h2>
+<p>Containers ensure the application runs identically in development, staging, and production. They also make deployment to any cloud provider trivial.</p>
 <pre><code class="language-dockerfile"># Dockerfile
 FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install dependencies first (Docker layer caching)
+# Install dependencies before copying code (Docker layer caching)
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY . .
 
-# Non-root user for security
+# Run as non-root user for security
 RUN adduser --disabled-password --gecos &#39;&#39; appuser
 USER appuser
 
 EXPOSE 8000
 
-CMD [&quot;uvicorn&quot;, &quot;main:app&quot;, &quot;--host&quot;, &quot;0.0.0.0&quot;, &quot;--port&quot;, &quot;8000&quot;]
+CMD [&quot;uvicorn&quot;, &quot;main:app&quot;, &quot;--host&quot;, &quot;0.0.0.0&quot;, &quot;--port&quot;, &quot;8000&quot;, &quot;--workers&quot;, &quot;2&quot;]
 </code></pre>
-<pre><code class="language-yaml"># docker-compose.yml
+<pre><code class="language-yaml"># docker-compose.yml — for local development and testing
 version: &quot;3.9&quot;
 
 services:
@@ -404,6 +464,11 @@ services:
     depends_on:
       - redis
     restart: unless-stopped
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;curl&quot;, &quot;-f&quot;, &quot;http://localhost:8000/health&quot;]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
   redis:
     image: redis:7-alpine
@@ -414,79 +479,80 @@ services:
 volumes:
   redis_data:
 </code></pre>
-<pre><code class="language-bash">docker-compose up -d
+<pre><code class="language-bash"># Start everything with one command
+docker-compose up -d
+
+# Verify it works
 curl http://localhost:8000/health
 </code></pre>
 <hr>
 <h2>Step 5: Cloud Deployment</h2>
-<h3>Railway (Easiest — 5 minutes)</h3>
+<h3>Railway (Easiest — 5 minutes from zero)</h3>
+<p>Railway deploys directly from your git repository. It detects the Dockerfile automatically and provisions infrastructure. Best for early-stage applications and side projects.</p>
 <pre><code class="language-bash">npm install -g @railway/cli
 railway login
 railway init
 railway up
-railway domain  # get your public URL
+railway domain  # assigns a public URL
 </code></pre>
-<p>Set environment variables in Railway dashboard.</p>
-<h3>AWS ECS (Container Service)</h3>
-<pre><code class="language-bash"># Build and push to ECR
-aws ecr create-repository --repository-name ai-api
-aws ecr get-login-password | docker login --username AWS --password-stdin &lt;ecr-url&gt;
-docker build -t ai-api .
-docker tag ai-api:latest &lt;ecr-url&gt;/ai-api:latest
-docker push &lt;ecr-url&gt;/ai-api:latest
+<p>Set <code>OPENAI_API_KEY</code> as an environment variable in the Railway dashboard. It injects it into your container at runtime.</p>
+<h3>Google Cloud Run (Serverless — scales to zero)</h3>
+<p>Cloud Run is serverless — you pay only for actual request processing time, and it scales to zero when idle. Excellent for applications with variable or unpredictable traffic.</p>
+<pre><code class="language-bash"># Build and push to Google Container Registry
+gcloud builds submit --tag gcr.io/your-project/ai-api
 
-# Deploy with Terraform or AWS Console
-</code></pre>
-<h3>Google Cloud Run (Serverless)</h3>
-<pre><code class="language-bash">gcloud run deploy ai-api \
+# Deploy
+gcloud run deploy ai-api \
   --image gcr.io/your-project/ai-api \
   --platform managed \
   --region us-central1 \
   --allow-unauthenticated \
+  --memory 1Gi \
   --set-env-vars OPENAI_API_KEY=sk-...
 </code></pre>
+<h3>AWS ECS (Best for existing AWS infrastructure)</h3>
+<pre><code class="language-bash"># Create repository
+aws ecr create-repository --repository-name ai-api
+
+# Authenticate, tag, and push
+aws ecr get-login-password --region us-east-1 | \
+  docker login --username AWS --password-stdin &lt;ecr-url&gt;
+docker build -t ai-api .
+docker tag ai-api:latest &lt;ecr-url&gt;/ai-api:latest
+docker push &lt;ecr-url&gt;/ai-api:latest
+</code></pre>
+<p>Then create an ECS service via the AWS console or Terraform to run the container with auto-scaling.</p>
 <hr>
-<h2>Step 6: Monitoring</h2>
+<h2>Step 6: Monitoring and Cost Tracking</h2>
+<p>Without monitoring, you discover production problems from user complaints. Instrument your application from day one.</p>
 <h3>Track Token Usage and Costs</h3>
-<pre><code class="language-python">from dataclasses import dataclass
+<pre><code class="language-python">import logging
 from datetime import datetime
-import logging
 
 logger = logging.getLogger(__name__)
-
-@dataclass
-class UsageLog:
-    timestamp: str
-    model: str
-    prompt_tokens: int
-    completion_tokens: int
-    total_tokens: int
-    cost_usd: float
 
 COST_PER_1K_TOKENS = {
     &quot;gpt-4o-mini&quot;: {&quot;input&quot;: 0.00015, &quot;output&quot;: 0.0006},
     &quot;gpt-4o&quot;:      {&quot;input&quot;: 0.0025,  &quot;output&quot;: 0.01},
 }
 
-def log_usage(response, model: str):
+def log_usage(response, model: str, endpoint: str):
     usage = response.usage
     costs = COST_PER_1K_TOKENS.get(model, {&quot;input&quot;: 0, &quot;output&quot;: 0})
     cost = (
-        usage.prompt_tokens / 1000 * costs[&quot;input&quot;]
-        + usage.completion_tokens / 1000 * costs[&quot;output&quot;]
+        usage.prompt_tokens     / 1000 * costs[&quot;input&quot;] +
+        usage.completion_tokens / 1000 * costs[&quot;output&quot;]
     )
-    log = UsageLog(
-        timestamp=datetime.utcnow().isoformat(),
-        model=model,
-        prompt_tokens=usage.prompt_tokens,
-        completion_tokens=usage.completion_tokens,
-        total_tokens=usage.total_tokens,
-        cost_usd=round(cost, 6),
+    logger.info(
+        &quot;API_USAGE endpoint=%s model=%s prompt_tokens=%d &quot;
+        &quot;completion_tokens=%d cost_usd=%.6f&quot;,
+        endpoint, model,
+        usage.prompt_tokens, usage.completion_tokens, cost
     )
-    logger.info(f&quot;USAGE: {log}&quot;)
-    return log
+    return cost
 </code></pre>
-<h3>Health Checks and Alerting</h3>
+<h3>Detailed Health Checks</h3>
+<p>A <code>/health</code> endpoint that returns 200 proves the server is running. A <code>/health/detailed</code> endpoint proves it can actually serve requests.</p>
 <pre><code class="language-python">@app.get(&quot;/health/detailed&quot;)
 async def detailed_health():
     checks = {}
@@ -496,7 +562,7 @@ async def detailed_health():
         client.models.list()
         checks[&quot;openai&quot;] = &quot;healthy&quot;
     except Exception as e:
-        checks[&quot;openai&quot;] = f&quot;error: {e}&quot;
+        checks[&quot;openai&quot;] = f&quot;error: {str(e)[:100]}&quot;
 
     # Check Redis
     try:
@@ -505,47 +571,42 @@ async def detailed_health():
     except Exception:
         checks[&quot;redis&quot;] = &quot;unreachable&quot;
 
-    status = &quot;healthy&quot; if all(v == &quot;healthy&quot; for v in checks.values()) else &quot;degraded&quot;
-    return {&quot;status&quot;: status, &quot;checks&quot;: checks}
+    overall = &quot;healthy&quot; if all(v == &quot;healthy&quot; for v in checks.values()) else &quot;degraded&quot;
+    return {&quot;status&quot;: overall, &quot;checks&quot;: checks, &quot;timestamp&quot;: datetime.utcnow().isoformat()}
 </code></pre>
+<p>Configure your cloud provider&#39;s health check to call <code>/health/detailed</code> and alert when the status is <code>degraded</code>.</p>
 <hr>
-<h2>Troubleshooting</h2>
-<p><strong>API returns 500 intermittently</strong></p>
-<ul>
-<li>Add retry logic with exponential backoff for OpenAI calls</li>
-<li>Check logs for specific error codes (rate limits, context length exceeded)</li>
-</ul>
-<p><strong>High latency (&gt; 5s)</strong></p>
-<ul>
-<li>Profile: is latency in LLM call or elsewhere?</li>
-<li>Use streaming for perceived responsiveness</li>
-<li>Cache frequent queries</li>
-</ul>
-<p><strong>Costs are higher than expected</strong></p>
-<ul>
-<li>Log all token usage</li>
-<li>Check for prompt inflation (system prompt too long)</li>
-<li>Consider gpt-4o-mini for simpler tasks</li>
-</ul>
-<hr>
-<h2>FAQ</h2>
-<p><strong>Should I use FastAPI or Flask?</strong>
-FastAPI: async support, automatic OpenAPI docs, better performance. Flask: simpler for tiny APIs. For AI apps with streaming, use FastAPI.</p>
-<p><strong>How do I handle API key security?</strong>
-Never hard-code API keys. Use environment variables, AWS Secrets Manager, or HashiCorp Vault. Rotate keys regularly. Set spending limits in your OpenAI account.</p>
+<h2>Common Pitfalls</h2>
+<p><strong>No retry logic for LLM calls</strong> — OpenAI&#39;s API has 99.9% uptime, but network errors and rate limits still happen. Wrap all LLM calls in retry logic with exponential backoff using <code>tenacity</code> or manual retry loops.</p>
+<p><strong>Hardcoding secrets</strong> — API keys in source code get committed to git, often publicly. Use environment variables injected at runtime, never hardcoded values.</p>
+<p><strong>Not setting spending limits</strong> — Configure a monthly spending cap in your OpenAI account. A single runaway request loop can generate hundreds of dollars in charges in minutes.</p>
+<p><strong>Caching sensitive responses</strong> — Not all responses should be cached. Never cache responses that include user-specific or private information in a shared cache. Use user-scoped cache keys when appropriate.</p>
+<p><strong>Deploying without a health check</strong> — Without health checks, a cloud load balancer cannot detect a failed container and will continue routing traffic to it. Always implement <code>/health</code> and configure it in your deployment.</p>
+<p><strong>Ignoring latency percentiles</strong> — Average latency is misleading. An application with average P50 latency of 800ms might have P99 latency of 8 seconds. Monitor P95 and P99 latency, not just averages.</p>
 <hr>
 <h2>What to Learn Next</h2>
+<p>Deployment is the final step, but building a deployable application requires solid foundations in each component:</p>
 <ul>
-<li><strong>AI application architecture</strong> → ai-application-architecture</li>
-<li><strong>Building AI chatbots</strong> → building-ai-chatbots</li>
-<li><strong>LangChain in production</strong> → <a href="/blog/langchain-tutorial-complete/">LangChain Complete Tutorial</a></li>
+<li><strong>Build the AI application you want to deploy</strong> → <a href="/blog/build-ai-app/">How to Build Your First AI App</a></li>
+<li><strong>Add retrieval to your AI API</strong> → <a href="/blog/build-rag-app/">How to Build a RAG Application</a></li>
+<li><strong>LangChain for complex AI backends</strong> → <a href="/blog/langchain-tutorial/">LangChain Tutorial</a></li>
 </ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -589,6 +650,34 @@ Never hard-code API keys. Use environment variables, AWS Secrets Manager, or Has
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

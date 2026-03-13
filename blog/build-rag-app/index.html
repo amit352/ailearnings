@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How to Build a RAG Application Step-by-Step | AI Learning Hub</title>
   <meta name="description" content="Learn how to build a Retrieval-Augmented Generation app using vector databases and LLMs." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -54,8 +97,8 @@
   "datePublished": "2026-03-13",
   "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,87 +217,132 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">How to Build a RAG Application Step-by-Step</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-13">March 13, 2026</time>
-          <span>·</span>
-          <span>5 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">How to Build a RAG Application Step-by-Step</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-13">March 13, 2026</time></span>
+              
+              <span class="sep">·</span>
+              <span>6 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
         <h1>How to Build a RAG Application Step-by-Step</h1>
-<p>A RAG application lets users ask questions against your own documents — product manuals, internal knowledge bases, research papers, code documentation. The model cannot answer these from its training data alone. RAG gives it the context it needs. This guide walks through building a complete RAG app from scratch.</p>
+<p>Every organization has a knowledge base: product documentation, internal policies, support articles, research papers, code documentation. GPT-4o knows nothing about any of it. You could fine-tune a model on your data — but fine-tuning cannot inject specific passages into answers, cannot cite sources, and cannot be updated without retraining. Retrieval-Augmented Generation solves all of this. It fetches the relevant passages at query time and feeds them to the model as context. This guide builds a complete, production-ready RAG application from scratch.</p>
 <hr>
-<h2>What is a RAG Application</h2>
-<p>A RAG application combines a retrieval system (vector database + semantic search) with a language model to answer questions grounded in your specific documents. The retrieval system finds the most relevant passages, and the language model synthesizes an answer from them.</p>
-<p>Unlike a standard chatbot, a RAG app can answer questions about private or recent data, cite its sources, and refuse to answer when the relevant information is not in the knowledge base.</p>
-<p>For an explanation of the underlying concepts, see <a href="/blog/rag-explained/">RAG explained</a>.</p>
-<hr>
-<h2>Why Building RAG Apps Matters for Developers</h2>
-<p>RAG is the most common architecture for production AI assistants. Internal Q&amp;A tools, customer support bots, documentation assistants, and research tools all use this pattern. Understanding how to build one from scratch gives you:</p>
+<h2>What You Are Building</h2>
+<p>A document Q&amp;A assistant that:</p>
 <ul>
-<li>Full control over document processing and chunking</li>
-<li>Ability to tune retrieval parameters for your content type</li>
-<li>Flexibility to swap embedding models, vector stores, and LLMs</li>
-<li>Insight into failure modes and how to fix them</li>
+<li>Loads and indexes PDF documents into a vector store</li>
+<li>Accepts natural language questions from users</li>
+<li>Retrieves the most relevant document passages</li>
+<li>Generates grounded answers that cite sources</li>
+<li>Returns &quot;I don&#39;t have that information&quot; when the answer is not in the documents</li>
 </ul>
+<p>This is the most common first production AI application. The pattern generalizes to customer support bots, internal knowledge bases, documentation assistants, and research tools.</p>
 <hr>
-<h2>How a RAG App Works</h2>
-<p>A RAG application has two distinct phases:</p>
-<p><strong>Indexing (offline):</strong> Load documents → split into chunks → embed each chunk → store in vector database</p>
-<p><strong>Query (online):</strong> Embed the user&#39;s question → search vector database → retrieve top-K chunks → build prompt → LLM generates answer</p>
+<h2>How RAG Works</h2>
+<p>RAG has two clearly separated phases:</p>
+<p><strong>Indexing phase (offline):</strong></p>
+<ol>
+<li>Load documents (PDF, web pages, text files)</li>
+<li>Split into overlapping chunks (500–1000 characters each)</li>
+<li>Embed each chunk using an embedding model</li>
+<li>Store embedding vectors in a vector database</li>
+</ol>
+<p><strong>Query phase (online, per user request):</strong></p>
+<ol>
+<li>Embed the user&#39;s question</li>
+<li>Search the vector database for the most similar chunks (top-K by cosine similarity)</li>
+<li>Insert retrieved chunks into the LLM prompt as context</li>
+<li>Generate an answer grounded in that context</li>
+</ol>
+<p>The retrieval step is what makes RAG different from standard chat: the model only has access to what you retrieve, not its full training-data knowledge about the topic.</p>
 <hr>
-<h2>Practical Examples</h2>
-<h3>Step 1: Install Dependencies</h3>
+<h2>Step 1: Install Dependencies</h2>
 <pre><code class="language-bash">pip install langchain langchain-openai langchain-community \
             chromadb pypdf sentence-transformers
+export OPENAI_API_KEY=&quot;sk-...&quot;
 </code></pre>
-<h3>Step 2: Load and Chunk Documents</h3>
+<hr>
+<h2>Step 2: Load and Chunk Documents</h2>
+<p>Document loading converts different file formats into LangChain&#39;s <code>Document</code> objects. Chunking breaks those documents into segments small enough for an embedding model to represent meaningfully.</p>
 <pre><code class="language-python">from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # Load a single PDF
-loader = PyPDFLoader(&quot;docs/handbook.pdf&quot;)
+loader = PyPDFLoader(&quot;docs/employee-handbook.pdf&quot;)
 documents = loader.load()
 
 # Or load all PDFs from a directory
 # loader = DirectoryLoader(&quot;docs/&quot;, glob=&quot;**/*.pdf&quot;, loader_cls=PyPDFLoader)
 # documents = loader.load()
 
+print(f&quot;Loaded {len(documents)} pages&quot;)
+print(f&quot;First page preview: {documents[0].page_content[:300]}&quot;)
+print(f&quot;Metadata: {documents[0].metadata}&quot;)
+
+# Split into chunks — each chunk gets embedded and stored independently
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=500,
-    chunk_overlap=50,
-    separators=[&quot;\n\n&quot;, &quot;\n&quot;, &quot; &quot;, &quot;&quot;]
+    chunk_overlap=50,         # overlap prevents information loss at boundaries
+    separators=[&quot;\n\n&quot;, &quot;\n&quot;, &quot; &quot;, &quot;&quot;]  # prefer paragraph breaks
 )
 chunks = splitter.split_documents(documents)
-print(f&quot;Created {len(chunks)} chunks from {len(documents)} documents&quot;)
+print(f&quot;Created {len(chunks)} chunks from {len(documents)} pages&quot;)
 </code></pre>
-<h3>Step 3: Create the Vector Store</h3>
+<p>The chunk size is one of the most impactful parameters in RAG. Small chunks (256–512 chars) produce precise retrieval but lose surrounding context. Large chunks (1024–2048 chars) preserve context but dilute the embedding signal. For most document types, 400–600 characters is a good starting point.</p>
+<hr>
+<h2>Step 3: Create the Vector Store</h2>
 <pre><code class="language-python">from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 
 embeddings = OpenAIEmbeddings(model=&quot;text-embedding-3-small&quot;)
 
+# Index all chunks — this calls the embeddings API for each chunk
+# Run this once; the result is persisted to disk
 vectorstore = Chroma.from_documents(
     documents=chunks,
     embedding=embeddings,
     persist_directory=&quot;./chroma_db&quot;,
     collection_name=&quot;my_documents&quot;
 )
-print(&quot;Vector store created and persisted.&quot;)
+
+print(f&quot;Indexed {vectorstore._collection.count()} chunks&quot;)
+print(&quot;Vector store persisted to ./chroma_db&quot;)
 </code></pre>
-<h3>Step 4: Build the Retrieval Chain</h3>
+<p>Embedding 500 chunks with <code>text-embedding-3-small</code> costs roughly $0.002 and takes about 10 seconds. Once persisted, you never need to re-index unless documents change.</p>
+<p>To reload the persisted vector store on subsequent runs:</p>
+<pre><code class="language-python"># In production: load from disk, never re-index on startup
+vectorstore = Chroma(
+    persist_directory=&quot;./chroma_db&quot;,
+    embedding_function=OpenAIEmbeddings(model=&quot;text-embedding-3-small&quot;),
+    collection_name=&quot;my_documents&quot;
+)
+print(f&quot;Loaded {vectorstore._collection.count()} indexed chunks&quot;)
+</code></pre>
+<hr>
+<h2>Step 4: Build the Retrieval QA Chain</h2>
+<p>The retrieval chain connects your vector store to an LLM. At query time it: embeds the question, retrieves the top-K most relevant chunks, formats them into a prompt, and calls the LLM.</p>
 <pre><code class="language-python">from langchain_openai import ChatOpenAI
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 
-# Custom prompt that grounds the model in context
-PROMPT_TEMPLATE = &quot;&quot;&quot;
-Answer the question based ONLY on the following context.
-If the context does not contain the answer, say &quot;I don&#39;t have enough information.&quot;
+# The grounding prompt is the most critical piece
+# Without explicit constraints, the model uses training-data knowledge
+PROMPT_TEMPLATE = &quot;&quot;&quot;Answer the question based ONLY on the context provided below.
+If the context does not contain the information needed to answer the question,
+say exactly: &quot;I don&#39;t have enough information to answer that.&quot;
+
+Do not invent or infer information not present in the context.
 
 Context:
 {context}
@@ -269,83 +357,177 @@ prompt = PromptTemplate(
 )
 
 llm = ChatOpenAI(model=&quot;gpt-4o-mini&quot;, temperature=0)
+
 retriever = vectorstore.as_retriever(
     search_type=&quot;similarity&quot;,
-    search_kwargs={&quot;k&quot;: 4}
+    search_kwargs={&quot;k&quot;: 4}   # retrieve top 4 most relevant chunks
 )
 
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm,
-    chain_type=&quot;stuff&quot;,
+    chain_type=&quot;stuff&quot;,         # &quot;stuff&quot; = insert all chunks into one prompt
     retriever=retriever,
     chain_type_kwargs={&quot;prompt&quot;: prompt},
     return_source_documents=True
 )
 </code></pre>
-<h3>Step 5: Query the App</h3>
+<hr>
+<h2>Step 5: Query the Application</h2>
 <pre><code class="language-python">def ask(question: str) -&gt; dict:
+    &quot;&quot;&quot;Ask a question and return the answer with source citations.&quot;&quot;&quot;
     result = qa_chain.invoke({&quot;query&quot;: question})
     return {
         &quot;answer&quot;: result[&quot;result&quot;],
         &quot;sources&quot;: [
             {
                 &quot;page&quot;: doc.metadata.get(&quot;page&quot;, &quot;?&quot;),
-                &quot;source&quot;: doc.metadata.get(&quot;source&quot;, &quot;?&quot;),
-                &quot;snippet&quot;: doc.page_content[:200]
+                &quot;source&quot;: doc.metadata.get(&quot;source&quot;, &quot;unknown&quot;),
+                &quot;snippet&quot;: doc.page_content[:200] + &quot;...&quot;
             }
             for doc in result[&quot;source_documents&quot;]
         ]
     }
 
+# Test it
 response = ask(&quot;What is the company&#39;s vacation policy?&quot;)
 print(response[&quot;answer&quot;])
+print(&quot;\nSources:&quot;)
 for src in response[&quot;sources&quot;]:
-    print(f&quot;  Source: {src[&#39;source&#39;]}, Page {src[&#39;page&#39;]}&quot;)
+    print(f&quot;  {src[&#39;source&#39;]}, page {src[&#39;page&#39;]}&quot;)
+    print(f&quot;  \&quot;{src[&#39;snippet&#39;]}\&quot;&quot;)
+
+# Test the &quot;I don&#39;t know&quot; path
+response = ask(&quot;What is the square root of 144?&quot;)
+print(response[&quot;answer&quot;])
+# Should say: &quot;I don&#39;t have enough information to answer that.&quot;
 </code></pre>
-<h3>Step 6: Load an Existing Vector Store</h3>
-<pre><code class="language-python"># In production, load the persisted store — don&#39;t re-index every time
-vectorstore = Chroma(
+<p>Testing the &quot;I don&#39;t know&quot; path is as important as testing happy-path queries. If your model answers questions that are not in the documents, your grounding prompt needs strengthening.</p>
+<hr>
+<h2>Step 6: Add a FastAPI Backend</h2>
+<p>Expose the RAG chain as a REST API for integration with any front-end or service.</p>
+<pre><code class="language-python">from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import uvicorn
+
+app = FastAPI(title=&quot;Document Q&amp;A API&quot;)
+
+# Load vector store once at startup — not on every request
+_vectorstore = Chroma(
     persist_directory=&quot;./chroma_db&quot;,
     embedding_function=OpenAIEmbeddings(model=&quot;text-embedding-3-small&quot;),
     collection_name=&quot;my_documents&quot;
 )
+_qa_chain = RetrievalQA.from_chain_type(
+    llm=ChatOpenAI(model=&quot;gpt-4o-mini&quot;, temperature=0),
+    retriever=_vectorstore.as_retriever(search_kwargs={&quot;k&quot;: 4}),
+    chain_type_kwargs={&quot;prompt&quot;: prompt},
+    return_source_documents=True
+)
+
+
+class QuestionRequest(BaseModel):
+    question: str
+
+
+class SourceDoc(BaseModel):
+    source: str
+    page: str
+
+
+class QuestionResponse(BaseModel):
+    answer: str
+    sources: list[SourceDoc]
+
+
+@app.post(&quot;/ask&quot;, response_model=QuestionResponse)
+def ask_question(request: QuestionRequest):
+    if not request.question.strip():
+        raise HTTPException(status_code=400, detail=&quot;Question cannot be empty&quot;)
+
+    result = _qa_chain.invoke({&quot;query&quot;: request.question})
+
+    sources = [
+        SourceDoc(
+            source=doc.metadata.get(&quot;source&quot;, &quot;unknown&quot;),
+            page=str(doc.metadata.get(&quot;page&quot;, &quot;?&quot;))
+        )
+        for doc in result[&quot;source_documents&quot;]
+    ]
+
+    return QuestionResponse(answer=result[&quot;result&quot;], sources=sources)
+
+
+@app.get(&quot;/health&quot;)
+def health():
+    return {&quot;status&quot;: &quot;ok&quot;, &quot;chunks_indexed&quot;: _vectorstore._collection.count()}
+
+
+if __name__ == &quot;__main__&quot;:
+    uvicorn.run(app, host=&quot;0.0.0.0&quot;, port=8000)
 </code></pre>
 <hr>
-<h2>Tools and Frameworks</h2>
-<p><strong>Chroma</strong> — Embedded vector database, ideal for local development and small to medium deployments. No server required.</p>
-<p><strong>FAISS</strong> — Facebook&#39;s similarity search library. Very fast for in-memory search. Use when you do not need persistence.</p>
-<p><strong>Pinecone</strong> — Managed cloud vector database. Good for production at scale with filtering, namespaces, and automatic scaling.</p>
-<p><strong>Weaviate / Qdrant</strong> — Open-source vector databases with rich filtering and hybrid search (keyword + semantic).</p>
-<p><strong>LangChain</strong> — Provides the glue between document loaders, text splitters, vector stores, and LLMs. See <a href="/blog/langchain-tutorial/">LangChain tutorial</a> for a full guide.</p>
-<p>For a deep dive on vector database options, see <a href="/blog/vector-database-explained/">vector databases explained</a>. For how embeddings power the retrieval step, see <a href="/blog/embeddings-explained/">embeddings explained</a>.</p>
+<h2>Improving Retrieval Quality</h2>
+<p>The default similarity search is a good start. These techniques improve precision and recall for production applications.</p>
+<h3>MMR (Maximal Marginal Relevance)</h3>
+<p>Standard top-K retrieval often returns multiple near-duplicate chunks (adjacent paragraphs from the same section). MMR reranks results to maximize diversity while maintaining relevance.</p>
+<pre><code class="language-python">retriever = vectorstore.as_retriever(
+    search_type=&quot;mmr&quot;,
+    search_kwargs={
+        &quot;k&quot;: 5,           # return 5 diverse results
+        &quot;fetch_k&quot;: 20,    # from 20 initial candidates
+        &quot;lambda_mult&quot;: 0.5  # balance between relevance (1.0) and diversity (0.0)
+    }
+)
+</code></pre>
+<h3>Metadata Filtering</h3>
+<p>Filter by document source when the user&#39;s query context implies a specific document.</p>
+<pre><code class="language-python">retriever = vectorstore.as_retriever(
+    search_kwargs={
+        &quot;k&quot;: 4,
+        &quot;filter&quot;: {&quot;source&quot;: &quot;employee-handbook.pdf&quot;}  # only search this document
+    }
+)
+</code></pre>
+<h3>Similarity Score Threshold</h3>
+<p>Reject chunks that are only weakly related to the query. This prevents the model from generating answers from tangentially related content.</p>
+<pre><code class="language-python"># Return only chunks with similarity score above 0.7
+retriever = vectorstore.as_retriever(
+    search_type=&quot;similarity_score_threshold&quot;,
+    search_kwargs={&quot;score_threshold&quot;: 0.7, &quot;k&quot;: 4}
+)
+</code></pre>
 <hr>
 <h2>Common Mistakes</h2>
-<p><strong>Re-embedding documents on every run</strong> — Index once, persist, and reload. Re-embedding is expensive and unnecessary.</p>
-<p><strong>Wrong chunk size</strong> — Too large: retrieval returns big blocks with irrelevant sentences. Too small: individual chunks lose context. Start with 400–500 tokens and tune from there.</p>
-<p><strong>No source attribution</strong> — Always return the source document metadata with the answer. This makes RAG apps auditable and lets users verify answers.</p>
-<p><strong>Only testing happy-path queries</strong> — Test queries that should return &quot;I don&#39;t know.&quot; If the model answers anyway, your grounding prompt needs strengthening.</p>
-<p><strong>Skipping chunk overlap</strong> — Overlapping chunks by 10–15% prevents important information from being split across chunks and lost during retrieval.</p>
+<p><strong>Re-indexing documents on every startup</strong> — Embedding 500 documents takes 30 seconds and costs money. Index once, persist to disk, and load the persisted store on startup. This is the most common performance mistake in RAG applications.</p>
+<p><strong>Chunk size too large</strong> — A 2,000-character chunk contains many ideas. The embedding averages over all of them, making the chunk match many different queries weakly rather than one query strongly. Start with 400–500 characters.</p>
+<p><strong>No chunk overlap</strong> — Information at a chunk boundary is split in half. With <code>chunk_overlap=0</code>, a sentence that spans the boundary is lost. Use 10–15% overlap relative to chunk size.</p>
+<p><strong>Weak grounding prompt</strong> — The system prompt must explicitly constrain the model to the retrieved context. Without this instruction, GPT-4o will supplement retrieved passages with its training data, producing confident answers that are not in your documents.</p>
+<p><strong>No source attribution</strong> — Always return the source document metadata with the answer. Users need to be able to verify answers, and source citations dramatically increase trust in the application.</p>
+<p><strong>Only testing with questions the documents can answer</strong> — You must test with out-of-scope questions to verify the model correctly says &quot;I don&#39;t know.&quot; If it does not, strengthen the grounding constraint in the prompt.</p>
 <hr>
-<h2>Best Practices</h2>
+<h2>What to Learn Next</h2>
+<p>A working RAG application is the foundation for more complex AI systems. The natural next steps deepen your understanding of each component:</p>
 <ul>
-<li><strong>Separate indexing from serving</strong> — Run the indexing pipeline as a background job. The query API should load the persisted vector store, not re-index on startup.</li>
-<li><strong>Store metadata with chunks</strong> — Document name, page number, section title, date. This enables filtering and citation.</li>
-<li><strong>Use hybrid search for better recall</strong> — Combine semantic search with keyword (BM25) search. The semantic search finds conceptually related content; keyword search finds exact terms.</li>
-<li><strong>Monitor retrieval quality</strong> — Log which chunks are retrieved for each query. If the wrong chunks come back, the problem is in retrieval — not generation.</li>
-<li><strong>Set a similarity threshold</strong> — Reject retrieved chunks below a minimum similarity score. This prevents the model from answering from weakly related content.</li>
+<li><strong>Understand why RAG works</strong> → <a href="/blog/rag-explained/">RAG Explained</a></li>
+<li><strong>Go deeper on vector databases</strong> → <a href="/blog/vector-database-explained/">Vector Database Explained</a></li>
+<li><strong>LangChain for complex retrieval pipelines</strong> → <a href="/blog/langchain-tutorial/">LangChain Tutorial</a></li>
 </ul>
-<hr>
-<h2>Summary</h2>
-<p>Building a RAG application involves four steps: load and chunk documents, embed and index chunks into a vector store, retrieve relevant chunks at query time, and generate an answer grounded in those chunks.</p>
-<p>The architecture is straightforward, but production quality requires attention to chunk size, retrieval parameters, prompt grounding, and source attribution.</p>
-<p>Start with Chroma locally, use LangChain&#39;s RetrievalQA chain, and tune chunk size and top-K based on your specific documents. Once basic retrieval works, add metadata filtering and hybrid search for production robustness.</p>
-<p>For the underlying concepts, see <a href="/blog/rag-explained/">RAG explained</a>. For the vector database infrastructure, see <a href="/blog/vector-database-explained/">vector databases explained</a>. For a complete LangChain walkthrough, see <a href="/blog/langchain-tutorial/">LangChain tutorial</a>.</p>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -389,6 +571,34 @@ vectorstore = Chroma(
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OpenAI API Tutorial for Developers | AI Learning Hub</title>
   <meta name="description" content="Learn how to use the OpenAI API to build AI-powered applications." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -54,8 +97,8 @@
   "datePublished": "2026-03-13",
   "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,119 +217,120 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">OpenAI API Tutorial for Developers</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-13">March 13, 2026</time>
-          <span>·</span>
-          <span>4 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">OpenAI API Tutorial for Developers</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-13">March 13, 2026</time></span>
+              
+              <span class="sep">·</span>
+              <span>7 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
         <h1>OpenAI API Tutorial for Developers</h1>
-<p>The OpenAI API gives developers access to GPT-4o, embedding models, image generation, and speech-to-text. It is the most widely used AI API in production applications. This tutorial covers everything you need to start building: authentication, chat completions, streaming, function calling, and embeddings.</p>
+<p>You can go from zero API knowledge to a working AI feature in about 30 minutes with the OpenAI API. No infrastructure to manage, no models to host, and a Python SDK that makes the most common patterns feel natural. But the gap between a demo that works once and an API integration that behaves reliably in production is significant — and it shows up in specifics: how you handle tokens, structure prompts, parse output, manage conversation history, and handle the inevitable rate limit errors. This tutorial covers the whole picture.</p>
 <hr>
-<h2>What is the OpenAI API</h2>
-<p>The OpenAI API is a REST API that provides access to OpenAI&#39;s models:</p>
+<h2>What the OpenAI API Provides</h2>
+<p>The OpenAI API is a REST API (with official Python and Node.js SDKs) that gives you access to:</p>
 <ul>
-<li><strong>Chat completions</strong> — GPT-4o, GPT-4o-mini for text generation and reasoning</li>
-<li><strong>Embeddings</strong> — text-embedding-3-small, text-embedding-3-large for semantic search</li>
-<li><strong>Images</strong> — DALL-E 3 for image generation</li>
-<li><strong>Audio</strong> — Whisper for transcription, TTS for text-to-speech</li>
+<li><strong>Chat completions</strong> — GPT-4o and GPT-4o-mini for text generation, reasoning, and code</li>
+<li><strong>Embeddings</strong> — <code>text-embedding-3-small</code> and <code>text-embedding-3-large</code> for semantic search and similarity</li>
+<li><strong>Images</strong> — DALL-E 3 for image generation from text prompts</li>
+<li><strong>Audio</strong> — Whisper for speech-to-text transcription, TTS for text-to-speech synthesis</li>
 <li><strong>Moderation</strong> — Content classification for safety filtering</li>
+<li><strong>Structured outputs</strong> — JSON mode and function calling for reliable structured data extraction</li>
 </ul>
-<p>For most AI application development, the chat completions and embeddings APIs are the primary interfaces. The Python SDK wraps the REST API with a clean object-oriented interface.</p>
+<p>For most AI application development, you will spend 90% of your time with chat completions and embeddings. Vision, audio, and image generation are additive capabilities you reach for when the product requires them.</p>
 <hr>
-<h2>Why the OpenAI API Matters for Developers</h2>
-<p>The OpenAI API is the fastest path from idea to working AI feature:</p>
-<ul>
-<li>No infrastructure to manage</li>
-<li>Pay per token — no upfront cost</li>
-<li>Regular model updates automatically improve your application</li>
-<li>Extensive documentation and community support</li>
-<li>Structured output, function calling, and vision built in</li>
-</ul>
-<p>For building applications with the Python client, see <a href="/blog/openai-python-client-guide/">OpenAI Python client guide</a>.</p>
-<hr>
-<h2>How the OpenAI API Works</h2>
-<h3>Setup</h3>
+<h2>Setup</h2>
 <pre><code class="language-bash">pip install openai
 export OPENAI_API_KEY=&quot;sk-...&quot;
 </code></pre>
 <pre><code class="language-python">from openai import OpenAI
-client = OpenAI()  # Reads OPENAI_API_KEY from environment
+
+# Reads OPENAI_API_KEY from environment automatically
+client = OpenAI()
 </code></pre>
-<h3>Chat Completions</h3>
-<p>The chat completions endpoint takes a list of messages and returns a response.</p>
+<p>Never hardcode your API key in source code. Use environment variables, a <code>.env</code> file loaded with <code>python-dotenv</code>, or a secrets manager in production. The OpenAI SDK will raise a clear error if the key is missing.</p>
+<hr>
+<h2>Chat Completions: The Core API</h2>
+<p>The chat completions endpoint takes a list of messages with roles and returns the model&#39;s response. Understanding the message structure is the foundation of everything else.</p>
 <pre><code class="language-python">response = client.chat.completions.create(
     model=&quot;gpt-4o-mini&quot;,
     messages=[
         {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful coding assistant.&quot;},
-        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Write a Python function to reverse a string.&quot;}
+        {&quot;role&quot;: &quot;user&quot;,   &quot;content&quot;: &quot;Write a Python function to reverse a string.&quot;}
     ],
     temperature=0,
     max_tokens=500
 )
+
 print(response.choices[0].message.content)
+print(f&quot;Tokens used: {response.usage.total_tokens}&quot;)
 </code></pre>
 <p><strong>Message roles:</strong></p>
 <ul>
-<li><code>system</code> — Sets the assistant&#39;s behavior and persona</li>
-<li><code>user</code> — The human&#39;s message</li>
-<li><code>assistant</code> — The model&#39;s previous responses (for multi-turn conversations)</li>
+<li><code>system</code> — Sets the assistant&#39;s persona and behavior. Applied to every turn. Put your instructions, constraints, and context here.</li>
+<li><code>user</code> — The human&#39;s input.</li>
+<li><code>assistant</code> — Previous model responses. Include these to give the model context in multi-turn conversations.</li>
 </ul>
-<h3>Key Parameters</h3>
+<p><strong>Key parameters:</strong></p>
 <table>
 <thead>
 <tr>
 <th>Parameter</th>
 <th>Purpose</th>
-<th>Typical Value</th>
+<th>When to Change</th>
 </tr>
 </thead>
 <tbody><tr>
 <td><code>model</code></td>
 <td>Which model to use</td>
-<td><code>gpt-4o-mini</code></td>
+<td>Use <code>gpt-4o</code> for complex reasoning, <code>gpt-4o-mini</code> for most tasks</td>
 </tr>
 <tr>
 <td><code>temperature</code></td>
-<td>Randomness (0=deterministic)</td>
-<td>0 for structured tasks, 0.7 for creative</td>
+<td>Output randomness (0 = deterministic)</td>
+<td>Set to 0 for structured/extraction tasks, 0.7 for creative generation</td>
 </tr>
 <tr>
 <td><code>max_tokens</code></td>
-<td>Maximum output length</td>
-<td>500–2000</td>
-</tr>
-<tr>
-<td><code>top_p</code></td>
-<td>Nucleus sampling</td>
-<td>Leave default unless tuning</td>
+<td>Maximum response length</td>
+<td>Always set a limit to control costs</td>
 </tr>
 <tr>
 <td><code>stream</code></td>
 <td>Stream tokens as generated</td>
-<td><code>True</code> for chat UIs</td>
+<td>Set <code>True</code> for chat UIs</td>
 </tr>
 </tbody></table>
 <hr>
-<h2>Practical Examples</h2>
-<h3>Streaming Responses</h3>
+<h2>Streaming Responses</h2>
+<p>For user-facing applications, streaming is not optional — it is expected. A non-streamed response forces the user to wait 5–10 seconds for the full text to appear at once. Streamed responses start appearing in under a second.</p>
 <pre><code class="language-python">stream = client.chat.completions.create(
     model=&quot;gpt-4o-mini&quot;,
     messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Explain recursion in 3 paragraphs.&quot;}],
     stream=True
 )
 
+# Print tokens as they arrive
 for chunk in stream:
     if chunk.choices[0].delta.content:
         print(chunk.choices[0].delta.content, end=&quot;&quot;, flush=True)
-print()
+print()  # newline at the end
 </code></pre>
-<h3>Function Calling (Structured Output)</h3>
+<p>In a FastAPI backend, use <code>StreamingResponse</code> with Server-Sent Events (SSE) to stream to the browser. In LangChain, use <code>.stream()</code> instead of <code>.invoke()</code>.</p>
+<hr>
+<h2>Function Calling and Structured Output</h2>
+<p>Asking an LLM to &quot;respond in JSON&quot; is unreliable — it might include preamble, commentary, or malformed JSON. Function calling gives you a schema-enforced structured output with automatic retries on the model side.</p>
 <pre><code class="language-python">import json
 
 tools = [
@@ -294,13 +338,14 @@ tools = [
         &quot;type&quot;: &quot;function&quot;,
         &quot;function&quot;: {
             &quot;name&quot;: &quot;extract_contact&quot;,
-            &quot;description&quot;: &quot;Extract contact information from text&quot;,
+            &quot;description&quot;: &quot;Extract contact information from free text&quot;,
             &quot;parameters&quot;: {
                 &quot;type&quot;: &quot;object&quot;,
                 &quot;properties&quot;: {
-                    &quot;name&quot;: {&quot;type&quot;: &quot;string&quot;},
-                    &quot;email&quot;: {&quot;type&quot;: &quot;string&quot;},
-                    &quot;phone&quot;: {&quot;type&quot;: &quot;string&quot;}
+                    &quot;name&quot;:  {&quot;type&quot;: &quot;string&quot;, &quot;description&quot;: &quot;Full name&quot;},
+                    &quot;email&quot;: {&quot;type&quot;: &quot;string&quot;, &quot;description&quot;: &quot;Email address&quot;},
+                    &quot;phone&quot;: {&quot;type&quot;: &quot;string&quot;, &quot;description&quot;: &quot;Phone number&quot;},
+                    &quot;company&quot;: {&quot;type&quot;: &quot;string&quot;, &quot;description&quot;: &quot;Company or organization&quot;}
                 },
                 &quot;required&quot;: [&quot;name&quot;]
             }
@@ -312,7 +357,7 @@ response = client.chat.completions.create(
     model=&quot;gpt-4o-mini&quot;,
     messages=[
         {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;:
-         &quot;Contact: Jane Smith, jane@example.com, 555-0100&quot;}
+         &quot;Contact: Jane Smith, Principal Engineer at Acme Corp. jane@acme.com, +1-555-0100&quot;}
     ],
     tools=tools,
     tool_choice={&quot;type&quot;: &quot;function&quot;, &quot;function&quot;: {&quot;name&quot;: &quot;extract_contact&quot;}}
@@ -321,84 +366,163 @@ response = client.chat.completions.create(
 tool_call = response.choices[0].message.tool_calls[0]
 contact = json.loads(tool_call.function.arguments)
 print(contact)
-# {&quot;name&quot;: &quot;Jane Smith&quot;, &quot;email&quot;: &quot;jane@example.com&quot;, &quot;phone&quot;: &quot;555-0100&quot;}
+# {&quot;name&quot;: &quot;Jane Smith&quot;, &quot;email&quot;: &quot;jane@acme.com&quot;, &quot;phone&quot;: &quot;+1-555-0100&quot;, &quot;company&quot;: &quot;Acme Corp&quot;}
 </code></pre>
-<h3>Embeddings</h3>
+<p>For simpler cases, use the newer <code>response_format</code> parameter with <code>json_schema</code> — it is cleaner and handles the parsing automatically.</p>
+<hr>
+<h2>Embeddings: Semantic Search</h2>
+<p>Embeddings convert text into dense vectors where semantically similar text maps to nearby vectors. This powers semantic search, clustering, and the retrieval step in RAG applications.</p>
 <pre><code class="language-python">response = client.embeddings.create(
     model=&quot;text-embedding-3-small&quot;,
-    input=[&quot;How does RAG work?&quot;, &quot;Retrieval augmented generation explained&quot;]
+    input=[
+        &quot;How does RAG work?&quot;,
+        &quot;Retrieval augmented generation explained&quot;,
+        &quot;Python list comprehension syntax&quot;
+    ]
 )
 
 vectors = [item.embedding for item in response.data]
-print(f&quot;Embedding dimensions: {len(vectors[0])}&quot;)  # 1536
+print(f&quot;Embedding dimensions: {len(vectors[0])}&quot;)  # 1536 for text-embedding-3-small
+
+# Compute cosine similarity manually
+import numpy as np
+
+def cosine_similarity(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+# These two should be more similar to each other than to the third
+print(cosine_similarity(vectors[0], vectors[1]))  # ~0.92
+print(cosine_similarity(vectors[0], vectors[2]))  # ~0.45
 </code></pre>
-<h3>Vision (Image Understanding)</h3>
+<p><code>text-embedding-3-small</code> is the right choice for most applications — it is fast, cheap, and produces 1536-dimensional vectors that capture semantic meaning well. Use <code>text-embedding-3-large</code> (3072 dimensions) when retrieval precision is critical.</p>
+<hr>
+<h2>Multi-Turn Conversations</h2>
+<p>Building a conversational application requires maintaining message history. The OpenAI API is stateless — you must send the full conversation history with every request.</p>
+<pre><code class="language-python">conversation_history = [
+    {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are an expert Python tutor. Be concise.&quot;}
+]
+
+def chat(user_message: str) -&gt; str:
+    conversation_history.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_message})
+
+    response = client.chat.completions.create(
+        model=&quot;gpt-4o-mini&quot;,
+        messages=conversation_history,
+        temperature=0.7,
+        max_tokens=500
+    )
+
+    assistant_message = response.choices[0].message.content
+    conversation_history.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: assistant_message})
+    return assistant_message
+
+print(chat(&quot;What is a list comprehension?&quot;))
+print(chat(&quot;Can you show me a real example with filtering?&quot;))
+# Second call — model has context from first turn
+print(chat(&quot;How would I do the same thing with a dict?&quot;))
+</code></pre>
+<p><strong>Important:</strong> conversation history grows unbounded. After 10–20 turns in a complex conversation, you will approach the model&#39;s context limit (128K tokens for GPT-4o). Implement a truncation strategy: keep the system message and last N turns, or use a summarization step to compress older history.</p>
+<hr>
+<h2>Vision: Analyzing Images</h2>
+<p>GPT-4o supports image inputs alongside text. Pass image URLs or base64-encoded image data directly in the message content.</p>
 <pre><code class="language-python">response = client.chat.completions.create(
     model=&quot;gpt-4o&quot;,
     messages=[
         {
             &quot;role&quot;: &quot;user&quot;,
             &quot;content&quot;: [
-                {&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;What is in this image?&quot;},
-                {&quot;type&quot;: &quot;image_url&quot;, &quot;image_url&quot;: {&quot;url&quot;: &quot;https://example.com/image.jpg&quot;}}
+                {&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;Describe what is in this chart and what trend it shows.&quot;},
+                {&quot;type&quot;: &quot;image_url&quot;, &quot;image_url&quot;: {&quot;url&quot;: &quot;https://example.com/sales-chart.png&quot;}}
             ]
         }
     ]
 )
 print(response.choices[0].message.content)
 </code></pre>
-<h3>Multi-Turn Conversation</h3>
-<pre><code class="language-python">conversation_history = [
-    {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a Python tutor.&quot;}
+<p>For local images, encode them as base64:</p>
+<pre><code class="language-python">import base64
+
+with open(&quot;./chart.png&quot;, &quot;rb&quot;) as f:
+    image_data = base64.b64encode(f.read()).decode(&quot;utf-8&quot;)
+
+content = [
+    {&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;What does this error message say?&quot;},
+    {&quot;type&quot;: &quot;image_url&quot;, &quot;image_url&quot;: {&quot;url&quot;: f&quot;data:image/png;base64,{image_data}&quot;}}
 ]
-
-def chat(user_message: str) -&gt; str:
-    conversation_history.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_message})
-    response = client.chat.completions.create(
-        model=&quot;gpt-4o-mini&quot;,
-        messages=conversation_history,
-        temperature=0.7
-    )
-    assistant_message = response.choices[0].message.content
-    conversation_history.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: assistant_message})
-    return assistant_message
-
-print(chat(&quot;What is a list comprehension?&quot;))
-print(chat(&quot;Can you show me an example?&quot;))
 </code></pre>
 <hr>
-<h2>Tools and Frameworks</h2>
-<p><strong>LangChain OpenAI integration</strong> — <code>ChatOpenAI</code> and <code>OpenAIEmbeddings</code> wrap the API with LangChain&#39;s chain and retrieval interfaces. See <a href="/blog/langchain-tutorial/">LangChain tutorial</a>.</p>
-<p><strong>OpenAI Cookbook</strong> — Official repository of example notebooks and guides for common use cases.</p>
-<p><strong>Instructor</strong> — Library for reliable structured outputs using Pydantic models. Simplifies function calling with automatic retries and validation.</p>
-<p><strong>LiteLLM</strong> — Proxy that provides a unified interface across OpenAI, Anthropic, Gemini, and 100+ other providers.</p>
+<h2>Error Handling and Retry Logic</h2>
+<p>OpenAI API calls fail for predictable reasons: rate limits, network timeouts, and occasional server errors. Production code must handle these gracefully.</p>
+<pre><code class="language-python">from openai import OpenAI, RateLimitError, APITimeoutError, APIConnectionError
+import time
+
+client = OpenAI()
+
+def call_with_retry(messages, model=&quot;gpt-4o-mini&quot;, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            return client.chat.completions.create(
+                model=model,
+                messages=messages,
+                timeout=30,
+            )
+        except RateLimitError:
+            if attempt &lt; max_retries - 1:
+                wait = 2 ** attempt  # exponential backoff: 1s, 2s, 4s
+                print(f&quot;Rate limited. Retrying in {wait}s...&quot;)
+                time.sleep(wait)
+            else:
+                raise
+        except APITimeoutError:
+            if attempt &lt; max_retries - 1:
+                time.sleep(1)
+            else:
+                raise
+        except APIConnectionError as e:
+            raise RuntimeError(f&quot;Could not connect to OpenAI API: {e}&quot;)
+</code></pre>
+<p>For more robust retry handling, use the <code>tenacity</code> library, which provides decorators for retry logic with configurable backoff strategies.</p>
 <hr>
 <h2>Common Mistakes</h2>
-<p><strong>Hardcoding API keys</strong> — Never put your API key in source code. Use environment variables or a secrets manager.</p>
-<p><strong>Not handling rate limits</strong> — OpenAI enforces token-per-minute and request-per-minute limits. Use exponential backoff for retries in production.</p>
-<p><strong>Ignoring token costs</strong> — Every token in and out costs money. Set <code>max_tokens</code> limits and monitor usage in the OpenAI dashboard.</p>
-<p><strong>Not streaming for user-facing apps</strong> — Users perceive streamed responses as faster even when total generation time is the same. Always stream in chat interfaces.</p>
-<p><strong>Storing full conversation history unbounded</strong> — Conversation history grows with each turn. Implement truncation or summarization to stay within the context window.</p>
+<p><strong>Hardcoding API keys</strong> — Never put your API key in source code. If it ends up in a git repository, even briefly, rotate it immediately. Use environment variables or a secrets manager.</p>
+<p><strong>Not handling rate limits</strong> — OpenAI enforces token-per-minute (TPM) and request-per-minute (RPM) limits per model. Without retry logic, rate limit errors will surface as 429 responses to your users. Implement exponential backoff.</p>
+<p><strong>Unbounded conversation history</strong> — Every token in the conversation history costs money and counts against the context window. Implement truncation after a reasonable number of turns.</p>
+<p><strong>Using <code>gpt-4o</code> for everything</strong> — <code>gpt-4o-mini</code> handles the majority of tasks at 10–20x lower cost. Default to <code>gpt-4o-mini</code> and only upgrade specific high-complexity calls to <code>gpt-4o</code>.</p>
+<p><strong>Not setting <code>max_tokens</code></strong> — Without a limit, a single request can generate thousands of tokens unexpectedly (especially if you ask the model to write code or explain complex topics). Always set <code>max_tokens</code> appropriate to your use case.</p>
+<p><strong>Parsing JSON from plain text responses</strong> — Asking &quot;respond in JSON&quot; in the system prompt produces inconsistent output. Use function calling or <code>response_format={&quot;type&quot;: &quot;json_object&quot;}</code> for reliable structured output.</p>
 <hr>
 <h2>Best Practices</h2>
-<ul>
-<li><strong>Use <code>gpt-4o-mini</code> for development</strong> — It is fast and cheap. Switch to <code>gpt-4o</code> only for tasks that require higher capability.</li>
-<li><strong>Set <code>temperature=0</code> for deterministic tasks</strong> — Extraction, classification, and structured output should be consistent. Reserve higher temperatures for creative generation.</li>
-<li><strong>Log requests and responses</strong> — API calls are billable and hard to debug without logs. Log model, tokens used, and response for every production call.</li>
-<li><strong>Use structured outputs for parsing</strong> — Function calling with a schema is more reliable than asking for JSON in plain text.</li>
-<li><strong>Implement retry logic with backoff</strong> — Network errors and rate limits happen. Use <code>tenacity</code> or similar for robust retries.</li>
-</ul>
+<ol>
+<li><strong>Always log API calls in production</strong> — Log model, input token count, output token count, latency, and any errors. You cannot optimize costs or debug failures without this data.</li>
+<li><strong>Use <code>temperature=0</code> for deterministic tasks</strong> — Extraction, classification, code generation, and structured output should be consistent across calls.</li>
+<li><strong>Set spending limits</strong> — Configure a monthly spending limit in the OpenAI dashboard. An infinite loop or unexpected traffic spike can generate unexpected charges.</li>
+<li><strong>Test with real inputs</strong> — Edge cases from real user inputs reveal prompt failures that synthetic tests miss. Collect a sample of real queries early and use them for regression testing.</li>
+<li><strong>Version your prompts</strong> — Treat prompts as code. Store them in version-controlled constants, not inline strings. When you change a prompt, run your test suite to catch regressions.</li>
+</ol>
 <hr>
-<h2>Summary</h2>
-<p>The OpenAI API provides access to GPT models through a simple REST interface. Chat completions, streaming, function calling, and embeddings cover the vast majority of production AI application patterns.</p>
-<p>Start with <code>gpt-4o-mini</code> for cost efficiency, use <code>temperature=0</code> for structured tasks, and implement streaming for user-facing interfaces. Function calling is the most reliable way to get structured output from the model.</p>
-<p>For the Python client details, see <a href="/blog/openai-python-client-guide/">OpenAI Python client guide</a>. For building a complete application, see <a href="/blog/build-ai-app/">how to build your first AI app</a>.</p>
+<h2>What to Learn Next</h2>
+<p>The OpenAI API is the foundation. Once you understand it, the natural next steps add retrieval, orchestration, and deployment:</p>
+<ul>
+<li><strong>Build a full AI application using the API</strong> → <a href="/blog/build-ai-app/">How to Build Your First AI App</a></li>
+<li><strong>Add retrieval to your LLM calls (RAG)</strong> → <a href="/blog/build-rag-app/">How to Build a RAG Application</a></li>
+<li><strong>Use LangChain to orchestrate complex pipelines</strong> → <a href="/blog/langchain-tutorial/">LangChain Tutorial</a></li>
+</ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -442,6 +566,34 @@ print(chat(&quot;Can you show me an example?&quot;))
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

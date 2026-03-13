@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Advanced Prompt Engineering Techniques for LLMs | AI Learning Hub</title>
   <meta name="description" content="Learn advanced prompt engineering strategies including prompt chaining and tool use." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -54,8 +97,8 @@
   "datePublished": "2026-03-13",
   "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,168 +217,259 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">Advanced Prompt Engineering Techniques for LLMs</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-13">March 13, 2026</time>
-          <span>·</span>
-          <span>5 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">Advanced Prompt Engineering Techniques for LLMs</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-13">March 13, 2026</time></span>
+              
+              <span class="sep">·</span>
+              <span>8 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
         <h1>Advanced Prompt Engineering Techniques for LLMs</h1>
-<p>Once you have the fundamentals — zero-shot, few-shot, chain-of-thought — you are ready for the techniques that power production AI systems. Advanced prompt engineering is about composing prompts into workflows, giving models access to tools, and designing systems that are reliable at scale. This guide covers the patterns that separate prototype prompts from production-grade systems.</p>
+<p>Your first AI feature works in the demo but breaks unpredictably in production — inconsistent formats, cascading errors, no way to debug which step failed. That is the gap between basic prompting and advanced prompt engineering. This guide covers the patterns that close it: prompt chaining, conditional routing, self-critique loops, and tool-augmented prompting.</p>
 <hr>
 <h2>What is Advanced Prompt Engineering</h2>
-<p>Advanced prompt engineering goes beyond single-prompt interactions. It covers how to break complex tasks into multi-step prompt pipelines, how to give models access to external tools, how to build self-correcting systems, and how to design prompts that work reliably across thousands of requests.</p>
-<p>Where basic prompting focuses on a single input/output pair, advanced prompting focuses on orchestrating multiple model calls, tool invocations, and evaluation steps into coherent workflows.</p>
+<p>Advanced prompt engineering goes beyond single-prompt interactions. It is the discipline of composing prompts into multi-step workflows, giving models access to external tools, and designing systems that are reliable across thousands of requests.</p>
+<p>Where basic prompting focuses on a single input/output pair, advanced prompting treats the LLM as a component in a pipeline. Each prompt has defined inputs, outputs, and contracts with the steps around it. You can test each step independently, version each prompt separately, and trace failures to specific nodes.</p>
+<p>The result is a system that degrades gracefully, catches its own errors, and handles inputs that were not in your test set.</p>
 <hr>
 <h2>Why Advanced Prompt Engineering Matters for Developers</h2>
-<p>Most real-world AI tasks are too complex for a single prompt. A user asks a question that requires searching a database, running a calculation, and summarizing a document. That is three operations — and each one benefits from its own focused prompt.</p>
+<p>Most real-world AI tasks are too complex for a single prompt. A user asks a question that requires searching a database, running a calculation, and summarizing a document. That is three operations — and each benefits from its own focused prompt.</p>
 <p>Advanced techniques let you build AI systems that:</p>
 <ul>
 <li>Handle tasks too complex for one prompt</li>
-<li>Catch and correct their own errors</li>
-<li>Use external tools (search, code execution, APIs)</li>
+<li>Catch and correct their own errors before returning a response</li>
+<li>Use external tools (search, code execution, APIs, databases)</li>
 <li>Maintain consistent quality across varied inputs</li>
 <li>Degrade gracefully when inputs are ambiguous or malformed</li>
+<li>Route different input types to specialized handling paths</li>
 </ul>
 <p>For developers building AI features into products, these patterns are the bridge between a demo that works once and a feature that works every time.</p>
 <hr>
 <h2>How Advanced Prompt Engineering Works</h2>
 <h3>Prompt Chaining</h3>
-<p>Prompt chaining splits a complex task into a sequence of simpler, focused prompts. The output of each step feeds the next.</p>
-<pre><code class="language-python"># Step 1: Extract key facts from a document
-facts = llm.invoke(
-    f&quot;Extract the 5 most important facts from this article. &quot;
-    f&quot;Return as a numbered list.\n\n{article}&quot;
-)
-
-# Step 2: Generate a summary from those facts
-summary = llm.invoke(
-    f&quot;Write a 2-paragraph executive summary based on these facts:\n{facts}&quot;
-)
-
-# Step 3: Write a headline
-headline = llm.invoke(
-    f&quot;Write a compelling 8-word headline for this summary:\n{summary}&quot;
-)
-</code></pre>
-<p>Each prompt is small, focused, and testable independently. Failures are easier to debug because you know exactly which step failed.</p>
+<p>Prompt chaining splits a complex task into a sequence of simpler, focused prompts. The output of each step feeds the next. Think of it as a pipeline where each stage has a clear responsibility.</p>
+<p>The key insight is that a model focused on one task performs better than one juggling three. A prompt that asks &quot;extract facts, then summarize, then write a headline&quot; produces worse results than three separate prompts doing each task independently.</p>
 <h3>Conditional Routing</h3>
-<p>Not every input needs the same treatment. Route inputs to different prompt paths based on classification.</p>
-<pre><code class="language-python">category = llm.invoke(
-    &quot;Classify this query as &#39;technical&#39;, &#39;billing&#39;, or &#39;general&#39;. &quot;
-    &quot;Return only the category.\n\nQuery: &quot; + user_query
-)
-
-if category == &quot;technical&quot;:
-    response = technical_prompt(user_query)
-elif category == &quot;billing&quot;:
-    response = billing_prompt(user_query)
-else:
-    response = general_prompt(user_query)
-</code></pre>
+<p>Not every input needs the same treatment. A classifier prompt categorizes inputs, then routes them to specialized handlers. This lets you tune each path independently without coupling them together.</p>
 <h3>Self-Critique Loops</h3>
-<p>Ask the model to evaluate and improve its own output.</p>
-<pre><code class="language-python">draft = llm.invoke(f&quot;Write a technical explanation of {topic}.&quot;)
-
-critique = llm.invoke(
-    f&quot;Review this explanation for accuracy, clarity, and completeness. &quot;
-    f&quot;List specific issues.\n\n{draft}&quot;
-)
-
-final = llm.invoke(
-    f&quot;Rewrite the explanation, addressing these issues:\n{critique}\n\n&quot;
-    f&quot;Original:\n{draft}&quot;
-)
-</code></pre>
-<p>Self-critique works best for writing tasks, code generation, and structured outputs where quality criteria can be stated explicitly.</p>
+<p>Ask the model to evaluate and improve its own output. The model first drafts an answer, then reviews it for accuracy or quality issues, then rewrites it addressing the identified problems. This pattern works best for writing tasks, code generation, and structured outputs where quality criteria can be stated explicitly.</p>
+<h3>Tool Augmentation (ReAct Pattern)</h3>
+<p>The <strong>ReAct</strong> pattern interleaves reasoning steps with tool calls. The model thinks, acts, observes the result of the action, then thinks again. This grounds the model&#39;s reasoning in real-world data rather than its own memory.</p>
 <hr>
-<h2>Practical Examples</h2>
+<h2>Practical Example</h2>
+<h3>Prompt Chaining Implementation</h3>
+<pre><code class="language-python">from openai import OpenAI
+
+client = OpenAI()
+
+def chain_extract_summarize_headline(article: str) -&gt; dict:
+    &quot;&quot;&quot;A three-step prompt chain.&quot;&quot;&quot;
+
+    # Step 1: Extract key facts
+    facts_response = client.chat.completions.create(
+        model=&quot;gpt-4o-mini&quot;,
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;Extract the 5 most important facts from the article. Return as a numbered list. Be specific and include numbers/dates where present.&quot;},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: article}
+        ],
+        temperature=0,
+    )
+    facts = facts_response.choices[0].message.content
+
+    # Step 2: Generate a summary from those facts
+    summary_response = client.chat.completions.create(
+        model=&quot;gpt-4o-mini&quot;,
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;Write a 2-paragraph executive summary based on the provided facts. Write for a non-technical audience.&quot;},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&quot;Facts:\n{facts}&quot;}
+        ],
+        temperature=0.3,
+    )
+    summary = summary_response.choices[0].message.content
+
+    # Step 3: Write a headline
+    headline_response = client.chat.completions.create(
+        model=&quot;gpt-4o-mini&quot;,
+        messages=[
+            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;Write a compelling, accurate headline under 10 words.&quot;},
+            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&quot;Summary:\n{summary}&quot;}
+        ],
+        temperature=0.5,
+    )
+    headline = headline_response.choices[0].message.content
+
+    return {&quot;facts&quot;: facts, &quot;summary&quot;: summary, &quot;headline&quot;: headline}
+</code></pre>
+<p>Each step is small, focused, and testable independently. Failures are easier to debug because you know exactly which step produced bad output.</p>
 <h3>Tool-Augmented Prompting (ReAct Pattern)</h3>
-<p>ReAct interleaves reasoning steps with tool calls. The model thinks, acts, observes, then thinks again.</p>
-<pre><code>System: You have access to these tools:
-- search(query) → returns web search results
-- calculator(expression) → returns numeric result
-- get_weather(city) → returns current weather
+<pre><code class="language-python">import json
 
-Use this format:
-Thought: [your reasoning]
-Action: tool_name(&quot;input&quot;)
-Observation: [tool result]
-... (repeat as needed)
-Final Answer: [your answer]
+def get_weather(city: str) -&gt; str:
+    &quot;&quot;&quot;Mock weather tool — replace with real API in production.&quot;&quot;&quot;
+    data = {&quot;tokyo&quot;: &quot;12°C, cloudy&quot;, &quot;london&quot;: &quot;8°C, rainy&quot;, &quot;paris&quot;: &quot;15°C, sunny&quot;}
+    return data.get(city.lower(), f&quot;No data available for {city}&quot;)
 
-User: What is the population of Tokyo multiplied by the current temperature in Celsius?
-</code></pre>
-<pre><code>Thought: I need the population of Tokyo and its current temperature.
-Action: search(&quot;Tokyo population 2026&quot;)
-Observation: Tokyo population is approximately 13.96 million (city proper)
-Thought: Now I need the current temperature.
-Action: get_weather(&quot;Tokyo&quot;)
-Observation: Current temperature: 12°C
-Thought: Now I can calculate.
-Action: calculator(&quot;13960000 * 12&quot;)
-Observation: 167520000
-Final Answer: 167,520,000
-</code></pre>
-<h3>Structured Decomposition</h3>
-<p>For complex analysis tasks, ask the model to decompose the problem before solving it.</p>
-<pre><code class="language-python">system_prompt = &quot;&quot;&quot;
-When given a complex problem:
-1. First identify all sub-problems that must be solved
-2. Solve each sub-problem in order
-3. Combine the results into a final answer
-4. Verify the answer makes sense
+def calculator(expression: str) -&gt; str:
+    &quot;&quot;&quot;Safe math expression evaluator.&quot;&quot;&quot;
+    try:
+        result = eval(expression, {&quot;__builtins__&quot;: {}}, {})
+        return str(result)
+    except Exception as e:
+        return f&quot;Error: {e}&quot;
 
-Format your response as:
-## Sub-problems
-[numbered list]
-## Solutions
-[solve each]
-## Final Answer
-[combined result]
-## Verification
-[check for errors]
-&quot;&quot;&quot;
+TOOLS = {
+    &quot;get_weather&quot;: get_weather,
+    &quot;calculator&quot;: calculator,
+}
+
+TOOL_SCHEMAS = [
+    {
+        &quot;type&quot;: &quot;function&quot;,
+        &quot;function&quot;: {
+            &quot;name&quot;: &quot;get_weather&quot;,
+            &quot;description&quot;: &quot;Get current weather conditions for a city. Use when the user asks about weather.&quot;,
+            &quot;parameters&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {&quot;city&quot;: {&quot;type&quot;: &quot;string&quot;, &quot;description&quot;: &quot;City name&quot;}},
+                &quot;required&quot;: [&quot;city&quot;],
+            },
+        },
+    },
+    {
+        &quot;type&quot;: &quot;function&quot;,
+        &quot;function&quot;: {
+            &quot;name&quot;: &quot;calculator&quot;,
+            &quot;description&quot;: &quot;Evaluate a mathematical expression. Use for any arithmetic.&quot;,
+            &quot;parameters&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {&quot;expression&quot;: {&quot;type&quot;: &quot;string&quot;}},
+                &quot;required&quot;: [&quot;expression&quot;],
+            },
+        },
+    },
+]
+
+def run_react_agent(user_query: str, max_steps: int = 6) -&gt; str:
+    messages = [
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant with access to tools. Use them whenever needed.&quot;},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_query},
+    ]
+
+    for _ in range(max_steps):
+        response = client.chat.completions.create(
+            model=&quot;gpt-4o-mini&quot;,
+            messages=messages,
+            tools=TOOL_SCHEMAS,
+            tool_choice=&quot;auto&quot;,
+        )
+        msg = response.choices[0].message
+        messages.append(msg)
+
+        if not msg.tool_calls:
+            return msg.content  # Final answer — no more tools needed
+
+        for tool_call in msg.tool_calls:
+            name = tool_call.function.name
+            args = json.loads(tool_call.function.arguments)
+            result = TOOLS.get(name, lambda **k: &quot;Unknown tool&quot;)(**args)
+            messages.append({
+                &quot;role&quot;: &quot;tool&quot;,
+                &quot;tool_call_id&quot;: tool_call.id,
+                &quot;content&quot;: result,
+            })
+
+    return &quot;Max steps reached without a final answer.&quot;
+
+# Test
+print(run_react_agent(&quot;What is the temperature in Tokyo? Multiply it by 1000.&quot;))
 </code></pre>
 <hr>
-<h2>Tools and Frameworks</h2>
-<p><strong>LangChain</strong> — Provides abstractions for chains, agents, and tool use. <code>LCEL</code> (LangChain Expression Language) makes composing prompt pipelines declarative. See the <a href="/blog/langchain-tutorial/">LangChain tutorial</a> for a hands-on introduction.</p>
-<p><strong>LangGraph</strong> — Extends LangChain with graph-based agent orchestration. Enables conditional routing, loops, and multi-agent coordination. Best for complex agent workflows.</p>
-<p><strong>LlamaIndex</strong> — Focused on data-connected LLM applications. Excellent for document Q&amp;A, knowledge graphs, and multi-step retrieval.</p>
-<p><strong>DSPy</strong> — A framework that optimizes prompts automatically using training data. Instead of writing prompts by hand, you define the task and DSPy searches for effective prompts.</p>
-<p><strong>Semantic Kernel (Microsoft)</strong> — An SDK for building AI plugins and agents. Supports prompt functions, memory, and planner orchestration in .NET and Python.</p>
+<h2>Real-World Applications</h2>
+<p>Advanced prompt engineering patterns power most production AI systems:</p>
+<p><strong>RAG pipelines</strong> — Use chaining to rewrite the user query, retrieve chunks, generate an answer, and optionally verify the answer cites sources correctly. Each step is a focused prompt.</p>
+<p><strong>Code generation workflows</strong> — Generate code, then run a separate critique step checking for bugs, then apply a final formatting step. The model catches more issues than single-shot generation.</p>
+<p><strong>Document processing</strong> — Extract structured data, validate it, transform it to the target schema, and generate a human-readable summary. Four focused prompts outperform one mega-prompt.</p>
+<p><strong>Customer support routing</strong> — A classifier prompt routes tickets to specialized handlers (billing, technical, general). Each handler has a prompt tuned for its domain.</p>
+<p><strong>AI agents</strong> — Every agent is a ReAct loop: think, use a tool, observe the result, think again. The pattern scales from single-tool agents to complex multi-step workflows.</p>
 <hr>
-<h2>Common Mistakes</h2>
-<p><strong>Treating chains as black boxes</strong> — Each step in a chain should be independently testable. Build a test set for each prompt in isolation before wiring them together.</p>
-<p><strong>No fallback on tool failure</strong> — Tools fail. APIs time out. Always design prompt chains with fallback paths for when tool calls return errors or empty results.</p>
-<p><strong>Inconsistent output formats between steps</strong> — If step 1 outputs a bulleted list but step 2 expects JSON, the chain breaks. Enforce format consistency with explicit output schemas at each step.</p>
-<p><strong>Over-relying on self-critique</strong> — Self-critique improves quality but does not guarantee correctness. The model can confidently confirm incorrect information. Use it as a quality signal, not a verification layer.</p>
-<p><strong>Too many hops in a single chain</strong> — Long chains accumulate errors. Each step can drift slightly from the original intent. Keep chains to 3–5 steps where possible. Break very long workflows into separate sub-chains.</p>
+<h2>Common Mistakes Developers Make</h2>
+<ol>
+<li><p><strong>Treating chains as black boxes</strong> — Each step in a chain should be independently testable. Build a test set for each prompt in isolation before wiring them together. If you cannot test step 2 without running step 1 first, your architecture needs adjustment.</p>
+</li>
+<li><p><strong>No fallback on tool failure</strong> — Tools fail. APIs time out. Always design prompt chains with fallback paths when tool calls return errors or empty results. Return a graceful degraded response rather than propagating the failure.</p>
+</li>
+<li><p><strong>Inconsistent output formats between steps</strong> — If step 1 outputs a bulleted list but step 2 expects JSON, the chain breaks on edge cases. Define explicit output schemas at each step and validate them before passing output to the next step.</p>
+</li>
+<li><p><strong>Over-relying on self-critique</strong> — Self-critique improves quality but does not guarantee correctness. The model can confidently confirm incorrect information. Use it as a quality filter, not as a verification layer for factual accuracy.</p>
+</li>
+<li><p><strong>Too many hops in a single chain</strong> — Long chains accumulate errors. Each step can drift slightly from the original intent. Keep chains to 3–5 steps where possible. Break very long workflows into separate, independently-tested sub-chains.</p>
+</li>
+</ol>
 <hr>
 <h2>Best Practices</h2>
 <ul>
-<li><strong>Define contracts between steps</strong> — Specify the exact input format each step expects and the exact output format it should produce. Treat each prompt like an API endpoint.</li>
-<li><strong>Log every step in production</strong> — When a chain fails, you need to know which step produced the bad output. Log inputs and outputs at every node.</li>
+<li><strong>Define contracts between steps</strong> — Specify the exact input format each step expects and the exact output format it should produce. Treat each prompt like a typed function signature.</li>
+<li><strong>Log every step in production</strong> — When a chain fails, you need to know which step produced bad output. Log inputs and outputs at every node — not just the final result.</li>
 <li><strong>Fail fast on malformed inputs</strong> — Validate inputs before passing them into a chain. An early validation step is cheaper than discovering malformed data three steps later.</li>
-<li><strong>Version each prompt separately</strong> — When a chain misbehaves, you need to know which prompt changed. Store each prompt as a named, versioned artifact.</li>
-<li><strong>Test chains end-to-end and step-by-step</strong> — Unit test individual steps. Integration test the full chain. Both are necessary.</li>
+<li><strong>Version each prompt separately</strong> — When a chain misbehaves, you need to know which prompt changed. Store each prompt as a named, versioned artifact in version control.</li>
+<li><strong>Test chains end-to-end and step-by-step</strong> — Unit test individual steps with fixed inputs. Integration test the full chain. Both are necessary.</li>
+<li><strong>Cache expensive steps</strong> — If step 1 is a slow web search, cache the result and allow re-running only steps 2 and 3 during debugging.</li>
 </ul>
 <hr>
-<h2>Summary</h2>
-<p>Advanced prompt engineering is primarily about composition and reliability. Single prompts handle simple tasks. Real applications require chaining, conditional logic, tool use, and self-correction loops.</p>
-<p>The core patterns — chaining, routing, self-critique, and ReAct — cover the vast majority of production use cases. Master these before reaching for specialized frameworks.</p>
-<p>For the foundational techniques that advanced patterns build on, see <a href="/blog/prompt-engineering-guide/">prompt engineering guide</a> and <a href="/blog/prompt-engineering-techniques/">prompt engineering techniques</a>. For deep reasoning patterns specifically, see <a href="/blog/chain-of-thought-prompting/">chain-of-thought prompting</a>.</p>
+<h2>FAQ</h2>
+<p><strong>When should I use prompt chaining vs. a single prompt?</strong>
+Use chaining when the task has multiple distinct phases, when format needs to change between phases, or when you need to test each phase independently. For simple single-step tasks, a single prompt is faster and cheaper.</p>
+<p><strong>Does self-critique actually improve output quality?</strong>
+Yes, measurably, for writing and code tasks. Run the critique step with a slightly higher temperature and the generation with temperature=0. The critique step introduces diversity; the rewrite step disciplines it.</p>
+<p><strong>How do I debug a chain when the output is wrong?</strong>
+Log every intermediate result. Then work backward from the failing step — feed that step&#39;s input in isolation and see if the output is wrong. This narrows the problem to a single prompt.</p>
+<p><strong>Can I use different models for different steps in a chain?</strong>
+Yes, and often this is the right approach. Use a smaller, faster model for classification and routing steps. Reserve larger models for the generation steps that require the most capability.</p>
+<p><strong>How do ReAct agents differ from prompt chaining?</strong>
+Chains have a fixed sequence of steps defined at build time. ReAct agents determine the sequence dynamically — the model decides what to do next based on the result of the previous step. Agents are more flexible but less predictable.</p>
+<hr>
+<h2>Further Reading</h2>
+<ul>
+<li><a href="https://platform.openai.com/docs/guides/function-calling">OpenAI Function Calling Documentation</a></li>
+<li><a href="https://python.langchain.com/docs/concepts/lcel/">LangChain LCEL Documentation</a></li>
+<li><a href="https://arxiv.org/abs/2210.03629">ReAct: Synergizing Reasoning and Acting in Language Models (paper)</a></li>
+<li><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview">Anthropic Prompt Engineering Guide</a></li>
+<li><a href="https://github.com/stanfordnlp/dspy">DSPy: Programming — not prompting — Foundation Models</a></li>
+</ul>
+<hr>
+<h2>What to Learn Next</h2>
+<ul>
+<li><a href="/blog/prompt-engineering-guide/">Prompt Engineering Guide</a> — foundational techniques that advanced patterns build on</li>
+<li><a href="/blog/chain-of-thought-prompting/">Chain-of-Thought Prompting Explained</a> — the reasoning technique at the heart of most advanced patterns</li>
+<li><a href="/blog/build-ai-agents/">Build AI Agents Step-by-Step</a> — put these techniques into a complete agent implementation</li>
+</ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -379,6 +513,34 @@ Format your response as:
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

@@ -4,43 +4,33 @@ description: "Learn how to use the OpenAI API to build AI-powered applications."
 date: "2026-03-13"
 slug: "openai-api-tutorial"
 keywords: ["OpenAI API tutorial", "OpenAI API guide", "how to use OpenAI API", "GPT API", "ChatGPT API developer"]
+author: "Amit K Chauhan"
+authorTitle: "Software Engineer & AI Builder"
+updatedAt: "2026-03-13"
 ---
 
 # OpenAI API Tutorial for Developers
 
-The OpenAI API gives developers access to GPT-4o, embedding models, image generation, and speech-to-text. It is the most widely used AI API in production applications. This tutorial covers everything you need to start building: authentication, chat completions, streaming, function calling, and embeddings.
+You can go from zero API knowledge to a working AI feature in about 30 minutes with the OpenAI API. No infrastructure to manage, no models to host, and a Python SDK that makes the most common patterns feel natural. But the gap between a demo that works once and an API integration that behaves reliably in production is significant — and it shows up in specifics: how you handle tokens, structure prompts, parse output, manage conversation history, and handle the inevitable rate limit errors. This tutorial covers the whole picture.
 
 ---
 
-## What is the OpenAI API
+## What the OpenAI API Provides
 
-The OpenAI API is a REST API that provides access to OpenAI's models:
-- **Chat completions** — GPT-4o, GPT-4o-mini for text generation and reasoning
-- **Embeddings** — text-embedding-3-small, text-embedding-3-large for semantic search
-- **Images** — DALL-E 3 for image generation
-- **Audio** — Whisper for transcription, TTS for text-to-speech
+The OpenAI API is a REST API (with official Python and Node.js SDKs) that gives you access to:
+
+- **Chat completions** — GPT-4o and GPT-4o-mini for text generation, reasoning, and code
+- **Embeddings** — `text-embedding-3-small` and `text-embedding-3-large` for semantic search and similarity
+- **Images** — DALL-E 3 for image generation from text prompts
+- **Audio** — Whisper for speech-to-text transcription, TTS for text-to-speech synthesis
 - **Moderation** — Content classification for safety filtering
+- **Structured outputs** — JSON mode and function calling for reliable structured data extraction
 
-For most AI application development, the chat completions and embeddings APIs are the primary interfaces. The Python SDK wraps the REST API with a clean object-oriented interface.
-
----
-
-## Why the OpenAI API Matters for Developers
-
-The OpenAI API is the fastest path from idea to working AI feature:
-- No infrastructure to manage
-- Pay per token — no upfront cost
-- Regular model updates automatically improve your application
-- Extensive documentation and community support
-- Structured output, function calling, and vision built in
-
-For building applications with the Python client, see [OpenAI Python client guide](/blog/openai-python-client-guide/).
+For most AI application development, you will spend 90% of your time with chat completions and embeddings. Vision, audio, and image generation are additive capabilities you reach for when the product requires them.
 
 ---
 
-## How the OpenAI API Works
-
-### Setup
+## Setup
 
 ```bash
 pip install openai
@@ -49,46 +39,53 @@ export OPENAI_API_KEY="sk-..."
 
 ```python
 from openai import OpenAI
-client = OpenAI()  # Reads OPENAI_API_KEY from environment
+
+# Reads OPENAI_API_KEY from environment automatically
+client = OpenAI()
 ```
 
-### Chat Completions
+Never hardcode your API key in source code. Use environment variables, a `.env` file loaded with `python-dotenv`, or a secrets manager in production. The OpenAI SDK will raise a clear error if the key is missing.
 
-The chat completions endpoint takes a list of messages and returns a response.
+---
+
+## Chat Completions: The Core API
+
+The chat completions endpoint takes a list of messages with roles and returns the model's response. Understanding the message structure is the foundation of everything else.
 
 ```python
 response = client.chat.completions.create(
     model="gpt-4o-mini",
     messages=[
         {"role": "system", "content": "You are a helpful coding assistant."},
-        {"role": "user", "content": "Write a Python function to reverse a string."}
+        {"role": "user",   "content": "Write a Python function to reverse a string."}
     ],
     temperature=0,
     max_tokens=500
 )
+
 print(response.choices[0].message.content)
+print(f"Tokens used: {response.usage.total_tokens}")
 ```
 
 **Message roles:**
-- `system` — Sets the assistant's behavior and persona
-- `user` — The human's message
-- `assistant` — The model's previous responses (for multi-turn conversations)
+- `system` — Sets the assistant's persona and behavior. Applied to every turn. Put your instructions, constraints, and context here.
+- `user` — The human's input.
+- `assistant` — Previous model responses. Include these to give the model context in multi-turn conversations.
 
-### Key Parameters
+**Key parameters:**
 
-| Parameter | Purpose | Typical Value |
-|-----------|---------|---------------|
-| `model` | Which model to use | `gpt-4o-mini` |
-| `temperature` | Randomness (0=deterministic) | 0 for structured tasks, 0.7 for creative |
-| `max_tokens` | Maximum output length | 500–2000 |
-| `top_p` | Nucleus sampling | Leave default unless tuning |
-| `stream` | Stream tokens as generated | `True` for chat UIs |
+| Parameter | Purpose | When to Change |
+|-----------|---------|----------------|
+| `model` | Which model to use | Use `gpt-4o` for complex reasoning, `gpt-4o-mini` for most tasks |
+| `temperature` | Output randomness (0 = deterministic) | Set to 0 for structured/extraction tasks, 0.7 for creative generation |
+| `max_tokens` | Maximum response length | Always set a limit to control costs |
+| `stream` | Stream tokens as generated | Set `True` for chat UIs |
 
 ---
 
-## Practical Examples
+## Streaming Responses
 
-### Streaming Responses
+For user-facing applications, streaming is not optional — it is expected. A non-streamed response forces the user to wait 5–10 seconds for the full text to appear at once. Streamed responses start appearing in under a second.
 
 ```python
 stream = client.chat.completions.create(
@@ -97,13 +94,20 @@ stream = client.chat.completions.create(
     stream=True
 )
 
+# Print tokens as they arrive
 for chunk in stream:
     if chunk.choices[0].delta.content:
         print(chunk.choices[0].delta.content, end="", flush=True)
-print()
+print()  # newline at the end
 ```
 
-### Function Calling (Structured Output)
+In a FastAPI backend, use `StreamingResponse` with Server-Sent Events (SSE) to stream to the browser. In LangChain, use `.stream()` instead of `.invoke()`.
+
+---
+
+## Function Calling and Structured Output
+
+Asking an LLM to "respond in JSON" is unreliable — it might include preamble, commentary, or malformed JSON. Function calling gives you a schema-enforced structured output with automatic retries on the model side.
 
 ```python
 import json
@@ -113,13 +117,14 @@ tools = [
         "type": "function",
         "function": {
             "name": "extract_contact",
-            "description": "Extract contact information from text",
+            "description": "Extract contact information from free text",
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "name": {"type": "string"},
-                    "email": {"type": "string"},
-                    "phone": {"type": "string"}
+                    "name":  {"type": "string", "description": "Full name"},
+                    "email": {"type": "string", "description": "Email address"},
+                    "phone": {"type": "string", "description": "Phone number"},
+                    "company": {"type": "string", "description": "Company or organization"}
                 },
                 "required": ["name"]
             }
@@ -131,7 +136,7 @@ response = client.chat.completions.create(
     model="gpt-4o-mini",
     messages=[
         {"role": "user", "content":
-         "Contact: Jane Smith, jane@example.com, 555-0100"}
+         "Contact: Jane Smith, Principal Engineer at Acme Corp. jane@acme.com, +1-555-0100"}
     ],
     tools=tools,
     tool_choice={"type": "function", "function": {"name": "extract_contact"}}
@@ -140,22 +145,81 @@ response = client.chat.completions.create(
 tool_call = response.choices[0].message.tool_calls[0]
 contact = json.loads(tool_call.function.arguments)
 print(contact)
-# {"name": "Jane Smith", "email": "jane@example.com", "phone": "555-0100"}
+# {"name": "Jane Smith", "email": "jane@acme.com", "phone": "+1-555-0100", "company": "Acme Corp"}
 ```
 
-### Embeddings
+For simpler cases, use the newer `response_format` parameter with `json_schema` — it is cleaner and handles the parsing automatically.
+
+---
+
+## Embeddings: Semantic Search
+
+Embeddings convert text into dense vectors where semantically similar text maps to nearby vectors. This powers semantic search, clustering, and the retrieval step in RAG applications.
 
 ```python
 response = client.embeddings.create(
     model="text-embedding-3-small",
-    input=["How does RAG work?", "Retrieval augmented generation explained"]
+    input=[
+        "How does RAG work?",
+        "Retrieval augmented generation explained",
+        "Python list comprehension syntax"
+    ]
 )
 
 vectors = [item.embedding for item in response.data]
-print(f"Embedding dimensions: {len(vectors[0])}")  # 1536
+print(f"Embedding dimensions: {len(vectors[0])}")  # 1536 for text-embedding-3-small
+
+# Compute cosine similarity manually
+import numpy as np
+
+def cosine_similarity(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+# These two should be more similar to each other than to the third
+print(cosine_similarity(vectors[0], vectors[1]))  # ~0.92
+print(cosine_similarity(vectors[0], vectors[2]))  # ~0.45
 ```
 
-### Vision (Image Understanding)
+`text-embedding-3-small` is the right choice for most applications — it is fast, cheap, and produces 1536-dimensional vectors that capture semantic meaning well. Use `text-embedding-3-large` (3072 dimensions) when retrieval precision is critical.
+
+---
+
+## Multi-Turn Conversations
+
+Building a conversational application requires maintaining message history. The OpenAI API is stateless — you must send the full conversation history with every request.
+
+```python
+conversation_history = [
+    {"role": "system", "content": "You are an expert Python tutor. Be concise."}
+]
+
+def chat(user_message: str) -> str:
+    conversation_history.append({"role": "user", "content": user_message})
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=conversation_history,
+        temperature=0.7,
+        max_tokens=500
+    )
+
+    assistant_message = response.choices[0].message.content
+    conversation_history.append({"role": "assistant", "content": assistant_message})
+    return assistant_message
+
+print(chat("What is a list comprehension?"))
+print(chat("Can you show me a real example with filtering?"))
+# Second call — model has context from first turn
+print(chat("How would I do the same thing with a dict?"))
+```
+
+**Important:** conversation history grows unbounded. After 10–20 turns in a complex conversation, you will approach the model's context limit (128K tokens for GPT-4o). Implement a truncation strategy: keep the system message and last N turns, or use a summarization step to compress older history.
+
+---
+
+## Vision: Analyzing Images
+
+GPT-4o supports image inputs alongside text. Pass image URLs or base64-encoded image data directly in the message content.
 
 ```python
 response = client.chat.completions.create(
@@ -164,8 +228,8 @@ response = client.chat.completions.create(
         {
             "role": "user",
             "content": [
-                {"type": "text", "text": "What is in this image?"},
-                {"type": "image_url", "image_url": {"url": "https://example.com/image.jpg"}}
+                {"type": "text", "text": "Describe what is in this chart and what trend it shows."},
+                {"type": "image_url", "image_url": {"url": "https://example.com/sales-chart.png"}}
             ]
         }
     ]
@@ -173,70 +237,90 @@ response = client.chat.completions.create(
 print(response.choices[0].message.content)
 ```
 
-### Multi-Turn Conversation
+For local images, encode them as base64:
 
 ```python
-conversation_history = [
-    {"role": "system", "content": "You are a Python tutor."}
+import base64
+
+with open("./chart.png", "rb") as f:
+    image_data = base64.b64encode(f.read()).decode("utf-8")
+
+content = [
+    {"type": "text", "text": "What does this error message say?"},
+    {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{image_data}"}}
 ]
-
-def chat(user_message: str) -> str:
-    conversation_history.append({"role": "user", "content": user_message})
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=conversation_history,
-        temperature=0.7
-    )
-    assistant_message = response.choices[0].message.content
-    conversation_history.append({"role": "assistant", "content": assistant_message})
-    return assistant_message
-
-print(chat("What is a list comprehension?"))
-print(chat("Can you show me an example?"))
 ```
 
 ---
 
-## Tools and Frameworks
+## Error Handling and Retry Logic
 
-**LangChain OpenAI integration** — `ChatOpenAI` and `OpenAIEmbeddings` wrap the API with LangChain's chain and retrieval interfaces. See [LangChain tutorial](/blog/langchain-tutorial/).
+OpenAI API calls fail for predictable reasons: rate limits, network timeouts, and occasional server errors. Production code must handle these gracefully.
 
-**OpenAI Cookbook** — Official repository of example notebooks and guides for common use cases.
+```python
+from openai import OpenAI, RateLimitError, APITimeoutError, APIConnectionError
+import time
 
-**Instructor** — Library for reliable structured outputs using Pydantic models. Simplifies function calling with automatic retries and validation.
+client = OpenAI()
 
-**LiteLLM** — Proxy that provides a unified interface across OpenAI, Anthropic, Gemini, and 100+ other providers.
+def call_with_retry(messages, model="gpt-4o-mini", max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            return client.chat.completions.create(
+                model=model,
+                messages=messages,
+                timeout=30,
+            )
+        except RateLimitError:
+            if attempt < max_retries - 1:
+                wait = 2 ** attempt  # exponential backoff: 1s, 2s, 4s
+                print(f"Rate limited. Retrying in {wait}s...")
+                time.sleep(wait)
+            else:
+                raise
+        except APITimeoutError:
+            if attempt < max_retries - 1:
+                time.sleep(1)
+            else:
+                raise
+        except APIConnectionError as e:
+            raise RuntimeError(f"Could not connect to OpenAI API: {e}")
+```
+
+For more robust retry handling, use the `tenacity` library, which provides decorators for retry logic with configurable backoff strategies.
 
 ---
 
 ## Common Mistakes
 
-**Hardcoding API keys** — Never put your API key in source code. Use environment variables or a secrets manager.
+**Hardcoding API keys** — Never put your API key in source code. If it ends up in a git repository, even briefly, rotate it immediately. Use environment variables or a secrets manager.
 
-**Not handling rate limits** — OpenAI enforces token-per-minute and request-per-minute limits. Use exponential backoff for retries in production.
+**Not handling rate limits** — OpenAI enforces token-per-minute (TPM) and request-per-minute (RPM) limits per model. Without retry logic, rate limit errors will surface as 429 responses to your users. Implement exponential backoff.
 
-**Ignoring token costs** — Every token in and out costs money. Set `max_tokens` limits and monitor usage in the OpenAI dashboard.
+**Unbounded conversation history** — Every token in the conversation history costs money and counts against the context window. Implement truncation after a reasonable number of turns.
 
-**Not streaming for user-facing apps** — Users perceive streamed responses as faster even when total generation time is the same. Always stream in chat interfaces.
+**Using `gpt-4o` for everything** — `gpt-4o-mini` handles the majority of tasks at 10–20x lower cost. Default to `gpt-4o-mini` and only upgrade specific high-complexity calls to `gpt-4o`.
 
-**Storing full conversation history unbounded** — Conversation history grows with each turn. Implement truncation or summarization to stay within the context window.
+**Not setting `max_tokens`** — Without a limit, a single request can generate thousands of tokens unexpectedly (especially if you ask the model to write code or explain complex topics). Always set `max_tokens` appropriate to your use case.
+
+**Parsing JSON from plain text responses** — Asking "respond in JSON" in the system prompt produces inconsistent output. Use function calling or `response_format={"type": "json_object"}` for reliable structured output.
 
 ---
 
 ## Best Practices
 
-- **Use `gpt-4o-mini` for development** — It is fast and cheap. Switch to `gpt-4o` only for tasks that require higher capability.
-- **Set `temperature=0` for deterministic tasks** — Extraction, classification, and structured output should be consistent. Reserve higher temperatures for creative generation.
-- **Log requests and responses** — API calls are billable and hard to debug without logs. Log model, tokens used, and response for every production call.
-- **Use structured outputs for parsing** — Function calling with a schema is more reliable than asking for JSON in plain text.
-- **Implement retry logic with backoff** — Network errors and rate limits happen. Use `tenacity` or similar for robust retries.
+1. **Always log API calls in production** — Log model, input token count, output token count, latency, and any errors. You cannot optimize costs or debug failures without this data.
+2. **Use `temperature=0` for deterministic tasks** — Extraction, classification, code generation, and structured output should be consistent across calls.
+3. **Set spending limits** — Configure a monthly spending limit in the OpenAI dashboard. An infinite loop or unexpected traffic spike can generate unexpected charges.
+4. **Test with real inputs** — Edge cases from real user inputs reveal prompt failures that synthetic tests miss. Collect a sample of real queries early and use them for regression testing.
+5. **Version your prompts** — Treat prompts as code. Store them in version-controlled constants, not inline strings. When you change a prompt, run your test suite to catch regressions.
 
 ---
 
-## Summary
+## What to Learn Next
 
-The OpenAI API provides access to GPT models through a simple REST interface. Chat completions, streaming, function calling, and embeddings cover the vast majority of production AI application patterns.
+The OpenAI API is the foundation. Once you understand it, the natural next steps add retrieval, orchestration, and deployment:
 
-Start with `gpt-4o-mini` for cost efficiency, use `temperature=0` for structured tasks, and implement streaming for user-facing interfaces. Function calling is the most reliable way to get structured output from the model.
-
-For the Python client details, see [OpenAI Python client guide](/blog/openai-python-client-guide/). For building a complete application, see [how to build your first AI app](/blog/build-ai-app/).
+- **Build a full AI application using the API** → [How to Build Your First AI App](/blog/build-ai-app/)
+- **Add retrieval to your LLM calls (RAG)** → [How to Build a RAG Application](/blog/build-rag-app/)
+- **Use LangChain to orchestrate complex pipelines** → [LangChain Tutorial](/blog/langchain-tutorial/)

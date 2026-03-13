@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fine-Tuning LLMs: Complete Guide to Instruction Tuning and LoRA | AI Learning Hub</title>
   <meta name="description" content="Learn how to fine-tune large language models — full fine-tuning vs LoRA vs QLoRA, dataset preparation, training with Hugging Face, and avoiding common pitfalls." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -52,10 +95,10 @@
   "image": "https://ailearnings.in/og-image.jpg",
   "url": "https://ailearnings.in/blog/fine-tuning-llms-guide/",
   "datePublished": "2026-03-10",
-  "dateModified": "2026-03-10",
+  "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,112 +217,140 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">Fine-Tuning LLMs: Complete Guide to Instruction Tuning and LoRA</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-10">March 10, 2026</time>
-          <span>·</span>
-          <span>4 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">Fine-Tuning LLMs: Complete Guide to Instruction Tuning and LoRA</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-10">March 10, 2026</time></span>
+              <span class="sep">·</span><span>Updated <time datetime="2026-03-13">March 13, 2026</time></span>
+              <span class="sep">·</span>
+              <span>7 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
-        <h2>Learning Objectives</h2>
-<ul>
-<li>Understand when fine-tuning is the right choice vs prompting</li>
-<li>Prepare instruction-following datasets</li>
-<li>Apply LoRA and QLoRA for efficient fine-tuning</li>
-<li>Train a model with Hugging Face&#39;s <code>transformers</code> and <code>trl</code> libraries</li>
-<li>Evaluate fine-tuned models and avoid common mistakes</li>
-</ul>
+        <h1>Fine-Tuning LLMs: Complete Guide to Instruction Tuning and LoRA</h1>
+<p>Fine-tuning is not the first thing you should try when an LLM underperforms on your task — it is the last thing. Improve your prompt first, add few-shot examples, try RAG if you need domain knowledge. Fine-tuning is powerful but expensive, slow to iterate, and genuinely necessary for a narrower set of problems than developers typically assume. When it is the right tool, though, it produces results that no amount of prompt engineering can match: consistent output format, deep domain adaptation, dramatic latency reductions by distilling large model behavior into smaller models. This guide covers when to fine-tune, how to prepare data correctly, and how to train efficiently with LoRA and QLoRA.</p>
 <hr>
-<h2>When to Fine-Tune (and When Not To)</h2>
-<p>Fine-tuning is not always the right answer. Before deciding, ask:</p>
+<h2>When Fine-Tuning is the Right Choice</h2>
+<p>Before starting a fine-tuning project, work through this decision table honestly:</p>
 <table>
 <thead>
 <tr>
 <th>Situation</th>
-<th>Recommendation</th>
+<th>Better Approach</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>You need better instruction following</td>
+<td>Model ignores format instructions</td>
 <td>Fine-tune</td>
 </tr>
 <tr>
-<td>You need domain-specific knowledge</td>
-<td>Fine-tune or RAG</td>
+<td>Model lacks domain-specific terminology or reasoning</td>
+<td>Fine-tune</td>
 </tr>
 <tr>
-<td>You need consistent output format</td>
-<td>Fine-tune</td>
+<td>Latency is too high — need a smaller, faster model</td>
+<td>Fine-tune a smaller model</td>
+</tr>
+<tr>
+<td>You need private data kept out of third-party APIs</td>
+<td>Fine-tune a local model</td>
 </tr>
 <tr>
 <td>You need to update knowledge frequently</td>
-<td>RAG is better</td>
+<td>RAG — fine-tuning requires retraining</td>
 </tr>
 <tr>
-<td>You need to inject private documents</td>
-<td>RAG is better</td>
+<td>You need to answer questions about specific documents</td>
+<td>RAG — fine-tuning doesn&#39;t inject passages</td>
 </tr>
 <tr>
-<td>You just need better prompts</td>
-<td>Improve prompts first</td>
+<td>The model just needs better instructions</td>
+<td>Improve your prompt first</td>
+</tr>
+<tr>
+<td>You have fewer than 50 examples</td>
+<td>Not enough data — use few-shot prompting</td>
 </tr>
 </tbody></table>
-<p><strong>Always try prompt engineering before fine-tuning.</strong> Fine-tuning is expensive, slow to iterate, and overkill for many tasks.</p>
+<p>The most common waste in fine-tuning projects: spending two weeks preparing a dataset and training runs to achieve what a better system prompt would have done in an afternoon.</p>
 <hr>
 <h2>Types of Fine-Tuning</h2>
 <h3>Full Fine-Tuning</h3>
-<p>Update all model parameters. Highest performance ceiling but requires enormous compute (the same as pre-training scale, proportionally).</p>
-<h3>Instruction Fine-Tuning (SFT)</h3>
-<p>Supervised fine-tuning on instruction-response pairs. Teaches the model to follow instructions. The foundation of most chat models.</p>
+<p>Update all model parameters on your training data. This has the highest performance ceiling but requires enormous compute — proportionally similar to the original pre-training. Impractical for models above 1B parameters without a dedicated GPU cluster.</p>
+<h3>Supervised Fine-Tuning (SFT / Instruction Tuning)</h3>
+<p>Fine-tune on instruction-response pairs. This is how GPT-3 became InstructGPT — showing the model examples of good instructions and responses makes it dramatically better at following instructions. Most fine-tuning projects use SFT.</p>
 <h3>RLHF (Reinforcement Learning from Human Feedback)</h3>
-<p>Fine-tunes using human preference data. Used to create alignment and safety. Very complex — most developers don&#39;t need this.</p>
+<p>Fine-tune using human preference comparisons. Humans rate two model responses, the model learns to prefer what humans prefer. This is how ChatGPT, Claude, and other aligned models are created. Very complex and expensive — not applicable to most developer projects.</p>
 <h3>LoRA (Low-Rank Adaptation)</h3>
-<p>Adds small trainable matrices to frozen model layers. Reduces trainable parameters by 10–1000×. Near-full-fine-tuning quality at a fraction of the cost.</p>
-<h3>QLoRA</h3>
-<p>Quantizes the base model to 4-bit, adds LoRA adapters. Enables fine-tuning a 70B model on a single 48GB GPU.</p>
+<p>Adds small trainable adapter matrices to frozen model layers. Reduces trainable parameters by 100–1000x compared to full fine-tuning. Near-equivalent quality at a tiny fraction of the compute cost. This is the standard approach for most fine-tuning projects today.</p>
+<h3>QLoRA (Quantized LoRA)</h3>
+<p>Quantizes the base model to 4-bit format, then applies LoRA adapters. Enables fine-tuning a 70B model on a single 48GB GPU. The practical default for developer-accessible hardware. See <a href="/blog/qlora-explained/">QLoRA explained</a> for the technique in depth.</p>
 <hr>
 <h2>Dataset Preparation</h2>
-<h3>Instruction-Following Format</h3>
-<pre><code class="language-python"># Standard chat template (most modern LLMs)
+<p>Dataset quality is the most important factor in fine-tuning quality. 500 carefully curated examples consistently outperforms 10,000 scraped examples with noisy labels.</p>
+<h3>The Instruction-Following Format</h3>
+<p>Modern LLMs use a chat template format with system, user, and assistant turns:</p>
+<pre><code class="language-python"># Standard example format — adjust to match your base model&#39;s template
 {
     &quot;messages&quot;: [
-        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful coding assistant.&quot;},
-        {&quot;role&quot;: &quot;user&quot;,   &quot;content&quot;: &quot;Write a Python function to reverse a string.&quot;},
-        {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: &quot;```python\ndef reverse_string(s: str) -&gt; str:\n    return s[::-1]\n```&quot;}
+        {&quot;role&quot;: &quot;system&quot;,    &quot;content&quot;: &quot;You are a SQL expert who writes clean, commented SQL.&quot;},
+        {&quot;role&quot;: &quot;user&quot;,      &quot;content&quot;: &quot;Get all customers who made a purchase in the last 30 days&quot;},
+        {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: &quot;SELECT DISTINCT c.customer_id, c.name, c.email\nFROM customers c\nINNER JOIN orders o ON c.customer_id = o.customer_id\nWHERE o.created_at &gt;= CURRENT_DATE - INTERVAL &#39;30 days&#39;\nORDER BY c.name;&quot;}
     ]
 }
 </code></pre>
-<h3>Prepare Dataset File</h3>
+<h3>Build and Save a Training Dataset</h3>
 <pre><code class="language-python">import json
 
-# Build your dataset as a list of conversation dicts
 dataset = [
     {
         &quot;messages&quot;: [
             {&quot;role&quot;: &quot;system&quot;,    &quot;content&quot;: &quot;You are a SQL expert.&quot;},
-            {&quot;role&quot;: &quot;user&quot;,      &quot;content&quot;: &quot;Convert this to SQL: get all users over 30&quot;},
+            {&quot;role&quot;: &quot;user&quot;,      &quot;content&quot;: &quot;Find all users where age &gt; 30&quot;},
             {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: &quot;SELECT * FROM users WHERE age &gt; 30;&quot;}
+        ]
+    },
+    {
+        &quot;messages&quot;: [
+            {&quot;role&quot;: &quot;system&quot;,    &quot;content&quot;: &quot;You are a SQL expert.&quot;},
+            {&quot;role&quot;: &quot;user&quot;,      &quot;content&quot;: &quot;Count orders by status&quot;},
+            {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: &quot;SELECT status, COUNT(*) AS order_count\nFROM orders\nGROUP BY status\nORDER BY order_count DESC;&quot;}
         ]
     },
     # ... more examples
 ]
 
-with open(&#39;train.jsonl&#39;, &#39;w&#39;) as f:
+# Save as JSONL (one JSON object per line)
+with open(&quot;train.jsonl&quot;, &quot;w&quot;) as f:
     for item in dataset:
-        f.write(json.dumps(item) + &#39;\n&#39;)
+        f.write(json.dumps(item) + &quot;\n&quot;)
+
+# Create a small validation split (10–20% of data)
+split = int(len(dataset) * 0.8)
+with open(&quot;val.jsonl&quot;, &quot;w&quot;) as f:
+    for item in dataset[split:]:
+        f.write(json.dumps(item) + &quot;\n&quot;)
+
+print(f&quot;Training: {split} examples, Validation: {len(dataset) - split} examples&quot;)
 </code></pre>
-<p><strong>Data quality tips:</strong></p>
+<p><strong>Data quality checklist:</strong></p>
 <ul>
-<li>100–1000 high-quality examples often beats 10,000 poor ones</li>
-<li>Ensure diverse coverage of your use cases</li>
-<li>Match the format your base model was trained on</li>
+<li>Every response is correct (have a domain expert review a sample)</li>
+<li>Responses have consistent format and tone</li>
+<li>Coverage is diverse — include edge cases and difficult examples</li>
+<li>Length is appropriate — don&#39;t include artificially short or long responses</li>
+<li>System prompt matches what you will use at inference</li>
 </ul>
 <hr>
-<h2>Fine-Tuning with LoRA (Using Hugging Face + TRL)</h2>
+<h2>Fine-Tuning with LoRA and QLoRA</h2>
 <h3>Install Dependencies</h3>
 <pre><code class="language-bash">pip install transformers trl peft bitsandbytes datasets accelerate
 </code></pre>
@@ -289,6 +360,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 model_name = &quot;meta-llama/Llama-3.2-3B-Instruct&quot;
 
+# 4-bit quantization configuration for QLoRA
 bnb_config = BitsAndBytesConfig(
     load_in_4bit=True,
     bnb_4bit_use_double_quant=True,
@@ -304,14 +376,18 @@ model = AutoModelForCausalLM.from_pretrained(
 
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 tokenizer.pad_token = tokenizer.eos_token
+tokenizer.padding_side = &quot;right&quot;  # important for causal LM training
 </code></pre>
 <h3>Configure LoRA</h3>
-<pre><code class="language-python">from peft import LoraConfig
+<pre><code class="language-python">from peft import LoraConfig, prepare_model_for_kbit_training
+
+# Prepare quantized model for training
+model = prepare_model_for_kbit_training(model)
 
 lora_config = LoraConfig(
-    r=16,              # rank — higher = more capacity, more params
-    lora_alpha=32,     # scaling factor (typically 2×r)
-    target_modules=[   # which layers to add LoRA to
+    r=16,              # rank — higher = more capacity, more trainable params
+    lora_alpha=32,     # scaling factor (rule of thumb: 2×r)
+    target_modules=[   # apply LoRA to these weight matrices
         &quot;q_proj&quot;, &quot;k_proj&quot;, &quot;v_proj&quot;, &quot;o_proj&quot;,
         &quot;gate_proj&quot;, &quot;up_proj&quot;, &quot;down_proj&quot;
     ],
@@ -320,62 +396,78 @@ lora_config = LoraConfig(
     task_type=&quot;CAUSAL_LM&quot;,
 )
 </code></pre>
-<p><strong>Rule of thumb for rank <code>r</code>:</strong></p>
+<p><strong>Rank selection guide:</strong></p>
 <ul>
-<li><code>r=8</code>: minimum, works for simple tasks</li>
-<li><code>r=16</code>: good default</li>
-<li><code>r=64</code>: high capacity, more memory</li>
+<li><code>r=8</code> — simple task adaptation, minimal memory overhead</li>
+<li><code>r=16</code> — good default for most instruction-following tasks</li>
+<li><code>r=64</code> — complex tasks, large vocabulary domains, 70B+ models</li>
 </ul>
 <h3>Training with SFTTrainer</h3>
 <pre><code class="language-python">from trl import SFTTrainer, SFTConfig
 from datasets import load_dataset
 
-dataset = load_dataset(&quot;json&quot;, data_files={&quot;train&quot;: &quot;train.jsonl&quot;})[&quot;train&quot;]
+# Load datasets
+train_dataset = load_dataset(&quot;json&quot;, data_files={&quot;train&quot;: &quot;train.jsonl&quot;})[&quot;train&quot;]
+eval_dataset  = load_dataset(&quot;json&quot;, data_files={&quot;train&quot;: &quot;val.jsonl&quot;})[&quot;train&quot;]
 
 training_args = SFTConfig(
     output_dir=&quot;./fine-tuned-model&quot;,
     num_train_epochs=3,
     per_device_train_batch_size=2,
-    gradient_accumulation_steps=4,   # effective batch size = 8
+    gradient_accumulation_steps=4,    # effective batch size = 8
     learning_rate=2e-4,
     lr_scheduler_type=&quot;cosine&quot;,
     warmup_ratio=0.03,
     logging_steps=10,
     save_steps=100,
-    fp16=False,
+    eval_strategy=&quot;steps&quot;,
+    eval_steps=50,                    # evaluate on val set every 50 steps
     bf16=True,
     max_seq_length=2048,
+    optim=&quot;paged_adamw_32bit&quot;,        # paged optimizer for QLoRA
 )
 
 trainer = SFTTrainer(
     model=model,
-    train_dataset=dataset,
+    train_dataset=train_dataset,
+    eval_dataset=eval_dataset,
     peft_config=lora_config,
     args=training_args,
 )
 
 trainer.train()
 trainer.save_model(&quot;./fine-tuned-model&quot;)
+print(&quot;Training complete. Adapter saved.&quot;)
 </code></pre>
 <hr>
-<h2>Merging LoRA Weights</h2>
-<p>After training, merge the LoRA adapter into the base model for deployment:</p>
+<h2>Merging LoRA Weights for Deployment</h2>
+<p>The LoRA adapter is a small file (50–200MB) that modifies the base model&#39;s behavior when loaded on top of it. For production inference, merge the adapter into the base model for slightly faster inference and simpler deployment.</p>
 <pre><code class="language-python">from peft import PeftModel
 from transformers import AutoModelForCausalLM
 import torch
 
+# Load base model in full precision for merging
 base_model = AutoModelForCausalLM.from_pretrained(
-    model_name, torch_dtype=torch.bfloat16
+    model_name,
+    torch_dtype=torch.bfloat16,
+    device_map=&quot;auto&quot;
 )
 
-model = PeftModel.from_pretrained(base_model, &quot;./fine-tuned-model&quot;)
-merged_model = model.merge_and_unload()
+# Load and merge LoRA adapter
+peft_model = PeftModel.from_pretrained(base_model, &quot;./fine-tuned-model&quot;)
+merged_model = peft_model.merge_and_unload()
 merged_model.save_pretrained(&quot;./merged-model&quot;)
+
+tokenizer = AutoTokenizer.from_pretrained(&quot;./fine-tuned-model&quot;)
+tokenizer.save_pretrained(&quot;./merged-model&quot;)
+print(&quot;Merged model saved.&quot;)
 </code></pre>
+<p>Keep the adapter files. Merging is not reversible unless you have both the base model and adapter saved.</p>
 <hr>
 <h2>Running Inference</h2>
 <pre><code class="language-python">from transformers import pipeline
 
+# Load merged model
 pipe = pipeline(
     &quot;text-generation&quot;,
     model=&quot;./merged-model&quot;,
@@ -383,88 +475,70 @@ pipe = pipeline(
     device_map=&quot;auto&quot;,
 )
 
-messages = [
+# Test a few examples from your use case
+test_messages = [
     {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a SQL expert.&quot;},
-    {&quot;role&quot;: &quot;user&quot;,   &quot;content&quot;: &quot;Get all orders from 2025&quot;},
+    {&quot;role&quot;: &quot;user&quot;,   &quot;content&quot;: &quot;Get the top 10 customers by total order value&quot;},
 ]
 
-output = pipe(messages, max_new_tokens=256, do_sample=True, temperature=0.7)
+output = pipe(
+    test_messages,
+    max_new_tokens=256,
+    do_sample=False,  # greedy decoding for deterministic SQL
+    temperature=None,
+    top_p=None,
+)
 print(output[0][&quot;generated_text&quot;][-1][&quot;content&quot;])
 </code></pre>
 <hr>
 <h2>Evaluation</h2>
-<h3>Held-Out Validation Loss</h3>
-<p>Monitor loss on a held-out validation set during training. If validation loss increases while training loss decreases — you&#39;re overfitting.</p>
-<pre><code class="language-python">training_args = SFTConfig(
-    ...
-    eval_strategy=&quot;steps&quot;,
-    eval_steps=50,
-)
-trainer = SFTTrainer(
-    ...
-    eval_dataset=eval_dataset,
-)
+<h3>Watch Validation Loss During Training</h3>
+<p>If validation loss starts increasing while training loss continues decreasing, you are overfitting. Stop training and use the checkpoint from before validation loss started rising.</p>
+<pre><code>Step  50: train_loss=1.82 eval_loss=1.85  ← good
+Step 100: train_loss=1.54 eval_loss=1.58  ← good
+Step 150: train_loss=1.31 eval_loss=1.55  ← overfitting starting
+Step 200: train_loss=1.10 eval_loss=1.72  ← overfitting confirmed, use step 100 checkpoint
 </code></pre>
-<h3>Manual Evaluation</h3>
-<p>Create a test set of 50–100 examples and manually rate model responses on:</p>
+<h3>Manual Evaluation Set</h3>
+<p>Create 50–100 test examples that were never seen during training. For each, manually evaluate:</p>
 <ul>
-<li>Correctness</li>
-<li>Format adherence</li>
-<li>Tone/style</li>
+<li>Is the answer correct?</li>
+<li>Is the format what you specified?</li>
+<li>Are there any hallucinations or errors?</li>
 </ul>
-<h3>Automated Benchmarks</h3>
-<pre><code class="language-python"># Use lm-evaluation-harness for standardized benchmarks
-# pip install lm-eval
-# lm_eval --model hf --model_args pretrained=./merged-model --tasks mmlu --device cuda
-</code></pre>
+<p>Track these as a percentage — your fine-tuned model should score significantly higher than the base model on your specific task.</p>
 <hr>
-<h2>Troubleshooting</h2>
-<p><strong>Loss doesn&#39;t decrease</strong></p>
-<ul>
-<li>Check that the chat template is applied correctly</li>
-<li>Verify labels are set properly (only train on assistant responses, not user inputs)</li>
-<li>Reduce learning rate</li>
-</ul>
-<p><strong>Model generates gibberish</strong></p>
-<ul>
-<li>Learning rate too high — try <code>1e-4</code> or lower</li>
-<li>Sequence length too short — increase <code>max_seq_length</code></li>
-<li>Base model and chat template mismatch</li>
-</ul>
-<p><strong>Out-of-memory (OOM)</strong></p>
-<ul>
-<li>Reduce <code>per_device_train_batch_size</code> to 1</li>
-<li>Increase <code>gradient_accumulation_steps</code> to maintain effective batch size</li>
-<li>Use <code>gradient_checkpointing=True</code></li>
-</ul>
-<p><strong>Fine-tuned model forgets previous capabilities (catastrophic forgetting)</strong></p>
-<ul>
-<li>Train on fewer epochs (1–2)</li>
-<li>Mix in general instruction data (5–10% of your dataset)</li>
-<li>Use a lower rank LoRA</li>
-</ul>
-<hr>
-<h2>FAQ</h2>
-<p><strong>How much data do I need?</strong>
-For instruction fine-tuning: 100 high-quality examples can meaningfully change behavior. 1000–5000 is solid. Tens of thousands for more general capabilities.</p>
-<p><strong>Should I fine-tune or use RAG?</strong>
-Use RAG when you need to inject documents, knowledge that changes frequently, or cited sources. Use fine-tuning when you need to change behavior, tone, output format, or domain expertise.</p>
-<p><strong>What GPU do I need?</strong>
-For QLoRA fine-tuning: 8B model → 1× RTX 4090 (24GB) or A100 (40GB). 70B model → 1× A100 80GB or 2× A100 40GB. For production training runs use cloud GPUs (Lambda Labs, RunPod, Vast.ai).</p>
+<h2>Common Mistakes</h2>
+<p><strong>Not applying the chat template correctly</strong> — Each base model has a specific chat template that adds special tokens around messages. Applying the wrong template (or none at all) causes the model to see malformed training data and produce garbage output at inference.</p>
+<p><strong>Training the model to reproduce the prompt</strong> — The loss should be computed only on the assistant&#39;s response tokens, not on the system and user turns. <code>SFTTrainer</code> handles this automatically with the messages format; verify that <code>packing=False</code> and the dataset format is correct.</p>
+<p><strong>Catastrophic forgetting</strong> — Fine-tuning on a narrow task can cause the model to forget general capabilities. Mitigation: use fewer epochs (1–2), use a lower rank (r=8 or r=16), and optionally mix in 5–10% general instruction data.</p>
+<p><strong>Too high a learning rate</strong> — QLoRA is more sensitive to learning rate than standard LoRA. If training loss spikes or oscillates, reduce from <code>2e-4</code> to <code>1e-4</code> or <code>5e-5</code>.</p>
+<p><strong>Skipping gradient checkpointing</strong> — <code>gradient_checkpointing=True</code> reduces peak GPU memory usage by recomputing activations during the backward pass. Enable it when training large models with limited memory, at the cost of ~20% slower training.</p>
+<p><strong>Merging before validating</strong> — Run your evaluation on the LoRA adapter before merging. Once merged, reverting requires keeping both checkpoints.</p>
 <hr>
 <h2>What to Learn Next</h2>
+<p>Fine-tuning sits at the intersection of data engineering, ML training, and deployment. Each adjacent topic adds leverage:</p>
 <ul>
-<li><strong>Transformer architecture</strong> → <a href="/blog/transformer-architecture-explained/">Transformer Architecture Explained</a></li>
-<li><strong>RAG systems</strong> → <a href="/blog/rag-tutorial-step-by-step/">RAG Tutorial Step by Step</a></li>
-<li><strong>Deploying AI apps</strong> → deploying-ai-applications</li>
-<li><strong>LLM roadmap</strong> → <a href="/blog/ai-roadmap-for-developers/">AI Roadmap for Developers</a></li>
+<li><strong>QLoRA in depth — the memory-efficient technique behind this guide</strong> → <a href="/blog/qlora-explained/">QLoRA Explained</a></li>
+<li><strong>When to use RAG instead of fine-tuning</strong> → <a href="/blog/build-rag-app/">How to Build a RAG Application</a></li>
+<li><strong>Deploy your fine-tuned model</strong> → <a href="/blog/deploying-ai-applications/">Deploying AI Applications</a></li>
 </ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -508,6 +582,34 @@ For QLoRA fine-tuning: 8B model → 1× RTX 4090 (24GB) or A100 (40GB). 70B mode
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

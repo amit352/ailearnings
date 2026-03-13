@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LangChain RAG Tutorial: Build a Document Q&amp;A System Step by Step | AI Learning Hub</title>
   <meta name="description" content="Build a complete RAG pipeline with LangChain — document loading, text splitting, vector store indexing, retrieval chains, and conversational Q&amp;A with memory." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -52,10 +95,10 @@
   "image": "https://ailearnings.in/og-image.jpg",
   "url": "https://ailearnings.in/blog/langchain-rag-tutorial/",
   "datePublished": "2026-03-10",
-  "dateModified": "2026-03-10",
+  "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,24 +217,35 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">LangChain RAG Tutorial: Build a Document Q&amp;A System Step by Step</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-10">March 10, 2026</time>
-          <span>·</span>
-          <span>4 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">LangChain RAG Tutorial: Build a Document Q&amp;A System Step by Step</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-10">March 10, 2026</time></span>
+              <span class="sep">·</span><span>Updated <time datetime="2026-03-13">March 13, 2026</time></span>
+              <span class="sep">·</span>
+              <span>7 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
-        <h2>Learning Objectives</h2>
+        <h1>LangChain RAG Tutorial: Build a Document Q&amp;A System Step by Step</h1>
+<p>Most AI tutorials stop at &quot;send a message, get a reply.&quot; Real applications need more: the ability to answer questions about <em>your</em> documents — internal policies, product manuals, research papers — data the model has never seen. Retrieval-Augmented Generation (RAG) is how you do that, and LangChain provides every building block you need to implement it correctly. This tutorial builds a complete, working document Q&amp;A system from raw PDF files to a conversational interface that remembers context across turns.</p>
+<hr>
+<h2>What You Will Build</h2>
+<p>By the end of this guide you will have:</p>
 <ul>
-<li>Load and split documents using LangChain loaders and splitters</li>
-<li>Create a vector store from documents using Chroma</li>
-<li>Build a simple retrieval QA chain</li>
-<li>Add conversation memory for follow-up questions</li>
-<li>Evaluate and improve retrieval quality</li>
+<li>A document ingestion pipeline that loads, splits, and indexes any PDF or text file</li>
+<li>A vector store (Chroma) containing semantic embeddings of your document chunks</li>
+<li>A retrieval QA chain that retrieves relevant passages and generates grounded answers</li>
+<li>A conversational wrapper that handles follow-up questions with context awareness</li>
+<li>Evaluation tooling to measure and improve retrieval quality</li>
 </ul>
 <hr>
 <h2>Setup</h2>
@@ -201,48 +255,52 @@ export OPENAI_API_KEY=&quot;sk-...&quot;
 </code></pre>
 <hr>
 <h2>Architecture Overview</h2>
+<p>Understanding the data flow before writing code saves you significant debugging time later.</p>
 <pre><code>Documents (PDF, web, text)
         ↓
-  Document Loaders
+  Document Loaders       ← convert files to LangChain Document objects
         ↓
-  Text Splitters (chunks)
+  Text Splitters         ← break documents into overlapping chunks
         ↓
-  Embedding Model
+  Embedding Model        ← convert each chunk to a dense vector
         ↓
-  Vector Store (Chroma)
-        ↓  ← Query
-  Retriever (top-k chunks)
+  Vector Store (Chroma)  ← store vectors for similarity search
+        ↓  ← Query embedding at runtime
+  Retriever (top-k)      ← find the most relevant chunks
         ↓
-  LLM (GPT-4o-mini)
+  LLM (GPT-4o-mini)      ← synthesize an answer from retrieved chunks
         ↓
-  Answer
+  Answer + Sources
 </code></pre>
+<p>There are two distinct phases: <strong>indexing</strong> (run once, offline) and <strong>querying</strong> (run on every user request). Separating these clearly in your codebase prevents the most common performance mistake: re-embedding documents on every startup.</p>
 <hr>
 <h2>Step 1: Load Documents</h2>
+<p>LangChain&#39;s document loaders normalize different file formats into a consistent <code>Document</code> object with <code>.page_content</code> (the text) and <code>.metadata</code> (source, page number, etc.).</p>
 <pre><code class="language-python">from langchain_community.document_loaders import (
     PyPDFLoader, WebBaseLoader, TextLoader, DirectoryLoader
 )
 
-# PDF
+# Load a single PDF — each page becomes one Document
 loader = PyPDFLoader(&quot;./docs/manual.pdf&quot;)
 docs = loader.load()
 print(f&quot;Loaded {len(docs)} pages&quot;)
 
-# Web page
+# Load a live web page
 loader = WebBaseLoader(&quot;https://docs.python.org/3/library/functions.html&quot;)
 docs = loader.load()
 
-# All PDFs in a directory
+# Load all PDFs from a directory recursively
 loader = DirectoryLoader(&quot;./docs/&quot;, glob=&quot;**/*.pdf&quot;, loader_cls=PyPDFLoader)
 docs = loader.load()
 
-# Plain text
+# Plain text or markdown
 loader = TextLoader(&quot;./README.md&quot;)
 docs = loader.load()
 </code></pre>
-<p>Each document has <code>.page_content</code> (text) and <code>.metadata</code> (source, page, etc.).</p>
+<p>Inspect your documents before chunking — print <code>docs[0].page_content[:500]</code> to verify the text extracted correctly. Scanned PDFs require OCR; use <code>UnstructuredPDFLoader</code> for those.</p>
 <hr>
-<h2>Step 2: Split into Chunks</h2>
+<h2>Step 2: Split Into Chunks</h2>
+<p>Raw pages are too large to embed usefully. You need to split them into smaller, focused chunks that contain one idea each.</p>
 <pre><code class="language-python">from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 splitter = RecursiveCharacterTextSplitter(
@@ -255,20 +313,23 @@ chunks = splitter.split_documents(docs)
 print(f&quot;Split into {len(chunks)} chunks&quot;)
 print(chunks[0].page_content[:200])
 </code></pre>
+<p><code>RecursiveCharacterTextSplitter</code> tries each separator in order, preferring to split on paragraph breaks before sentence breaks before words. The <code>chunk_overlap</code> ensures that sentences spanning a split boundary appear in both adjacent chunks — preventing information loss at boundaries.</p>
 <p><strong>Chunk size guidelines:</strong></p>
 <ul>
-<li>Short, precise Q&amp;A: 256–512 chars</li>
-<li>Technical documentation: 512–1024 chars</li>
-<li>Long-form narrative: 1024–2048 chars</li>
+<li>Short, precise Q&amp;A (policy docs, FAQs): 256–512 characters</li>
+<li>Technical documentation (API docs, code): 512–1024 characters</li>
+<li>Long-form narrative (books, articles): 1024–2048 characters</li>
 </ul>
+<p>Start with 512 and 64 overlap. Measure retrieval quality, then tune.</p>
 <hr>
 <h2>Step 3: Create a Vector Store</h2>
+<p>Embeddings convert text chunks into dense vectors. Similar text maps to nearby vectors in high-dimensional space — this is what enables semantic search.</p>
 <pre><code class="language-python">from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 
 embeddings = OpenAIEmbeddings(model=&quot;text-embedding-3-small&quot;)
 
-# Create and persist vector store
+# Index once — this calls the OpenAI embeddings API for every chunk
 vectorstore = Chroma.from_documents(
     documents=chunks,
     embedding=embeddings,
@@ -278,13 +339,20 @@ vectorstore = Chroma.from_documents(
 print(f&quot;Indexed {vectorstore._collection.count()} chunks&quot;)
 </code></pre>
 <h3>Load an Existing Vector Store</h3>
+<p>On subsequent runs, load the persisted store. Do not re-index unless documents have changed.</p>
 <pre><code class="language-python">vectorstore = Chroma(
     persist_directory=&quot;./chroma_db&quot;,
     embedding_function=embeddings,
 )
 </code></pre>
+<p>If you want free embeddings without an OpenAI key, use a local model:</p>
+<pre><code class="language-python">from langchain_huggingface import HuggingFaceEmbeddings
+embeddings = HuggingFaceEmbeddings(model_name=&quot;BAAI/bge-small-en-v1.5&quot;)
+# Runs locally on CPU — no API key required
+</code></pre>
 <hr>
 <h2>Step 4: Build a Retrieval Chain</h2>
+<p>The retrieval chain connects the vector store to the LLM. At query time, it embeds the user&#39;s question, finds the most similar chunks, and asks the LLM to synthesize an answer from them.</p>
 <pre><code class="language-python">from langchain_openai import ChatOpenAI
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
@@ -292,41 +360,45 @@ from langchain_core.prompts import ChatPromptTemplate
 
 llm = ChatOpenAI(model=&quot;gpt-4o-mini&quot;, temperature=0)
 
-# Retriever: return top 4 most relevant chunks
+# Return the 4 most relevant chunks
 retriever = vectorstore.as_retriever(search_kwargs={&quot;k&quot;: 4})
 
-# Prompt template
+# The system prompt grounds the model in the retrieved context
 prompt = ChatPromptTemplate.from_messages([
     (&quot;system&quot;, &quot;&quot;&quot;You are a helpful assistant. Answer the question based only on the context provided.
-If the answer isn&#39;t in the context, say &quot;I don&#39;t have information about that.&quot;
+If the answer is not in the context, say &quot;I don&#39;t have information about that.&quot;
 
 Context:
 {context}&quot;&quot;&quot;),
     (&quot;human&quot;, &quot;{input}&quot;),
 ])
 
-# Chain: retrieve → format prompt → LLM
+# Combine retrieved docs + prompt → LLM
 question_answer_chain = create_stuff_documents_chain(llm, prompt)
 rag_chain = create_retrieval_chain(retriever, question_answer_chain)
 
-# Run a query
-result = rag_chain.invoke({&quot;input&quot;: &quot;What are the main features?&quot;})
+# Query
+result = rag_chain.invoke({&quot;input&quot;: &quot;What are the main product features?&quot;})
 print(result[&quot;answer&quot;])
+
+# Always show sources — this is what makes RAG trustworthy
 print(&quot;\nSources:&quot;)
 for doc in result[&quot;context&quot;]:
     print(f&quot;  - {doc.metadata.get(&#39;source&#39;, &#39;unknown&#39;)} (page {doc.metadata.get(&#39;page&#39;, &#39;?&#39;)})&quot;)
 </code></pre>
+<p>The key constraint in the prompt is &quot;answer based only on the context provided.&quot; Without this, the model will confidently invent answers from its training data when the retrieved chunks are insufficient.</p>
 <hr>
 <h2>Step 5: Add Conversation Memory</h2>
-<p>For multi-turn Q&amp;A where follow-up questions reference previous context:</p>
+<p>Single-turn Q&amp;A is useful, but users ask follow-up questions. &quot;Tell me more about that&quot; or &quot;What are the limitations?&quot; require the system to understand what &quot;that&quot; refers to. <code>create_history_aware_retriever</code> handles this by reformulating follow-up questions as standalone questions before retrieval.</p>
 <pre><code class="language-python">from langchain.chains import create_history_aware_retriever
 from langchain_core.prompts import MessagesPlaceholder
 from langchain_core.messages import HumanMessage, AIMessage
 
-# Reformulate question in context of chat history
+# Reformulate ambiguous follow-up questions using chat history
 contextualize_prompt = ChatPromptTemplate.from_messages([
     (&quot;system&quot;, &quot;&quot;&quot;Given the chat history and a follow-up question,
-rephrase it as a standalone question. Return only the rephrased question.&quot;&quot;&quot;),
+rephrase it as a standalone question that can be understood without the history.
+Return only the rephrased question.&quot;&quot;&quot;),
     MessagesPlaceholder(&quot;chat_history&quot;),
     (&quot;human&quot;, &quot;{input}&quot;),
 ])
@@ -335,7 +407,7 @@ history_aware_retriever = create_history_aware_retriever(
     llm, retriever, contextualize_prompt
 )
 
-# QA prompt with history
+# QA prompt now includes chat history for context
 qa_prompt = ChatPromptTemplate.from_messages([
     (&quot;system&quot;, &quot;Answer based only on this context:\n\n{context}&quot;),
     MessagesPlaceholder(&quot;chat_history&quot;),
@@ -345,7 +417,7 @@ qa_prompt = ChatPromptTemplate.from_messages([
 qa_chain = create_stuff_documents_chain(llm, qa_prompt)
 conversational_rag = create_retrieval_chain(history_aware_retriever, qa_chain)
 
-# Chat loop
+# Maintain history as a list of message objects
 chat_history = []
 
 def chat(question: str) -&gt; str:
@@ -360,123 +432,118 @@ def chat(question: str) -&gt; str:
     return result[&quot;answer&quot;]
 
 print(chat(&quot;What is the main topic of this document?&quot;))
-print(chat(&quot;Tell me more about it.&quot;))   # &quot;it&quot; refers to previous answer
-print(chat(&quot;What are the limitations?&quot;))
+print(chat(&quot;Tell me more about the limitations.&quot;))  # &quot;limitations&quot; understood in context
+print(chat(&quot;Can you give a specific example?&quot;))      # &quot;example&quot; understood in context
 </code></pre>
 <hr>
 <h2>Advanced Retrieval Techniques</h2>
+<p>The default similarity search retrieves the top-k most similar chunks. In practice, the top-k chunks often contain redundant content (multiple chunks from the same paragraph). These techniques improve retrieval diversity and precision.</p>
 <h3>MMR (Maximal Marginal Relevance)</h3>
-<p>Returns diverse results instead of the top-k most similar (which may all be nearly identical).</p>
+<p>Returns diverse results instead of the top-k most similar. Balances relevance with novelty.</p>
 <pre><code class="language-python">retriever = vectorstore.as_retriever(
     search_type=&quot;mmr&quot;,
     search_kwargs={&quot;k&quot;: 6, &quot;fetch_k&quot;: 20, &quot;lambda_mult&quot;: 0.5},
 )
+# fetch_k=20: fetch 20 candidates, then select 6 diverse ones
+# lambda_mult=0.5: balance between relevance (1.0) and diversity (0.0)
 </code></pre>
 <h3>Metadata Filtering</h3>
+<p>When you know which document to search, filter by source to avoid noise from other documents.</p>
 <pre><code class="language-python">retriever = vectorstore.as_retriever(
     search_kwargs={
         &quot;k&quot;: 4,
-        &quot;filter&quot;: {&quot;source&quot;: &quot;manual.pdf&quot;},  # only search this source
+        &quot;filter&quot;: {&quot;source&quot;: &quot;manual.pdf&quot;},
     }
 )
 </code></pre>
 <h3>Self-Query Retriever</h3>
-<p>Automatically extracts filters from the question:</p>
+<p>Automatically parses filters from natural language questions — users can say &quot;find information about authentication in the API docs&quot; and the retriever extracts the filter automatically.</p>
 <pre><code class="language-python">from langchain.retrievers.self_query.base import SelfQueryRetriever
 from langchain.chains.query_constructor.schema import AttributeInfo
 
 metadata_info = [
     AttributeInfo(name=&quot;source&quot;, description=&quot;The source filename&quot;, type=&quot;string&quot;),
-    AttributeInfo(name=&quot;page&quot;, description=&quot;Page number&quot;, type=&quot;integer&quot;),
+    AttributeInfo(name=&quot;page&quot;, description=&quot;Page number in the document&quot;, type=&quot;integer&quot;),
 ]
 
 self_query_retriever = SelfQueryRetriever.from_llm(
     llm=llm,
     vectorstore=vectorstore,
-    document_contents=&quot;Technical documentation&quot;,
+    document_contents=&quot;Technical product documentation&quot;,
     metadata_field_info=metadata_info,
 )
-# &quot;Find information about authentication on page 3 of auth.pdf&quot;
-# → automatically applies {&quot;source&quot;: &quot;auth.pdf&quot;, &quot;page&quot;: 3} filter
+# Query: &quot;Find information about rate limits on page 3 of api_docs.pdf&quot;
+# → automatically applies {&quot;source&quot;: &quot;api_docs.pdf&quot;, &quot;page&quot;: 3}
 </code></pre>
 <hr>
 <h2>Evaluating Your RAG Pipeline</h2>
-<h3>Measure Retrieval Quality</h3>
+<p>Measuring retrieval quality is the most important — and most skipped — step in RAG development. If retrieval fails, no amount of prompt engineering will fix the answers.</p>
+<h3>Measure Retrieval Hit Rate</h3>
 <pre><code class="language-python"># Build a test set of (question, expected_source) pairs
 test_cases = [
-    (&quot;What is the rate limit?&quot;,    &quot;api_docs.pdf&quot;),
-    (&quot;How to authenticate?&quot;,       &quot;auth.pdf&quot;),
+    (&quot;What is the rate limit?&quot;,   &quot;api_docs.pdf&quot;),
+    (&quot;How do I authenticate?&quot;,    &quot;auth_guide.pdf&quot;),
+    (&quot;What are the pricing tiers?&quot;, &quot;pricing.pdf&quot;),
 ]
 
 hits = 0
 for question, expected_source in test_cases:
-    docs = retriever.invoke(question)
-    sources = [d.metadata.get(&quot;source&quot;) for d in docs]
+    retrieved_docs = retriever.invoke(question)
+    sources = [d.metadata.get(&quot;source&quot;, &quot;&quot;) for d in retrieved_docs]
     if expected_source in sources:
         hits += 1
 
-print(f&quot;Retrieval accuracy: {hits / len(test_cases):.0%}&quot;)
+print(f&quot;Retrieval hit rate: {hits / len(test_cases):.0%}&quot;)
 </code></pre>
 <h3>Use RAGAs for Automated Evaluation</h3>
-<pre><code class="language-bash">pip install ragas
+<p>RAGAs provides standardized metrics: faithfulness (does the answer stay grounded in context?), answer relevancy (does the answer address the question?), and context recall (are the right chunks retrieved?).</p>
+<pre><code class="language-bash">pip install ragas datasets
 </code></pre>
 <pre><code class="language-python">from ragas import evaluate
 from ragas.metrics import faithfulness, answer_relevancy, context_recall
 from datasets import Dataset
 
 eval_data = {
-    &quot;question&quot;:   [&quot;What is RAG?&quot;],
-    &quot;answer&quot;:     [&quot;RAG combines retrieval with generation.&quot;],
-    &quot;contexts&quot;:   [[&quot;RAG stands for Retrieval-Augmented Generation...&quot;]],
-    &quot;ground_truth&quot;: [&quot;RAG is a technique that retrieves relevant documents before generating an answer.&quot;],
+    &quot;question&quot;:   [&quot;What is the vacation policy?&quot;],
+    &quot;answer&quot;:     [&quot;Employees receive 20 days of paid vacation annually.&quot;],
+    &quot;contexts&quot;:   [[&quot;The company provides 20 days PTO per year for full-time employees...&quot;]],
+    &quot;ground_truth&quot;: [&quot;The vacation policy grants 20 days of paid time off per year.&quot;],
 }
 
 result = evaluate(Dataset.from_dict(eval_data), metrics=[faithfulness, answer_relevancy])
 print(result)
 </code></pre>
 <hr>
-<h2>Troubleshooting</h2>
-<p><strong>Irrelevant documents retrieved</strong></p>
-<ul>
-<li>Check chunk size — try smaller chunks for better precision</li>
-<li>Try MMR retrieval for diversity</li>
-<li>Add a metadata filter if you know which source to query</li>
-<li>Inspect embedded queries: <code>embeddings.embed_query(&quot;your question&quot;)</code></li>
-</ul>
-<p><strong>Answer says &quot;I don&#39;t have information&quot;</strong></p>
-<ul>
-<li>Increase <code>k</code> to retrieve more chunks</li>
-<li>Check if the answer exists in your source documents</li>
-<li>Try different query phrasings</li>
-</ul>
-<p><strong>Context is too long (token limit exceeded)</strong></p>
-<ul>
-<li>Reduce <code>k</code> or chunk size</li>
-<li>Use a model with larger context (GPT-4o supports 128K tokens)</li>
-<li>Apply document compression before passing to LLM</li>
-</ul>
-<hr>
-<h2>FAQ</h2>
-<p><strong>How many documents can I index?</strong>
-Chroma handles millions of chunks comfortably. For high-scale production use Qdrant or Weaviate.</p>
-<p><strong>Do I need OpenAI for embeddings?</strong>
-No. Use free alternatives: <code>langchain-huggingface</code> with <code>BAAI/bge-small-en-v1.5</code> runs locally.</p>
-<pre><code class="language-python">from langchain_huggingface import HuggingFaceEmbeddings
-embeddings = HuggingFaceEmbeddings(model_name=&quot;BAAI/bge-small-en-v1.5&quot;)
-</code></pre>
+<h2>Common Pitfalls</h2>
+<p><strong>Re-embedding documents on every server start</strong> — This is the single most common performance mistake. Embedding 500 chunks costs money and takes 30+ seconds. Index once, persist to disk, and reload on startup.</p>
+<p><strong>Chunk size too large</strong> — Chunks of 2,000+ characters dilute the embedding signal. The retrieved chunk is &quot;about&quot; many things, so it matches too broadly and the LLM has to wade through irrelevant sentences to find the answer.</p>
+<p><strong>No chunk overlap</strong> — Sentences spanning a chunk boundary are split and the semantic meaning is lost. Always use 10–15% overlap of the chunk size.</p>
+<p><strong>Ignoring the grounding instruction in the prompt</strong> — Without explicit instructions to stay within the provided context, the model will supplement retrieved passages with training-data knowledge. This produces confident hallucinations that appear plausible.</p>
+<p><strong>Using <code>k=3</code> for all applications</strong> — The right value depends on your content type and query complexity. Test with k=4, k=6, and k=8, and measure answer quality for each.</p>
 <hr>
 <h2>What to Learn Next</h2>
+<p>The patterns in this tutorial apply across a wide range of document-based applications. Once you have a working retrieval pipeline, the natural next steps are:</p>
 <ul>
-<li><strong>Full RAG architecture</strong> → <a href="/blog/rag-tutorial-step-by-step/">RAG Tutorial Step by Step</a></li>
-<li><strong>Vector databases in depth</strong> → <a href="/blog/vector-database-guide/">Vector Database Guide</a></li>
-<li><strong>AI agents with LangChain</strong> → langchain-agents-tutorial</li>
+<li><strong>Understand the full RAG architecture in depth</strong> → <a href="/blog/rag-explained/">RAG Explained</a></li>
+<li><strong>Learn the LangChain fundamentals powering this pipeline</strong> → <a href="/blog/langchain-tutorial/">LangChain Tutorial</a></li>
+<li><strong>Add a vector database for production scale</strong> → <a href="/blog/vector-database-explained/">Vector Database Explained</a></li>
 </ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -520,6 +587,34 @@ embeddings = HuggingFaceEmbeddings(model_name=&quot;BAAI/bge-small-en-v1.5&quot;
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Agents Explained – How Autonomous AI Systems Work | AI Learning Hub</title>
   <meta name="description" content="Learn what AI agents are and how developers build autonomous AI systems." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -54,8 +97,8 @@
   "datePublished": "2026-03-13",
   "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,22 +217,30 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">AI Agents Explained – How Autonomous AI Systems Work</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-13">March 13, 2026</time>
-          <span>·</span>
-          <span>5 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">AI Agents Explained – How Autonomous AI Systems Work</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-13">March 13, 2026</time></span>
+              
+              <span class="sep">·</span>
+              <span>7 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
         <h1>AI Agents Explained – How Autonomous AI Systems Work</h1>
-<p>An AI agent is a system where a language model drives its own actions — deciding what to do, calling tools, observing results, and repeating until a task is complete. Unlike a chatbot that responds to one question at a time, an agent pursues a goal across multiple steps. Understanding how agents work is increasingly essential for developers building AI applications.</p>
+<p>Your product needs to do more than answer questions — it needs to look things up, take actions, and chain those actions together until a task is done. That is the gap between a chatbot and an AI agent. Understanding how agents work at the architectural level is increasingly essential for developers building AI features in 2026.</p>
 <hr>
 <h2>What is an AI Agent</h2>
-<p>An AI agent is a system that combines a language model with:</p>
+<p>An <strong>AI agent</strong> is a system where a language model drives its own actions — deciding what to do next, calling tools, observing results, and repeating until a task is complete. Unlike a chatbot that responds to one question at a time, an agent pursues a goal across multiple steps.</p>
+<p>An agent consists of three core components:</p>
 <ul>
 <li><strong>Tools</strong> — Functions the model can call (search, code execution, APIs, database queries)</li>
 <li><strong>Memory</strong> — Context that persists across steps or sessions</li>
@@ -197,49 +248,49 @@
 </ul>
 <p>The agent receives a goal, breaks it into steps, executes those steps using tools, and adapts based on what it observes. The loop continues until the goal is achieved or a stopping condition is met.</p>
 <p>At the core of most agents is the <strong>ReAct pattern</strong> (Reason + Act): the model alternates between reasoning about what to do and taking an action.</p>
-<pre><code>User: Research the top 3 AI frameworks and write a comparison table.
+<pre><code>User: Research the top 3 AI frameworks and write a comparison.
 
 Agent:
 Thought: I need to search for popular AI frameworks.
 Action: search(&quot;top AI frameworks 2026&quot;)
 Observation: LangChain, LlamaIndex, Haystack, DSPy are widely used...
-Thought: I have results. Now I need details on each.
-Action: search(&quot;LangChain vs LlamaIndex comparison&quot;)
-Observation: [details]
+Thought: I need details on each to compare them.
+Action: search(&quot;LangChain vs LlamaIndex features 2026&quot;)
+Observation: [detailed comparison data]
 ...
-Final Answer: [comparison table]
+Final Answer: [formatted comparison table]
 </code></pre>
 <hr>
 <h2>Why AI Agents Matter for Developers</h2>
-<p>Most meaningful real-world tasks involve multiple steps with dependencies. A user might ask: &quot;Find the best-reviewed hotel in Paris under $200 per night and check if it has availability for next weekend.&quot; That requires search, filtering, date logic, and synthesis — steps that a simple chatbot cannot handle in a single response.</p>
+<p>Most meaningful real-world tasks involve multiple steps with dependencies. A user might ask: &quot;Find the best-reviewed hotel in Paris under $200 per night and check availability for next weekend.&quot; That requires search, filtering, date logic, and synthesis — steps no single prompt can handle.</p>
 <p>Agents enable:</p>
 <ul>
-<li><strong>Multi-step task completion</strong> — Handle tasks that require planning and sequential execution</li>
+<li><strong>Multi-step task completion</strong> — Handle tasks requiring planning and sequential execution</li>
 <li><strong>Tool integration</strong> — Connect LLMs to real-world systems: databases, APIs, file systems, browsers</li>
 <li><strong>Autonomy</strong> — Reduce the amount of human orchestration needed for complex workflows</li>
-<li><strong>Adaptive behavior</strong> — Adjust the execution path based on what the agent discovers</li>
+<li><strong>Adaptive behavior</strong> — Adjust the execution path based on what the agent discovers at runtime</li>
 </ul>
-<p>For developers, agents are the building block of AI systems that can be delegated complex tasks rather than just answering questions.</p>
+<p>For developers, agents are the building block of AI systems that can be delegated complex tasks rather than merely answering questions. The difference between &quot;What is our refund policy?&quot; and &quot;Process this refund and send the customer a confirmation email&quot; is the difference between a chatbot and an agent.</p>
 <hr>
 <h2>How AI Agents Work</h2>
-<h3>Core Components</h3>
-<p><strong>Reasoning model</strong> — Usually an LLM (GPT-4, Claude, etc.) that decides what to do next. The quality of the model directly determines agent reliability.</p>
-<p><strong>Tool registry</strong> — A set of functions the model can invoke. Each tool has a name, description, and input schema. The model selects tools based on their descriptions.</p>
-<p><strong>Agent loop</strong> — The runtime that orchestrates reasoning and action. It prompts the model, parses tool call instructions, executes tools, and loops with the results.</p>
-<p><strong>Memory systems</strong> — Several types:</p>
+<h3>Core Components in Detail</h3>
+<p><strong>Reasoning model</strong> — Usually a capable LLM (GPT-4o, Claude Sonnet, Llama 3.1 70B). The quality of the reasoning model directly determines agent reliability. Smaller models under 7B often struggle with consistent tool selection.</p>
+<p><strong>Tool registry</strong> — A set of functions the model can invoke. Each tool has a name, description, and input schema. The model selects tools based on their descriptions, so clear, precise descriptions are critical.</p>
+<p><strong>Agent loop</strong> — The runtime that orchestrates the cycle. It prompts the model, parses tool call instructions from the response, executes the tools, and injects results back as observations. The loop continues until the model produces a final answer or a stopping condition is triggered.</p>
+<p><strong>Memory systems:</strong></p>
 <ul>
-<li><em>In-context memory</em> — The running conversation history in the prompt</li>
-<li><em>External memory</em> — A vector database storing past interactions or knowledge</li>
-<li><em>Episodic memory</em> — Summaries of past tasks and outcomes</li>
+<li><em>In-context memory</em> — The running conversation and tool call history in the current prompt</li>
+<li><em>External memory</em> — A vector database storing past interactions, user preferences, or knowledge</li>
+<li><em>Episodic memory</em> — Summaries of past tasks and outcomes stored between sessions</li>
 </ul>
 <h3>Agent Architecture Patterns</h3>
-<p><strong>Single agent</strong> — One LLM with tools. Simple, predictable, good for focused tasks.</p>
-<p><strong>Multi-agent</strong> — Multiple specialized agents that hand off tasks to each other. A supervisor agent delegates subtasks to specialist agents (researcher, coder, writer).</p>
-<p><strong>Plan-and-execute</strong> — The agent creates a full plan upfront, then executes each step. More structured than reactive agents; better for well-defined tasks.</p>
+<p><strong>Single agent</strong> — One LLM with a set of tools. Simple, predictable, and good for focused tasks. Start here before adding complexity.</p>
+<p><strong>Multi-agent</strong> — Multiple specialized agents that hand off tasks to each other. A supervisor agent delegates subtasks to specialists (researcher, coder, writer). More powerful but harder to debug.</p>
+<p><strong>Plan-and-execute</strong> — The agent generates a full plan upfront, then executes each step. More structured than reactive agents and better for well-defined tasks with predictable requirements.</p>
 <p><strong>Reflexion</strong> — The agent reflects on past failures and revises its approach. Useful for tasks requiring iteration (code debugging, writing refinement).</p>
 <hr>
-<h2>Practical Examples</h2>
-<h3>Simple Agent with Tools</h3>
+<h2>Practical Example</h2>
+<h3>Simple Agent with LangChain Tools</h3>
 <pre><code class="language-python">from langchain_openai import ChatOpenAI
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain.tools import tool
@@ -249,9 +300,14 @@ llm = ChatOpenAI(model=&quot;gpt-4o-mini&quot;, temperature=0)
 
 @tool
 def get_weather(city: str) -&gt; str:
-    &quot;&quot;&quot;Get the current weather for a city.&quot;&quot;&quot;
-    # In production, call a real weather API
-    return f&quot;The weather in {city} is 18°C and sunny.&quot;
+    &quot;&quot;&quot;Get the current weather for a city. Use when asked about weather conditions.&quot;&quot;&quot;
+    # Replace with a real weather API in production
+    weather_data = {
+        &quot;tokyo&quot;: &quot;18°C and sunny&quot;,
+        &quot;london&quot;: &quot;12°C and overcast&quot;,
+        &quot;new york&quot;: &quot;5°C and snowing&quot;,
+    }
+    return weather_data.get(city.lower(), f&quot;Weather data unavailable for {city}&quot;)
 
 @tool
 def calculate(expression: str) -&gt; str:
@@ -266,51 +322,96 @@ prompt = hub.pull(&quot;hwchase17/react&quot;)
 agent = create_react_agent(llm, tools, prompt)
 executor = AgentExecutor(agent=agent, tools=tools, verbose=True, max_iterations=8)
 
-result = executor.invoke({&quot;input&quot;: &quot;What is the temperature in Tokyo? Is that above or below 20°C?&quot;})
+result = executor.invoke({
+    &quot;input&quot;: &quot;Is it above 20°C in Tokyo today? What is the difference from 20°C?&quot;
+})
 print(result[&quot;output&quot;])
 </code></pre>
 <h3>Streaming Agent Responses</h3>
-<pre><code class="language-python">for step in executor.stream({&quot;input&quot;: &quot;Research LangChain and summarize its main features&quot;}):
+<pre><code class="language-python">for step in executor.stream({&quot;input&quot;: &quot;What is the weather in London? Is it warmer than 15°C?&quot;}):
     if &quot;intermediate_steps&quot; in step:
         action, observation = step[&quot;intermediate_steps&quot;][-1]
         print(f&quot;Tool: {action.tool}&quot;)
         print(f&quot;Input: {action.tool_input}&quot;)
         print(f&quot;Result: {observation[:200]}\n&quot;)
+    if &quot;output&quot; in step:
+        print(f&quot;Final: {step[&#39;output&#39;]}&quot;)
 </code></pre>
 <hr>
-<h2>Tools and Frameworks</h2>
-<p><strong>LangChain / LangGraph</strong> — The most widely used agent framework. LangGraph adds graph-based orchestration for complex multi-step agents. See <a href="/blog/langchain-agents/">LangChain agents</a> for implementation details.</p>
-<p><strong>AutoGen (Microsoft)</strong> — A framework for multi-agent conversations. Multiple agents with different roles collaborate to solve tasks.</p>
-<p><strong>CrewAI</strong> — Opinionated framework for role-based multi-agent teams. Agents have explicit roles, goals, and backstories.</p>
-<p><strong>OpenAI Assistants API</strong> — Managed agent runtime with built-in tool use (code interpreter, file search), thread management, and persistent memory.</p>
-<p><strong>Anthropic Tool Use</strong> — Claude&#39;s native tool-use API. Structured tool calling with reliable JSON outputs.</p>
+<h2>Real-World Applications</h2>
+<p>Agents are deployed across a wide range of production AI systems:</p>
+<p><strong>Enterprise chatbots</strong> — Look up CRM data, check inventory, submit tickets. The agent handles the multi-step workflow; humans only intervene when it escalates.</p>
+<p><strong>Coding assistants</strong> — Read files, run linters, write tests, execute them, and iterate based on failures. GitHub Copilot Workspace uses this pattern.</p>
+<p><strong>Research automation</strong> — Search the web, read articles, extract data, and compile reports. Reduces hours of manual research to minutes.</p>
+<p><strong>Financial analysis</strong> — Query databases, run calculations, generate visualizations, and summarize findings. Each operation uses an appropriate tool rather than asking an LLM to do math from memory.</p>
+<p><strong>DevOps automation</strong> — Monitor logs, detect anomalies, create incidents, and page on-call engineers. The agent takes action on real systems through tool calls.</p>
 <hr>
-<h2>Common Mistakes</h2>
-<p><strong>No stopping condition</strong> — Agents can loop indefinitely. Always set a maximum number of iterations and a timeout.</p>
-<p><strong>Trusting all tool outputs</strong> — Tools return strings. Malicious or malformed data in tool outputs can influence agent behavior. Validate tool outputs before injecting them into the agent context.</p>
-<p><strong>Overly broad tool descriptions</strong> — The agent selects tools based on their description. Vague descriptions like &quot;does stuff with data&quot; cause the agent to select the wrong tool. Be precise.</p>
-<p><strong>No error handling in tools</strong> — Tools that raise exceptions crash the agent loop. Wrap tool logic in try/except and return informative error messages.</p>
-<p><strong>Using agents for simple tasks</strong> — If the steps are fixed, use a chain. Agents add latency (multiple LLM calls) and unpredictability. Match the tool to the task complexity.</p>
+<h2>Common Mistakes Developers Make</h2>
+<ol>
+<li><p><strong>No stopping condition</strong> — Agents can loop indefinitely on ambiguous tasks. Always set a maximum iteration count and a wall-clock timeout.</p>
+</li>
+<li><p><strong>Trusting all tool outputs</strong> — Tools return strings. Validate tool outputs before injecting them into the agent&#39;s context. A tool that returns 10,000 characters can overflow the context window.</p>
+</li>
+<li><p><strong>Overly broad tool descriptions</strong> — The agent selects tools based on their description. Vague descriptions cause the agent to select the wrong tool. Be specific about when to use each tool and what it returns.</p>
+</li>
+<li><p><strong>No error handling in tools</strong> — An unhandled exception inside a tool crashes the agent loop. Wrap every tool in try/except and return descriptive error messages.</p>
+</li>
+<li><p><strong>Using agents for simple tasks</strong> — If the steps are fixed and known in advance, use a chain. Agents add multiple LLM call latency and unpredictability. Reserve agents for genuinely dynamic tasks.</p>
+</li>
+</ol>
 <hr>
 <h2>Best Practices</h2>
 <ul>
-<li><strong>Start with a single agent and a small tool set</strong> — Complexity multiplies quickly. Validate the core loop before adding more tools or agents.</li>
+<li><strong>Start with a single agent and a small tool set</strong> — Validate the core loop with two or three tools before adding more. Complexity multiplies quickly.</li>
 <li><strong>Log every step</strong> — In production, log every tool call, input, and output. Agent behavior is hard to debug without a complete trace.</li>
-<li><strong>Test adversarial inputs</strong> — Users will try to manipulate agents into taking unintended actions (prompt injection). Test for this explicitly.</li>
-<li><strong>Give agents clear stopping criteria</strong> — Explicitly describe in the system prompt when the agent should consider the task complete and return a final answer.</li>
-<li><strong>Use human-in-the-loop for high-stakes actions</strong> — For irreversible actions (sending emails, executing code, modifying data), require human confirmation before proceeding.</li>
+<li><strong>Test adversarial inputs</strong> — Users will try to manipulate agents through prompt injection. Test for this explicitly in your QA process.</li>
+<li><strong>Give agents clear stopping criteria</strong> — In the system prompt, describe explicitly when the task is complete and the agent should return a final answer.</li>
+<li><strong>Use human-in-the-loop for irreversible actions</strong> — For sending emails, executing code against production data, or making API calls with side effects, require human confirmation before proceeding.</li>
 </ul>
 <hr>
-<h2>Summary</h2>
-<p>AI agents are LLMs paired with tools, memory, and a reasoning loop. They can pursue multi-step goals, adapt based on observations, and integrate with real-world systems in ways that simple chatbots cannot.</p>
-<p>The core pattern — ReAct — is straightforward. The complexity comes from tool design, error handling, and ensuring the agent reliably stops when done. Start simple, add tools incrementally, and invest in observability from the beginning.</p>
-<p>For a hands-on implementation, see <a href="/blog/build-ai-agents/">how to build AI agents</a>. For the LangChain-specific implementation, see <a href="/blog/langchain-agents/">LangChain agents</a>.</p>
+<h2>FAQ</h2>
+<p><strong>What is the difference between an AI agent and a chatbot?</strong>
+A chatbot responds once per message. An agent acts in a loop, uses tools, and can autonomously complete multi-step tasks without human orchestration.</p>
+<p><strong>When should I use agents versus standard RAG?</strong>
+Use RAG when you need to answer questions about documents. Use agents when you need to take actions, use multiple tools in flexible combinations, or handle tasks requiring dynamic planning.</p>
+<p><strong>Are agents reliable enough for production?</strong>
+Narrow, well-defined tasks with a small tool set can be production-ready. Open-ended tasks with many tools have higher failure rates and need oversight. Start narrow and expand scope as reliability improves.</p>
+<p><strong>How do I debug an agent that takes unexpected actions?</strong>
+Enable verbose logging on the agent executor. Log every thought, action, and observation. Use LangSmith if you are in the LangChain ecosystem — it traces every step automatically.</p>
+<p><strong>What is the difference between LangChain agents and LangGraph agents?</strong>
+LangChain agents use a simple loop and are good for prototyping. LangGraph gives you explicit state management, conditional branching, and human-in-the-loop checkpoints — better for production.</p>
+<hr>
+<h2>Further Reading</h2>
+<ul>
+<li><a href="https://python.langchain.com/docs/concepts/agents/">LangChain Agents Documentation</a></li>
+<li><a href="https://langchain-ai.github.io/langgraph/tutorials/introduction/">LangGraph Getting Started</a></li>
+<li><a href="https://platform.openai.com/docs/assistants/overview">OpenAI Assistants API</a></li>
+<li><a href="https://arxiv.org/abs/2210.03629">ReAct: Synergizing Reasoning and Acting in Language Models</a></li>
+<li><a href="https://huggingface.co/docs/transformers/en/agents">HuggingFace Agents Documentation</a></li>
+</ul>
+<hr>
+<h2>What to Learn Next</h2>
+<ul>
+<li><a href="/blog/build-ai-agents/">Build AI Agents Step-by-Step</a> — hands-on implementation guide with complete code</li>
+<li><a href="/blog/langchain-agents/">LangChain Agents Explained</a> — LangChain-specific patterns and LangGraph integration</li>
+<li><a href="/blog/multi-agent-systems/">Multi-Agent Systems</a> — coordinating multiple specialized agents</li>
+</ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -354,6 +455,34 @@ print(result[&quot;output&quot;])
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

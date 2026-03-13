@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Learning Roadmap for Developers (2026) | AI Learning Hub</title>
   <meta name="description" content="A step-by-step roadmap for developers to learn AI and build AI applications." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -54,8 +97,8 @@
   "datePublished": "2026-03-13",
   "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,57 +217,64 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">AI Learning Roadmap for Developers (2026)</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-13">March 13, 2026</time>
-          <span>·</span>
-          <span>5 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">AI Learning Roadmap for Developers (2026)</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-13">March 13, 2026</time></span>
+              
+              <span class="sep">·</span>
+              <span>8 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
         <h1>AI Learning Roadmap for Developers (2026)</h1>
-<p>Most developers trying to learn AI feel overwhelmed by the volume of content and unclear about where to start. This roadmap gives you a structured path from zero AI knowledge to building production AI applications — organized by phase, with clear milestones and the most practical resources for each stage.</p>
+<p>Most developers trying to learn AI feel overwhelmed not because resources are scarce but because there are too many of them with no clear sequence. Reading about transformers before making your first API call is backwards. Jumping to fine-tuning before understanding RAG leaves critical gaps. This roadmap gives you a structured path from zero to shipping production AI applications — organized by phase, with clear milestones at each stage.</p>
 <hr>
 <h2>What is an AI Learning Roadmap</h2>
 <p>An AI learning roadmap is a sequenced curriculum that guides a developer from foundational concepts to applied skills. Unlike a list of topics, a roadmap organizes learning in dependency order — each phase builds on the previous one — and specifies what &quot;done&quot; looks like at each stage.</p>
-<p>This roadmap focuses on applied AI development: using models, building systems, and shipping features — not research or model training from scratch.</p>
+<p>This roadmap focuses on applied AI development: using models, building systems, and shipping features — not research or training models from scratch. By the end, you can build and deploy production AI applications. That is the goal.</p>
 <hr>
-<h2>Why a Structured Roadmap Matters</h2>
-<p>Without a roadmap, most developers either:</p>
+<h2>Why a Structured Roadmap Matters for Developers</h2>
+<p>Without a roadmap, most developers fall into predictable failure modes:</p>
 <ul>
-<li>Learn theory without building anything (too abstract)</li>
-<li>Jump straight to frameworks without understanding the fundamentals (too shallow)</li>
-<li>Get distracted by adjacent topics and make no progress on the core skills</li>
+<li>Learning theory without building anything concrete (too abstract, knowledge does not stick)</li>
+<li>Jumping straight to frameworks without understanding the fundamentals (too shallow, debugging becomes guesswork)</li>
+<li>Getting distracted by adjacent topics (fine-tuning, new models, new frameworks) before mastering the core</li>
 </ul>
-<p>A roadmap prevents both failure modes by sequencing concepts correctly and anchoring each phase to a concrete project milestone.</p>
+<p>A roadmap prevents both failure modes by sequencing concepts correctly and anchoring each phase to a concrete project milestone. The milestone forces you to apply what you learned before moving on.</p>
 <hr>
 <h2>How This Roadmap Works</h2>
 <p>The roadmap has five phases. Each phase has:</p>
 <ul>
-<li><strong>Core concepts</strong> to learn</li>
+<li><strong>Core concepts</strong> to understand</li>
 <li><strong>Practical skills</strong> to develop</li>
 <li><strong>A milestone project</strong> to build</li>
 </ul>
-<p>Work through phases in order. Each phase typically takes two to four weeks of consistent effort.</p>
+<p>Work through phases in order. Each phase typically takes two to four weeks of consistent effort — about 5–8 hours per week. The total is approximately 16 weeks to build a complete foundation.</p>
 <hr>
 <h2>Phase 1: Foundations (Weeks 1–3)</h2>
 <p><strong>Goal:</strong> Understand what LLMs are, how to use them, and how to prompt them effectively.</p>
 <p><strong>Core concepts:</strong></p>
 <ul>
-<li>What is a large language model and how does it generate text</li>
-<li>Tokens, context windows, and temperature</li>
+<li>What a large language model is and how it generates text one token at a time</li>
+<li>Tokens, context windows, and temperature — what these parameters actually do</li>
 <li>The difference between base models and instruction-tuned models</li>
 <li>Prompt engineering fundamentals: zero-shot, few-shot, chain-of-thought</li>
 </ul>
 <p><strong>Practical skills:</strong></p>
 <ul>
 <li>Make your first API call with the OpenAI Python client</li>
-<li>Write system prompts that produce consistent outputs</li>
-<li>Use chain-of-thought prompting for reasoning tasks</li>
-<li>Format outputs as structured JSON</li>
+<li>Write system prompts that produce consistent outputs across varied inputs</li>
+<li>Use chain-of-thought prompting to improve accuracy on reasoning tasks</li>
+<li>Format outputs as structured JSON using response_format</li>
 </ul>
 <p><strong>Resources:</strong></p>
 <ul>
@@ -232,95 +282,95 @@
 <li><a href="/blog/prompt-engineering-guide/">Prompt engineering guide</a></li>
 <li><a href="/blog/openai-python-client-guide/">OpenAI Python client guide</a></li>
 </ul>
-<p><strong>Milestone:</strong> Build a command-line tool that answers questions using the OpenAI API, with a custom system prompt and structured JSON output.</p>
+<p><strong>Milestone:</strong> Build a command-line tool that answers questions using the OpenAI API, with a custom system prompt and structured JSON output. It should handle edge cases like empty inputs and API errors gracefully.</p>
 <hr>
 <h2>Phase 2: Retrieval and Data (Weeks 4–6)</h2>
 <p><strong>Goal:</strong> Connect LLMs to your own data using embeddings and vector search.</p>
 <p><strong>Core concepts:</strong></p>
 <ul>
-<li>What embeddings are and why they matter</li>
-<li>How vector databases store and search by semantic similarity</li>
-<li>The RAG (Retrieval-Augmented Generation) pattern</li>
-<li>Document chunking strategies</li>
+<li>What embeddings are: dense vectors that encode semantic meaning</li>
+<li>How vector databases store and search by semantic similarity (cosine distance)</li>
+<li>The RAG (Retrieval-Augmented Generation) pattern: why it exists and how it works</li>
+<li>Document chunking strategies: chunk size, overlap, and their effect on retrieval quality</li>
 </ul>
 <p><strong>Practical skills:</strong></p>
 <ul>
-<li>Generate embeddings with OpenAI&#39;s API</li>
+<li>Generate text embeddings with OpenAI&#39;s embedding API</li>
 <li>Build and query a Chroma vector store</li>
 <li>Build a complete RAG pipeline: load, chunk, embed, retrieve, generate</li>
-<li>Add source citations to RAG answers</li>
+<li>Add source citations to RAG answers for auditability</li>
 </ul>
 <p><strong>Resources:</strong></p>
 <ul>
 <li><a href="/blog/embeddings-explained/">Embeddings explained</a></li>
 <li><a href="/blog/rag-explained/">RAG explained</a></li>
 <li><a href="/blog/vector-database-explained/">Vector databases explained</a></li>
-<li><a href="/blog/build-rag-app/">Build a RAG app</a></li>
+<li><a href="/blog/document-chunking-strategies/">Document chunking strategies</a></li>
 </ul>
-<p><strong>Milestone:</strong> Build a document Q&amp;A application that answers questions about a PDF using semantic retrieval.</p>
+<p><strong>Milestone:</strong> Build a document Q&amp;A application that answers questions about a PDF using semantic retrieval. It should return answers grounded in the document with source citations.</p>
 <hr>
 <h2>Phase 3: Frameworks and Applications (Weeks 7–9)</h2>
-<p><strong>Goal:</strong> Build production-quality AI applications using LangChain.</p>
+<p><strong>Goal:</strong> Build production-quality AI applications using LangChain and FastAPI.</p>
 <p><strong>Core concepts:</strong></p>
 <ul>
-<li>LangChain chains, LCEL, and prompt templates</li>
-<li>Memory and conversation history</li>
-<li>Output parsing and structured responses</li>
+<li>LangChain chains, LCEL (LangChain Expression Language), and prompt templates</li>
+<li>Memory and conversation history: how to maintain context across turns</li>
+<li>Output parsing and structured responses with Pydantic</li>
 <li>Building and serving an AI API with FastAPI</li>
 </ul>
 <p><strong>Practical skills:</strong></p>
 <ul>
-<li>Build multi-step chains with LCEL</li>
+<li>Build multi-step chains with LCEL using the pipe operator</li>
 <li>Add conversation memory to a chatbot</li>
-<li>Parse structured outputs with Pydantic</li>
-<li>Deploy an AI application as a REST API</li>
+<li>Parse and validate structured outputs with Pydantic models</li>
+<li>Deploy an AI application as a REST API with proper error handling</li>
 </ul>
 <p><strong>Resources:</strong></p>
 <ul>
-<li><a href="/blog/langchain-tutorial/">LangChain tutorial</a></li>
-<li><a href="/blog/build-ai-app/">How to build your first AI app</a></li>
+<li><a href="/blog/langchain-tutorial-complete/">LangChain complete tutorial</a></li>
+<li><a href="/blog/building-ai-chatbots/">Building AI chatbots</a></li>
 </ul>
-<p><strong>Milestone:</strong> Build a web API with FastAPI that handles document Q&amp;A with conversation memory and source citations.</p>
+<p><strong>Milestone:</strong> Build a web API with FastAPI that handles document Q&amp;A with conversation memory and source citations. Deploy it locally and test with realistic queries.</p>
 <hr>
 <h2>Phase 4: Agents and Automation (Weeks 10–12)</h2>
 <p><strong>Goal:</strong> Build AI agents that use tools to complete multi-step tasks autonomously.</p>
 <p><strong>Core concepts:</strong></p>
 <ul>
-<li>The ReAct agent pattern: Reason → Act → Observe</li>
-<li>Tool design and description</li>
+<li>The ReAct agent pattern: Reason → Act → Observe and repeat</li>
+<li>Tool design: how to write descriptions the model uses correctly</li>
 <li>Agent loops and stopping conditions</li>
-<li>LangGraph for stateful agent orchestration</li>
+<li>LangGraph for stateful agent orchestration with explicit state management</li>
 </ul>
 <p><strong>Practical skills:</strong></p>
 <ul>
-<li>Define and register custom tools</li>
+<li>Define and register custom tools with clear descriptions and schemas</li>
 <li>Build a ReAct agent with LangChain</li>
 <li>Handle tool errors and agent failures gracefully</li>
-<li>Use LangGraph for complex agent workflows</li>
+<li>Use LangGraph for complex agent workflows requiring state management</li>
 </ul>
 <p><strong>Resources:</strong></p>
 <ul>
 <li><a href="/blog/ai-agents-guide/">AI agents guide</a></li>
-<li><a href="/blog/langchain-agents/">LangChain agents</a></li>
-<li><a href="/blog/build-ai-agents/">Build AI agents</a></li>
+<li><a href="/blog/langchain-agents/">LangChain agents explained</a></li>
+<li><a href="/blog/build-ai-agents/">Build AI agents step-by-step</a></li>
 </ul>
-<p><strong>Milestone:</strong> Build an agent with three custom tools that can research topics, run calculations, and summarize findings.</p>
+<p><strong>Milestone:</strong> Build an agent with three custom tools that can research topics, run calculations, and summarize findings. The agent should handle tool failures gracefully and stop cleanly when done.</p>
 <hr>
 <h2>Phase 5: Customization and Deployment (Weeks 13–16)</h2>
 <p><strong>Goal:</strong> Fine-tune models for specific tasks and deploy AI applications to production.</p>
 <p><strong>Core concepts:</strong></p>
 <ul>
-<li>When fine-tuning is better than prompting</li>
-<li>LoRA and QLoRA for parameter-efficient fine-tuning</li>
+<li>When fine-tuning is better than prompting — the tradeoffs and decision criteria</li>
+<li>LoRA and QLoRA: parameter-efficient fine-tuning on consumer hardware</li>
 <li>Running open-source models locally with Ollama</li>
-<li>Production considerations: latency, cost, reliability</li>
+<li>Production considerations: latency budgets, cost control, reliability</li>
 </ul>
 <p><strong>Practical skills:</strong></p>
 <ul>
-<li>Run open-source models locally with Ollama</li>
+<li>Run open-source models locally with Ollama and the OpenAI-compatible API</li>
 <li>Fine-tune a model with LoRA using Hugging Face PEFT</li>
-<li>Set up LangSmith for production observability</li>
-<li>Deploy an AI API to production</li>
+<li>Set up LangSmith for production observability and debugging</li>
+<li>Deploy an AI API to production with proper error handling and monitoring</li>
 </ul>
 <p><strong>Resources:</strong></p>
 <ul>
@@ -329,55 +379,97 @@
 <li><a href="/blog/llm-fine-tuning-guide/">LLM fine-tuning guide</a></li>
 <li><a href="/blog/ai-tools-for-developers/">AI tools for developers</a></li>
 </ul>
-<p><strong>Milestone:</strong> Deploy a complete AI application with a fine-tuned or local model, production logging, and error handling.</p>
+<p><strong>Milestone:</strong> Deploy a complete AI application with observability (LangSmith), proper error handling, and a working production deployment. Optionally fine-tune a small model on custom data.</p>
 <hr>
-<h2>Practical Examples</h2>
-<h3>A Concrete Weekly Schedule</h3>
-<pre><code>Week 1: Read LLM fundamentals. Make first OpenAI API call. Build a simple chatbot.
-Week 2: Learn prompt engineering. Build a structured output extractor.
-Week 3: Learn embeddings. Generate and compare text embeddings.
-Week 4: Build your first RAG pipeline with Chroma.
-Week 5: Add metadata filtering and source citations to RAG.
-Week 6: Build a full document Q&amp;A web API with FastAPI.
-Week 7: Learn LangChain LCEL. Refactor your code to use LangChain.
-Week 8: Add conversation memory. Build a chat interface.
-Week 9: Add agents. Give your chatbot a search tool.
-Week 10: Build a multi-tool agent with LangGraph.
-Week 11: Run Ollama locally. Benchmark against cloud models.
-Week 12: Fine-tune a 7B model with QLoRA on custom data.
-Week 13-16: Deploy, add observability, and ship a real feature.
+<h2>Practical Example: A Concrete Weekly Schedule</h2>
+<pre><code>Week 1:  Read LLM fundamentals. Make first OpenAI API call. Build a simple chatbot.
+Week 2:  Learn prompt engineering. Build a structured output extractor.
+Week 3:  Learn embeddings. Generate and compare text embeddings.
+Week 4:  Build first RAG pipeline with Chroma. Index a PDF.
+Week 5:  Add metadata filtering and source citations to your RAG system.
+Week 6:  Build a full document Q&amp;A API with FastAPI.
+Week 7:  Learn LangChain LCEL. Refactor your API to use LangChain.
+Week 8:  Add conversation memory. Build a chat interface with Gradio.
+Week 9:  Add agents. Give your chatbot a search tool.
+Week 10: Build a multi-tool agent. Test error handling.
+Week 11: Run Ollama locally. Benchmark a local model against cloud.
+Week 12: Add LangSmith observability to your application.
+Week 13: Learn LoRA. Fine-tune a small model on Colab.
+Week 14: Deploy your application to a production environment.
+Week 15: Add cost tracking and rate limiting.
+Week 16: Write a blog post about what you built. Polish your portfolio.
 </code></pre>
 <hr>
-<h2>Tools and Frameworks</h2>
-<p>The minimal stack for this roadmap:</p>
+<h2>Real-World Applications</h2>
+<p>Following this roadmap produces a developer who can build:</p>
+<p><strong>Document Q&amp;A systems</strong> — The milestone from Phase 2 is a fully functional product. Companies use these for internal knowledge bases, customer support, and compliance research.</p>
+<p><strong>AI-powered APIs</strong> — The Phase 3 milestone is production-ready with minor additions. Every SaaS product in 2026 is adding AI features through endpoints like the one you build.</p>
+<p><strong>Autonomous agents</strong> — The Phase 4 milestone handles real automation use cases: research compilation, data processing, multi-step workflows.</p>
+<p><strong>Custom fine-tuned models</strong> — The Phase 5 skills are what differentiate AI engineers from developers who only call APIs. Domain-specific fine-tuning is a premium skill in the job market.</p>
+<hr>
+<h2>Common Mistakes Developers Make</h2>
+<ol>
+<li><p><strong>Skipping fundamentals to learn frameworks</strong> — LangChain becomes confusing without understanding what it abstracts. Developers who skip Phase 1 struggle to debug Phase 3 applications.</p>
+</li>
+<li><p><strong>Learning without building</strong> — Every phase ends with a working project milestone. Reading without coding produces knowledge that fades in weeks. You must build to retain.</p>
+</li>
+<li><p><strong>Trying to learn everything simultaneously</strong> — This roadmap covers the most important 20% of AI concepts that produce 80% of practical value. Ignore adjacent topics until you have solid fundamentals.</p>
+</li>
+<li><p><strong>Not tracking progress</strong> — Keep a log of what you built each week. It makes the roadmap tangible, shows you how far you have come, and identifies where you are stuck.</p>
+</li>
+<li><p><strong>Giving up after a hard week</strong> — AI development involves debugging issues with limited documentation. This is normal. The debugging instincts you build are as valuable as the technical knowledge.</p>
+</li>
+</ol>
+<hr>
+<h2>Best Practices</h2>
 <ul>
-<li><strong>LLM API</strong>: OpenAI (start here, all examples use this)</li>
-<li><strong>Embeddings</strong>: OpenAI <code>text-embedding-3-small</code></li>
-<li><strong>Vector database</strong>: Chroma (local) → Qdrant or Pinecone (production)</li>
-<li><strong>Framework</strong>: LangChain + LangGraph</li>
-<li><strong>Web API</strong>: FastAPI</li>
-<li><strong>Local models</strong>: Ollama</li>
-<li><strong>Observability</strong>: LangSmith</li>
+<li><strong>Ship each milestone project</strong> — Put it on GitHub. Write a README. Share it. The act of shipping forces you to handle edge cases you would skip in a learning exercise.</li>
+<li><strong>Use real data for each project</strong> — Toy datasets make toy results. Use a real PDF, a real API, or a real dataset for each milestone.</li>
+<li><strong>Read the source code</strong> — When a LangChain abstraction confuses you, read its implementation. You will understand it better and build better mental models.</li>
+<li><strong>Join the communities</strong> — The LangChain Discord, Hugging Face forums, and AI Twitter/X communities answer questions quickly and keep you current on developments.</li>
 </ul>
 <hr>
-<h2>Common Mistakes</h2>
-<p><strong>Skipping fundamentals to learn frameworks</strong> — LangChain becomes confusing without understanding what it abstracts. Learn the basics first.</p>
-<p><strong>Learning without building</strong> — Every phase should end with a working project. Reading without coding produces knowledge you cannot apply.</p>
-<p><strong>Trying to learn everything</strong> — This roadmap covers the most important 20% of AI concepts that produce 80% of practical value. Ignore the rest until you have solid fundamentals.</p>
-<p><strong>Not tracking progress</strong> — Keep a log of what you built each week. It makes the roadmap tangible and motivating.</p>
-<p><strong>Giving up after a hard week</strong> — AI development involves debugging issues that have limited documentation. This is normal. Push through, and your debugging skills will compound.</p>
+<h2>FAQ</h2>
+<p><strong>How long does this roadmap take?</strong>
+About 16 weeks at 5–8 hours per week. Developers with strong Python backgrounds complete it faster. Non-Python developers should add 2–4 weeks for Python fluency.</p>
+<p><strong>Do I need a math background?</strong>
+No. The first four phases require only Python. Phase 5 (fine-tuning) benefits from basic linear algebra intuition but you can fine-tune models with QLoRA without deep math.</p>
+<p><strong>Should I learn PyTorch?</strong>
+After completing this roadmap, yes. PyTorch is the foundation of open-source AI and is required for custom model training and fine-tuning beyond the basics.</p>
+<p><strong>How do I know when I am ready to apply for AI engineering jobs?</strong>
+When you have completed the Phase 3 and Phase 4 milestones, you have the core skills for LLM application engineering roles. Add Phase 5 to differentiate yourself.</p>
 <hr>
-<h2>Summary</h2>
-<p>The path from developer to AI developer follows five phases: foundations (LLMs + prompting), retrieval (RAG + vector search), frameworks (LangChain + FastAPI), agents (ReAct + tools), and customization (fine-tuning + deployment).</p>
-<p>Each phase builds on the previous. Each has a concrete milestone project. Consistent effort across 16 weeks produces a developer who can build and deploy production AI applications.</p>
-<p>Start with Phase 1 today: read <a href="/blog/how-llms-work/">how large language models work</a>, then make your first API call using the <a href="/blog/prompt-engineering-guide/">prompt engineering guide</a>. Build something before moving to Phase 2.</p>
-<p>For a broader technical overview of the AI application stack, see <a href="/blog/build-ai-app/">how to build your first AI app</a>.</p>
+<h2>Further Reading</h2>
+<ul>
+<li><a href="https://www.deeplearning.ai/short-courses/">DeepLearning.AI Short Courses</a> — free, high-quality courses on specific AI topics</li>
+<li><a href="https://huggingface.co/learn/nlp-course/en/chapter1/1">Hugging Face Course</a></li>
+<li><a href="https://www.youtube.com/watch?v=zjkBMFhNj_g">Andrej Karpathy: Intro to LLMs</a></li>
+<li><a href="https://python.langchain.com/docs/introduction/">LangChain Documentation</a></li>
+<li><a href="https://platform.openai.com/docs/">OpenAI API Documentation</a></li>
+</ul>
+<hr>
+<h2>What to Learn Next</h2>
+<ul>
+<li><a href="/blog/how-llms-work/">How Large Language Models Work</a> — start here for Phase 1</li>
+<li><a href="/blog/prompt-engineering-guide/">Prompt Engineering Guide</a> — the core skill of Phase 1</li>
+<li><a href="/blog/ai-roadmap-for-developers/">AI Roadmap for Developers</a> — a more detailed breakdown of the full AI engineering path</li>
+</ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -421,6 +513,34 @@ Week 13-16: Deploy, add observability, and ship a real feature.
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Agent Fundamentals: How LLM Agents Think, Plan, and Act | AI Learning Hub</title>
   <meta name="description" content="Learn the building blocks of AI agents — ReAct loops, tool use, planning, memory, and multi-agent coordination. Includes hands-on examples with LangChain and OpenAI." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -52,10 +95,10 @@
   "image": "https://ailearnings.in/og-image.jpg",
   "url": "https://ailearnings.in/blog/ai-agent-fundamentals/",
   "datePublished": "2026-03-10",
-  "dateModified": "2026-03-10",
+  "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,51 +217,71 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">AI Agent Fundamentals: How LLM Agents Think, Plan, and Act</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-10">March 10, 2026</time>
-          <span>·</span>
-          <span>5 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">AI Agent Fundamentals: How LLM Agents Think, Plan, and Act</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-10">March 10, 2026</time></span>
+              <span class="sep">·</span><span>Updated <time datetime="2026-03-13">March 13, 2026</time></span>
+              <span class="sep">·</span>
+              <span>7 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
-        <h2>Learning Objectives</h2>
-<ul>
-<li>Understand what an AI agent is and how it differs from a chatbot</li>
-<li>Implement the ReAct (Reasoning + Acting) loop</li>
-<li>Give agents tools and handle tool call results</li>
-<li>Add memory so agents can reference prior context</li>
-<li>Design multi-step task flows</li>
-</ul>
+        <h1>AI Agent Fundamentals: How LLM Agents Think, Plan, and Act</h1>
+<p>You have built a chatbot that answers questions, but your users keep asking it to do things — check a price, look up a record, run a calculation. A chatbot gives one response. An <strong>AI agent</strong> takes action: it reasons about what to do, calls a tool, observes the result, and continues until the task is complete. This guide walks through the building blocks you need to build reliable agents.</p>
 <hr>
 <h2>What Is an AI Agent?</h2>
-<p>A chatbot generates a single response. An <strong>AI agent</strong> takes actions in a loop — reasoning about what to do, using tools, observing results, and repeating until a goal is achieved.</p>
+<p>A chatbot generates a single response and stops. An <strong>AI agent</strong> operates in a loop — reasoning about what to do next, using tools to take action, observing the result, and repeating until a goal is achieved.</p>
 <pre><code>Chatbot:    User → LLM → Response
 Agent:      User → [LLM → Tool → Observe → LLM → Tool → Observe → ...] → Final Answer
 </code></pre>
-<p>The key difference: an agent can use external tools (web search, code execution, APIs, databases) and decide autonomously which tools to use and in what order.</p>
+<p>The key difference: an agent can use external tools (web search, code execution, APIs, databases) and decides autonomously which tools to use and in what order. The agent is not executing a fixed script — it is reasoning through the problem in real time.</p>
+<p>A minimal agent has three components:</p>
+<ul>
+<li>An <strong>LLM</strong> — the reasoning engine</li>
+<li>A set of <strong>tools</strong> — functions the LLM can call</li>
+<li>An <strong>agent loop</strong> — the runtime that orchestrates reasoning and execution</li>
+</ul>
+<hr>
+<h2>Why AI Agent Fundamentals Matter for Developers</h2>
+<p>Understanding agent architecture at the component level lets you build agents that are reliable, debuggable, and scoped correctly. Developers who treat agents as black boxes struggle to diagnose failures, tune behavior, and control costs.</p>
+<p>Knowing the fundamentals helps you:</p>
+<ul>
+<li>Decide when to use an agent versus a simpler chain</li>
+<li>Design tools that the agent uses correctly</li>
+<li>Set appropriate stopping conditions and error handling</li>
+<li>Understand why an agent chose a particular path</li>
+<li>Build memory systems that scale appropriately</li>
+</ul>
+<p>For most real-world tasks — research, analysis, data lookup, automation — well-designed agents with focused tools outperform elaborate prompts against a single model call.</p>
 <hr>
 <h2>The ReAct Pattern</h2>
-<p>ReAct (Reasoning + Acting) interleaves reasoning traces with tool calls:</p>
+<p><strong>ReAct</strong> (Reasoning + Acting) is the most common agent architecture. It interleaves explicit reasoning traces with tool calls:</p>
 <pre><code>Thought: I need to find the current price of Bitcoin.
 Action: search(&quot;Bitcoin price today&quot;)
-Observation: Bitcoin is trading at $67,432 as of March 10, 2026.
-Thought: I have the price. Now I can answer.
-Action: finish(&quot;The current Bitcoin price is $67,432.&quot;)
+Observation: Bitcoin is trading at $67,432 as of March 2026.
+Thought: I have the price. I can now answer.
+Final Answer: The current Bitcoin price is $67,432.
 </code></pre>
-<p>This pattern dramatically improves reliability on multi-step tasks compared to single-shot prompting.</p>
+<p>The model generates the Thought step to reason about what it needs. The Action step calls a tool. The runtime executes the tool and injects the result as an Observation. The model then reasons again. This loop continues until it produces a Final Answer.</p>
+<p>This pattern dramatically improves reliability on multi-step tasks compared to asking for the answer in a single prompt.</p>
 <hr>
-<h2>Agent Loop from Scratch</h2>
+<h2>Practical Example</h2>
+<h3>Building an Agent Loop from Scratch</h3>
 <pre><code class="language-python">from openai import OpenAI
 import json
 
 client = OpenAI()
 
-# ── Tool definitions ──────────────────────────────────────────────────────────
-
+# Tool implementations
 def calculator(expression: str) -&gt; str:
     &quot;&quot;&quot;Safely evaluate a math expression.&quot;&quot;&quot;
     try:
@@ -228,29 +291,26 @@ def calculator(expression: str) -&gt; str:
         return f&quot;Error: {e}&quot;
 
 def get_weather(city: str) -&gt; str:
-    &quot;&quot;&quot;Mock weather tool.&quot;&quot;&quot;
-    weather_data = {
+    &quot;&quot;&quot;Return current weather for a city (mock).&quot;&quot;&quot;
+    data = {
         &quot;london&quot;: &quot;15°C, cloudy&quot;,
         &quot;tokyo&quot;: &quot;22°C, sunny&quot;,
         &quot;new york&quot;: &quot;8°C, rainy&quot;,
     }
-    return weather_data.get(city.lower(), f&quot;No data for {city}&quot;)
+    return data.get(city.lower(), f&quot;No data for {city}&quot;)
 
-TOOLS = {
-    &quot;calculator&quot;: calculator,
-    &quot;get_weather&quot;: get_weather,
-}
+TOOLS = {&quot;calculator&quot;: calculator, &quot;get_weather&quot;: get_weather}
 
 TOOL_SCHEMAS = [
     {
         &quot;type&quot;: &quot;function&quot;,
         &quot;function&quot;: {
             &quot;name&quot;: &quot;calculator&quot;,
-            &quot;description&quot;: &quot;Evaluate a mathematical expression&quot;,
+            &quot;description&quot;: &quot;Evaluate a mathematical expression. Use for any arithmetic or numeric calculation.&quot;,
             &quot;parameters&quot;: {
                 &quot;type&quot;: &quot;object&quot;,
                 &quot;properties&quot;: {
-                    &quot;expression&quot;: {&quot;type&quot;: &quot;string&quot;, &quot;description&quot;: &quot;Math expression to evaluate&quot;}
+                    &quot;expression&quot;: {&quot;type&quot;: &quot;string&quot;, &quot;description&quot;: &quot;Valid Python math expression&quot;}
                 },
                 &quot;required&quot;: [&quot;expression&quot;],
             },
@@ -260,7 +320,7 @@ TOOL_SCHEMAS = [
         &quot;type&quot;: &quot;function&quot;,
         &quot;function&quot;: {
             &quot;name&quot;: &quot;get_weather&quot;,
-            &quot;description&quot;: &quot;Get current weather for a city&quot;,
+            &quot;description&quot;: &quot;Get current weather for a city. Use when the user asks about weather conditions.&quot;,
             &quot;parameters&quot;: {
                 &quot;type&quot;: &quot;object&quot;,
                 &quot;properties&quot;: {
@@ -272,12 +332,10 @@ TOOL_SCHEMAS = [
     },
 ]
 
-# ── Agent loop ────────────────────────────────────────────────────────────────
-
 def run_agent(user_message: str, max_iterations: int = 10) -&gt; str:
     messages = [
-        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant with access to tools. Use them when needed.&quot;},
-        {&quot;role&quot;: &quot;user&quot;,   &quot;content&quot;: user_message},
+        {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;You are a helpful assistant with access to tools. Use them when needed to answer accurately.&quot;},
+        {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_message},
     ]
 
     for iteration in range(max_iterations):
@@ -291,20 +349,15 @@ def run_agent(user_message: str, max_iterations: int = 10) -&gt; str:
         msg = response.choices[0].message
         messages.append(msg)
 
-        # No tool call — final answer
+        # No tool call — this is the final answer
         if not msg.tool_calls:
             return msg.content
 
-        # Execute all tool calls
+        # Execute all requested tool calls
         for tool_call in msg.tool_calls:
             name = tool_call.function.name
             args = json.loads(tool_call.function.arguments)
-
-            if name in TOOLS:
-                result = TOOLS[name](**args)
-            else:
-                result = f&quot;Unknown tool: {name}&quot;
-
+            result = TOOLS.get(name, lambda **k: &quot;Unknown tool&quot;)(**args)
             print(f&quot;  [Tool] {name}({args}) → {result}&quot;)
 
             messages.append({
@@ -313,19 +366,17 @@ def run_agent(user_message: str, max_iterations: int = 10) -&gt; str:
                 &quot;content&quot;: result,
             })
 
-    return &quot;Max iterations reached.&quot;
+    return &quot;Max iterations reached without a final answer.&quot;
 
-
-# Test
+# Tests
 print(run_agent(&quot;What&#39;s 15% of 847?&quot;))
-print(run_agent(&quot;Is it a good day to visit Tokyo? What&#39;s the weather like?&quot;))
-print(run_agent(&quot;If I spend 2 hours commuting and 8 hours working, how many hours are left in my day?&quot;))
+print(run_agent(&quot;Is it warm in Tokyo today?&quot;))
+print(run_agent(&quot;If I spend 2 hours commuting and 8 hours working, how many hours are left?&quot;))
 </code></pre>
-<hr>
-<h2>Agent Memory</h2>
-<p>Without memory, agents can&#39;t reference earlier conversations. Add memory by maintaining a message history.</p>
-<h3>Short-Term Memory (In-Context)</h3>
+<h3>Adding Short-Term Memory</h3>
 <pre><code class="language-python">class AgentWithMemory:
+    &quot;&quot;&quot;Agent that remembers conversation history within a session.&quot;&quot;&quot;
+
     def __init__(self, system_prompt: str):
         self.messages = [{&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: system_prompt}]
 
@@ -339,7 +390,6 @@ print(run_agent(&quot;If I spend 2 hours commuting and 8 hours working, how many
                 tools=TOOL_SCHEMAS,
                 tool_choice=&quot;auto&quot;,
             )
-
             msg = response.choices[0].message
             self.messages.append(msg)
 
@@ -357,159 +407,87 @@ print(run_agent(&quot;If I spend 2 hours commuting and 8 hours working, how many
                 })
 
     def clear_memory(self):
-        self.messages = [self.messages[0]]  # keep system prompt
-
+        self.messages = [self.messages[0]]  # keep system prompt only
 
 agent = AgentWithMemory(&quot;You are a helpful research assistant.&quot;)
 print(agent.run(&quot;What&#39;s 15% of 850?&quot;))
-print(agent.run(&quot;What was the number I just asked about?&quot;))  # remembers 850
-</code></pre>
-<h3>Long-Term Memory (External Store)</h3>
-<p>For persistent memory across sessions, store important facts in a vector database:</p>
-<pre><code class="language-python">from langchain_chroma import Chroma
-from langchain_openai import OpenAIEmbeddings
-
-class MemoryStore:
-    def __init__(self):
-        self.db = Chroma(embedding_function=OpenAIEmbeddings())
-
-    def remember(self, fact: str):
-        self.db.add_texts([fact])
-
-    def recall(self, query: str, top_k: int = 3) -&gt; list[str]:
-        results = self.db.similarity_search(query, k=top_k)
-        return [r.page_content for r in results]
-
-memory = MemoryStore()
-memory.remember(&quot;User prefers Python over JavaScript.&quot;)
-memory.remember(&quot;User is building a RAG system for legal documents.&quot;)
-
-recalled = memory.recall(&quot;What is the user&#39;s project?&quot;)
-print(recalled)  # [&quot;User is building a RAG system for legal documents.&quot;]
+print(agent.run(&quot;What number did I just ask about?&quot;))  # should recall 850
 </code></pre>
 <hr>
-<h2>Planning: Breaking Down Complex Tasks</h2>
-<p>For complex, multi-step tasks, have the agent create a plan before executing:</p>
-<pre><code class="language-python">def plan_and_execute(task: str) -&gt; str:
-    # Step 1: Generate a plan
-    plan_response = client.chat.completions.create(
-        model=&quot;gpt-4o&quot;,
-        messages=[
-            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;&quot;&quot;Break down the task into a numbered list of concrete steps.
-Each step should be independently executable. Be specific.&quot;&quot;&quot;},
-            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&quot;Task: {task}&quot;},
-        ],
-    )
-    plan = plan_response.choices[0].message.content
-    print(f&quot;Plan:\n{plan}\n&quot;)
-
-    # Step 2: Execute each step
-    results = []
-    agent = AgentWithMemory(&quot;You are executing a step in a larger task. Be concise and precise.&quot;)
-
-    for line in plan.split(&#39;\n&#39;):
-        line = line.strip()
-        if not line or not line[0].isdigit():
-            continue
-        step = line.split(&#39;.&#39;, 1)[-1].strip()
-        print(f&quot;Executing: {step}&quot;)
-        result = agent.run(step)
-        results.append(f&quot;{step}: {result}&quot;)
-
-    # Step 3: Synthesize results
-    synthesis = client.chat.completions.create(
-        model=&quot;gpt-4o-mini&quot;,
-        messages=[
-            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;Synthesize the step results into a coherent final answer.&quot;},
-            {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&quot;Original task: {task}\n\nResults:\n&quot; + &quot;\n&quot;.join(results)},
-        ],
-    )
-    return synthesis.choices[0].message.content
-</code></pre>
+<h2>Real-World Applications</h2>
+<p>AI agents are the foundation of several categories of production AI systems:</p>
+<p><strong>Research assistants</strong> — Search the web, read pages, and synthesize findings into structured reports. The agent decides which sources are authoritative and when it has gathered enough information.</p>
+<p><strong>Code assistants</strong> — Read files, write code, run tests, observe the test output, and iterate. The loop continues until tests pass or the agent declares that it cannot solve the problem.</p>
+<p><strong>Customer support automation</strong> — Look up customer records in a CRM, check order status via an API, and compose a response grounded in real data. Reduces the hallucination risk of pure generation.</p>
+<p><strong>Data analysis agents</strong> — Query databases, compute statistics, generate charts, and summarize findings. The agent routes numerical questions to a code execution tool rather than reasoning about them.</p>
+<p><strong>Document processing</strong> — Extract structured fields, validate against schemas, flag exceptions for human review. Each step uses the right tool rather than relying on a single model call.</p>
 <hr>
-<h2>Common Agent Patterns</h2>
-<h3>Router Agent</h3>
-<p>Routes queries to specialized sub-agents:</p>
-<pre><code class="language-python">AGENTS = {
-    &quot;math&quot;:    AgentWithMemory(&quot;You are a math expert.&quot;),
-    &quot;weather&quot;: AgentWithMemory(&quot;You are a weather assistant.&quot;),
-    &quot;general&quot;: AgentWithMemory(&quot;You are a general assistant.&quot;),
-}
-
-def route(query: str) -&gt; str:
-    router_response = client.chat.completions.create(
-        model=&quot;gpt-4o-mini&quot;,
-        messages=[
-            {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: f&quot;Route the query to one of: {list(AGENTS.keys())}. Reply with just the agent name.&quot;},
-            {&quot;role&quot;: &quot;user&quot;,   &quot;content&quot;: query},
-        ],
-    )
-    agent_name = router_response.choices[0].message.content.strip().lower()
-    agent = AGENTS.get(agent_name, AGENTS[&quot;general&quot;])
-    return agent.run(query)
-</code></pre>
-<h3>Reflection Pattern</h3>
-<p>Agent evaluates its own output and improves it:</p>
-<pre><code class="language-python">def agent_with_reflection(task: str) -&gt; str:
-    agent = AgentWithMemory(&quot;You are a careful assistant. Think step by step.&quot;)
-
-    # First attempt
-    response = agent.run(task)
-
-    # Self-critique
-    critique = agent.run(f&quot;&quot;&quot;
-Review your previous response and identify:
-1. Any errors or inaccuracies
-2. Missing important information
-3. Ways to make it clearer
-
-Previous response: {response}
-&quot;&quot;&quot;)
-
-    # Refined answer
-    refined = agent.run(&quot;Based on your critique, provide an improved final answer.&quot;)
-    return refined
-</code></pre>
+<h2>Common Mistakes Developers Make</h2>
+<ol>
+<li><p><strong>No stopping condition</strong> — Without a maximum iteration limit, a stuck agent runs forever and accumulates cost. Always set <code>max_iterations</code> and return a graceful message when exceeded. Also consider wall-clock timeouts.</p>
+</li>
+<li><p><strong>Trusting all tool outputs blindly</strong> — Tools return strings. Malicious or malformed data in tool outputs can influence agent behavior. Validate tool outputs before injecting them back into the agent&#39;s context.</p>
+</li>
+<li><p><strong>Overly broad tool descriptions</strong> — The agent selects tools based on their description. Vague descriptions like &quot;does stuff with data&quot; cause the agent to select the wrong tool. Be precise about what each tool does and when to use it.</p>
+</li>
+<li><p><strong>No error handling in tools</strong> — Tools that raise unhandled exceptions crash the agent loop. Wrap every tool in try/except and return informative error strings instead of propagating exceptions.</p>
+</li>
+<li><p><strong>Using agents for simple tasks</strong> — If the steps are fixed and known in advance, use a chain. Agents add latency from multiple LLM calls and introduce unpredictability. Match the pattern to the task complexity.</p>
+</li>
+</ol>
 <hr>
-<h2>Troubleshooting</h2>
-<p><strong>Agent loops forever</strong></p>
+<h2>Best Practices</h2>
 <ul>
-<li>Set <code>max_iterations</code> and return a graceful message when exceeded</li>
-<li>Add a &quot;finish&quot; tool that the agent must call when done</li>
-</ul>
-<p><strong>Agent calls the wrong tool</strong></p>
-<ul>
-<li>Improve tool descriptions — be explicit about when to use each tool</li>
-<li>Add examples in the tool description</li>
-<li>Reduce the number of tools (fewer choices = clearer decisions)</li>
-</ul>
-<p><strong>Agent ignores available tools</strong></p>
-<ul>
-<li>Set <code>tool_choice=&quot;required&quot;</code> to force tool use when appropriate</li>
-<li>Move tool descriptions earlier in the system prompt</li>
+<li><strong>Start with two or three tools</strong> — Validate the core loop with minimal tools before adding complexity. More tools create more decision points and more places to fail.</li>
+<li><strong>Log every tool call and result</strong> — In production, log every tool invocation including inputs, outputs, and timing. Agent behavior is nearly impossible to debug without a complete trace.</li>
+<li><strong>Test adversarial inputs</strong> — Users will try to manipulate agents. Test for prompt injection, unexpected input types, and edge cases that cause tools to return errors.</li>
+<li><strong>Give agents clear stopping criteria</strong> — Describe in the system prompt when the agent should consider the task complete and return a final answer.</li>
+<li><strong>Use human-in-the-loop for high-stakes actions</strong> — For irreversible actions (sending emails, executing code that modifies data), require human confirmation before proceeding.</li>
 </ul>
 <hr>
 <h2>FAQ</h2>
 <p><strong>What is the difference between an AI agent and a chatbot?</strong>
-A chatbot responds once. An agent acts in a loop, uses tools, and can autonomously complete multi-step tasks.</p>
+A chatbot responds once per user message. An agent acts in a loop across multiple steps, using tools to gather information and take actions autonomously.</p>
 <p><strong>When should I use agents vs standard RAG?</strong>
-Use RAG when you need to answer questions about documents. Use agents when you need to take actions, use multiple tools, or complete tasks that require multi-step planning.</p>
+Use RAG when you need to answer questions about documents. Use agents when you need to take actions, use multiple tools in flexible combinations, or complete tasks requiring multi-step planning.</p>
 <p><strong>Are agents reliable enough for production?</strong>
-It depends on task complexity. Well-defined, narrow tasks (e.g., &quot;look up a customer record and draft an email&quot;) can be production-ready. Open-ended, complex tasks have higher failure rates and need human oversight.</p>
+It depends on task complexity and how narrowly scoped the tools are. Well-defined tasks (look up a record, draft an email) can be production-ready. Open-ended tasks have higher failure rates and need human oversight or fallback mechanisms.</p>
+<p><strong>How do I prevent an agent from looping forever?</strong>
+Set a <code>max_iterations</code> limit. Add a &quot;finish&quot; tool the agent must call when done. Use LangGraph&#39;s recursion limit for graph-based agents. Always set a wall-clock timeout as a final backstop.</p>
+<p><strong>What models work best for agents?</strong>
+GPT-4o and GPT-4o-mini for OpenAI. Claude 3.5 Sonnet for Anthropic. For local models, Llama 3.1 70B performs well on tool selection. Smaller models under 7B often struggle with correct tool use.</p>
+<hr>
+<h2>Further Reading</h2>
+<ul>
+<li><a href="https://platform.openai.com/docs/guides/function-calling">OpenAI Function Calling Guide</a></li>
+<li><a href="https://arxiv.org/abs/2210.03629">ReAct: Synergizing Reasoning and Acting in Language Models</a></li>
+<li><a href="https://langchain-ai.github.io/langgraph/">LangGraph Documentation</a></li>
+<li><a href="https://docs.anthropic.com/en/docs/build-with-claude/tool-use">Anthropic Tool Use Documentation</a></li>
+<li><a href="https://huggingface.co/learn/agents-course/en/unit0/introduction">HuggingFace Agents Course</a></li>
+</ul>
 <hr>
 <h2>What to Learn Next</h2>
 <ul>
-<li><strong>LangChain agents</strong> → langchain-agents-tutorial</li>
-<li><strong>Multi-agent systems</strong> → multi-agent-systems</li>
-<li><strong>Tool use and function calling</strong> → tool-use-and-function-calling</li>
-<li><strong>AI agent projects</strong> → <a href="/ai-projects/">AI Projects for Developers</a></li>
+<li><a href="/blog/ai-agents-guide/">AI Agents Guide</a> — architecture patterns and design decisions for agent systems</li>
+<li><a href="/blog/build-ai-agents/">Build AI Agents Step-by-Step</a> — hands-on implementation with LangChain and LangGraph</li>
+<li><a href="/blog/tool-use-and-function-calling/">Tool Use and Function Calling</a> — deep dive on defining and handling tool calls</li>
 </ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -553,6 +531,34 @@ It depends on task complexity. Well-defined, narrow tasks (e.g., &quot;look up a
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

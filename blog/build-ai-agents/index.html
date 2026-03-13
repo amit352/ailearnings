@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How to Build AI Agents Step-by-Step | AI Learning Hub</title>
   <meta name="description" content="Learn how developers build AI agents using LLM frameworks." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -54,8 +97,8 @@
   "datePublished": "2026-03-13",
   "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,79 +217,73 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">How to Build AI Agents Step-by-Step</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-13">March 13, 2026</time>
-          <span>·</span>
-          <span>5 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">How to Build AI Agents Step-by-Step</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-13">March 13, 2026</time></span>
+              
+              <span class="sep">·</span>
+              <span>6 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
         <h1>How to Build AI Agents Step-by-Step</h1>
-<p>Building an AI agent means giving a language model the ability to take actions — run tools, access data, and complete multi-step tasks autonomously. This guide walks through building a production-ready agent from scratch, covering tool design, the agent loop, memory, and error handling.</p>
+<p>A chatbot answers a question and stops. An agent answers a question, runs a calculation, searches for current information, and then synthesizes everything into a final answer — all without you specifying each step. The difference is not just a matter of architecture; it changes what problems you can solve. This guide shows you exactly how to build a production-ready agent from tool definitions through state management.</p>
 <hr>
 <h2>What is Building an AI Agent</h2>
-<p>Building an AI agent means combining an LLM with a set of tools and a runtime loop that allows the model to reason, act, and observe in cycles until a task is complete. The result is a system that can handle open-ended tasks that cannot be solved in a single prompt response.</p>
-<p>For background on how agents work conceptually, see <a href="/blog/ai-agents-guide/">AI agents guide</a>.</p>
+<p><strong>Building an AI agent</strong> means combining an LLM with a set of tools and a runtime loop that allows the model to reason, act, and observe in cycles until a task is complete. Unlike a simple API call, an agent chooses which tools to use, in what order, based on what it observes after each action.</p>
+<p>The result is a system that can handle open-ended tasks that cannot be solved in a single prompt response — research tasks, multi-step workflows, and tasks requiring access to live data or external systems. For background on how agents work conceptually, see <a href="/blog/ai-agents-guide/">AI agents guide</a>.</p>
 <hr>
 <h2>Why Building AI Agents Matters for Developers</h2>
-<p>Agents are how AI moves from answering questions to getting work done. A well-built agent can:</p>
-<ul>
-<li>Autonomously research topics using search tools</li>
-<li>Write and test code by running a Python interpreter</li>
-<li>Query databases and synthesize results</li>
-<li>Coordinate workflows across multiple systems</li>
-</ul>
-<p>The barrier to building agents has dropped significantly. With LangChain, LangGraph, or the OpenAI Assistants API, a working agent can be built in under 50 lines of code.</p>
+<p>Agents are how AI moves from answering questions to getting work done. A well-built agent can autonomously research topics using search tools, write and test code by running a Python interpreter, query databases and synthesize results, and coordinate workflows across multiple systems.</p>
+<p>The barrier to building agents has dropped significantly. With LangChain, LangGraph, or the OpenAI Assistants API, a working agent can be built in under 50 lines of code. The challenge is making agents reliable and observable in production — which is what this guide focuses on.</p>
 <hr>
 <h2>How to Build an AI Agent</h2>
-<p>The core steps:</p>
-<ol>
-<li>Choose an LLM</li>
-<li>Define tools</li>
-<li>Create the agent and executor</li>
-<li>Add memory (optional)</li>
-<li>Handle errors and add guardrails</li>
-</ol>
+<p>The core steps are: choose an LLM, define tools, create the agent and executor, add memory, and add error handling with guardrails. Each step has specific design decisions that determine whether the agent works reliably or fails unpredictably.</p>
+<p><strong>Tool design is the most critical step.</strong> The LLM decides which tool to use solely based on the tool&#39;s name and description. A vague description produces unpredictable tool selection. A precise description produces reliable behavior.</p>
 <hr>
-<h2>Practical Examples</h2>
+<h2>Practical Example</h2>
 <h3>Step 1: Install Dependencies</h3>
 <pre><code class="language-bash">pip install langchain langchain-openai langchain-community langgraph
 </code></pre>
 <h3>Step 2: Define Tools</h3>
-<p>Tools are the actions your agent can take. Each tool needs a clear name, description, and well-defined input/output.</p>
+<p>Tools are the actions your agent can take. Each tool needs a clear name, description, and well-defined input/output contract.</p>
 <pre><code class="language-python">from langchain.tools import tool
-import requests
+import io, sys, contextlib
 
 @tool
 def search_web(query: str) -&gt; str:
     &quot;&quot;&quot;Search the web for current information about a topic.
-    Use this when you need up-to-date facts or recent events.&quot;&quot;&quot;
-    # In production, use Tavily or SerpAPI
+    Use this when you need up-to-date facts, recent events, or information
+    that may have changed since your training data cutoff.&quot;&quot;&quot;
     from langchain_community.tools import DuckDuckGoSearchRun
     return DuckDuckGoSearchRun().run(query)
 
 @tool
 def run_python(code: str) -&gt; str:
     &quot;&quot;&quot;Execute Python code and return the output.
-    Use this for calculations, data analysis, or code testing.
+    Use this for calculations, data analysis, or verifying logic.
     Only use safe, non-destructive operations.&quot;&quot;&quot;
-    import io, sys, contextlib
     output = io.StringIO()
     try:
         with contextlib.redirect_stdout(output):
-            exec(code, {&quot;__builtins__&quot;: {&quot;print&quot;: print, &quot;range&quot;: range, &quot;len&quot;: len}})
-        return output.getvalue() or &quot;Code executed successfully with no output.&quot;
+            exec(code, {&quot;__builtins__&quot;: {&quot;print&quot;: print, &quot;range&quot;: range, &quot;len&quot;: len, &quot;sum&quot;: sum}})
+        return output.getvalue() or &quot;Code executed with no output.&quot;
     except Exception as e:
         return f&quot;Error: {type(e).__name__}: {e}&quot;
 
 @tool
 def read_file(filepath: str) -&gt; str:
     &quot;&quot;&quot;Read the contents of a text file.
-    Input should be a valid file path.&quot;&quot;&quot;
+    Input should be a valid relative or absolute file path.&quot;&quot;&quot;
     try:
         with open(filepath, &quot;r&quot;) as f:
             return f.read()
@@ -257,49 +294,31 @@ def read_file(filepath: str) -&gt; str:
 
 tools = [search_web, run_python, read_file]
 </code></pre>
-<h3>Step 3: Create the Agent</h3>
+<h3>Step 3: Create the Agent with LangChain</h3>
 <pre><code class="language-python">from langchain_openai import ChatOpenAI
 from langchain.agents import create_react_agent, AgentExecutor
 from langchain import hub
 
 llm = ChatOpenAI(model=&quot;gpt-4o-mini&quot;, temperature=0)
+
+# Pull the standard ReAct prompt from LangChain Hub
 prompt = hub.pull(&quot;hwchase17/react&quot;)
 
 agent = create_react_agent(llm, tools, prompt)
 executor = AgentExecutor(
     agent=agent,
     tools=tools,
-    verbose=True,
-    max_iterations=10,
+    verbose=True,           # log each reasoning step
+    max_iterations=10,      # prevent infinite loops
     handle_parsing_errors=True,
-    return_intermediate_steps=True
+    return_intermediate_steps=True,
 )
+
+result = executor.invoke({&quot;input&quot;: &quot;What is 1234 * 5678? Verify with Python.&quot;})
+print(result[&quot;output&quot;])
 </code></pre>
-<h3>Step 4: Add Memory</h3>
-<pre><code class="language-python">from langchain.memory import ConversationBufferWindowMemory
-from langchain.agents import create_react_agent, AgentExecutor
-from langchain import hub
-
-memory = ConversationBufferWindowMemory(
-    memory_key=&quot;chat_history&quot;,
-    k=5,  # Remember last 5 exchanges
-    return_messages=True
-)
-
-# Use a prompt that includes chat_history
-prompt_with_memory = hub.pull(&quot;hwchase17/react-chat&quot;)
-
-agent = create_react_agent(llm, tools, prompt_with_memory)
-executor = AgentExecutor(
-    agent=agent,
-    tools=tools,
-    memory=memory,
-    verbose=True,
-    max_iterations=10,
-)
-</code></pre>
-<h3>Step 5: Build with LangGraph (Production)</h3>
-<p>LangGraph gives you explicit control over agent state and transitions — critical for production.</p>
+<h3>Step 4: Build with LangGraph for Production</h3>
+<p>LangGraph gives you explicit control over agent state and transitions — critical for production workflows that need checkpoints, human-in-the-loop pauses, or complex branching.</p>
 <pre><code class="language-python">from langgraph.graph import StateGraph, END
 from langgraph.prebuilt import ToolNode
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -307,8 +326,8 @@ from typing import TypedDict, Annotated
 import operator
 
 SYSTEM_PROMPT = &quot;&quot;&quot;You are a helpful research assistant.
-Use your tools to answer questions thoroughly.
-When you have a complete answer, provide it as your final response.&quot;&quot;&quot;
+Use your tools to answer questions thoroughly and accurately.
+When you have a complete answer, provide it directly.&quot;&quot;&quot;
 
 class AgentState(TypedDict):
     messages: Annotated[list, operator.add]
@@ -338,65 +357,80 @@ graph.add_edge(&quot;tools&quot;, &quot;agent&quot;)
 app = graph.compile()
 
 result = app.invoke({
-    &quot;messages&quot;: [HumanMessage(content=&quot;Research the top 3 open-source LLMs released in 2025&quot;)]
+    &quot;messages&quot;: [HumanMessage(content=&quot;Research the top 3 open-source LLMs and compare their context windows&quot;)]
 })
 print(result[&quot;messages&quot;][-1].content)
 </code></pre>
-<h3>Step 6: Running and Testing</h3>
-<pre><code class="language-python">def run_agent(task: str, verbose: bool = False) -&gt; str:
-    try:
-        result = executor.invoke(
-            {&quot;input&quot;: task},
-            config={&quot;max_concurrency&quot;: 1}
-        )
-        return result[&quot;output&quot;]
-    except Exception as e:
-        return f&quot;Agent failed: {e}&quot;
-
-# Test cases
-test_tasks = [
-    &quot;What is 847 * 293?&quot;,
-    &quot;Search for the latest developments in AI agents&quot;,
-    &quot;Write Python code to calculate the first 10 Fibonacci numbers&quot;,
-]
-
-for task in test_tasks:
-    print(f&quot;Task: {task}&quot;)
-    print(f&quot;Result: {run_agent(task)}\n&quot;)
-</code></pre>
 <hr>
-<h2>Tools and Frameworks</h2>
-<p><strong>LangChain</strong> — The most accessible starting point for agent development. Rich ecosystem of built-in tools and integrations. See <a href="/blog/langchain-agents/">LangChain agents</a> for the full guide.</p>
-<p><strong>LangGraph</strong> — Best for production agents. Gives you control over state, transitions, and human-in-the-loop checkpoints.</p>
-<p><strong>OpenAI Assistants API</strong> — Managed agent runtime. Built-in file search, code interpreter, and thread management. Good if you want to minimize infrastructure.</p>
-<p><strong>AutoGen</strong> — Microsoft&#39;s multi-agent framework. Best for workflows requiring multiple specialized agents collaborating.</p>
+<h2>Real-World Applications</h2>
+<p><strong>Research automation</strong> — Agents that search the web, read pages, and produce structured reports eliminate hours of manual research. The same agent pattern powers tools like Perplexity and deep research assistants.</p>
+<p><strong>Code generation and testing</strong> — Agents with a Python interpreter tool can write code, run it, observe the output, and fix bugs iteratively. GitHub Copilot Workspace uses this pattern for multi-file edits.</p>
+<p><strong>Data analysis pipelines</strong> — An agent given database query tools and a Python execution tool can answer analytical questions by writing SQL, running it, and interpreting the results.</p>
+<p><strong>Customer support automation</strong> — Agents with access to CRM data, knowledge bases, and ticketing tools can resolve common support requests without human involvement, escalating only when confidence is low.</p>
 <hr>
-<h2>Common Mistakes</h2>
-<p><strong>No timeout or iteration limit</strong> — Agents can loop indefinitely on ambiguous tasks. Always set <code>max_iterations</code> and handle <code>StopIteration</code> errors.</p>
-<p><strong>Tools that throw exceptions</strong> — An unhandled exception inside a tool crashes the agent loop. Wrap every tool in try/except.</p>
-<p><strong>Not validating tool outputs</strong> — Tool outputs are injected directly into the agent&#39;s context. Large or malformed outputs can exceed the context window or confuse the model.</p>
-<p><strong>Testing only happy paths</strong> — Test what happens when search returns no results, when files don&#39;t exist, and when the model misuses a tool.</p>
-<p><strong>No observability</strong> — Without logging each tool call and result, debugging agent failures is nearly impossible.</p>
+<h2>Common Mistakes Developers Make</h2>
+<ol>
+<li><p><strong>No iteration or timeout limit</strong> — Agents can loop indefinitely on ambiguous tasks. Always set <code>max_iterations</code> in the executor and add wall-clock timeouts in production.</p>
+</li>
+<li><p><strong>Tools that throw unhandled exceptions</strong> — An unhandled exception inside a tool crashes the agent loop mid-task. Wrap every tool body in a try/except and return descriptive error messages.</p>
+</li>
+<li><p><strong>Vague tool descriptions</strong> — The LLM chooses tools based entirely on descriptions. &quot;Run code&quot; is worse than &quot;Execute Python code and return stdout. Use for calculations and data verification.&quot; Specificity drives correct tool selection.</p>
+</li>
+<li><p><strong>No observability on intermediate steps</strong> — Without logging each tool call and observation, debugging production agent failures is guesswork. Set <code>return_intermediate_steps=True</code> and log every action.</p>
+</li>
+<li><p><strong>Testing only happy paths</strong> — Test what happens when search returns no results, files do not exist, or the model misuses a tool. Agents need adversarial testing beyond the expected workflow.</p>
+</li>
+</ol>
 <hr>
 <h2>Best Practices</h2>
 <ul>
-<li><strong>Start with two or three tools</strong> — Validate the agent loop before adding more complexity.</li>
-<li><strong>Write tool descriptions as if writing documentation for the model</strong> — The LLM chooses tools based on their descriptions. Be precise about what each tool does and when to use it.</li>
-<li><strong>Log intermediate steps in production</strong> — Set <code>return_intermediate_steps=True</code> and log every action and observation.</li>
-<li><strong>Add input validation to tools</strong> — Reject malformed inputs early with a descriptive error message.</li>
-<li><strong>Use LangGraph for anything stateful</strong> — Memory, checkpoints, and human-in-the-loop flows all require explicit state management that LangGraph handles cleanly.</li>
+<li><strong>Start with two or three tools</strong> — Validate the agent loop before adding complexity. A 10-tool agent that misbehaves is much harder to debug than a 2-tool agent.</li>
+<li><strong>Write tool descriptions as if writing docs for a junior developer</strong> — The LLM uses descriptions exactly as written. Be explicit about when to use the tool, what inputs it expects, and what it returns.</li>
+<li><strong>Use LangGraph for stateful or multi-step production agents</strong> — Memory, checkpoints, and human-in-the-loop flows require explicit state management. LangGraph handles these patterns cleanly where <code>AgentExecutor</code> does not.</li>
+<li><strong>Add input validation inside tools</strong> — Reject malformed inputs immediately with a descriptive error. Better to fail fast with context than silently produce wrong output.</li>
+<li><strong>Monitor token consumption</strong> — Agents can accumulate large context windows through tool observations. Set context size limits and summarize intermediate results when they exceed a threshold.</li>
 </ul>
 <hr>
-<h2>Summary</h2>
-<p>Building an AI agent involves four steps: define the tools, create the agent with an LLM and prompt, wrap it in an executor with iteration limits, and optionally add memory.</p>
-<p>Start simple with two or three tools and the ReAct pattern. Validate that the basic loop works before adding complexity. Migrate to LangGraph when you need production-grade state management and observability.</p>
-<p>For the conceptual foundation, see <a href="/blog/ai-agents-guide/">AI agents guide</a>. For LangChain-specific agent patterns, see <a href="/blog/langchain-agents/">LangChain agents</a>. For building AI applications more broadly, see <a href="/blog/build-ai-app/">how to build your first AI app</a>.</p>
+<h2>FAQ</h2>
+<p><strong>Which LLM works best for agents?</strong>
+GPT-4o or Claude Sonnet for production — they follow tool-calling instructions reliably. GPT-4o-mini and Claude Haiku are good for development and cost-sensitive use cases. Smaller open-source models (7B–13B) often struggle with consistent tool selection.</p>
+<p><strong>When should I use LangGraph instead of AgentExecutor?</strong>
+Use LangGraph when you need: explicit state that persists across steps, human-in-the-loop pauses, conditional branching based on tool results, or sub-agents within a larger workflow. Use AgentExecutor for simple single-agent prototypes.</p>
+<p><strong>How do I prevent agents from going off-task?</strong>
+Add explicit constraints to the system prompt (&quot;Only answer questions related to X. If asked about Y, decline and explain.&quot;). Add a tool that signals task completion with a structured output. Set <code>max_iterations</code> conservatively.</p>
+<p><strong>How do I handle tool failures gracefully?</strong>
+Return an error string (not raise an exception) from the tool function. The agent will observe the error, adapt its approach, and try an alternative. Raising an exception bypasses the reasoning loop.</p>
+<hr>
+<h2>Further Reading</h2>
+<ul>
+<li><a href="https://python.langchain.com/docs/concepts/agents/">LangChain Agents Documentation</a></li>
+<li><a href="https://langchain-ai.github.io/langgraph/">LangGraph Documentation</a></li>
+<li><a href="https://platform.openai.com/docs/guides/function-calling">OpenAI Function Calling Guide</a></li>
+<li><a href="https://arxiv.org/abs/2210.03629">ReAct: Synergizing Reasoning and Acting in Language Models</a></li>
+</ul>
+<hr>
+<h2>What to Learn Next</h2>
+<ul>
+<li><a href="/blog/ai-agents-guide/">AI Agents Guide</a> — the conceptual foundation for agent architectures</li>
+<li><a href="/blog/langchain-agents/">LangChain Agents</a> — LangChain-specific agent patterns and tooling</li>
+<li><a href="/blog/multi-agent-systems/">Multi-Agent Systems</a> — coordinating multiple specialized agents in a pipeline</li>
+</ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -440,6 +474,34 @@ for task in test_tasks:
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){

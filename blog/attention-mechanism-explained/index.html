@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <script>if(location.protocol!=='https:')location.replace('https:'+location.href.substring(location.protocol.length));</script>
+  <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Attention Mechanism Explained in Simple Terms | AI Learning Hub</title>
   <meta name="description" content="Understand how attention mechanisms allow AI models to focus on relevant context." />
@@ -42,6 +42,49 @@
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9rem; }
     .prose th { text-align: left; padding: 0.6rem 1rem; background: rgba(99,102,241,0.15); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .prose td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); color: #d1d5db; }
+    /* Code copy button */
+    .code-block-wrapper { position: relative; margin: 1.5rem 0; }
+    .code-block-wrapper .prose pre { margin: 0; }
+    .copy-btn {
+      position: absolute; top: 0.6rem; right: 0.6rem;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.6rem;
+      border-radius: 4px; cursor: pointer; transition: all 0.15s;
+      font-family: inherit; line-height: 1.4;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.14); color: #e5e7eb; }
+    .copy-btn.copied { color: #86efac; border-color: rgba(134,239,172,0.3); }
+    /* Author bio (bottom) */
+    .author-bio {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem; margin: 2.5rem 0 1rem;
+      background: rgba(17,24,39,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0.75rem;
+    }
+    .author-bio .author-avatar { width: 3rem; height: 3rem; font-size: 1.1rem; flex-shrink:0; }
+    .author-bio .bio-name { font-weight: 700; font-size: 0.95rem; color: #f3f4f6; margin-bottom: 0.25rem; }
+    .author-bio .bio-title { font-size: 0.8rem; color: #818cf8; margin-bottom: 0.5rem; }
+    .author-bio .bio-text { font-size: 0.82rem; color: #9ca3af; line-height: 1.6; }
+    /* Author card */
+    .author-card {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 1rem 1.25rem; margin: 2rem 0;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.15);
+      border-radius: 0.75rem;
+    }
+    .author-avatar {
+      width: 2.75rem; height: 2.75rem; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg,#6366f1,#8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1rem; color: #fff; letter-spacing: 0.02em;
+    }
+    .author-info { flex: 1; min-width: 0; }
+    .author-name { font-weight: 600; font-size: 0.9rem; color: #f3f4f6; }
+    .author-title { font-size: 0.78rem; color: #9ca3af; margin-top: 0.1rem; }
+    .post-meta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; font-size: 0.78rem; color: #6b7280; margin-top: 0.4rem; }
+    .post-meta-row .sep { color: #374151; }
   </style>
   <script type="application/ld+json">
 {
@@ -54,8 +97,8 @@
   "datePublished": "2026-03-13",
   "dateModified": "2026-03-13",
   "author": {
-    "@type": "Organization",
-    "name": "AI Learning Hub",
+    "@type": "Person",
+    "name": "Amit K Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -174,58 +217,64 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-3 leading-tight">Attention Mechanism Explained in Simple Terms</h1>
-        <div class="flex items-center gap-4 text-sm text-gray-400">
-          <time datetime="2026-03-13">March 13, 2026</time>
-          <span>·</span>
-          <span>5 min read</span>
-          <span>·</span>
-          <span>AI Learning Hub</span>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">Attention Mechanism Explained in Simple Terms</h1>
+
+        <div class="author-card">
+          <div class="author-avatar">AK</div>
+          <div class="author-info">
+            <div class="author-name">Amit K Chauhan</div>
+            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="post-meta-row">
+              <span>Published <time datetime="2026-03-13">March 13, 2026</time></span>
+              
+              <span class="sep">·</span>
+              <span>7 min read</span>
+            </div>
+          </div>
         </div>
       </header>
 
       <div class="prose">
         <h1>Attention Mechanism Explained in Simple Terms</h1>
-<p>Attention is the core innovation that made modern language models possible. Before attention, models processed sequences step-by-step and struggled to connect information across long distances in text. Attention allows a model to directly compare every word to every other word in one operation — and to do this in parallel. Understanding attention helps you reason about what language models can and cannot do.</p>
+<p>LLMs can resolve ambiguity like &quot;The animal didn&#39;t cross the street because it was too tired&quot; instantly — understanding that &quot;it&quot; refers to the animal, not the street. Before attention mechanisms, language models had to process text sequentially and struggled to maintain these long-range connections. Attention lets a model look at every other word simultaneously to resolve such connections. Understanding how this works makes you a better developer of AI systems.</p>
 <hr>
 <h2>What is the Attention Mechanism</h2>
-<p>The attention mechanism allows a model to weigh the importance of different parts of an input when producing each part of the output. Instead of treating all words equally, the model learns which words are most relevant to each other for understanding meaning.</p>
-<p>Consider the sentence: &quot;The animal didn&#39;t cross the street because it was too tired.&quot;</p>
-<p>What does &quot;it&quot; refer to? The animal, not the street. A human reader resolves this instantly. Attention lets the model do the same — when processing &quot;it,&quot; the model attends heavily to &quot;animal&quot; and less to &quot;street,&quot; correctly disambiguating the pronoun.</p>
-<p><strong>Self-attention</strong> is attention applied within a single sequence. Every token attends to every other token in the same input. This is the core operation in transformer models.</p>
+<p>The <strong>attention mechanism</strong> allows a model to weigh the importance of different parts of an input when producing each part of the output. Instead of treating all words equally, the model learns which words are most relevant to each other for understanding meaning.</p>
+<p>Consider: &quot;The animal didn&#39;t cross the street because it was too tired.&quot; What does &quot;it&quot; refer to? The animal. When processing &quot;it,&quot; the attention mechanism allows the model to look at &quot;animal&quot; with high weight and &quot;street&quot; with low weight — resolving the ambiguity correctly.</p>
+<p><strong>Self-attention</strong> is attention applied within a single sequence. Every token attends to every other token in the same input. This is the central operation in transformer models and what gives LLMs their ability to understand context across long passages.</p>
 <hr>
 <h2>Why Attention Matters for Developers</h2>
-<p>You do not implement attention from scratch in application development. But understanding it helps you:</p>
+<p>You will never implement attention from scratch in application development. But understanding it helps you make better practical decisions:</p>
 <ul>
-<li><strong>Understand context windows</strong> — Attention is the operation that connects tokens. The context window limit is a direct consequence of how attention scales with sequence length.</li>
-<li><strong>Reason about model behavior</strong> — Why does the model summarize the beginning of a long document poorly? Attention degrades over very long sequences. &quot;Lost in the middle&quot; is a known failure mode.</li>
-<li><strong>Make sense of embeddings</strong> — Attention is what makes embeddings context-sensitive. The word &quot;bank&quot; produces a different embedding in different sentences because attention considers surrounding context.</li>
-<li><strong>Understand fine-tuning</strong> — LoRA and other parameter-efficient methods specifically target the attention weight matrices. Knowing where they apply helps you make better fine-tuning decisions.</li>
+<li><strong>Context windows</strong> — Attention is the operation that connects tokens. The context window limit exists because attention computation scales as O(n²) with sequence length. Very long contexts are significantly more expensive than short ones.</li>
+<li><strong>The &quot;lost in the middle&quot; problem</strong> — Research shows LLMs attend more strongly to tokens at the beginning and end of long contexts. Critical information buried in the middle of a 100K-token prompt may be underweighted. This affects how you structure prompts and RAG contexts.</li>
+<li><strong>Embeddings</strong> — Attention is what makes embeddings context-sensitive. The word &quot;bank&quot; produces a different embedding in &quot;river bank&quot; versus &quot;bank account&quot; because attention considers surrounding tokens.</li>
+<li><strong>Fine-tuning decisions</strong> — LoRA and other parameter-efficient methods specifically target the attention weight matrices. Knowing where they apply helps you understand what fine-tuning actually changes.</li>
 </ul>
-<p>For how attention fits into the full transformer, see <a href="/blog/transformer-architecture-explained/">transformer architecture explained</a>. For how LLMs work overall, see <a href="/blog/how-llms-work/">how large language models work</a>.</p>
 <hr>
 <h2>How Attention Works</h2>
-<h3>The Core Idea</h3>
-<p>Every token in the input is represented as three vectors:</p>
+<h3>The Core Concept: Query, Key, Value</h3>
+<p>Every token in the input is represented as three learned projections:</p>
 <ul>
 <li><strong>Query (Q)</strong> — &quot;What am I looking for?&quot;</li>
-<li><strong>Key (K)</strong> — &quot;What do I contain?&quot;</li>
-<li><strong>Value (V)</strong> — &quot;What information do I pass forward?&quot;</li>
+<li><strong>Key (K)</strong> — &quot;What do I contain that others might be looking for?&quot;</li>
+<li><strong>Value (V)</strong> — &quot;What information do I actually pass forward?&quot;</li>
 </ul>
+<p>Think of it like a library search. The Query is your search term. The Keys are the index entries. The Values are the actual book contents. The similarity between your Query and each Key determines how much of each Value you read.</p>
 <p>To compute attention for a single token:</p>
 <ol>
-<li>Compute a dot product between its Query and every Key in the sequence → attention scores</li>
-<li>Scale scores by √d (the key dimension) to prevent very large values</li>
-<li>Apply softmax → attention weights (sum to 1.0)</li>
+<li>Compute a dot product between its Query and every Key in the sequence → raw attention scores</li>
+<li>Scale scores by √d (the key dimension) to prevent very large values that destabilize training</li>
+<li>Apply softmax → attention weights that sum to 1.0</li>
 <li>Multiply each Value by its weight and sum → the output for this token</li>
 </ol>
 <pre><code>Attention(Q, K, V) = softmax( QK^T / √d_k ) × V
 </code></pre>
-<p>In matrix form, this computes attention for all tokens simultaneously.</p>
+<p>This formula, introduced in the 2017 &quot;Attention is All You Need&quot; paper, is the foundation of every modern LLM.</p>
 <h3>Why Scaling Matters</h3>
-<p>Without the √d_k scaling factor, dot products between high-dimensional vectors become very large, pushing the softmax into regions with tiny gradients. This makes training unstable. The scaling keeps dot products in a well-behaved range.</p>
+<p>Without the √d_k scaling factor, dot products between high-dimensional vectors become very large, pushing softmax into regions with near-zero gradients. This makes training unstable. The scaling keeps attention scores in a well-behaved numerical range.</p>
 <h3>Multi-Head Attention</h3>
-<p>A single attention head learns one type of relationship. Multi-head attention runs multiple attention heads in parallel, each with its own Q/K/V projections. Each head can attend to different types of relationships simultaneously.</p>
+<p>A single attention head learns one type of relationship. <strong>Multi-head attention</strong> runs multiple attention heads in parallel, each with independent Q/K/V projections. Each head can learn to attend to different relationship types simultaneously — one head for syntactic dependencies, another for semantic similarity, another for coreference resolution.</p>
 <pre><code class="language-python">import torch
 import torch.nn as nn
 import math
@@ -245,31 +294,27 @@ class MultiHeadAttention(nn.Module):
         batch, seq, d = x.shape
         h = self.num_heads
 
+        # Project into Q, K, V and split across heads
         Q = self.W_q(x).view(batch, seq, h, self.d_k).transpose(1, 2)
         K = self.W_k(x).view(batch, seq, h, self.d_k).transpose(1, 2)
         V = self.W_v(x).view(batch, seq, h, self.d_k).transpose(1, 2)
 
+        # Scaled dot-product attention
         scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(self.d_k)
         weights = torch.softmax(scores, dim=-1)
         attended = torch.matmul(weights, V)
 
+        # Concatenate heads and project back
         out = attended.transpose(1, 2).contiguous().view(batch, seq, d)
         return self.W_o(out)
 </code></pre>
-<p>GPT-2 (small) uses 12 attention heads. GPT-3 uses 96.</p>
-<h3>Causal Masking</h3>
-<p>Decoder models (GPT, LLaMA) use a causal mask — each token can only attend to previous tokens, not future ones. This enforces the autoregressive property: the model generates text left-to-right without &quot;cheating&quot; by looking at future tokens.</p>
-<pre><code class="language-python">def causal_mask(seq_len: int) -&gt; torch.Tensor:
-    # Upper triangle is -inf (masked out), lower triangle is 0 (kept)
-    mask = torch.triu(torch.ones(seq_len, seq_len), diagonal=1)
-    return mask.masked_fill(mask == 1, float(&#39;-inf&#39;))
-</code></pre>
+<p>GPT-2 (small, 117M params) uses 12 attention heads. GPT-3 (175B params) uses 96 heads across 96 layers.</p>
 <hr>
-<h2>Practical Examples</h2>
-<h3>Visualizing Attention Weights</h3>
+<h2>Practical Example: Visualizing Attention</h2>
 <pre><code class="language-python">from transformers import AutoTokenizer, AutoModel
 import torch
 
+# Load BERT with attention output enabled
 tokenizer = AutoTokenizer.from_pretrained(&quot;bert-base-uncased&quot;)
 model = AutoModel.from_pretrained(&quot;bert-base-uncased&quot;, output_attentions=True)
 
@@ -280,44 +325,90 @@ with torch.no_grad():
     outputs = model(**inputs)
 
 # outputs.attentions: tuple of (batch, heads, seq, seq) for each layer
+# Shape: [num_layers][batch, num_heads, seq_len, seq_len]
 last_layer_attn = outputs.attentions[-1][0]  # shape: (heads, seq, seq)
-avg_attn = last_layer_attn.mean(dim=0)       # average over heads
+avg_attn = last_layer_attn.mean(dim=0)       # average over all heads
 
 tokens = tokenizer.convert_ids_to_tokens(inputs[&quot;input_ids&quot;][0])
 it_idx = tokens.index(&quot;it&quot;)
 
-# What does &quot;it&quot; attend to?
+print(f&quot;Token &#39;it&#39; attends most to:&quot;)
 for i, (token, weight) in enumerate(zip(tokens, avg_attn[it_idx])):
-    print(f&quot;{token:15} {weight:.3f}&quot;)
+    if weight &gt; 0.05:  # only show significant attention
+        print(f&quot;  {token:15} {weight:.3f}&quot;)
 </code></pre>
+<p>Running this typically shows &quot;animal&quot; receiving high attention weight when the model processes &quot;it&quot; — matching human intuition about coreference.</p>
 <hr>
-<h2>Tools and Frameworks</h2>
-<p><strong>BertViz</strong> — Interactive visualization of attention weights in transformer models. Shows which tokens attend to which across all layers and heads.</p>
-<p><strong>Hugging Face Transformers</strong> — <code>output_attentions=True</code> returns attention weights from any transformer model. Standard tool for attention analysis.</p>
-<p><strong>Captum (PyTorch)</strong> — Interpretability library with attention-based attribution methods. Useful for explaining model predictions.</p>
+<h2>Real-World Applications</h2>
+<p>Understanding attention explains several production AI behaviors:</p>
+<p><strong>RAG context placement</strong> — Retrieval systems inject context into prompts. Knowing that attention is stronger at context boundaries, place the most critical instructions at the beginning of the system prompt, not buried in the middle.</p>
+<p><strong>Long-document processing</strong> — For documents that exceed the context window, chunking and retrieval (RAG) performs better than stuffing everything in. Long contexts dilute attention across irrelevant tokens.</p>
+<p><strong>Fine-tuning with LoRA</strong> — LoRA targets attention weight matrices specifically because these matrices encode the model&#39;s learned relationships. See <a href="/blog/lora-fine-tuning-explained/">LoRA fine-tuning explained</a>.</p>
+<p><strong>Embedding quality</strong> — Context-sensitive embeddings (from BERT, sentence transformers) use attention to produce representations that capture meaning in context, not just word frequency. This is why they work better for semantic search than TF-IDF.</p>
 <hr>
-<h2>Common Mistakes</h2>
-<p><strong>Confusing attention with understanding</strong> — Attention weights show what the model focuses on, not why. High attention to a token does not guarantee correct reasoning about it.</p>
-<p><strong>Ignoring the &quot;lost in the middle&quot; problem</strong> — Research shows that LLMs attend more strongly to tokens at the beginning and end of long contexts. Critical information placed in the middle of a very long prompt may be underweighted.</p>
-<p><strong>Treating context windows as free</strong> — Attention computation scales as O(n²) with sequence length. Very long contexts are significantly more expensive to process than short ones.</p>
+<h2>Common Mistakes Developers Make</h2>
+<ol>
+<li><p><strong>Confusing attention with understanding</strong> — Attention weights show what the model focuses on, not what it understands. High attention to a token does not guarantee correct reasoning about it. Attention is a mechanism, not a guarantee of correctness.</p>
+</li>
+<li><p><strong>Ignoring the &quot;lost in the middle&quot; problem</strong> — Research by Liu et al. (2023) demonstrated that LLMs attend more strongly to tokens at the beginning and end of long contexts. Critical information placed in the middle of a very long prompt may receive insufficient attention.</p>
+</li>
+<li><p><strong>Treating context windows as free</strong> — Attention computation scales as O(n²) with sequence length. A 32,000-token context costs roughly 16 times more compute than an 8,000-token context. Long contexts have real latency and cost implications.</p>
+</li>
+<li><p><strong>Assuming all attention heads do the same thing</strong> — Different heads specialize. Visualization tools like BertViz show that some heads track syntactic dependencies, others track coreference, others focus on adjacent tokens. This specialization is emergent from training.</p>
+</li>
+<li><p><strong>Equating attention score with importance</strong> — High attention weight means the model is looking there, not that the information there is correct or reliable. A model can attend to incorrect information and produce confident wrong answers.</p>
+</li>
+</ol>
 <hr>
 <h2>Best Practices</h2>
 <ul>
-<li><strong>Place critical information at the start or end of prompts</strong> — Attention is stronger at context boundaries. Important instructions belong at the beginning of the system prompt, not buried in the middle.</li>
-<li><strong>Use retrieval to avoid stuffing large contexts</strong> — Rather than injecting an entire document, retrieve only the relevant passages. This focuses attention on what matters.</li>
-<li><strong>For long-document tasks, chunk and process</strong> — Process long documents in overlapping chunks rather than attempting to fit everything into one context window.</li>
+<li><strong>Place critical information at the start or end of prompts</strong> — Attention is stronger at context boundaries. Important instructions belong at the beginning of the system prompt.</li>
+<li><strong>Use retrieval to avoid stuffing large contexts</strong> — Rather than injecting entire documents, retrieve only the relevant passages. This focuses attention on what matters.</li>
+<li><strong>For long-document tasks, chunk and process in segments</strong> — Process long documents in overlapping chunks rather than attempting to fit everything into one context window.</li>
+<li><strong>Profile context window usage before optimizing</strong> — Measure how many tokens your application actually uses before assuming you need a larger context window.</li>
 </ul>
 <hr>
-<h2>Summary</h2>
-<p>The attention mechanism allows each token in a sequence to weigh the importance of every other token when building its representation. It operates through Query, Key, and Value projections, producing a weighted combination of values based on similarity scores.</p>
-<p>Multi-head attention runs this operation in parallel across multiple subspaces, capturing different types of relationships simultaneously. Causal masking ensures decoder models generate text left-to-right without peeking at future tokens.</p>
-<p>For the full transformer architecture that attention is embedded in, see <a href="/blog/transformer-architecture-explained/">transformer architecture explained</a>. For how this fits into the LLM as a whole, see <a href="/blog/how-llms-work/">how large language models work</a>.</p>
+<h2>FAQ</h2>
+<p><strong>Do I need to understand attention to build AI applications?</strong>
+Not deeply. But knowing that O(n²) scaling makes long contexts expensive, and that &quot;lost in the middle&quot; is a real failure mode, will make you a better system designer.</p>
+<p><strong>What is the difference between self-attention and cross-attention?</strong>
+Self-attention: every token attends to every other token in the same sequence. Cross-attention: tokens in one sequence attend to tokens in a different sequence. Cross-attention is used in encoder-decoder models (translation, summarization) where the decoder attends to the encoder output.</p>
+<p><strong>Why is attention O(n²)?</strong>
+For a sequence of n tokens, computing attention requires an n×n matrix of scores (every token compared with every other token). At n=1000 tokens that is 1 million comparisons; at n=4000 it is 16 million. This is why flash attention and other efficient attention methods matter for long contexts.</p>
+<p><strong>What is Flash Attention?</strong>
+Flash Attention is a memory-efficient algorithm for computing attention that reduces GPU memory usage without changing the mathematical output. It enables longer contexts without running out of GPU memory. vLLM and most modern inference engines use it automatically.</p>
+<hr>
+<h2>Further Reading</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need (original paper)</a></li>
+<li><a href="https://jalammar.github.io/illustrated-transformer/">The Illustrated Transformer by Jay Alammar</a></li>
+<li><a href="https://github.com/jessevig/bertviz">BertViz: Visualize Attention in NLP Models</a></li>
+<li><a href="https://arxiv.org/abs/2307.03172">Lost in the Middle: How Language Models Use Long Contexts</a></li>
+<li><a href="https://huggingface.co/docs/transformers/en/index">Hugging Face Transformers Documentation</a></li>
+</ul>
+<hr>
+<h2>What to Learn Next</h2>
+<ul>
+<li><a href="/blog/transformer-architecture-explained/">Transformer Architecture Explained</a> — attention in the context of the full transformer</li>
+<li><a href="/blog/how-llms-work/">How Large Language Models Work</a> — how transformers become LLMs through training</li>
+<li><a href="/blog/lora-fine-tuning-explained/">LoRA Fine-Tuning Explained</a> — how LoRA targets attention weight matrices specifically</li>
+</ul>
 
       </div>
     </article>
 
+    <!-- Author bio -->
+    <div class="author-bio">
+      <div class="author-avatar">AK</div>
+      <div>
+        <div class="bio-name">Amit K Chauhan</div>
+        <div class="bio-title">Software Engineer &amp; AI Builder</div>
+        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+      </div>
+    </div>
+
     <!-- Back link -->
-    <div class="mt-12 pt-8 border-t border-white/8">
+    <div class="mt-8 pt-6 border-t border-white/8">
       <a href="/blog/" class="text-blue-400 hover:text-blue-300 text-sm transition-colors">← Back to all articles</a>
     </div>
   </main>
@@ -361,6 +452,34 @@ for i, (token, weight) in enumerate(zip(tokens, avg_attn[it_idx])):
       </div>
     </div>
   </footer>
+
+  <script>
+    /* ── Copy-code buttons ──────────────────────────────────────────────── */
+    (function(){
+      document.querySelectorAll('.prose pre').forEach(function(pre){
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function(){
+          var code = pre.querySelector('code');
+          var text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(function(){
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(function(){
+            btn.textContent = 'Error';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 2000);
+          });
+        });
+        wrapper.appendChild(btn);
+      });
+    })();
+  </script>
 
   <script>
     (function(){
