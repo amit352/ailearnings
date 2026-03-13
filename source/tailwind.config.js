@@ -1,0 +1,40 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/index.html',
+    './app.jsx',
+  ],
+  safelist: [
+    // Dynamic gradient colors used in roadmap phases
+    'from-green-500', 'to-emerald-600', 'bg-green-100', 'text-green-700',
+    'from-slate-500', 'to-gray-600', 'bg-slate-100', 'text-slate-700',
+    'from-blue-500', 'to-indigo-600', 'bg-blue-100', 'text-blue-700',
+    'from-purple-500', 'to-violet-600', 'bg-purple-100', 'text-purple-700',
+    'from-orange-500', 'to-amber-600', 'bg-orange-100', 'text-orange-700',
+    'from-rose-500', 'to-pink-600', 'bg-rose-100', 'text-rose-700',
+    'from-teal-500', 'to-cyan-600', 'bg-teal-100', 'text-teal-700',
+    'from-blue-600', 'to-blue-800', 'border-blue-700',
+    'from-purple-600', 'to-purple-800', 'border-purple-700',
+    'from-orange-600', 'to-red-700', 'border-orange-700',
+    'from-blue-600', 'to-cyan-700', 'from-purple-600', 'to-violet-700',
+    'from-green-600', 'to-teal-700', 'from-orange-600', 'to-amber-700',
+    'bg-green-900', 'text-green-300', 'border-green-700',
+    'bg-orange-900', 'text-orange-300', 'border-orange-700',
+    'bg-gray-800', 'text-gray-400', 'border-gray-600',
+    'bg-purple-950', 'border-purple-700', 'text-purple-300', 'bg-purple-500',
+    'bg-blue-600', 'bg-indigo-500', 'bg-gray-600', 'bg-red-500',
+    'from-green-600', 'to-emerald-700', 'from-rose-600', 'to-pink-700', 'from-teal-600', 'to-cyan-700',
+    'border-green-700', 'border-slate-600', 'border-rose-700', 'border-teal-700',
+    'bg-blue-900', 'bg-purple-900', 'bg-rose-900', 'bg-teal-900',
+    'from-red-600', 'to-rose-700', 'from-yellow-600', 'to-amber-700',
+    'from-gray-600', 'to-slate-700', 'from-indigo-600', 'to-blue-700', 'from-pink-600', 'to-rose-700',
+    'bg-red-900', 'text-red-300', 'border-red-800',
+    'bg-yellow-900', 'text-yellow-300', 'border-yellow-800',
+    'bg-purple-900', 'text-purple-300', 'border-purple-800',
+    'bg-blue-900', 'text-blue-300', 'border-blue-800',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    background: #030712;
+    font-family: system-ui, -apple-system, sans-serif;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Subtle grid background */
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Radial glow */
+  .bg-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(99,102,241,0.12), transparent 70%);
+  }
+
+  .content {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 0 80px; gap: 24px;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(99,102,241,0.15);
+    border: 1px solid rgba(99,102,241,0.3);
+    color: #818cf8;
+    font-size: 15px; font-weight: 600;
+    padding: 8px 20px; border-radius: 9999px;
+    letter-spacing: 0.01em;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #818cf8;
+    animation: none;
+  }
+
+  h1 {
+    font-size: 72px; font-weight: 800; line-height: 1.05; letter-spacing: -0.03em;
+    color: #f9fafb;
+  }
+
+  h1 .gradient {
+    background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: 24px; color: #9ca3af; font-weight: 400; line-height: 1.5;
+    max-width: 700px;
+  }
+
+  .pills {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+  }
+
+  .pill {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #d1d5db;
+    font-size: 14px; font-weight: 500;
+    padding: 6px 16px; border-radius: 9999px;
+  }
+
+  .domain {
+    font-size: 16px; color: #4b5563; font-weight: 500;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+  <div class="content">
+    <div class="badge">
+      <div class="badge-dot"></div>
+      The Developer Roadmap to AI Engineering · 2026
+    </div>
+    <h1><span class="gradient">AI Engineering</span><br>Roadmap</h1>
+    <p class="subtitle">The structured path from zero to production-ready AI.<br>7 phases · free resources · real projects.</p>
+    <div class="pills">
+      <span class="pill">AI Foundations</span>
+      <span class="pill">LLM APIs</span>
+      <span class="pill">Prompt Engineering</span>
+      <span class="pill">RAG</span>
+      <span class="pill">Agentic AI</span>
+      <span class="pill">Fine-tuning</span>
+    </div>
+    <p class="domain">ailearnings.in</p>
+  </div>
+</body>
+</html>

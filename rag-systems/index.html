@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAG Systems: Retrieval-Augmented Generation Guides &amp; Tutorials (2026)</title>
+  <meta name="description" content="Learn Retrieval-Augmented Generation (RAG) from scratch. Covers embeddings, vector databases, chunking strategies, LangChain, and production RAG architecture with step-by-step tutorials." />
+  <link rel="canonical" href="https://ailearnings.in/rag-systems/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="RAG Systems: Retrieval-Augmented Generation Guides &amp; Tutorials (2026)" />
+  <meta property="og:description" content="Learn Retrieval-Augmented Generation (RAG) from scratch. Covers embeddings, vector databases, chunking strategies, LangChain, and production RAG architecture with step-by-step tutorials." />
+  <meta property="og:url" content="https://ailearnings.in/rag-systems/" />
+  <meta property="og:site_name" content="AI Learning Hub" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="RAG Systems: Retrieval-Augmented Generation Guides &amp; Tutorials (2026)" />
+  <meta name="twitter:description" content="Learn Retrieval-Augmented Generation (RAG) from scratch. Covers embeddings, vector databases, chunking strategies, LangChain, and production RAG architecture with step-by-step tutorials." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background-color: #030712; color: #f3f4f6; font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    header { background-color: rgba(17,24,39,0.7); border-bottom: 1px solid rgba(255,255,255,0.08); position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); }
+    .nav-inner { display: flex; align-items: center; gap: 0.25rem; padding: 0.5rem 0.75rem; overflow-x: auto; scrollbar-width: none; }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-logo { font-size: 0.875rem; font-weight: 600; color: #fff; padding: 0.375rem 0.75rem; white-space: nowrap; flex-shrink: 0; margin-right: 0.25rem; }
+    .nav-logo:hover { color: #60a5fa; }
+    .nav-link { font-size: 0.75rem; padding: 0.375rem 0.75rem; border-radius: 0.5rem; white-space: nowrap; flex-shrink: 0; color: #9ca3af; transition: color 0.15s, background-color 0.15s; }
+    .nav-link:hover { color: #fff; background-color: #1f2937; }
+    footer { border-top: 1px solid rgba(255,255,255,0.08); background-color: rgba(3,7,18,0.8); margin-top: 4rem; }
+    .footer-inner { max-width: 56rem; margin: 0 auto; padding: 2rem 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .footer-links a { font-size: 0.75rem; color: #6b7280; transition: color 0.15s; }
+    .footer-links a:hover { color: #fff; }
+    .container { max-width: 56rem; margin: 0 auto; padding: 0 1rem; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: #6b7280; padding: 1.25rem 0 0.5rem; }
+    .breadcrumb a:hover { color: #d1d5db; }
+    h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; color: #f9fafb; line-height: 1.15; margin-bottom: 1rem; }
+    .lead { font-size: 1.0625rem; color: #9ca3af; line-height: 1.75; max-width: 48rem; margin-bottom: 2rem; }
+    .badge { display: inline-block; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.25rem 0.625rem; border-radius: 9999px; margin-bottom: 1rem; background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.22); }
+    .section { margin: 3rem 0; }
+    .section-label { font-size: 0.6875rem; font-weight: 700; color: #4b5563; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+    h2 { font-size: 1.375rem; font-weight: 700; color: #f9fafb; margin-bottom: 0.75rem; }
+    h3 { font-size: 1.0625rem; font-weight: 600; color: #e5e7eb; margin-bottom: 0.5rem; }
+    p { color: #d1d5db; line-height: 1.75; margin-bottom: 0.875rem; }
+    ul { color: #d1d5db; padding-left: 1.5rem; margin-bottom: 0.875rem; }
+    li { margin-bottom: 0.375rem; line-height: 1.7; }
+    strong { color: #f9fafb; font-weight: 600; }
+    .roadmap-card { background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.18); border-radius: 0.75rem; padding: 1.25rem 1.5rem; }
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 2.5rem 0; }
+    .pipeline-steps { display: flex; flex-direction: column; gap: 0; margin-top: 1rem; }
+    .pipeline-step { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .pipeline-step:last-child { border-bottom: none; }
+    .step-num { width: 2rem; height: 2rem; border-radius: 50%; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #34d399; flex-shrink: 0; margin-top: 0.125rem; }
+    .step-body h3 { font-size: 0.9375rem; margin-bottom: 0.25rem; }
+    .step-body p { font-size: 0.875rem; margin-bottom: 0; color: #9ca3af; }
+    .tutorial-list { display: flex; flex-direction: column; gap: 0.625rem; margin-top: 1rem; }
+    .tutorial-item { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.875rem 1.125rem; background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.07); border-radius: 0.5rem; text-decoration: none; transition: border-color 0.15s, background-color 0.15s; }
+    .tutorial-item:hover { border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.05); }
+    .tutorial-type { font-size: 0.6875rem; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+    .tutorial-title { font-size: 0.9375rem; font-weight: 500; color: #e5e7eb; }
+    .cta-block { margin: 3rem 0; padding: 2rem; background: linear-gradient(135deg, rgba(16,185,129,0.1) 0%, rgba(99,102,241,0.07) 100%); border: 1px solid rgba(16,185,129,0.2); border-radius: 1rem; text-align: center; }
+    .cta-block h2 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .cta-block p { color: #9ca3af; margin-bottom: 1.25rem; font-size: 0.9375rem; }
+    .cta-btn { display: inline-block; background: #059669; color: #fff; font-weight: 600; font-size: 0.875rem; padding: 0.625rem 1.5rem; border-radius: 0.5rem; text-decoration: none; transition: background-color 0.15s; }
+    .cta-btn:hover { background: #047857; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "RAG Systems: Retrieval-Augmented Generation Guides & Tutorials (2026)",
+  "description": "Learn Retrieval-Augmented Generation (RAG) from scratch. Covers embeddings, vector databases, chunking strategies, LangChain, and production RAG architecture.",
+  "url": "https://ailearnings.in/rag-systems/",
+  "datePublished": "2026-03-10",
+  "dateModified": "2026-03-10",
+  "author": { "@type": "Organization", "name": "AI Learning Hub" },
+  "publisher": { "@type": "Organization", "name": "AI Learning Hub", "url": "https://ailearnings.in" }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ailearnings.in/" },
+    { "@type": "ListItem", "position": 2, "name": "RAG Systems", "item": "https://ailearnings.in/rag-systems/" }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is RAG (Retrieval-Augmented Generation)?",
+      "acceptedAnswer": { "@type": "Answer", "text": "RAG is a technique that improves LLM responses by retrieving relevant documents from an external knowledge base at query time and including them in the prompt. This allows models to answer questions about private, recent, or domain-specific knowledge without retraining." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a vector database?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A vector database stores high-dimensional numerical representations (embeddings) of text or other data. It enables fast semantic similarity search — finding documents whose meaning is closest to a query — which is the core retrieval mechanism in RAG systems." }
+    },
+    {
+      "@type": "Question",
+      "name": "When should I use RAG instead of fine-tuning?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Use RAG when your knowledge base changes frequently, when you need source citations, or when your data is private. Use fine-tuning when you need the model to adopt a specific style, format, or behaviour that can't be captured in a prompt." }
+    },
+    {
+      "@type": "Question",
+      "name": "What tools are used to build RAG systems?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Common tools include LangChain or LlamaIndex for orchestration, Pinecone, Weaviate, Chroma, or pgvector for vector storage, OpenAI or open-source models for embeddings and generation, and Python for integration." }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">AI Learning Hub</a>
+      <a href="/" class="nav-link">Roadmap</a>
+      <a href="/resources/" class="nav-link">Resources</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href="/projects/" class="nav-link">Projects</a>
+      <a href="/paths/" class="nav-link">Paths</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:0.5rem;padding-bottom:3rem;">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <span style="color:#9ca3af;">RAG Systems</span>
+    </nav>
+
+    <div class="badge">Topic Hub</div>
+    <h1>RAG Systems</h1>
+    <p class="lead">Retrieval-Augmented Generation lets LLMs answer questions about your own data without retraining. Learn how to build RAG pipelines from scratch — embeddings, vector search, chunking, reranking, and production architecture.</p>
+
+    <hr class="divider" />
+
+    <!-- What it is -->
+    <section class="section">
+      <p class="section-label">What it is</p>
+      <h2>What Is Retrieval-Augmented Generation?</h2>
+      <p>Retrieval-Augmented Generation (RAG) is a technique that connects a language model to an external knowledge base. Instead of relying solely on what the model learned during training, RAG <strong>retrieves relevant documents at query time</strong> and includes them in the prompt as context — giving the model accurate, up-to-date, and domain-specific information to reason from.</p>
+      <p>The result is a system that can answer questions about your internal documents, recent events, or proprietary data without expensive fine-tuning.</p>
+
+      <div style="margin-top:1.5rem;">
+        <p class="section-label" style="margin-bottom:1rem;">How a RAG pipeline works</p>
+        <div class="pipeline-steps">
+          <div class="pipeline-step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h3>Ingest &amp; Chunk</h3>
+              <p>Load documents (PDF, Markdown, web pages) and split them into semantically coherent chunks of 200–500 tokens.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h3>Embed</h3>
+              <p>Convert each chunk into a vector embedding using a model like text-embedding-3-small or a local embedding model.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h3>Store in Vector DB</h3>
+              <p>Index embeddings in a vector database (Pinecone, Chroma, pgvector) for fast similarity search.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h3>Retrieve</h3>
+              <p>At query time, embed the user question and find the top-k most similar chunks using cosine or dot-product similarity.</p>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <h3>Generate</h3>
+              <p>Inject retrieved chunks into the prompt as context. The LLM generates a grounded, cited answer.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Why it matters -->
+    <section class="section">
+      <p class="section-label">Why it matters</p>
+      <h2>Why RAG Is a Core Skill for AI Engineers</h2>
+      <p>RAG is the dominant pattern for production AI applications that need to work with real-world data:</p>
+      <ul>
+        <li><strong>No retraining required</strong> — update your knowledge base instantly; no model training pipeline needed</li>
+        <li><strong>Source attribution</strong> — retrieved chunks make it possible to cite sources, reducing hallucination risk</li>
+        <li><strong>Handles private data</strong> — company documents, codebases, and internal wikis never need to leave your infrastructure</li>
+        <li><strong>Cost-effective at scale</strong> — cheaper than fine-tuning and more accurate than pure prompting for knowledge tasks</li>
+        <li><strong>Foundation for agents</strong> — memory retrieval in autonomous agents is fundamentally a RAG operation</li>
+      </ul>
+      <p>Most enterprise AI projects — document Q&amp;A, support bots, internal search, copilots — are RAG applications. Mastering RAG makes you immediately productive on real-world projects.</p>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Where it fits -->
+    <section class="section">
+      <p class="section-label">Where it fits in the AI roadmap</p>
+      <h2>Phase 4 of the AI Engineering Roadmap</h2>
+      <div class="roadmap-card">
+        <p style="font-size:0.875rem;color:#6ee7b7;margin-bottom:1rem;">RAG Systems is Phase 4 of the <a href="/ai-roadmap-for-developers/" style="color:#34d399;text-decoration:underline;">AI roadmap for developers</a>. Here is where it sits relative to adjacent skills:</p>
+        <div style="display:flex;flex-direction:column;gap:0.625rem;">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:0.75rem;color:#6b7280;white-space:nowrap;width:5rem;">Phase 1–2</span>
+            <span style="font-size:0.875rem;color:#9ca3af;">AI Foundations + LLM APIs</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:0.75rem;color:#6b7280;white-space:nowrap;width:5rem;">Phase 3</span>
+            <span style="font-size:0.875rem;color:#9ca3af;">Prompt Engineering → <strong style="color:#d1d5db;">prerequisite for RAG</strong></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:0.75rem;color:#10b981;font-weight:600;white-space:nowrap;width:5rem;">Phase 4 ★</span>
+            <span style="font-size:0.875rem;color:#6ee7b7;font-weight:500;">RAG Systems ← you are here</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:0.75rem;color:#6b7280;white-space:nowrap;width:5rem;">Phase 5</span>
+            <span style="font-size:0.875rem;color:#9ca3af;">AI Agents → uses RAG for long-term memory and tool retrieval</span>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:1rem;">RAG requires understanding of embeddings, vector similarity, and prompt engineering. Once you have it, AI agent memory and production deployments become natural next steps.</p>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Tutorials -->
+    <section class="section">
+      <p class="section-label">Tutorials on this site</p>
+      <h2>RAG Guides &amp; Deep-Dives</h2>
+      <p>End-to-end tutorials covering every layer of a production RAG system — from document ingestion to retrieval evaluation.</p>
+
+      <div class="tutorial-list">
+        <a href="/blog/rag-tutorial-step-by-step/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#10b981;">Tutorial</span>
+          <span class="tutorial-title">RAG Tutorial 2026: Build a Retrieval-Augmented Generation Pipeline from Scratch</span>
+        </a>
+        <a href="/blog/rag-system-architecture/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#10b981;">Architecture</span>
+          <span class="tutorial-title">RAG System Architecture: Design Patterns for Production Retrieval-Augmented Generation</span>
+        </a>
+        <a href="/blog/vector-database-guide/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#10b981;">Guide</span>
+          <span class="tutorial-title">Vector Database Guide: Embeddings, Similarity Search, and Choosing the Right DB</span>
+        </a>
+        <a href="/blog/embeddings-explained/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#10b981;">Guide</span>
+          <span class="tutorial-title">Embeddings Explained: Vectors, Semantic Search, and Practical Applications</span>
+        </a>
+        <a href="/blog/document-chunking-strategies/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#10b981;">Guide</span>
+          <span class="tutorial-title">Document Chunking Strategies for RAG: How to Split Text for Better Retrieval</span>
+        </a>
+        <a href="/blog/langchain-rag-tutorial/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#10b981;">Tutorial</span>
+          <span class="tutorial-title">LangChain RAG Tutorial: Build a Document Q&amp;A System Step by Step</span>
+        </a>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Related hubs -->
+    <section class="section">
+      <p class="section-label">Related topic hubs</p>
+      <h2>Continue Learning</h2>
+      <div class="tutorial-list">
+        <a href="/prompt-engineering/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#6366f1;">Hub</span>
+          <span class="tutorial-title">Prompt Engineering — Techniques for writing effective LLM prompts</span>
+        </a>
+        <a href="/ai-agents/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#6366f1;">Hub</span>
+          <span class="tutorial-title">AI Agents — Building autonomous LLM agents and multi-agent systems</span>
+        </a>
+        <a href="/fine-tuning-llms/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#6366f1;">Hub</span>
+          <span class="tutorial-title">Fine-Tuning LLMs — Instruction tuning, LoRA, and custom model training</span>
+        </a>
+        <a href="/paths/ai-engineer/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#f59e0b;">Path</span>
+          <span class="tutorial-title">AI Engineer Learning Path — Full structured curriculum</span>
+        </a>
+      </div>
+    </section>
+
+    <div class="cta-block">
+      <h2>Ready to build your first RAG system?</h2>
+      <p>Follow the complete AI engineering roadmap — from foundations to production RAG and beyond.</p>
+      <a href="/ai-roadmap-for-developers/" class="cta-btn">View the full AI roadmap →</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <p style="color:#fff;font-weight:600;font-size:0.875rem;margin-bottom:0.25rem;">ailearnings.in</p>
+        <p style="color:#6b7280;font-size:0.75rem;">Free AI roadmap for software developers</p>
+      </div>
+      <div class="footer-links">
+        <a href="/">Roadmap</a>
+        <a href="/resources/">Resources</a>
+        <a href="/projects/">Projects</a>
+        <a href="/paths/">Paths</a>
+        <a href="/blog/">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

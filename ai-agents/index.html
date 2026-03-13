@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Agents: Building Autonomous LLM Agents — Guides &amp; Tutorials (2026)</title>
+  <meta name="description" content="Learn to build AI agents from scratch. Covers agent architectures, tool use, function calling, multi-agent systems, planning loops, and production deployment with practical tutorials." />
+  <link rel="canonical" href="https://ailearnings.in/ai-agents/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="AI Agents: Building Autonomous LLM Agents — Guides &amp; Tutorials (2026)" />
+  <meta property="og:description" content="Learn to build AI agents from scratch. Covers agent architectures, tool use, function calling, multi-agent systems, planning loops, and production deployment with practical tutorials." />
+  <meta property="og:url" content="https://ailearnings.in/ai-agents/" />
+  <meta property="og:site_name" content="AI Learning Hub" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="AI Agents: Building Autonomous LLM Agents — Guides &amp; Tutorials (2026)" />
+  <meta name="twitter:description" content="Learn to build AI agents from scratch. Covers agent architectures, tool use, function calling, multi-agent systems, planning loops, and production deployment with practical tutorials." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background-color: #030712; color: #f3f4f6; font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    header { background-color: rgba(17,24,39,0.7); border-bottom: 1px solid rgba(255,255,255,0.08); position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); }
+    .nav-inner { display: flex; align-items: center; gap: 0.25rem; padding: 0.5rem 0.75rem; overflow-x: auto; scrollbar-width: none; }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-logo { font-size: 0.875rem; font-weight: 600; color: #fff; padding: 0.375rem 0.75rem; white-space: nowrap; flex-shrink: 0; margin-right: 0.25rem; }
+    .nav-logo:hover { color: #60a5fa; }
+    .nav-link { font-size: 0.75rem; padding: 0.375rem 0.75rem; border-radius: 0.5rem; white-space: nowrap; flex-shrink: 0; color: #9ca3af; transition: color 0.15s, background-color 0.15s; }
+    .nav-link:hover { color: #fff; background-color: #1f2937; }
+    footer { border-top: 1px solid rgba(255,255,255,0.08); background-color: rgba(3,7,18,0.8); margin-top: 4rem; }
+    .footer-inner { max-width: 56rem; margin: 0 auto; padding: 2rem 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .footer-links a { font-size: 0.75rem; color: #6b7280; transition: color 0.15s; }
+    .footer-links a:hover { color: #fff; }
+    .container { max-width: 56rem; margin: 0 auto; padding: 0 1rem; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: #6b7280; padding: 1.25rem 0 0.5rem; }
+    .breadcrumb a:hover { color: #d1d5db; }
+    h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; color: #f9fafb; line-height: 1.15; margin-bottom: 1rem; }
+    .lead { font-size: 1.0625rem; color: #9ca3af; line-height: 1.75; max-width: 48rem; margin-bottom: 2rem; }
+    .badge { display: inline-block; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.25rem 0.625rem; border-radius: 9999px; margin-bottom: 1rem; background: rgba(251,146,60,0.12); color: #fb923c; border: 1px solid rgba(251,146,60,0.22); }
+    .section { margin: 3rem 0; }
+    .section-label { font-size: 0.6875rem; font-weight: 700; color: #4b5563; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+    h2 { font-size: 1.375rem; font-weight: 700; color: #f9fafb; margin-bottom: 0.75rem; }
+    h3 { font-size: 1.0625rem; font-weight: 600; color: #e5e7eb; margin-bottom: 0.5rem; }
+    p { color: #d1d5db; line-height: 1.75; margin-bottom: 0.875rem; }
+    ul { color: #d1d5db; padding-left: 1.5rem; margin-bottom: 0.875rem; }
+    li { margin-bottom: 0.375rem; line-height: 1.7; }
+    strong { color: #f9fafb; font-weight: 600; }
+    .roadmap-card { background: rgba(251,146,60,0.06); border: 1px solid rgba(251,146,60,0.18); border-radius: 0.75rem; padding: 1.25rem 1.5rem; }
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 2.5rem 0; }
+    .arch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .arch-card { background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.07); border-radius: 0.625rem; padding: 1rem 1.125rem; }
+    .arch-card h3 { font-size: 0.9375rem; margin-bottom: 0.375rem; color: #fb923c; }
+    .arch-card p { font-size: 0.875rem; color: #9ca3af; margin-bottom: 0; }
+    .tutorial-list { display: flex; flex-direction: column; gap: 0.625rem; margin-top: 1rem; }
+    .tutorial-item { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.875rem 1.125rem; background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.07); border-radius: 0.5rem; text-decoration: none; transition: border-color 0.15s, background-color 0.15s; }
+    .tutorial-item:hover { border-color: rgba(251,146,60,0.35); background: rgba(251,146,60,0.04); }
+    .tutorial-type { font-size: 0.6875rem; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+    .tutorial-title { font-size: 0.9375rem; font-weight: 500; color: #e5e7eb; }
+    .cta-block { margin: 3rem 0; padding: 2rem; background: linear-gradient(135deg, rgba(251,146,60,0.1) 0%, rgba(99,102,241,0.07) 100%); border: 1px solid rgba(251,146,60,0.2); border-radius: 1rem; text-align: center; }
+    .cta-block h2 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .cta-block p { color: #9ca3af; margin-bottom: 1.25rem; font-size: 0.9375rem; }
+    .cta-btn { display: inline-block; background: #ea580c; color: #fff; font-weight: 600; font-size: 0.875rem; padding: 0.625rem 1.5rem; border-radius: 0.5rem; text-decoration: none; transition: background-color 0.15s; }
+    .cta-btn:hover { background: #c2410c; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI Agents: Building Autonomous LLM Agents — Guides & Tutorials (2026)",
+  "description": "Learn to build AI agents from scratch. Covers agent architectures, tool use, function calling, multi-agent systems, planning loops, and production deployment.",
+  "url": "https://ailearnings.in/ai-agents/",
+  "datePublished": "2026-03-10",
+  "dateModified": "2026-03-10",
+  "author": { "@type": "Organization", "name": "AI Learning Hub" },
+  "publisher": { "@type": "Organization", "name": "AI Learning Hub", "url": "https://ailearnings.in" }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ailearnings.in/" },
+    { "@type": "ListItem", "position": 2, "name": "AI Agents", "item": "https://ailearnings.in/ai-agents/" }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is an AI agent?",
+      "acceptedAnswer": { "@type": "Answer", "text": "An AI agent is an LLM-powered system that can autonomously decide which actions to take, call tools (web search, code execution, APIs), observe results, and iterate until it completes a goal. Unlike a simple chatbot, an agent can take multi-step actions without human input at each step." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the ReAct pattern in AI agents?",
+      "acceptedAnswer": { "@type": "Answer", "text": "ReAct (Reasoning + Acting) is an agent architecture where the LLM alternates between Thought (reasoning about what to do next), Action (calling a tool), and Observation (receiving the tool result). This loop continues until the task is complete." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a multi-agent system?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A multi-agent system uses multiple specialized LLM agents working together. One orchestrator agent decomposes a task and delegates subtasks to worker agents with different tools or expertise. This enables parallelism and modularity for complex workflows." }
+    },
+    {
+      "@type": "Question",
+      "name": "What frameworks are used to build AI agents?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Popular frameworks include LangChain (most widely used), LangGraph (for stateful agent workflows), AutoGen (Microsoft's multi-agent framework), CrewAI (role-based agents), and the OpenAI Assistants API. Each has different trade-offs for production use." }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">AI Learning Hub</a>
+      <a href="/" class="nav-link">Roadmap</a>
+      <a href="/resources/" class="nav-link">Resources</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href="/projects/" class="nav-link">Projects</a>
+      <a href="/paths/" class="nav-link">Paths</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:0.5rem;padding-bottom:3rem;">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <span style="color:#9ca3af;">AI Agents</span>
+    </nav>
+
+    <div class="badge">Topic Hub</div>
+    <h1>AI Agents</h1>
+    <p class="lead">AI agents are LLMs that can reason, plan, use tools, and take multi-step actions to complete goals autonomously. Learn how they work, how to build them, and how to deploy them reliably in production.</p>
+
+    <hr class="divider" />
+
+    <!-- What it is -->
+    <section class="section">
+      <p class="section-label">What it is</p>
+      <h2>What Is an AI Agent?</h2>
+      <p>An AI agent is a software system where a language model acts as the reasoning engine and decision-maker. Given a goal, the agent can <strong>break the task into steps, call external tools</strong> (search, code execution, APIs, databases), observe the results, and iterate — all without a human directing each step.</p>
+      <p>The key difference from a chatbot is autonomy. A chatbot responds to a single message. An agent pursues a goal across multiple steps, adapting its plan based on tool outputs and new information.</p>
+
+      <div class="arch-grid" style="margin-top:1.5rem;">
+        <div class="arch-card">
+          <h3>ReAct</h3>
+          <p>Alternates Thought → Action → Observation in a loop. The simplest and most widely used agent pattern.</p>
+        </div>
+        <div class="arch-card">
+          <h3>Plan-and-Execute</h3>
+          <p>Planner creates a full step-by-step plan first; executor carries it out. Better for long, structured tasks.</p>
+        </div>
+        <div class="arch-card">
+          <h3>Multi-Agent</h3>
+          <p>Orchestrator delegates to specialist sub-agents. Enables parallelism and separation of concerns.</p>
+        </div>
+        <div class="arch-card">
+          <h3>Reflection</h3>
+          <p>Agent critiques its own output and iterates until quality standards are met. Improves output reliability.</p>
+        </div>
+        <div class="arch-card">
+          <h3>Memory</h3>
+          <p>In-context, external (vector DB), or episodic memory lets agents recall past interactions and facts.</p>
+        </div>
+        <div class="arch-card">
+          <h3>Tool Use</h3>
+          <p>Function calling lets agents invoke code, APIs, search engines, browsers, and databases as needed.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Why it matters -->
+    <section class="section">
+      <p class="section-label">Why it matters</p>
+      <h2>Why AI Agents Are the Future of Software</h2>
+      <p>Agents are shifting software development from "write code to automate tasks" to "describe goals and let AI execute them". The implications are significant:</p>
+      <ul>
+        <li><strong>Dramatically expanded automation</strong> — tasks that required complex deterministic code can be handled by a well-prompted agent with the right tools</li>
+        <li><strong>Adaptability</strong> — agents handle edge cases by reasoning, not by explicit if-else logic</li>
+        <li><strong>Human-in-the-loop workflows</strong> — agents can run autonomously but escalate to humans when uncertain</li>
+        <li><strong>Composability</strong> — multi-agent systems can coordinate entire workflows across search, data processing, writing, and decision-making</li>
+      </ul>
+      <p>Understanding agents is becoming as fundamental as understanding APIs or databases — it is the architectural pattern defining the next generation of AI-powered software.</p>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Where it fits -->
+    <section class="section">
+      <p class="section-label">Where it fits in the AI roadmap</p>
+      <h2>Phase 5 of the AI Engineering Roadmap</h2>
+      <div class="roadmap-card">
+        <p style="font-size:0.875rem;color:#fed7aa;margin-bottom:1rem;">AI Agents is Phase 5 of the <a href="/ai-roadmap-for-developers/" style="color:#fb923c;text-decoration:underline;">AI roadmap for developers</a>. Here is where it fits:</p>
+        <div style="display:flex;flex-direction:column;gap:0.625rem;">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:0.75rem;color:#6b7280;white-space:nowrap;width:5rem;">Phase 3</span>
+            <span style="font-size:0.875rem;color:#9ca3af;">Prompt Engineering → <strong style="color:#d1d5db;">required for tool-use and system prompts</strong></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:0.75rem;color:#6b7280;white-space:nowrap;width:5rem;">Phase 4</span>
+            <span style="font-size:0.875rem;color:#9ca3af;">RAG Systems → <strong style="color:#d1d5db;">required for agent memory and retrieval</strong></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:0.75rem;color:#fb923c;font-weight:600;white-space:nowrap;width:5rem;">Phase 5 ★</span>
+            <span style="font-size:0.875rem;color:#fed7aa;font-weight:500;">AI Agents ← you are here</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:0.75rem;color:#6b7280;white-space:nowrap;width:5rem;">Phase 6</span>
+            <span style="font-size:0.875rem;color:#9ca3af;">Fine-tuning → customise models to improve agent behaviour</span>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:1rem;">Agents require mastery of both prompt engineering (for reasoning and tool-use schemas) and RAG (for memory). They are the highest-complexity topic in the standard AI engineering curriculum — but also the most powerful.</p>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Tutorials -->
+    <section class="section">
+      <p class="section-label">Tutorials on this site</p>
+      <h2>AI Agent Guides &amp; Tutorials</h2>
+      <p>From agent fundamentals to multi-agent architectures — everything you need to build and deploy autonomous AI systems.</p>
+
+      <div class="tutorial-list">
+        <a href="/blog/ai-agent-fundamentals/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#fb923c;">Guide</span>
+          <span class="tutorial-title">AI Agent Fundamentals: How LLM Agents Think, Plan, and Act</span>
+        </a>
+        <a href="/blog/tool-use-and-function-calling/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#fb923c;">Guide</span>
+          <span class="tutorial-title">Tool Use and Function Calling in LLMs: Practical Patterns and Best Practices</span>
+        </a>
+        <a href="/blog/multi-agent-systems/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#fb923c;">Architecture</span>
+          <span class="tutorial-title">Multi-Agent Systems: Architectures for Coordinating LLM Agents</span>
+        </a>
+        <a href="/blog/langchain-tutorial-complete/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#fb923c;">Tutorial</span>
+          <span class="tutorial-title">LangChain Complete Tutorial: Chains, Agents, Tools, and Memory</span>
+        </a>
+        <a href="/blog/building-ai-chatbots/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#fb923c;">Project</span>
+          <span class="tutorial-title">Building AI Chatbots: From Simple Q&amp;A to Contextual Conversations</span>
+        </a>
+        <a href="/blog/ai-application-architecture/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#fb923c;">Architecture</span>
+          <span class="tutorial-title">AI Application Architecture: Patterns for Production AI Systems</span>
+        </a>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Related hubs -->
+    <section class="section">
+      <p class="section-label">Related topic hubs</p>
+      <h2>Continue Learning</h2>
+      <div class="tutorial-list">
+        <a href="/prompt-engineering/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#6366f1;">Hub</span>
+          <span class="tutorial-title">Prompt Engineering — Techniques for writing effective LLM prompts</span>
+        </a>
+        <a href="/rag-systems/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#10b981;">Hub</span>
+          <span class="tutorial-title">RAG Systems — Retrieval-Augmented Generation guides and tutorials</span>
+        </a>
+        <a href="/fine-tuning-llms/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#6366f1;">Hub</span>
+          <span class="tutorial-title">Fine-Tuning LLMs — Instruction tuning, LoRA, and custom model training</span>
+        </a>
+        <a href="/paths/ai-engineer/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#f59e0b;">Path</span>
+          <span class="tutorial-title">AI Engineer Learning Path — Full structured curriculum</span>
+        </a>
+      </div>
+    </section>
+
+    <div class="cta-block">
+      <h2>Ready to build your first AI agent?</h2>
+      <p>Follow the complete AI engineering roadmap — structured phases from foundations to autonomous agents.</p>
+      <a href="/ai-roadmap-for-developers/" class="cta-btn">View the full AI roadmap →</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <p style="color:#fff;font-weight:600;font-size:0.875rem;margin-bottom:0.25rem;">ailearnings.in</p>
+        <p style="color:#6b7280;font-size:0.75rem;">Free AI roadmap for software developers</p>
+      </div>
+      <div class="footer-links">
+        <a href="/">Roadmap</a>
+        <a href="/resources/">Resources</a>
+        <a href="/projects/">Projects</a>
+        <a href="/paths/">Paths</a>
+        <a href="/blog/">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

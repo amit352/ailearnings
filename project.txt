@@ -1,0 +1,269 @@
+You are a senior AI engineer, software architect, and technical educator.
+
+Your task is to design and generate a **large AI project library** for the website:
+
+https://ailearnings.in
+
+The goal is to help developers learn AI engineering through **real-world projects**.
+
+The project library should become one of the largest curated collections of **AI portfolio projects**.
+
+The projects must align with the learning roadmap for AI engineers.
+
+---
+
+PROJECT LIBRARY GOALS
+
+The project library should:
+
+• help developers practice AI engineering
+• teach real-world AI system design
+• provide portfolio-quality projects
+• include datasets and APIs
+• provide ways to validate projects online
+
+Each project must be detailed enough that a developer could actually implement it.
+
+---
+
+DIFFICULTY LEVELS
+
+Beginner
+Intermediate
+Advanced
+Expert
+
+---
+
+PROJECT CATEGORIES
+
+AI Fundamentals
+Machine Learning
+Natural Language Processing
+Computer Vision
+LLM Applications
+Prompt Engineering
+RAG Systems
+AI Agents
+AI Automation
+AI SaaS Products
+
+---
+
+IMPORTANT CONSTRAINT
+
+Due to token limits, generate the project library in phases.
+
+After each phase:
+
+1. show generated files
+2. show commit message
+3. stop and wait for command:
+
+CONTINUE
+
+---
+
+PHASE 1 — GENERATE 120 PROJECT IDEAS
+
+Generate **120 AI project ideas**.
+
+Each project must include:
+
+Project title
+Difficulty level
+Category
+Short description
+Skills learned
+
+Group them by difficulty level.
+
+Create file:
+
+/docs/ai-project-ideas.md
+
+Commit:
+
+feat: add large AI project idea library
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 2 — SELECT TOP 40 PORTFOLIO PROJECTS
+
+From the list select **40 high-value portfolio projects**.
+
+These should be projects developers can showcase in portfolios.
+
+For each project include:
+
+Project title
+Problem statement
+Real-world use case
+Expected output
+Skills gained
+
+Create file:
+
+/docs/portfolio-projects.md
+
+Commit:
+
+feat: add curated portfolio AI projects
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 3 — PROJECT IMPLEMENTATION BLUEPRINTS
+
+Create **detailed blueprints for 20 projects**.
+
+Each blueprint must include:
+
+Project overview
+Learning objectives
+Architecture diagram explanation
+Technology stack
+System components
+Implementation steps
+Expected outputs
+
+Create file:
+
+/docs/project-blueprints.md
+
+Commit:
+
+feat: add detailed AI project blueprints
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 4 — ONLINE VALIDATION OPTIONS
+
+For each project suggest ways to validate or test the project online.
+
+Possible options include:
+
+Interactive demo UI
+Streamlit demo
+Gradio interface
+Colab notebook
+API endpoint
+public dataset evaluation
+
+For each project include:
+
+Demo idea
+Suggested UI framework
+Dataset source
+Testing method
+
+Create file:
+
+/docs/project-validation.md
+
+Commit:
+
+feat: add project validation and demo strategies
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 5 — GENERATE FIRST 10 FULL PROJECT GUIDES
+
+Generate **10 complete project tutorials**.
+
+Each tutorial must include:
+
+Project overview
+Learning goals
+Prerequisites
+Architecture explanation
+Step-by-step implementation
+Code snippets
+Deployment guide
+Testing instructions
+Suggested improvements
+
+Example projects:
+
+AI Document Chatbot (RAG)
+AI Resume Analyzer
+AI Code Review Assistant
+AI Research Assistant
+AI Personal Knowledge Base
+AI Meeting Summarizer
+AI Study Assistant
+AI Email Classifier
+AI News Analyzer
+AI Portfolio Generator
+
+Each tutorial should be **1800–2500 words**.
+
+Create files in:
+
+/projects/
+
+Commit:
+
+feat: add first set of AI project tutorials
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 6 — PROJECT INDEX AND FILTERING
+
+Create project index page.
+
+Projects should be filterable by:
+
+Difficulty
+Category
+Technologies used
+
+Create file:
+
+/projects/index.md
+
+Commit:
+
+feat: add project library index
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 7 — SITEMAP UPDATE
+
+Add project pages to sitemap.
+
+Create:
+
+/public/sitemap-projects.xml
+
+Update main sitemap.
+
+Commit:
+
+feat: add project pages to sitemap
+
+Stop.
+
+---
+
+OUTPUT FORMAT
+
+Use structured markdown.
+
+Show file structures.
+
+Show commits.
+
+Respect phase workflow.
+

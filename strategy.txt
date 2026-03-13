@@ -1,0 +1,258 @@
+You are acting as a senior AI educator, SEO strategist, and software architect.
+
+The website https://ailearnings.in has already been expanded with:
+
+• Prep Plan (6-month program)
+• AI Roadmap
+• Developer Guides
+• AI Project Library
+
+Your task is to safely scale the learning platform to approximately **100 high-quality pages**.
+
+IMPORTANT RULES:
+
+Do NOT change UI layout or styling.
+
+Only expand the content structure using the existing layout system.
+
+All work must continue in branch:
+
+feature/ai-learning-platform-expansion
+
+---
+
+GOAL
+
+Build a complete AI engineering learning ecosystem consisting of:
+
+Prep Plan
+Roadmap
+Guides
+Projects
+Resources
+
+The content must be **educational, professional, and developer-focused**.
+
+Avoid generic blog posts.
+
+Focus on **step-by-step technical learning guides and projects**.
+
+---
+
+WORKFLOW
+
+Work in phases.
+
+After each phase:
+
+1. show created files
+2. generate commit message
+3. simulate git commit
+4. stop and wait for command:
+
+CONTINUE
+
+---
+
+PHASE 1 — EXPAND DEVELOPER GUIDES
+
+Generate **30 professional developer guides**.
+
+Categories:
+
+Machine Learning
+LLM Engineering
+Prompt Engineering
+RAG Systems
+AI Agents
+AI Application Development
+
+Example guides:
+
+Machine learning basics for developers
+Transformer architecture explained
+Prompt engineering patterns
+RAG system architecture
+LangChain tutorial
+Vector database guide
+Fine-tuning LLMs
+Deploying AI applications
+
+Each guide should include:
+
+Learning objectives
+Concept explanation
+Step-by-step implementation
+Code examples
+Troubleshooting
+FAQ
+
+Create files inside:
+
+/blog/
+
+Commit:
+
+feat: add developer tutorial guide library
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 2 — EXPAND AI PROJECT LIBRARY
+
+Generate **40 AI project ideas** and **20 detailed project guides**.
+
+Projects should cover:
+
+Beginner
+Intermediate
+Advanced
+
+Example projects:
+
+AI chatbot
+RAG document assistant
+AI meeting summarizer
+AI research assistant
+AI resume analyzer
+AI personal knowledge base
+AI email assistant
+AI support bot
+AI code review assistant
+AI study planner
+
+Each project guide must include:
+
+Project overview
+Learning goals
+Architecture explanation
+Implementation steps
+Deployment idea
+Extension ideas
+
+Create files inside:
+
+/projects/
+
+Commit:
+
+feat: expand AI project tutorial library
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 3 — ADD ROADMAP PHASE GUIDES
+
+For each roadmap phase generate supporting guides.
+
+Example:
+
+AI Foundations → Python for AI guide
+Machine Learning → Model evaluation guide
+LLMs → Transformer architecture guide
+RAG → Vector database guide
+AI Agents → Agent orchestration guide
+
+Create files:
+
+/blog/roadmap-guides/
+
+Commit:
+
+feat: add roadmap phase supporting guides
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 4 — CREATE LEARNING PATH PAGES
+
+Generate learning path pages for different roles.
+
+Example paths:
+
+AI Engineer
+ML Engineer
+LLM Engineer
+AI Product Engineer
+AI Research Engineer
+
+Each path should include:
+
+Skill requirements
+Suggested roadmap phases
+Recommended guides
+Suggested projects
+
+Create files:
+
+/paths/
+
+Commit:
+
+feat: add AI engineering career learning paths
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 5 — CONTENT QUALITY REVIEW
+
+Review all generated content.
+
+Ensure:
+
+• consistent formatting
+• professional tone
+• developer focus
+• clear learning progression
+
+Create document:
+
+/docs/content-quality-guidelines.md
+
+Commit:
+
+feat: add content quality guidelines
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 6 — FINAL SITEMAP UPDATE
+
+Update sitemap to include all pages.
+
+Ensure sitemap contains:
+
+roadmap pages
+guide pages
+project pages
+learning path pages
+
+Update:
+
+/public/sitemap.xml
+
+Commit:
+
+feat: update sitemap for full learning platform
+
+Stop.
+
+---
+
+OUTPUT FORMAT
+
+Use structured markdown.
+
+Show file tree changes.
+
+Show commit messages.
+
+Respect phase workflow.
+
+Do not modify UI layout.
+

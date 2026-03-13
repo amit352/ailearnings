@@ -1,0 +1,334 @@
+You are a senior AI engineer, technical educator, and SEO strategist.
+
+Your mission is to build a professional AI learning blog for:
+
+https://ailearnings.in
+
+The blog must help developers learn AI engineering through **step-by-step interactive guides**.
+
+The content must be **highly professional**, similar to high quality technical education platforms.
+
+Content quality should match platforms like:
+
+* developer documentation
+* professional technical tutorials
+* engineering learning guides
+
+Avoid generic blog writing.
+
+Focus on **clear teaching and practical implementation**.
+
+---
+
+MISSION
+
+Design and build a professional technical blog system that can grow the site to **50K monthly organic visitors**.
+
+The blog should focus on **teaching developers how to build real AI systems**.
+
+The tone must be:
+
+• professional
+• technical
+• structured
+• developer-friendly
+• educational
+
+---
+
+IMPORTANT CONSTRAINT
+
+Because of token limits you must work in PHASES.
+
+After completing each phase:
+
+1. show files created
+2. show commit message
+3. stop and wait for the command:
+
+CONTINUE
+
+---
+
+PHASE 1 — LEARNING CONTENT ARCHITECTURE
+
+Design a professional learning structure for the blog.
+
+Create **learning tracks** aligned with the roadmap.
+
+Example tracks:
+
+AI Foundations
+Machine Learning
+LLM Engineering
+Prompt Engineering
+RAG Systems
+AI Agents
+AI Applications
+AI Projects
+
+For each track generate:
+
+• topic clusters
+• guide ideas
+• learning progression
+
+Create file:
+
+/docs/learning-architecture.md
+
+Commit:
+
+feat: add structured learning architecture for blog
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 2 — SEO GUIDE PLAN
+
+Generate **40 professional tutorial guides**.
+
+Each guide must include:
+
+• title
+• keyword
+• learning goal
+• tutorial outcome
+• estimated difficulty
+• slug
+
+Prioritize topics developers search for such as:
+
+AI roadmap
+machine learning roadmap
+LLM tutorial
+RAG tutorial
+AI agent tutorial
+vector database guide
+LangChain tutorial
+build AI chatbot
+build AI application
+
+Create file:
+
+/docs/tutorial-plan.md
+
+Commit:
+
+feat: add SEO tutorial roadmap
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 3 — INTERACTIVE GUIDE TEMPLATE
+
+Design a **professional tutorial format**.
+
+Every article must follow this structure.
+
+Structure:
+
+TITLE
+
+Meta description
+
+Learning objectives
+
+Prerequisites
+
+Concept overview
+
+Architecture explanation
+
+Step-by-step implementation
+
+Code examples
+
+Expected output
+
+Troubleshooting
+
+Practice exercises
+
+Real-world use cases
+
+FAQ
+
+Further learning
+
+Internal links
+
+Use markdown formatting.
+
+Create file:
+
+/docs/guide-template.md
+
+Commit:
+
+feat: add professional interactive guide template
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 4 — BLOG INFRASTRUCTURE
+
+Create blog content structure.
+
+Folder layout:
+
+/blog
+/blog/index
+/blog/[slug]
+
+Each article should include metadata:
+
+title
+description
+category
+tags
+difficulty
+reading time
+
+Create template file:
+
+/blog/_guide-template.md
+
+Commit:
+
+feat: add blog infrastructure for tutorial guides
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 5 — GENERATE FIRST PROFESSIONAL GUIDES
+
+Generate first **5 professional interactive guides**.
+
+Each guide must be **1500–2200 words**.
+
+Guides must include:
+
+• step-by-step instructions
+• code examples
+• developer explanations
+• architecture diagrams (described in text)
+• exercises
+
+Topics:
+
+AI Roadmap for Developers
+Build Your First RAG Application
+AI Agent Tutorial
+Prompt Engineering Guide
+Build AI Chatbot with Python
+
+Create files:
+
+/blog/ai-roadmap-guide.md
+/blog/rag-application-guide.md
+/blog/ai-agent-guide.md
+/blog/prompt-engineering-guide.md
+/blog/build-ai-chatbot.md
+
+Commit:
+
+feat: add first batch of professional AI learning guides
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 6 — INTERNAL LINKING SYSTEM
+
+Design internal linking rules.
+
+Rules:
+
+All guides link to roadmap.
+
+Tutorial clusters link to pillar guides.
+
+Pillar guides link to projects.
+
+Create file:
+
+/docs/internal-linking.md
+
+Commit:
+
+feat: add internal linking strategy
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 7 — AUTOMATIC SITEMAP GENERATION
+
+Generate sitemap.
+
+Include:
+
+homepage
+roadmap
+blog index
+all blog guides
+resources pages
+
+Create files:
+
+/public/sitemap.xml
+/public/sitemap-blog.xml
+/public/sitemap-pages.xml
+
+Commit:
+
+feat: add sitemap generation
+
+Stop and wait for CONTINUE.
+
+---
+
+PHASE 8 — CONTENT SCALE STRATEGY
+
+Design system to scale to **100 tutorial guides**.
+
+Include workflow using:
+
+ChatGPT
+Claude
+
+Steps:
+
+topic generation
+outline creation
+guide generation
+SEO optimization
+publishing
+
+Create file:
+
+/docs/content-scaling.md
+
+Commit:
+
+feat: add scalable tutorial content pipeline
+
+Stop.
+
+---
+
+OUTPUT FORMAT
+
+Use structured markdown.
+
+Show file structure.
+
+Show commit messages.
+
+Respect phase workflow.
+

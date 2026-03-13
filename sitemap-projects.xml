@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Projects index -->
+  <url><loc>https://ailearnings.in/projects/</loc><lastmod>2026-03-10</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+
+  <!-- Beginner projects -->
+  <url><loc>https://ailearnings.in/projects/build-chatgpt-clone/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-chatbot-python/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/document-summarizer/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-quiz-generator/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-resume-analyzer/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-code-explainer/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-email-writer/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/sentiment-analyzer/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Intermediate projects -->
+  <url><loc>https://ailearnings.in/projects/rag-document-assistant/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-meeting-summarizer/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-research-assistant/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-data-analyst/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-support-bot/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-content-moderator/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/voice-ai-assistant/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Advanced projects -->
+  <url><loc>https://ailearnings.in/projects/ai-personal-knowledge-base/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-code-review-assistant/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/multi-agent-research-system/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-study-planner/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-sales-agent/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/projects/ai-security-analyzer/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+</urlset>

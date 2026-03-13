@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fine-Tuning LLMs: Instruction Tuning, LoRA &amp; Custom Model Training (2026)</title>
+  <meta name="description" content="Learn how to fine-tune large language models. Covers instruction tuning, LoRA, QLoRA, RLHF, dataset preparation, and when to fine-tune vs prompt engineer with practical tutorials." />
+  <link rel="canonical" href="https://ailearnings.in/fine-tuning-llms/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Fine-Tuning LLMs: Instruction Tuning, LoRA &amp; Custom Model Training (2026)" />
+  <meta property="og:description" content="Learn how to fine-tune large language models. Covers instruction tuning, LoRA, QLoRA, RLHF, dataset preparation, and when to fine-tune vs prompt engineer with practical tutorials." />
+  <meta property="og:url" content="https://ailearnings.in/fine-tuning-llms/" />
+  <meta property="og:site_name" content="AI Learning Hub" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Fine-Tuning LLMs: Instruction Tuning, LoRA &amp; Custom Model Training (2026)" />
+  <meta name="twitter:description" content="Learn how to fine-tune large language models. Covers instruction tuning, LoRA, QLoRA, RLHF, dataset preparation, and when to fine-tune vs prompt engineer with practical tutorials." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background-color: #030712; color: #f3f4f6; font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    header { background-color: rgba(17,24,39,0.7); border-bottom: 1px solid rgba(255,255,255,0.08); position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); }
+    .nav-inner { display: flex; align-items: center; gap: 0.25rem; padding: 0.5rem 0.75rem; overflow-x: auto; scrollbar-width: none; }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-logo { font-size: 0.875rem; font-weight: 600; color: #fff; padding: 0.375rem 0.75rem; white-space: nowrap; flex-shrink: 0; margin-right: 0.25rem; }
+    .nav-logo:hover { color: #60a5fa; }
+    .nav-link { font-size: 0.75rem; padding: 0.375rem 0.75rem; border-radius: 0.5rem; white-space: nowrap; flex-shrink: 0; color: #9ca3af; transition: color 0.15s, background-color 0.15s; }
+    .nav-link:hover { color: #fff; background-color: #1f2937; }
+    footer { border-top: 1px solid rgba(255,255,255,0.08); background-color: rgba(3,7,18,0.8); margin-top: 4rem; }
+    .footer-inner { max-width: 56rem; margin: 0 auto; padding: 2rem 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .footer-links a { font-size: 0.75rem; color: #6b7280; transition: color 0.15s; }
+    .footer-links a:hover { color: #fff; }
+    .container { max-width: 56rem; margin: 0 auto; padding: 0 1rem; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: #6b7280; padding: 1.25rem 0 0.5rem; }
+    .breadcrumb a:hover { color: #d1d5db; }
+    h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 800; color: #f9fafb; line-height: 1.15; margin-bottom: 1rem; }
+    .lead { font-size: 1.0625rem; color: #9ca3af; line-height: 1.75; max-width: 48rem; margin-bottom: 2rem; }
+    .badge { display: inline-block; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.25rem 0.625rem; border-radius: 9999px; margin-bottom: 1rem; background: rgba(168,85,247,0.12); color: #c084fc; border: 1px solid rgba(168,85,247,0.22); }
+    .section { margin: 3rem 0; }
+    .section-label { font-size: 0.6875rem; font-weight: 700; color: #4b5563; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+    h2 { font-size: 1.375rem; font-weight: 700; color: #f9fafb; margin-bottom: 0.75rem; }
+    h3 { font-size: 1.0625rem; font-weight: 600; color: #e5e7eb; margin-bottom: 0.5rem; }
+    p { color: #d1d5db; line-height: 1.75; margin-bottom: 0.875rem; }
+    ul { color: #d1d5db; padding-left: 1.5rem; margin-bottom: 0.875rem; }
+    li { margin-bottom: 0.375rem; line-height: 1.7; }
+    strong { color: #f9fafb; font-weight: 600; }
+    .roadmap-card { background: rgba(168,85,247,0.06); border: 1px solid rgba(168,85,247,0.18); border-radius: 0.75rem; padding: 1.25rem 1.5rem; }
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 2.5rem 0; }
+    .method-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .method-card { background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.07); border-radius: 0.625rem; padding: 1rem 1.125rem; }
+    .method-card h3 { font-size: 0.9375rem; margin-bottom: 0.375rem; color: #c084fc; }
+    .method-card p { font-size: 0.875rem; color: #9ca3af; margin-bottom: 0; }
+    .decision-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.875rem; }
+    .decision-table th { text-align: left; padding: 0.6rem 1rem; background: rgba(168,85,247,0.1); color: #e5e7eb; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .decision-table td { padding: 0.6rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: #d1d5db; }
+    .decision-table tr:last-child td { border-bottom: none; }
+    .tutorial-list { display: flex; flex-direction: column; gap: 0.625rem; margin-top: 1rem; }
+    .tutorial-item { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.875rem 1.125rem; background: rgba(17,24,39,0.5); border: 1px solid rgba(255,255,255,0.07); border-radius: 0.5rem; text-decoration: none; transition: border-color 0.15s, background-color 0.15s; }
+    .tutorial-item:hover { border-color: rgba(168,85,247,0.35); background: rgba(168,85,247,0.04); }
+    .tutorial-type { font-size: 0.6875rem; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+    .tutorial-title { font-size: 0.9375rem; font-weight: 500; color: #e5e7eb; }
+    .cta-block { margin: 3rem 0; padding: 2rem; background: linear-gradient(135deg, rgba(168,85,247,0.1) 0%, rgba(99,102,241,0.07) 100%); border: 1px solid rgba(168,85,247,0.2); border-radius: 1rem; text-align: center; }
+    .cta-block h2 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .cta-block p { color: #9ca3af; margin-bottom: 1.25rem; font-size: 0.9375rem; }
+    .cta-btn { display: inline-block; background: #7c3aed; color: #fff; font-weight: 600; font-size: 0.875rem; padding: 0.625rem 1.5rem; border-radius: 0.5rem; text-decoration: none; transition: background-color 0.15s; }
+    .cta-btn:hover { background: #6d28d9; }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Fine-Tuning LLMs: Instruction Tuning, LoRA & Custom Model Training (2026)",
+  "description": "Learn how to fine-tune large language models. Covers instruction tuning, LoRA, QLoRA, RLHF, dataset preparation, and when to fine-tune vs prompt engineer.",
+  "url": "https://ailearnings.in/fine-tuning-llms/",
+  "datePublished": "2026-03-10",
+  "dateModified": "2026-03-10",
+  "author": { "@type": "Organization", "name": "AI Learning Hub" },
+  "publisher": { "@type": "Organization", "name": "AI Learning Hub", "url": "https://ailearnings.in" }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ailearnings.in/" },
+    { "@type": "ListItem", "position": 2, "name": "Fine-Tuning LLMs", "item": "https://ailearnings.in/fine-tuning-llms/" }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is fine-tuning an LLM?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Fine-tuning is a training process that adapts a pre-trained language model to a specific task, domain, or style by training it further on a curated dataset. Unlike prompting, fine-tuning modifies the model's weights to bake in behaviour, tone, or knowledge permanently." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is LoRA fine-tuning?",
+      "acceptedAnswer": { "@type": "Answer", "text": "LoRA (Low-Rank Adaptation) is a parameter-efficient fine-tuning technique that trains small adapter matrices instead of all model weights. It reduces GPU memory requirements by 90%+ and training time significantly, making fine-tuning accessible without expensive hardware." }
+    },
+    {
+      "@type": "Question",
+      "name": "When should I fine-tune instead of using prompt engineering?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Fine-tune when you need consistent style or tone across all outputs, when you have 500+ high-quality task examples, when the task is well-defined and unlikely to change, or when you need to reduce prompt length and latency at scale. Use prompt engineering first — it is faster and cheaper to iterate." }
+    },
+    {
+      "@type": "Question",
+      "name": "What hardware do I need to fine-tune an LLM?",
+      "acceptedAnswer": { "@type": "Answer", "text": "With QLoRA, you can fine-tune a 7B parameter model on a single consumer GPU with 16–24 GB VRAM (e.g. RTX 3090/4090). For 13B models, 2x A100s or cloud instances (RunPod, Lambda Labs, Google Colab Pro) are common. Full fine-tuning of large models requires multi-GPU setups." }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">AI Learning Hub</a>
+      <a href="/" class="nav-link">Roadmap</a>
+      <a href="/resources/" class="nav-link">Resources</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href="/projects/" class="nav-link">Projects</a>
+      <a href="/paths/" class="nav-link">Paths</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:0.5rem;padding-bottom:3rem;">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <span style="color:#9ca3af;">Fine-Tuning LLMs</span>
+    </nav>
+
+    <div class="badge">Topic Hub</div>
+    <h1>Fine-Tuning LLMs</h1>
+    <p class="lead">Fine-tuning adapts a pre-trained language model to your specific domain, style, or task. Learn when it makes sense, how to prepare your data, and how to use efficient techniques like LoRA and QLoRA to train models on consumer hardware.</p>
+
+    <hr class="divider" />
+
+    <!-- What it is -->
+    <section class="section">
+      <p class="section-label">What it is</p>
+      <h2>What Is Fine-Tuning?</h2>
+      <p>Pre-trained LLMs like Llama 3, Mistral, and Gemma are trained on vast general-purpose datasets. Fine-tuning is a <strong>second training stage</strong> on a smaller, task-specific dataset that adjusts the model's weights to excel at your particular use case — whether that's writing in your brand voice, following a specific output format, or mastering a technical domain.</p>
+      <p>Modern fine-tuning is far more accessible than it sounds. Parameter-efficient methods like LoRA mean you can fine-tune a high-quality 7B model on a single consumer GPU in a few hours.</p>
+
+      <div class="method-grid" style="margin-top:1.5rem;">
+        <div class="method-card">
+          <h3>Instruction Tuning</h3>
+          <p>Train the model to follow instructions using (instruction, response) pairs. Creates chat-capable, assistant-style models.</p>
+        </div>
+        <div class="method-card">
+          <h3>LoRA</h3>
+          <p>Low-Rank Adaptation trains small adapter matrices. Reduces GPU memory 10×+ with minimal quality loss.</p>
+        </div>
+        <div class="method-card">
+          <h3>QLoRA</h3>
+          <p>Quantized LoRA combines 4-bit quantization with LoRA adapters. Fine-tune 7B models on a single 16 GB GPU.</p>
+        </div>
+        <div class="method-card">
+          <h3>RLHF</h3>
+          <p>Reinforcement Learning from Human Feedback aligns model behaviour with human preferences. Used in ChatGPT, Claude, Gemini.</p>
+        </div>
+        <div class="method-card">
+          <h3>DPO</h3>
+          <p>Direct Preference Optimisation is a simpler RLHF alternative. Trains on preference pairs without a reward model.</p>
+        </div>
+        <div class="method-card">
+          <h3>Domain Adaptation</h3>
+          <p>Continue pre-training on domain-specific text (medical, legal, code) so the model learns specialised vocabulary and facts.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Why it matters -->
+    <section class="section">
+      <p class="section-label">Why it matters</p>
+      <h2>When Fine-Tuning Is the Right Choice</h2>
+      <p>Fine-tuning is not always the answer — but when it is, it delivers capabilities that prompting simply cannot match:</p>
+      <ul>
+        <li><strong>Style and tone consistency</strong> — bake your brand voice or writing style directly into the model</li>
+        <li><strong>Format adherence</strong> — models learn to reliably output specific JSON schemas, code formats, or document structures</li>
+        <li><strong>Reduced prompt length</strong> — move few-shot examples into weights, cutting token costs at scale</li>
+        <li><strong>Domain expertise</strong> — models learn specialised terminology, reasoning patterns, and domain knowledge</li>
+        <li><strong>Privacy</strong> — run a fine-tuned open-source model entirely on your own infrastructure</li>
+      </ul>
+
+      <div style="margin-top:1.5rem;">
+        <p class="section-label" style="margin-bottom:0.75rem;">Fine-tuning vs. prompting: when to use each</p>
+        <table class="decision-table">
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Recommendation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Prototype or early product</td><td>Prompt engineering first</td></tr>
+            <tr><td>Need consistent output format</td><td>Fine-tuning (+ structured output)</td></tr>
+            <tr><td>Knowledge changes frequently</td><td>RAG, not fine-tuning</td></tr>
+            <tr><td>Need specific persona or style</td><td>Fine-tuning</td></tr>
+            <tr><td>Fewer than 100 examples</td><td>Few-shot prompting</td></tr>
+            <tr><td>500+ high-quality examples</td><td>Fine-tuning likely worth it</td></tr>
+            <tr><td>Cost-sensitive at high volume</td><td>Fine-tune a smaller model</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Where it fits -->
+    <section class="section">
+      <p class="section-label">Where it fits in the AI roadmap</p>
+      <h2>Phase 6 of the AI Engineering Roadmap</h2>
+      <div class="roadmap-card">
+        <p style="font-size:0.875rem;color:#e9d5ff;margin-bottom:1rem;">Fine-Tuning LLMs is Phase 6 of the <a href="/ai-roadmap-for-developers/" style="color:#c084fc;text-decoration:underline;">AI roadmap for developers</a>. It comes after you have mastered the core LLM development stack:</p>
+        <div style="display:flex;flex-direction:column;gap:0.625rem;">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:0.75rem;color:#6b7280;white-space:nowrap;width:5rem;">Phase 3</span>
+            <span style="font-size:0.875rem;color:#9ca3af;">Prompt Engineering → understand what models respond to</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:0.75rem;color:#6b7280;white-space:nowrap;width:5rem;">Phase 4–5</span>
+            <span style="font-size:0.875rem;color:#9ca3af;">RAG + Agents → build production AI applications</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:0.75rem;color:#a855f7;font-weight:600;white-space:nowrap;width:5rem;">Phase 6 ★</span>
+            <span style="font-size:0.875rem;color:#e9d5ff;font-weight:500;">Fine-Tuning LLMs ← you are here</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:0.75rem;color:#6b7280;white-space:nowrap;width:5rem;">Phase 7</span>
+            <span style="font-size:0.875rem;color:#9ca3af;">Real-world Projects → ship production AI systems</span>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:1rem;">Fine-tuning is an advanced topic — you will get the most out of it once you understand model behaviour through prompting, have a clear task definition, and have a quality dataset. Do not skip phases 3–5.</p>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Tutorials -->
+    <section class="section">
+      <p class="section-label">Tutorials on this site</p>
+      <h2>Fine-Tuning Guides &amp; Deep-Dives</h2>
+      <p>From understanding transformer internals to running LoRA fine-tuning on open-source models — practical guides for every stage of the process.</p>
+
+      <div class="tutorial-list">
+        <a href="/blog/fine-tuning-llms-guide/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#a855f7;">Guide</span>
+          <span class="tutorial-title">Fine-Tuning LLMs: Complete Guide to Instruction Tuning and LoRA</span>
+        </a>
+        <a href="/blog/transformer-architecture-explained/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#a855f7;">Foundation</span>
+          <span class="tutorial-title">Transformer Architecture Explained: How LLMs Actually Work</span>
+        </a>
+        <a href="/blog/open-source-llms-guide/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#a855f7;">Guide</span>
+          <span class="tutorial-title">Open Source LLMs Guide: Llama, Mistral, Gemma, and How to Run Them Locally</span>
+        </a>
+        <a href="/blog/llm-inference-and-serving/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#a855f7;">Guide</span>
+          <span class="tutorial-title">LLM Inference and Serving: vLLM, Ollama, and Production Optimization</span>
+        </a>
+        <a href="/blog/deploying-ai-applications/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#a855f7;">Guide</span>
+          <span class="tutorial-title">Deploying AI Applications: From Development to Production</span>
+        </a>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- Related hubs -->
+    <section class="section">
+      <p class="section-label">Related topic hubs</p>
+      <h2>Continue Learning</h2>
+      <div class="tutorial-list">
+        <a href="/prompt-engineering/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#6366f1;">Hub</span>
+          <span class="tutorial-title">Prompt Engineering — Master prompting before fine-tuning</span>
+        </a>
+        <a href="/rag-systems/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#10b981;">Hub</span>
+          <span class="tutorial-title">RAG Systems — Often a better alternative to fine-tuning for knowledge tasks</span>
+        </a>
+        <a href="/ai-agents/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#fb923c;">Hub</span>
+          <span class="tutorial-title">AI Agents — Build autonomous systems on top of fine-tuned models</span>
+        </a>
+        <a href="/paths/llm-engineer/" class="tutorial-item">
+          <span class="tutorial-type" style="color:#f59e0b;">Path</span>
+          <span class="tutorial-title">LLM Engineer Learning Path — Deep track for model-level work</span>
+        </a>
+      </div>
+    </section>
+
+    <div class="cta-block">
+      <h2>Ready to go deeper into LLMs?</h2>
+      <p>Follow the complete AI engineering roadmap — from API basics to fine-tuning your own models.</p>
+      <a href="/ai-roadmap-for-developers/" class="cta-btn">View the full AI roadmap →</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <p style="color:#fff;font-weight:600;font-size:0.875rem;margin-bottom:0.25rem;">ailearnings.in</p>
+        <p style="color:#6b7280;font-size:0.75rem;">Free AI roadmap for software developers</p>
+      </div>
+      <div class="footer-links">
+        <a href="/">Roadmap</a>
+        <a href="/resources/">Resources</a>
+        <a href="/projects/">Projects</a>
+        <a href="/paths/">Paths</a>
+        <a href="/blog/">Blog</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

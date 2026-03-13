@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Roadmap guides index -->
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Phase 1: AI Foundations -->
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/ai-foundations-for-developers/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/python-for-ai-complete-guide/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Phase 2: Math & ML Fundamentals -->
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/linear-algebra-for-ai/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/statistics-for-machine-learning/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/ml-project-workflow/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Phase 3: Deep Learning -->
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/neural-networks-from-scratch/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/deep-learning-fundamentals/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/pytorch-for-ai-developers/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Phase 4: LLMs -->
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/how-llms-work/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/working-with-local-llms/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Phase 5: RAG -->
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/semantic-search-explained/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/production-rag-best-practices/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Phase 6: Agentic AI -->
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/building-ai-agents-guide/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ailearnings.in/blog/roadmap-guides/ai-agent-evaluation/</loc><lastmod>2026-03-10</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+</urlset>
