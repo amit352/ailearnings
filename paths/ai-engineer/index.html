@@ -38,6 +38,8 @@
     a { color: inherit; }
     .prose h2 { font-size: 1.5rem; font-weight: 700; color: #f9fafb; margin: 2rem 0 0.75rem; }
     .prose h3 { font-size: 1.125rem; font-weight: 600; color: #e5e7eb; margin: 1.5rem 0 0.5rem; }
+    .prose h3.phase-heading { display: flex; align-items: center; gap: 0.6rem; margin: 2rem 0 0.75rem; font-size: 1.1rem; }
+    .prose .phase-badge { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 999px; white-space: nowrap; letter-spacing: 0.04em; font-family: 'Mona Sans', system-ui, sans-serif; }
     .prose p { color: #d1d5db; line-height: 1.75; margin-bottom: 1rem; }
     .prose ul, .prose ol { color: #d1d5db; padding-left: 1.5rem; margin-bottom: 1rem; }
     .prose li { margin-bottom: 0.375rem; line-height: 1.7; }
@@ -234,7 +236,7 @@
 </ul>
 <hr>
 <h2>Learning Path</h2>
-<h3>Phase 0: Warmup &amp; Prerequisites (Weeks 1–2)</h3>
+<h3 class="phase-heading" style="color:#10b981"><span class="phase-badge" style="background:#10b98120;border:1px solid #10b98140;color:#10b981">Phase 0</span>Warmup & Prerequisites (Weeks 1–2)</h3>
 <p>New to coding or AI? Start here. If you&#39;re already comfortable writing Python scripts and have a rough sense of what LLMs are, skip to Phase 1.</p>
 <p><strong>Environment Setup:</strong></p>
 <ul>
@@ -271,7 +273,7 @@ response = client.chat.completions.create(
 </ul>
 <p><strong>Milestone:</strong> Your Python environment works, you&#39;ve made your first API call, and you understand what an LLM actually does under the hood.</p>
 <hr>
-<h3>Phase 1: Python &amp; AI Foundations (Weeks 3–6)</h3>
+<h3 class="phase-heading" style="color:#6366f1"><span class="phase-badge" style="background:#6366f120;border:1px solid #6366f140;color:#6366f1">Phase 1</span>Python & AI Foundations (Weeks 3–6)</h3>
 <p>Build the foundation before touching LLMs.</p>
 <p><strong>Learn:</strong></p>
 <ul>
@@ -285,7 +287,7 @@ response = client.chat.completions.create(
 </ul>
 <p><strong>Milestone:</strong> You can call the OpenAI API, build a simple chatbot, and understand tokens, context windows, and temperature.</p>
 <hr>
-<h3>Phase 2: Prompt Engineering (Weeks 7–8)</h3>
+<h3 class="phase-heading" style="color:#3b82f6"><span class="phase-badge" style="background:#3b82f620;border:1px solid #3b82f640;color:#3b82f6">Phase 2</span>Prompt Engineering (Weeks 7–8)</h3>
 <p>Prompts are your primary tool. Master them.</p>
 <p><strong>Learn:</strong></p>
 <ul>
@@ -299,7 +301,7 @@ response = client.chat.completions.create(
 </ul>
 <p><strong>Milestone:</strong> You can design prompts for consistent, reliable outputs across different task types.</p>
 <hr>
-<h3>Phase 3: RAG Systems (Weeks 9–12)</h3>
+<h3 class="phase-heading" style="color:#8b5cf6"><span class="phase-badge" style="background:#8b5cf620;border:1px solid #8b5cf640;color:#8b5cf6">Phase 3</span>RAG Systems (Weeks 9–12)</h3>
 <p>RAG is the most important AI pattern for production applications.</p>
 <p><strong>Learn:</strong></p>
 <ul>
@@ -316,7 +318,7 @@ response = client.chat.completions.create(
 </ul>
 <p><strong>Milestone:</strong> You can build a production-quality RAG system from scratch.</p>
 <hr>
-<h3>Phase 4: AI Agents (Weeks 13–16)</h3>
+<h3 class="phase-heading" style="color:#f59e0b"><span class="phase-badge" style="background:#f59e0b20;border:1px solid #f59e0b40;color:#f59e0b">Phase 4</span>AI Agents (Weeks 13–16)</h3>
 <p>Extend LLMs with tools and autonomous decision-making.</p>
 <p><strong>Learn:</strong></p>
 <ul>
@@ -331,7 +333,7 @@ response = client.chat.completions.create(
 </ul>
 <p><strong>Milestone:</strong> You can build agents that use tools, maintain memory, and execute multi-step tasks.</p>
 <hr>
-<h3>Phase 5: Production &amp; Deployment (Weeks 17–22)</h3>
+<h3 class="phase-heading" style="color:#ec4899"><span class="phase-badge" style="background:#ec489920;border:1px solid #ec489940;color:#ec4899">Phase 5</span>Production & Deployment (Weeks 17–22)</h3>
 <p>Ship reliable AI systems.</p>
 <p><strong>Learn:</strong></p>
 <ul>

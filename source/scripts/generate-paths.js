@@ -24,8 +24,24 @@ const LANG_META = {
   go: { label: 'Go', dot: '#22d3ee' }, java: { label: 'Java', dot: '#f59e0b' },
 };
 
+// Phase color palette (Phase 0–5)
+const PHASE_COLORS = ['#10b981','#6366f1','#3b82f6','#8b5cf6','#f59e0b','#ec4899'];
+
 marked.use({
   renderer: {
+    heading(token) {
+      const text = token.text;
+      const level = token.depth;
+      const tag = `h${level}`;
+      // Detect "Phase N:" headings and color them
+      const phaseMatch = text.match(/^Phase\s+(\d+)\s*:/);
+      if (phaseMatch) {
+        const phaseNum = parseInt(phaseMatch[1], 10);
+        const color = PHASE_COLORS[phaseNum % PHASE_COLORS.length] || '#6366f1';
+        return `<${tag} class="phase-heading" style="color:${color}"><span class="phase-badge" style="background:${color}20;border:1px solid ${color}40;color:${color}">Phase ${phaseMatch[1]}</span>${text.replace(/^Phase\s+\d+\s*:\s*/, '')}</${tag}>\n`;
+      }
+      return `<${tag}>${text}</${tag}>\n`;
+    },
     code(token) {
       const lang = (token.lang || '').toLowerCase();
       const code = token.text;

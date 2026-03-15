@@ -38,6 +38,8 @@
     a { color: inherit; }
     .prose h2 { font-size: 1.5rem; font-weight: 700; color: #f9fafb; margin: 2rem 0 0.75rem; }
     .prose h3 { font-size: 1.125rem; font-weight: 600; color: #e5e7eb; margin: 1.5rem 0 0.5rem; }
+    .prose h3.phase-heading { display: flex; align-items: center; gap: 0.6rem; margin: 2rem 0 0.75rem; font-size: 1.1rem; }
+    .prose .phase-badge { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 999px; white-space: nowrap; letter-spacing: 0.04em; font-family: 'Mona Sans', system-ui, sans-serif; }
     .prose p { color: #d1d5db; line-height: 1.75; margin-bottom: 1rem; }
     .prose ul, .prose ol { color: #d1d5db; padding-left: 1.5rem; margin-bottom: 1rem; }
     .prose li { margin-bottom: 0.375rem; line-height: 1.7; }
@@ -234,7 +236,7 @@
 </ul>
 <hr>
 <h2>Learning Path</h2>
-<h3>Phase 0: Warmup &amp; Prerequisites (Weeks 1–2)</h3>
+<h3 class="phase-heading" style="color:#10b981"><span class="phase-badge" style="background:#10b98120;border:1px solid #10b98140;color:#10b981">Phase 0</span>Warmup & Prerequisites (Weeks 1–2)</h3>
 <p>AI Research Engineering is the longest and hardest path here. This warmup phase is not optional — it ensures you have the foundations that Phase 1 assumes.</p>
 <p><strong>Environment Setup:</strong></p>
 <ul>
@@ -289,7 +291,7 @@ w, b, lr = np.random.randn(<span class="hljs-number">2</span>), <span class="hlj
 </ul>
 <p><strong>Milestone:</strong> You&#39;ve implemented gradient descent by hand, understand what a loss function is geometrically, and have identified any math gaps to close before Phase 1.</p>
 <hr>
-<h3>Phase 1: Mathematical Foundations (Weeks 3–10)</h3>
+<h3 class="phase-heading" style="color:#6366f1"><span class="phase-badge" style="background:#6366f120;border:1px solid #6366f140;color:#6366f1">Phase 1</span>Mathematical Foundations (Weeks 3–10)</h3>
 <p>Research requires deep mathematical fluency. There are no shortcuts here.</p>
 <p><strong>Learn:</strong></p>
 <ul>
@@ -306,7 +308,7 @@ w, b, lr = np.random.randn(<span class="hljs-number">2</span>), <span class="hlj
 </ul>
 <p><strong>Milestone:</strong> You can derive common ML algorithms from mathematical first principles.</p>
 <hr>
-<h3>Phase 2: Deep Learning Mastery (Weeks 11–18)</h3>
+<h3 class="phase-heading" style="color:#3b82f6"><span class="phase-badge" style="background:#3b82f620;border:1px solid #3b82f640;color:#3b82f6">Phase 2</span>Deep Learning Mastery (Weeks 11–18)</h3>
 <p><strong>Learn:</strong></p>
 <ul>
 <li><a href="/blog/roadmap-guides/neural-networks-from-scratch/">Neural Networks from Scratch</a> — every component derived and implemented</li>
@@ -321,7 +323,7 @@ w, b, lr = np.random.randn(<span class="hljs-number">2</span>), <span class="hlj
 </ul>
 <p><strong>Milestone:</strong> You can implement any architecture from a paper without tutorial help.</p>
 <hr>
-<h3>Phase 3: Research Skills &amp; Paper Reading (Weeks 19–24)</h3>
+<h3 class="phase-heading" style="color:#8b5cf6"><span class="phase-badge" style="background:#8b5cf620;border:1px solid #8b5cf640;color:#8b5cf6">Phase 3</span>Research Skills & Paper Reading (Weeks 19–24)</h3>
 <p><strong>Learn:</strong></p>
 <ul>
 <li>How to read a research paper: skim → deep read → reproduce → critique</li>
@@ -337,7 +339,7 @@ w, b, lr = np.random.randn(<span class="hljs-number">2</span>), <span class="hlj
 </ul>
 <p><strong>Milestone:</strong> You can reproduce a published result and write a rigorous analysis of what changed.</p>
 <hr>
-<h3>Phase 4: Specialization (Weeks 25–34)</h3>
+<h3 class="phase-heading" style="color:#f59e0b"><span class="phase-badge" style="background:#f59e0b20;border:1px solid #f59e0b40;color:#f59e0b">Phase 4</span>Specialization (Weeks 25–34)</h3>
 <p>Pick one research area and go deep.</p>
 <p><strong>Option A — LLM Alignment:</strong></p>
 <ul>
@@ -371,7 +373,7 @@ w, b, lr = np.random.randn(<span class="hljs-number">2</span>), <span class="hlj
 </ul>
 <p><strong>Milestone:</strong> You have run an original experiment and can present findings clearly.</p>
 <hr>
-<h3>Phase 5: Contributing to the Field (Weeks 35–54)</h3>
+<h3 class="phase-heading" style="color:#ec4899"><span class="phase-badge" style="background:#ec489920;border:1px solid #ec489940;color:#ec4899">Phase 5</span>Contributing to the Field (Weeks 35–54)</h3>
 <p><strong>Activities:</strong></p>
 <ul>
 <li>Submit to workshops (NeurIPS, ICML, ICLR workshops have lower bars than main tracks)</li>
