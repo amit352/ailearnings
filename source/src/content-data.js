@@ -137,6 +137,14 @@ const BLOG_POSTS = [
     "mins": 8
   },
   {
+    "slug": "/blog/fine-tune-open-source-llm",
+    "title": "Fine-Tuning Open Source LLMs: From Llama to Production",
+    "description": "End-to-end guide to fine-tuning Llama 3 with Unsloth and TRL — dataset prep, LoRA training, merging adapters, exporting to GGUF, and serving with Ollama.",
+    "date": "2026-03-15",
+    "date_display": "March 15, 2026",
+    "mins": 9
+  },
+  {
     "slug": "/blog/finetuning-datasets",
     "title": "Dataset Preparation for LLM Fine-Tuning",
     "description": "How to prepare high-quality datasets for LLM fine-tuning: Alpaca format, ShareGPT, deduplication, quality filtering, synthetic data with GPT-4, and HuggingFace datasets.",
@@ -164,6 +172,14 @@ const BLOG_POSTS = [
     "slug": "/blog/gguf-models",
     "title": "GGUF Models Explained: The Format Powering Local LLMs",
     "description": "Understand GGUF — what it is, how llama.cpp uses it, Q4_K_M vs Q5_K_M vs Q8_0 quant levels, finding models on HuggingFace, and loading with llama-cpp-python.",
+    "date": "2026-03-15",
+    "date_display": "March 15, 2026",
+    "mins": 9
+  },
+  {
+    "slug": "/blog/huggingface-training",
+    "title": "Training LLMs with HuggingFace: Complete Guide",
+    "description": "Complete guide to HuggingFace LLM training: Trainer, TRL SFTTrainer, DPOTrainer, Accelerate for multi-GPU, and PEFT for parameter-efficient fine-tuning.",
     "date": "2026-03-15",
     "date_display": "March 15, 2026",
     "mins": 9
@@ -201,6 +217,14 @@ const BLOG_POSTS = [
     "mins": 12
   },
   {
+    "slug": "/blog/llm-api-errors",
+    "title": "LLM API Error Handling Best Practices",
+    "description": "Handle LLM API errors in production — 429 rate limits, 500 server errors, context length exceeded, content filters, circuit breaker pattern, and fallback providers.",
+    "date": "2026-03-15",
+    "date_display": "March 15, 2026",
+    "mins": 13
+  },
+  {
     "slug": "/blog/llm-api-guide",
     "title": "LLM APIs Guide for Developers",
     "description": "Complete guide to working with LLM APIs — authentication, tokens, streaming, function calling, error handling, and cost management across OpenAI, Anthropic, and Gemini.",
@@ -215,6 +239,14 @@ const BLOG_POSTS = [
     "date": "2026-03-15",
     "date_display": "March 15, 2026",
     "mins": 11
+  },
+  {
+    "slug": "/blog/llm-evaluation",
+    "title": "Evaluation Metrics for LLMs: How to Measure Quality",
+    "description": "How to evaluate LLM quality with BLEU, ROUGE, perplexity, LLM-as-judge, lm-eval-harness, and custom task-specific evals. With code for running evaluations.",
+    "date": "2026-03-15",
+    "date_display": "March 15, 2026",
+    "mins": 10
   },
   {
     "slug": "/blog/llm-fine-tuning-guide",
@@ -281,6 +313,14 @@ const BLOG_POSTS = [
     "mins": 10
   },
   {
+    "slug": "/blog/model-distillation",
+    "title": "Model Distillation Explained: Smaller Models, Similar Performance",
+    "description": "Understand knowledge distillation for LLMs — teacher-student training, response distillation, distillation vs quantization, and Python examples with Hugging Face Transformers.",
+    "date": "2026-03-15",
+    "date_display": "March 15, 2026",
+    "mins": 10
+  },
+  {
     "slug": "/blog/multi-agent-systems",
     "title": "Multi-Agent Systems Explained",
     "description": "Multi-agent coordination patterns — supervisor-worker, peer-to-peer, hierarchical. When to use multi-agent vs single agent, with CrewAI and LangGraph examples.",
@@ -319,6 +359,14 @@ const BLOG_POSTS = [
     "date": "2026-03-15",
     "date_display": "March 15, 2026",
     "mins": 13
+  },
+  {
+    "slug": "/blog/openai-api-tutorial",
+    "title": "OpenAI API Tutorial for Developers (2026)",
+    "description": "Complete OpenAI API tutorial — setup, chat completions, streaming, function calling, embeddings, vision, token counting, error handling, and retry logic for 2026.",
+    "date": "2026-03-15",
+    "date_display": "March 15, 2026",
+    "mins": 14
   },
   {
     "slug": "/blog/openai-langchain",
@@ -623,14 +671,6 @@ const BLOG_POSTS = [
     "date": "2026-03-13",
     "date_display": "March 13, 2026",
     "mins": 5
-  },
-  {
-    "slug": "openai-api-tutorial",
-    "title": "OpenAI API Tutorial for Developers",
-    "description": "Learn how to use the OpenAI API to build AI-powered applications.",
-    "date": "2026-03-13",
-    "date_display": "March 13, 2026",
-    "mins": 7
   },
   {
     "slug": "openai-python-client-guide",

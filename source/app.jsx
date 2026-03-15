@@ -4222,77 +4222,183 @@ function KnowledgeGaps() {
     // ═══════════════════════════════════════════════════════════
     function BlogIndexPage() {
       useSeo("AI Engineering Blog – Guides & Tutorials | AI Learning Hub", "AI engineering articles, tutorials, and roadmaps for software developers learning LLMs, RAG, and agentic AI.");
-      const [tab, setTab] = React.useState("articles");
-      const posts  = tab === "articles" ? BLOG_POSTS : ROADMAP_GUIDES;
-      const prefix = tab === "articles" ? "/blog/" : "/blog/roadmap-guides/";
-      const tagPalette = [
-        "text-blue-400 bg-blue-500/10",
-        "text-purple-400 bg-purple-500/10",
-        "text-green-400 bg-green-500/10",
-        "text-amber-400 bg-amber-500/10",
-        "text-rose-400 bg-rose-500/10",
-        "text-cyan-400 bg-cyan-500/10",
-        "text-indigo-400 bg-indigo-500/10",
-      ];
+      const [tab, setTab]           = React.useState("articles");
+      const [category, setCategory] = React.useState("All");
+      const [page, setPage]         = React.useState(1);
+      const PER_PAGE = 15;
+
+      // Derive category from slug
+      function getCategory(slug) {
+        if (/prompt-eng|chain-of-thought|few-shot|zero-shot|system-prompt|role-prompt|prompt-inject|prompt-template|prompt-mistake|prompt-example|prompt-best|advanced-prompt/.test(slug)) return "Prompt Engineering";
+        if (/^rag-|hybrid-search-rag|multi-document-rag|context-window-rag|production-rag|rag-chunk|rag-eval|vector-vs-keyword|build-rag/.test(slug)) return "RAG Systems";
+        if (/vector-database|vector-search|vector-index|vector-recomm|vector-vs-relational|embeddings-explained|semantic-search-vector|ann-algo|embedding-model/.test(slug)) return "Vector Databases";
+        if (/^ai-agent|^agent-|multi-agent|langchain-agent|autonomous-agent|build-ai-agent/.test(slug)) return "AI Agents";
+        if (/llm-api|openai-api|anthropic-api|gemini-api|llm-stream|llm-function-call|llm-rate|llm-api-cost|openai-langchain|api-vs-local|llm-api-error/.test(slug)) return "LLM APIs";
+        if (/open-source-llm|ollama|llm-quantiz|gguf|llm-hardware|local-ai-dev|llm-benchmark|model-distill|fine-tune-open|open-vs-closed|run-llm/.test(slug)) return "Open Source LLMs";
+        if (/llm-fine-tun|lora-fine|qlora|full-vs-lora|instruction-tun|finetuning-dataset|huggingface-train|llm-evaluat|rlhf|synthetic-data|distributed-llm/.test(slug)) return "LLM Training";
+        return "General";
+      }
+
+      const catMeta = {
+        "All":                { text: "text-gray-300",   bg: "bg-white/8",         activeBg: "bg-white/12",       dot: "" },
+        "Prompt Engineering": { text: "text-blue-400",   bg: "bg-blue-500/10",     activeBg: "bg-blue-500/20",    dot: "bg-blue-500" },
+        "RAG Systems":        { text: "text-purple-400", bg: "bg-purple-500/10",   activeBg: "bg-purple-500/20",  dot: "bg-purple-500" },
+        "Vector Databases":   { text: "text-green-400",  bg: "bg-green-500/10",    activeBg: "bg-green-500/20",   dot: "bg-green-500" },
+        "AI Agents":          { text: "text-amber-400",  bg: "bg-amber-500/10",    activeBg: "bg-amber-500/20",   dot: "bg-amber-500" },
+        "LLM APIs":           { text: "text-cyan-400",   bg: "bg-cyan-500/10",     activeBg: "bg-cyan-500/20",    dot: "bg-cyan-500" },
+        "Open Source LLMs":   { text: "text-rose-400",   bg: "bg-rose-500/10",     activeBg: "bg-rose-500/20",    dot: "bg-rose-500" },
+        "LLM Training":       { text: "text-indigo-400", bg: "bg-indigo-500/10",   activeBg: "bg-indigo-500/20",  dot: "bg-indigo-500" },
+        "General":            { text: "text-gray-400",   bg: "bg-gray-700/40",     activeBg: "bg-gray-700/60",    dot: "bg-gray-500" },
+      };
+      const CATS = ["All","Prompt Engineering","RAG Systems","Vector Databases","AI Agents","LLM APIs","Open Source LLMs","LLM Training"];
+
+      const allPosts = tab === "articles" ? BLOG_POSTS : ROADMAP_GUIDES;
+      const prefix   = tab === "articles" ? "/blog/" : "/blog/roadmap-guides/";
+
+      const changeTab = (t)  => { setTab(t); setCategory("All"); setPage(1); };
+      const changeCat = (c)  => { setCategory(c); setPage(1); };
+      const changePage = (p) => { setPage(p); if (typeof window !== "undefined") window.scrollTo({top:0,behavior:"smooth"}); };
+
+      const filtered   = category === "All" ? allPosts : allPosts.filter(p => getCategory(p.slug) === category);
+      const totalPages = Math.ceil(filtered.length / PER_PAGE);
+      const paginated  = filtered.slice((page-1)*PER_PAGE, page*PER_PAGE);
+      const showFeatured = page === 1 && category === "All" && tab === "articles" && paginated.length > 0;
+      const listPosts  = showFeatured ? paginated.slice(1) : paginated;
+
       return (
-        <div className="max-w-2xl mx-auto px-4 py-10">
+        <div className="max-w-5xl mx-auto px-4 py-10">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">AI Engineering Blog</h1>
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold text-white mb-1.5">AI Engineering Blog</h1>
             <p className="text-gray-400 text-sm">Practical guides for developers building with LLMs, RAG, and agentic AI.</p>
           </div>
-          {/* Medium-style underline tabs */}
+          {/* Tabs */}
           <div className="flex gap-6 mb-8 border-b border-white/8">
             {[["articles","Developer Guides",BLOG_POSTS.length],["guides","Roadmap Guides",ROADMAP_GUIDES.length]].map(([id,label,count]) => (
-              <button key={id} onClick={() => setTab(id)}
+              <button key={id} onClick={() => changeTab(id)}
                 className={`text-sm pb-3 px-0 transition-colors border-b-2 -mb-px font-medium ${tab === id ? "border-blue-500 text-white" : "border-transparent text-gray-500 hover:text-gray-300"}`}>
                 {label} <span className="text-xs opacity-50 ml-1">{count}</span>
               </button>
             ))}
           </div>
-          {/* Featured first post */}
-          {posts.length > 0 && (() => {
-            const fp = posts[0];
-            return (
-              <a href={`${prefix}${fp.slug}/`} className="group block mb-8 pb-8 border-b border-white/8" style={{textDecoration:"none"}}>
-                <span className={`inline-block text-[11px] font-semibold px-2 py-0.5 rounded-full mb-3 ${tagPalette[0]}`}>
-                  {tab === "articles" ? "Developer Guide" : "Roadmap Guide"}
-                </span>
-                <h2 className="text-white font-bold text-2xl leading-snug mb-2 group-hover:text-blue-300 transition-colors">{fp.title}</h2>
-                <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">{fp.description}</p>
-                <div className="flex items-center gap-2 text-xs text-gray-500">
-                  <span className="w-6 h-6 rounded-full bg-blue-600/30 text-blue-400 flex items-center justify-center text-[10px] font-bold flex-shrink-0">AK</span>
-                  <span className="text-gray-400 font-medium">Amit K Chauhan</span>
-                  <span>·</span>
-                  <span>{fp.date_display}</span>
-                  <span>·</span>
-                  <span>{fp.mins} min read</span>
-                </div>
-              </a>
-            );
-          })()}
-          {/* Post list */}
-          <div className="divide-y divide-white/6">
-            {posts.slice(1).map((post, i) => (
-              <a key={post.slug} href={`${prefix}${post.slug}/`}
-                className="group flex items-start gap-4 py-5 hover:no-underline" style={{textDecoration:"none"}}>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${tagPalette[(i+1) % tagPalette.length]}`}>
-                      {tab === "articles" ? "Developer Guide" : "Roadmap Guide"}
+
+          {/* Mobile category chips */}
+          <div className="md:hidden flex gap-2 overflow-x-auto pb-3 mb-6 -mx-4 px-4">
+            {CATS.map(cat => {
+              const count = cat === "All" ? allPosts.length : allPosts.filter(p => getCategory(p.slug) === cat).length;
+              const m = catMeta[cat] || catMeta["General"];
+              const isActive = category === cat;
+              return (
+                <button key={cat} onClick={() => changeCat(cat)}
+                  className={`flex-shrink-0 text-[11px] font-semibold px-3 py-1.5 rounded-full transition-all ${isActive ? `${m.text} ${m.activeBg}` : "text-gray-500 bg-gray-800 hover:text-white"}`}>
+                  {cat} <span className="opacity-50 ml-0.5">{count}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Layout: sidebar + content */}
+          <div className="flex gap-10">
+
+            {/* Left sidebar */}
+            <aside className="hidden md:flex flex-col w-44 flex-shrink-0">
+              <p className="text-[10px] uppercase tracking-widest text-gray-600 font-bold mb-2 px-3">Topics</p>
+              <nav className="space-y-0.5">
+                {CATS.map(cat => {
+                  const count = cat === "All" ? allPosts.length : allPosts.filter(p => getCategory(p.slug) === cat).length;
+                  const m = catMeta[cat] || catMeta["General"];
+                  const isActive = category === cat;
+                  return (
+                    <button key={cat} onClick={() => changeCat(cat)}
+                      className={`w-full flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-left text-sm transition-all ${
+                        isActive
+                          ? `${m.text} ${m.activeBg} font-semibold`
+                          : "text-gray-500 hover:text-gray-200 hover:bg-white/5"
+                      }`}>
+                      <div className="flex items-center gap-2 min-w-0">
+                        {m.dot && <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${m.dot}`}/>}
+                        <span className="truncate">{cat}</span>
+                      </div>
+                      <span className="text-[10px] opacity-50 flex-shrink-0">{count}</span>
+                    </button>
+                  );
+                })}
+              </nav>
+            </aside>
+
+            {/* Content area */}
+            <div className="flex-1 min-w-0">
+              {/* Featured hero post */}
+              {showFeatured && (() => {
+                const fp = paginated[0];
+                const m  = catMeta[getCategory(fp.slug)] || catMeta["General"];
+                return (
+                  <a href={`${prefix}${fp.slug}/`} className="group block mb-8 pb-8 border-b border-white/8" style={{textDecoration:"none"}}>
+                    <span className={`inline-block text-[11px] font-semibold px-2 py-0.5 rounded-full mb-3 ${m.text} ${m.bg}`}>
+                      {getCategory(fp.slug)}
                     </span>
-                    <span className="text-[11px] text-gray-600">{post.mins} min read</span>
+                    <h2 className="text-white font-bold text-2xl leading-snug mb-2 group-hover:text-blue-300 transition-colors">{fp.title}</h2>
+                    <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">{fp.description}</p>
+                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <span className="w-6 h-6 rounded-full bg-blue-600/30 text-blue-400 flex items-center justify-center text-[10px] font-bold flex-shrink-0">AK</span>
+                      <span className="text-gray-400 font-medium">Amit K Chauhan</span>
+                      <span>·</span><span>{fp.date_display}</span>
+                      <span>·</span><span>{fp.mins} min read</span>
+                    </div>
+                  </a>
+                );
+              })()}
+
+              {/* Post list */}
+              {listPosts.length === 0 && (
+                <p className="text-gray-500 text-sm py-8">No posts in this category yet.</p>
+              )}
+              <div className="divide-y divide-white/6">
+                {listPosts.map((post, i) => {
+                  const m = catMeta[getCategory(post.slug)] || catMeta["General"];
+                  return (
+                    <a key={post.slug} href={`${prefix}${post.slug}/`}
+                      className="group flex items-start py-5" style={{textDecoration:"none"}}>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${m.text} ${m.bg}`}>
+                            {tab === "articles" ? getCategory(post.slug) : "Roadmap Guide"}
+                          </span>
+                          <span className="text-[11px] text-gray-600">{post.mins} min read</span>
+                        </div>
+                        <h2 className="text-white font-bold text-base leading-snug mb-1 group-hover:text-blue-300 transition-colors line-clamp-2">{post.title}</h2>
+                        <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-2">{post.description}</p>
+                        <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
+                          <span>Amit K Chauhan</span><span>·</span><span>{post.date_display}</span>
+                        </div>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-between mt-8 pt-6 border-t border-white/8">
+                  <button onClick={() => changePage(Math.max(1,page-1))} disabled={page===1}
+                    className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                    <ArrowRight size={14} className="rotate-180"/> Prev
+                  </button>
+                  <div className="flex items-center gap-1">
+                    {Array.from({length: totalPages}, (_,i) => i+1).map(pg => (
+                      <button key={pg} onClick={() => changePage(pg)}
+                        className={`w-8 h-8 rounded-lg text-sm font-medium transition-all ${pg === page ? "bg-blue-600 text-white" : "text-gray-500 hover:text-white hover:bg-white/8"}`}>
+                        {pg}
+                      </button>
+                    ))}
                   </div>
-                  <h2 className="text-white font-bold text-base leading-snug mb-1 group-hover:text-blue-300 transition-colors line-clamp-2">{post.title}</h2>
-                  <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-2">{post.description}</p>
-                  <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
-                    <span>Amit K Chauhan</span>
-                    <span>·</span>
-                    <span>{post.date_display}</span>
-                  </div>
+                  <button onClick={() => changePage(Math.min(totalPages,page+1))} disabled={page===totalPages}
+                    className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                    Next <ArrowRight size={14}/>
+                  </button>
                 </div>
-              </a>
-            ))}
+              )}
+            </div>
           </div>
         </div>
       );
