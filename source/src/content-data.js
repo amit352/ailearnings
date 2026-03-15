@@ -70,7 +70,7 @@ const BLOG_POSTS = [
     "description": "Learn how to build reusable, maintainable prompt templates for production AI applications — covering parameterization, versioning, and testing patterns.",
     "date": "2026-03-15",
     "date_display": "March 15, 2026",
-    "mins": 8
+    "mins": 7
   },
   {
     "slug": "role-prompting",
@@ -78,7 +78,7 @@ const BLOG_POSTS = [
     "description": "Learn how role prompting shapes LLM outputs — when persona assignment improves results, how to write effective role prompts, and the trade-offs to know.",
     "date": "2026-03-15",
     "date_display": "March 15, 2026",
-    "mins": 9
+    "mins": 8
   },
   {
     "slug": "system-prompts-guide",
