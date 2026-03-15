@@ -4,20 +4,20 @@
   <meta charset="UTF-8" />
   <script>if(location.protocol!=='https:'&&location.hostname!=='localhost'&&location.hostname!=='127.0.0.1'&&location.hostname!=='::1')location.replace('https:'+location.href.substring(location.protocol.length));</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vector Databases Guide for AI Applications | AI Learning Hub</title>
-  <meta name="description" content="Complete guide to vector databases for AI apps — embeddings, similarity search, HNSW indexing, and how to pick the right vector DB for production." />
-  <link rel="canonical" href="https://ailearnings.in/blog/vector-database-guide/" />
+  <title>Approximate Nearest Neighbor Algorithms Explained | AI Learning Hub</title>
+  <meta name="description" content="How ANN algorithms work — HNSW, IVF, ScaNN, and PQ explained with code, benchmarks, and tradeoffs for building fast vector search at scale." />
+  <link rel="canonical" href="https://ailearnings.in/blog/ann-algorithms/" />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content="Vector Databases Guide for AI Applications" />
-  <meta property="og:description" content="Complete guide to vector databases for AI apps — embeddings, similarity search, HNSW indexing, and how to pick the right vector DB for production." />
-  <meta property="og:url" content="https://ailearnings.in/blog/vector-database-guide/" />
+  <meta property="og:title" content="Approximate Nearest Neighbor Algorithms Explained" />
+  <meta property="og:description" content="How ANN algorithms work — HNSW, IVF, ScaNN, and PQ explained with code, benchmarks, and tradeoffs for building fast vector search at scale." />
+  <meta property="og:url" content="https://ailearnings.in/blog/ann-algorithms/" />
   <meta property="og:site_name" content="AI Learning Hub" />
   <meta property="og:image" content="https://ailearnings.in/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Vector Databases Guide for AI Applications" />
-  <meta name="twitter:description" content="Complete guide to vector databases for AI apps — embeddings, similarity search, HNSW indexing, and how to pick the right vector DB for production." />
+  <meta name="twitter:title" content="Approximate Nearest Neighbor Algorithms Explained" />
+  <meta name="twitter:description" content="How ANN algorithms work — HNSW, IVF, ScaNN, and PQ explained with code, benchmarks, and tradeoffs for building fast vector search at scale." />
   <meta name="twitter:image" content="https://ailearnings.in/og-image.jpg" />
   <style>*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.\!visible{visibility:visible!important}.visible{visibility:visible}.collapse{visibility:collapse}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.-right-0\.5{right:-.125rem}.-top-0\.5{top:-.125rem}.bottom-6{bottom:1.5rem}.left-6{left:1.5rem}.right-6{right:1.5rem}.top-0{top:0}.top-6{top:1.5rem}.top-\[52px\]{top:52px}.z-10{z-index:10}.z-30{z-index:30}.z-50{z-index:50}.-mx-2{margin-left:-.5rem;margin-right:-.5rem}.-mx-4{margin-left:-1rem;margin-right:-1rem}.mx-1{margin-left:.25rem;margin-right:.25rem}.mx-auto{margin-left:auto;margin-right:auto}.my-8{margin-top:2rem;margin-bottom:2rem}.mb-0\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-10{margin-bottom:2.5rem}.mb-2{margin-bottom:.5rem}.mb-2\.5{margin-bottom:.625rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-10{margin-left:2.5rem}.ml-2{margin-left:.5rem}.ml-3{margin-left:.75rem}.ml-9{margin-left:2.25rem}.ml-auto{margin-left:auto}.mr-0\.5{margin-right:.125rem}.mr-1{margin-right:.25rem}.mr-1\.5{margin-right:.375rem}.mr-2{margin-right:.5rem}.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.line-clamp-1{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1}.block{display:block}.inline-block{display:inline-block}.inline{display:inline}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.hidden{display:none}.h-0\.5{height:.125rem}.h-1{height:.25rem}.h-1\.5{height:.375rem}.h-10{height:2.5rem}.h-12{height:3rem}.h-2{height:.5rem}.h-3{height:.75rem}.h-4{height:1rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-full{height:100%}.h-px{height:1px}.min-h-screen{min-height:100vh}.w-0\.5{width:.125rem}.w-1\.5{width:.375rem}.w-10{width:2.5rem}.w-12{width:3rem}.w-16{width:4rem}.w-20{width:5rem}.w-24{width:6rem}.w-28{width:7rem}.w-36{width:9rem}.w-4{width:1rem}.w-40{width:10rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-full{width:100%}.min-w-0{min-width:0}.min-w-max{min-width:-moz-max-content;min-width:max-content}.max-w-24{max-width:6rem}.max-w-3xl{max-width:48rem}.max-w-\[88px\]{max-width:88px}.max-w-full{max-width:100%}.max-w-lg{max-width:32rem}.max-w-xl{max-width:36rem}.max-w-xs{max-width:20rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes bounce{0%,to{transform:translateY(-25%);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes ping{75%,to{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0,0,.2,1) infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0{gap:0}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.gap-x-3{-moz-column-gap:.75rem;column-gap:.75rem}.gap-y-1{row-gap:.25rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-white\/5>:not([hidden])~:not([hidden]){border-color:hsla(0,0%,100%,.05)}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.truncate{overflow:hidden;text-overflow:ellipsis}.truncate,.whitespace-nowrap{white-space:nowrap}.whitespace-pre{white-space:pre}.whitespace-pre-wrap{white-space:pre-wrap}.rounded{border-radius:.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-md{border-radius:.375rem}.rounded-xl{border-radius:.75rem}.rounded-l-none{border-top-left-radius:0;border-bottom-left-radius:0}.rounded-r-full{border-top-right-radius:9999px;border-bottom-right-radius:9999px}.rounded-r-xl{border-top-right-radius:.75rem;border-bottom-right-radius:.75rem}.rounded-t-lg{border-top-left-radius:.5rem;border-top-right-radius:.5rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-amber-500\/10{border-color:rgba(245,158,11,.1)}.border-amber-500\/30{border-color:rgba(245,158,11,.3)}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.border-blue-500\/20{border-color:rgba(59,130,246,.2)}.border-blue-500\/25{border-color:rgba(59,130,246,.25)}.border-blue-500\/30{border-color:rgba(59,130,246,.3)}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-cyan-800{--tw-border-opacity:1;border-color:rgb(21 94 117/var(--tw-border-opacity,1))}.border-gray-500{--tw-border-opacity:1;border-color:rgb(107 114 128/var(--tw-border-opacity,1))}.border-gray-500\/20{border-color:hsla(220,9%,46%,.2)}.border-gray-600{--tw-border-opacity:1;border-color:rgb(75 85 99/var(--tw-border-opacity,1))}.border-gray-700{--tw-border-opacity:1;border-color:rgb(55 65 81/var(--tw-border-opacity,1))}.border-gray-800{--tw-border-opacity:1;border-color:rgb(31 41 55/var(--tw-border-opacity,1))}.border-gray-800\/50{border-color:rgba(31,41,55,.5)}.border-green-500\/20{border-color:rgba(34,197,94,.2)}.border-green-500\/25{border-color:rgba(34,197,94,.25)}.border-green-500\/30{border-color:rgba(34,197,94,.3)}.border-green-600{--tw-border-opacity:1;border-color:rgb(22 163 74/var(--tw-border-opacity,1))}.border-green-700{--tw-border-opacity:1;border-color:rgb(21 128 61/var(--tw-border-opacity,1))}.border-green-800{--tw-border-opacity:1;border-color:rgb(22 101 52/var(--tw-border-opacity,1))}.border-green-900{--tw-border-opacity:1;border-color:rgb(20 83 45/var(--tw-border-opacity,1))}.border-indigo-500\/60{border-color:rgba(99,102,241,.6)}.border-indigo-800{--tw-border-opacity:1;border-color:rgb(55 48 163/var(--tw-border-opacity,1))}.border-orange-500\/20{border-color:rgba(249,115,22,.2)}.border-orange-500\/30{border-color:rgba(249,115,22,.3)}.border-orange-700{--tw-border-opacity:1;border-color:rgb(194 65 12/var(--tw-border-opacity,1))}.border-orange-800{--tw-border-opacity:1;border-color:rgb(154 52 18/var(--tw-border-opacity,1))}.border-pink-800{--tw-border-opacity:1;border-color:rgb(157 23 77/var(--tw-border-opacity,1))}.border-purple-500\/20{border-color:rgba(168,85,247,.2)}.border-purple-500\/25{border-color:rgba(168,85,247,.25)}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-red-500\/20{border-color:rgba(239,68,68,.2)}.border-red-800{--tw-border-opacity:1;border-color:rgb(153 27 27/var(--tw-border-opacity,1))}.border-red-900{--tw-border-opacity:1;border-color:rgb(127 29 29/var(--tw-border-opacity,1))}.border-rose-500\/20{border-color:rgba(244,63,94,.2)}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-slate-500\/20{border-color:rgba(100,116,139,.2)}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-teal-500\/30{border-color:rgba(20,184,166,.3)}.border-teal-700{--tw-border-opacity:1;border-color:rgb(15 118 110/var(--tw-border-opacity,1))}.border-teal-800{--tw-border-opacity:1;border-color:rgb(17 94 89/var(--tw-border-opacity,1))}.border-violet-800{--tw-border-opacity:1;border-color:rgb(91 33 182/var(--tw-border-opacity,1))}.border-white\/10{border-color:hsla(0,0%,100%,.1)}.border-white\/5{border-color:hsla(0,0%,100%,.05)}.border-yellow-500\/25{border-color:rgba(234,179,8,.25)}.border-yellow-800{--tw-border-opacity:1;border-color:rgb(133 77 14/var(--tw-border-opacity,1))}.border-yellow-900{--tw-border-opacity:1;border-color:rgb(113 63 18/var(--tw-border-opacity,1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36/var(--tw-bg-opacity,1))}.bg-amber-500\/10{background-color:rgba(245,158,11,.1)}.bg-amber-500\/15{background-color:rgba(245,158,11,.15)}.bg-amber-500\/5{background-color:rgba(245,158,11,.05)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-500\/10{background-color:rgba(59,130,246,.1)}.bg-blue-500\/15{background-color:rgba(59,130,246,.15)}.bg-blue-500\/5{background-color:rgba(59,130,246,.05)}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-600\/10{background-color:rgba(37,99,235,.1)}.bg-blue-600\/20{background-color:rgba(37,99,235,.2)}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-900\/20{background-color:rgba(30,58,138,.2)}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-emerald-600\/20{background-color:rgba(5,150,105,.2)}.bg-gray-500{--tw-bg-opacity:1;background-color:rgb(107 114 128/var(--tw-bg-opacity,1))}.bg-gray-500\/10{background-color:hsla(220,9%,46%,.1)}.bg-gray-600{--tw-bg-opacity:1;background-color:rgb(75 85 99/var(--tw-bg-opacity,1))}.bg-gray-700{--tw-bg-opacity:1;background-color:rgb(55 65 81/var(--tw-bg-opacity,1))}.bg-gray-700\/50{background-color:rgba(55,65,81,.5)}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55/var(--tw-bg-opacity,1))}.bg-gray-800\/40{background-color:rgba(31,41,55,.4)}.bg-gray-800\/50{background-color:rgba(31,41,55,.5)}.bg-gray-800\/60{background-color:rgba(31,41,55,.6)}.bg-gray-800\/70{background-color:rgba(31,41,55,.7)}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39/var(--tw-bg-opacity,1))}.bg-gray-900\/50{background-color:rgba(17,24,39,.5)}.bg-gray-900\/60{background-color:rgba(17,24,39,.6)}.bg-gray-900\/70{background-color:rgba(17,24,39,.7)}.bg-gray-900\/80{background-color:rgba(17,24,39,.8)}.bg-gray-900\/95{background-color:rgba(17,24,39,.95)}.bg-gray-950{--tw-bg-opacity:1;background-color:rgb(3 7 18/var(--tw-bg-opacity,1))}.bg-gray-950\/70{background-color:rgba(3,7,18,.7)}.bg-gray-950\/80{background-color:rgba(3,7,18,.8)}.bg-gray-950\/95{background-color:rgba(3,7,18,.95)}.bg-green-100{--tw-bg-opacity:1;background-color:rgb(220 252 231/var(--tw-bg-opacity,1))}.bg-green-500{--tw-bg-opacity:1;background-color:rgb(34 197 94/var(--tw-bg-opacity,1))}.bg-green-500\/10{background-color:rgba(34,197,94,.1)}.bg-green-500\/20{background-color:rgba(34,197,94,.2)}.bg-green-500\/5{background-color:rgba(34,197,94,.05)}.bg-green-600{--tw-bg-opacity:1;background-color:rgb(22 163 74/var(--tw-bg-opacity,1))}.bg-green-600\/20{background-color:rgba(22,163,74,.2)}.bg-green-900{--tw-bg-opacity:1;background-color:rgb(20 83 45/var(--tw-bg-opacity,1))}.bg-green-900\/10{background-color:rgba(20,83,45,.1)}.bg-green-900\/20{background-color:rgba(20,83,45,.2)}.bg-green-900\/30{background-color:rgba(20,83,45,.3)}.bg-green-950{--tw-bg-opacity:1;background-color:rgb(5 46 22/var(--tw-bg-opacity,1))}.bg-indigo-500{--tw-bg-opacity:1;background-color:rgb(99 102 241/var(--tw-bg-opacity,1))}.bg-indigo-500\/10{background-color:rgba(99,102,241,.1)}.bg-indigo-500\/25{background-color:rgba(99,102,241,.25)}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229/var(--tw-bg-opacity,1))}.bg-indigo-900{--tw-bg-opacity:1;background-color:rgb(49 46 129/var(--tw-bg-opacity,1))}.bg-orange-100{--tw-bg-opacity:1;background-color:rgb(255 237 213/var(--tw-bg-opacity,1))}.bg-orange-500\/10{background-color:rgba(249,115,22,.1)}.bg-orange-600{--tw-bg-opacity:1;background-color:rgb(234 88 12/var(--tw-bg-opacity,1))}.bg-orange-600\/10{background-color:rgba(234,88,12,.1)}.bg-orange-600\/20{background-color:rgba(234,88,12,.2)}.bg-orange-900{--tw-bg-opacity:1;background-color:rgb(124 45 18/var(--tw-bg-opacity,1))}.bg-pink-600{--tw-bg-opacity:1;background-color:rgb(219 39 119/var(--tw-bg-opacity,1))}.bg-pink-900{--tw-bg-opacity:1;background-color:rgb(131 24 67/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-500\/10{background-color:rgba(168,85,247,.1)}.bg-purple-500\/5{background-color:rgba(168,85,247,.05)}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-600\/20{background-color:rgba(147,51,234,.2)}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68/var(--tw-bg-opacity,1))}.bg-red-500\/10{background-color:rgba(239,68,68,.1)}.bg-red-600\/20{background-color:rgba(220,38,38,.2)}.bg-red-900{--tw-bg-opacity:1;background-color:rgb(127 29 29/var(--tw-bg-opacity,1))}.bg-red-950{--tw-bg-opacity:1;background-color:rgb(69 10 10/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-500\/10{background-color:rgba(244,63,94,.1)}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-500\/10{background-color:rgba(100,116,139,.1)}.bg-teal-100{--tw-bg-opacity:1;background-color:rgb(204 251 241/var(--tw-bg-opacity,1))}.bg-teal-600{--tw-bg-opacity:1;background-color:rgb(13 148 136/var(--tw-bg-opacity,1))}.bg-teal-600\/10{background-color:rgba(13,148,136,.1)}.bg-teal-600\/20{background-color:rgba(13,148,136,.2)}.bg-teal-900{--tw-bg-opacity:1;background-color:rgb(19 78 74/var(--tw-bg-opacity,1))}.bg-violet-600{--tw-bg-opacity:1;background-color:rgb(124 58 237/var(--tw-bg-opacity,1))}.bg-violet-600\/20{background-color:rgba(124,58,237,.2)}.bg-white\/20{background-color:hsla(0,0%,100%,.2)}.bg-yellow-500{--tw-bg-opacity:1;background-color:rgb(234 179 8/var(--tw-bg-opacity,1))}.bg-yellow-500\/10{background-color:rgba(234,179,8,.1)}.bg-yellow-500\/15{background-color:rgba(234,179,8,.15)}.bg-yellow-600\/20{background-color:rgba(202,138,4,.2)}.bg-yellow-900{--tw-bg-opacity:1;background-color:rgb(113 63 18/var(--tw-bg-opacity,1))}.bg-yellow-950{--tw-bg-opacity:1;background-color:rgb(66 32 6/var(--tw-bg-opacity,1))}.bg-gradient-to-b{background-image:linear-gradient(to bottom,var(--tw-gradient-stops))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right,var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}.from-blue-400{--tw-gradient-from:#60a5fa var(--tw-gradient-from-position);--tw-gradient-to:rgba(96,165,250,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-blue-500{--tw-gradient-from:#3b82f6 var(--tw-gradient-from-position);--tw-gradient-to:rgba(59,130,246,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-blue-600{--tw-gradient-from:#2563eb var(--tw-gradient-from-position);--tw-gradient-to:rgba(37,99,235,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-cyan-600{--tw-gradient-from:#0891b2 var(--tw-gradient-from-position);--tw-gradient-to:rgba(8,145,178,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-gray-600{--tw-gradient-from:#4b5563 var(--tw-gradient-from-position);--tw-gradient-to:rgba(75,85,99,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-green-500{--tw-gradient-from:#22c55e var(--tw-gradient-from-position);--tw-gradient-to:rgba(34,197,94,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-green-600{--tw-gradient-from:#16a34a var(--tw-gradient-from-position);--tw-gradient-to:rgba(22,163,74,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-indigo-600{--tw-gradient-from:#4f46e5 var(--tw-gradient-from-position);--tw-gradient-to:rgba(79,70,229,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-orange-500{--tw-gradient-from:#f97316 var(--tw-gradient-from-position);--tw-gradient-to:rgba(249,115,22,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-orange-600{--tw-gradient-from:#ea580c var(--tw-gradient-from-position);--tw-gradient-to:rgba(234,88,12,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-pink-600{--tw-gradient-from:#db2777 var(--tw-gradient-from-position);--tw-gradient-to:rgba(219,39,119,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-purple-400{--tw-gradient-from:#c084fc var(--tw-gradient-from-position);--tw-gradient-to:rgba(192,132,252,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-purple-500{--tw-gradient-from:#a855f7 var(--tw-gradient-from-position);--tw-gradient-to:rgba(168,85,247,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-purple-600{--tw-gradient-from:#9333ea var(--tw-gradient-from-position);--tw-gradient-to:rgba(147,51,234,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-red-600{--tw-gradient-from:#dc2626 var(--tw-gradient-from-position);--tw-gradient-to:rgba(220,38,38,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-rose-500{--tw-gradient-from:#f43f5e var(--tw-gradient-from-position);--tw-gradient-to:rgba(244,63,94,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-rose-600{--tw-gradient-from:#e11d48 var(--tw-gradient-from-position);--tw-gradient-to:rgba(225,29,72,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-slate-500{--tw-gradient-from:#64748b var(--tw-gradient-from-position);--tw-gradient-to:rgba(100,116,139,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-teal-500{--tw-gradient-from:#14b8a6 var(--tw-gradient-from-position);--tw-gradient-to:rgba(20,184,166,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-teal-600{--tw-gradient-from:#0d9488 var(--tw-gradient-from-position);--tw-gradient-to:rgba(13,148,136,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-violet-600{--tw-gradient-from:#7c3aed var(--tw-gradient-from-position);--tw-gradient-to:rgba(124,58,237,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-yellow-600{--tw-gradient-from:#ca8a04 var(--tw-gradient-from-position);--tw-gradient-to:rgba(202,138,4,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.via-blue-500{--tw-gradient-to:rgba(59,130,246,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#3b82f6 var(--tw-gradient-via-position),var(--tw-gradient-to)}.via-purple-400{--tw-gradient-to:rgba(192,132,252,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#c084fc var(--tw-gradient-via-position),var(--tw-gradient-to)}.via-purple-500{--tw-gradient-to:rgba(168,85,247,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#a855f7 var(--tw-gradient-via-position),var(--tw-gradient-to)}.to-amber-600{--tw-gradient-to:#d97706 var(--tw-gradient-to-position)}.to-amber-700{--tw-gradient-to:#b45309 var(--tw-gradient-to-position)}.to-blue-700{--tw-gradient-to:#1d4ed8 var(--tw-gradient-to-position)}.to-blue-800{--tw-gradient-to:#1e40af var(--tw-gradient-to-position)}.to-cyan-600{--tw-gradient-to:#0891b2 var(--tw-gradient-to-position)}.to-cyan-700{--tw-gradient-to:#0e7490 var(--tw-gradient-to-position)}.to-emerald-400{--tw-gradient-to:#34d399 var(--tw-gradient-to-position)}.to-emerald-600{--tw-gradient-to:#059669 var(--tw-gradient-to-position)}.to-emerald-700{--tw-gradient-to:#047857 var(--tw-gradient-to-position)}.to-gray-600{--tw-gradient-to:#4b5563 var(--tw-gradient-to-position)}.to-gray-700{--tw-gradient-to:#374151 var(--tw-gradient-to-position)}.to-indigo-600{--tw-gradient-to:#4f46e5 var(--tw-gradient-to-position)}.to-indigo-700{--tw-gradient-to:#4338ca var(--tw-gradient-to-position)}.to-orange-400{--tw-gradient-to:#fb923c var(--tw-gradient-to-position)}.to-orange-500{--tw-gradient-to:#f97316 var(--tw-gradient-to-position)}.to-pink-400{--tw-gradient-to:#f472b6 var(--tw-gradient-to-position)}.to-pink-600{--tw-gradient-to:#db2777 var(--tw-gradient-to-position)}.to-pink-700{--tw-gradient-to:#be185d var(--tw-gradient-to-position)}.to-purple-500{--tw-gradient-to:#a855f7 var(--tw-gradient-to-position)}.to-purple-600{--tw-gradient-to:#9333ea var(--tw-gradient-to-position)}.to-purple-700{--tw-gradient-to:#7e22ce var(--tw-gradient-to-position)}.to-purple-800{--tw-gradient-to:#6b21a8 var(--tw-gradient-to-position)}.to-red-700{--tw-gradient-to:#b91c1c var(--tw-gradient-to-position)}.to-rose-500{--tw-gradient-to:#f43f5e var(--tw-gradient-to-position)}.to-rose-700{--tw-gradient-to:#be123c var(--tw-gradient-to-position)}.to-slate-700{--tw-gradient-to:#334155 var(--tw-gradient-to-position)}.to-teal-700{--tw-gradient-to:#0f766e var(--tw-gradient-to-position)}.to-violet-600{--tw-gradient-to:#7c3aed var(--tw-gradient-to-position)}.to-violet-700{--tw-gradient-to:#6d28d9 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-1{padding:.25rem}.p-2{padding:.5rem}.p-2\.5{padding:.625rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\.5{padding-top:.875rem;padding-bottom:.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-0{padding-bottom:0}.pb-1{padding-bottom:.25rem}.pb-2{padding-bottom:.5rem}.pb-6{padding-bottom:1.5rem}.pb-8{padding-bottom:2rem}.pr-3{padding-right:.75rem}.pr-4{padding-right:1rem}.pt-1{padding-top:.25rem}.pt-2{padding-top:.5rem}.pt-3{padding-top:.75rem}.pt-6{padding-top:1.5rem}.text-left{text-align:left}.text-center{text-align:center}.align-middle{vertical-align:middle}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.capitalize{text-transform:capitalize}.italic{font-style:italic}.leading-\[1\.1\]{line-height:1.1}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-.025em}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77/var(--tw-text-opacity,1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36/var(--tw-text-opacity,1))}.text-amber-400\/70{color:rgba(251,191,36,.7)}.text-amber-500\/60{color:rgba(245,158,11,.6)}.text-amber-500\/70{color:rgba(245,158,11,.7)}.text-blue-200{--tw-text-opacity:1;color:rgb(191 219 254/var(--tw-text-opacity,1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-400\/70{color:rgba(96,165,250,.7)}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153/var(--tw-text-opacity,1))}.text-gray-100{--tw-text-opacity:1;color:rgb(243 244 246/var(--tw-text-opacity,1))}.text-gray-200{--tw-text-opacity:1;color:rgb(229 231 235/var(--tw-text-opacity,1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219/var(--tw-text-opacity,1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity,1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128/var(--tw-text-opacity,1))}.text-gray-500\/60{color:hsla(220,9%,46%,.6)}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99/var(--tw-text-opacity,1))}.text-green-300{--tw-text-opacity:1;color:rgb(134 239 172/var(--tw-text-opacity,1))}.text-green-400{--tw-text-opacity:1;color:rgb(74 222 128/var(--tw-text-opacity,1))}.text-green-400\/70{color:rgba(74,222,128,.7)}.text-green-700{--tw-text-opacity:1;color:rgb(21 128 61/var(--tw-text-opacity,1))}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252/var(--tw-text-opacity,1))}.text-indigo-400{--tw-text-opacity:1;color:rgb(129 140 248/var(--tw-text-opacity,1))}.text-orange-300{--tw-text-opacity:1;color:rgb(253 186 116/var(--tw-text-opacity,1))}.text-orange-400{--tw-text-opacity:1;color:rgb(251 146 60/var(--tw-text-opacity,1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22/var(--tw-text-opacity,1))}.text-orange-700{--tw-text-opacity:1;color:rgb(194 65 12/var(--tw-text-opacity,1))}.text-pink-300{--tw-text-opacity:1;color:rgb(249 168 212/var(--tw-text-opacity,1))}.text-pink-400{--tw-text-opacity:1;color:rgb(244 114 182/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-400\/70{color:rgba(192,132,252,.7)}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-red-300{--tw-text-opacity:1;color:rgb(252 165 165/var(--tw-text-opacity,1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113/var(--tw-text-opacity,1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-teal-300{--tw-text-opacity:1;color:rgb(94 234 212/var(--tw-text-opacity,1))}.text-teal-400{--tw-text-opacity:1;color:rgb(45 212 191/var(--tw-text-opacity,1))}.text-teal-700{--tw-text-opacity:1;color:rgb(15 118 110/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-violet-400{--tw-text-opacity:1;color:rgb(167 139 250/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-yellow-300{--tw-text-opacity:1;color:rgb(253 224 71/var(--tw-text-opacity,1))}.text-yellow-400{--tw-text-opacity:1;color:rgb(250 204 21/var(--tw-text-opacity,1))}.text-yellow-500{--tw-text-opacity:1;color:rgb(234 179 8/var(--tw-text-opacity,1))}.text-opacity-70{--tw-text-opacity:0.7}.text-opacity-80{--tw-text-opacity:0.8}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.opacity-20{opacity:.2}.opacity-30{opacity:.3}.opacity-60{opacity:.6}.opacity-70{opacity:.7}.opacity-90{opacity:.9}.shadow-\[0_0_0_1px_rgba\(99\2c 102\2c 241\2c 0\.2\)\2c 0_10px_25px_rgba\(99\2c 102\2c 241\2c 0\.15\)\]{--tw-shadow:0 0 0 1px rgba(99,102,241,.2),0 10px 25px rgba(99,102,241,.15);--tw-shadow-colored:0 0 0 1px var(--tw-shadow-color),0 10px 25px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_12px_rgba\(59\2c 130\2c 246\2c 0\.4\)\]{--tw-shadow:0 0 12px rgba(59,130,246,.4);--tw-shadow-colored:0 0 12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_14px_rgba\(59\2c 130\2c 246\2c 0\.35\)\]{--tw-shadow:0 0 14px rgba(59,130,246,.35);--tw-shadow-colored:0 0 14px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_18px_rgba\(59\2c 130\2c 246\2c 0\.3\)\]{--tw-shadow:0 0 18px rgba(59,130,246,.3);--tw-shadow-colored:0 0 18px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_20px_rgba\(59\2c 130\2c 246\2c 0\.35\)\]{--tw-shadow:0 0 20px rgba(59,130,246,.35);--tw-shadow-colored:0 0 20px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_24px_rgba\(59\2c 130\2c 246\2c 0\.35\)\]{--tw-shadow:0 0 24px rgba(59,130,246,.35);--tw-shadow-colored:0 0 24px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-\[0_0_30px_rgba\(59\2c 130\2c 246\2c 0\.08\)\]{--tw-shadow:0 0 30px rgba(59,130,246,.08);--tw-shadow-colored:0 0 30px var(--tw-shadow-color)}.shadow-\[0_0_30px_rgba\(59\2c 130\2c 246\2c 0\.08\)\],.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-gray-900{--tw-ring-opacity:1;--tw-ring-color:rgb(17 24 39/var(--tw-ring-opacity,1))}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px)}.backdrop-blur-md,.backdrop-blur-sm{-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-200{transition-duration:.2s}.duration-300{transition-duration:.3s}.duration-500{transition-duration:.5s}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.hover\:-translate-y-0\.5:hover{--tw-translate-y:-0.125rem;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-blue-500\/30:hover{border-color:rgba(59,130,246,.3)}.hover\:border-blue-500\/40:hover{border-color:rgba(59,130,246,.4)}.hover\:border-blue-500\/50:hover{border-color:rgba(59,130,246,.5)}.hover\:border-blue-700:hover{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.hover\:border-gray-500:hover{--tw-border-opacity:1;border-color:rgb(107 114 128/var(--tw-border-opacity,1))}.hover\:border-gray-600:hover{--tw-border-opacity:1;border-color:rgb(75 85 99/var(--tw-border-opacity,1))}.hover\:border-green-400\/50:hover{border-color:rgba(74,222,128,.5)}.hover\:border-green-500\/30:hover{border-color:rgba(34,197,94,.3)}.hover\:border-green-500\/50:hover{border-color:rgba(34,197,94,.5)}.hover\:border-purple-500\/30:hover{border-color:rgba(168,85,247,.3)}.hover\:border-purple-500\/50:hover{border-color:rgba(168,85,247,.5)}.hover\:border-white\/15:hover{border-color:hsla(0,0%,100%,.15)}.hover\:border-white\/20:hover{border-color:hsla(0,0%,100%,.2)}.hover\:bg-blue-500:hover{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.hover\:bg-blue-500\/15:hover{background-color:rgba(59,130,246,.15)}.hover\:bg-blue-600:hover{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.hover\:bg-blue-900\/30:hover{background-color:rgba(30,58,138,.3)}.hover\:bg-gray-600:hover{--tw-bg-opacity:1;background-color:rgb(75 85 99/var(--tw-bg-opacity,1))}.hover\:bg-gray-700:hover{--tw-bg-opacity:1;background-color:rgb(55 65 81/var(--tw-bg-opacity,1))}.hover\:bg-gray-700\/50:hover{background-color:rgba(55,65,81,.5)}.hover\:bg-gray-700\/60:hover{background-color:rgba(55,65,81,.6)}.hover\:bg-gray-800:hover{--tw-bg-opacity:1;background-color:rgb(31 41 55/var(--tw-bg-opacity,1))}.hover\:bg-gray-800\/30:hover{background-color:rgba(31,41,55,.3)}.hover\:bg-gray-800\/60:hover{background-color:rgba(31,41,55,.6)}.hover\:bg-gray-800\/80:hover{background-color:rgba(31,41,55,.8)}.hover\:bg-gray-900\/80:hover{background-color:rgba(17,24,39,.8)}.hover\:bg-green-500\/15:hover{background-color:rgba(34,197,94,.15)}.hover\:bg-orange-500:hover{--tw-bg-opacity:1;background-color:rgb(249 115 22/var(--tw-bg-opacity,1))}.hover\:bg-purple-500:hover{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.hover\:bg-teal-500:hover{--tw-bg-opacity:1;background-color:rgb(20 184 166/var(--tw-bg-opacity,1))}.hover\:bg-violet-500:hover{--tw-bg-opacity:1;background-color:rgb(139 92 246/var(--tw-bg-opacity,1))}.hover\:text-amber-300:hover{--tw-text-opacity:1;color:rgb(252 211 77/var(--tw-text-opacity,1))}.hover\:text-blue-300:hover{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.hover\:text-gray-200:hover{--tw-text-opacity:1;color:rgb(229 231 235/var(--tw-text-opacity,1))}.hover\:text-gray-300:hover{--tw-text-opacity:1;color:rgb(209 213 219/var(--tw-text-opacity,1))}.hover\:text-green-300:hover{--tw-text-opacity:1;color:rgb(134 239 172/var(--tw-text-opacity,1))}.hover\:text-pink-300:hover{--tw-text-opacity:1;color:rgb(249 168 212/var(--tw-text-opacity,1))}.hover\:text-red-400:hover{--tw-text-opacity:1;color:rgb(248 113 113/var(--tw-text-opacity,1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\:underline:hover{text-decoration-line:underline}.hover\:shadow-\[0_0_32px_rgba\(59\2c 130\2c 246\2c 0\.5\)\]:hover{--tw-shadow:0 0 32px rgba(59,130,246,.5);--tw-shadow-colored:0 0 32px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.hover\:shadow-\[0_8px_25px_rgba\(0\2c 0\2c 0\2c 0\.35\)\]:hover{--tw-shadow:0 8px 25px rgba(0,0,0,.35);--tw-shadow-colored:0 8px 25px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.group:hover .group-hover\:border-gray-400{--tw-border-opacity:1;border-color:rgb(156 163 175/var(--tw-border-opacity,1))}.group:hover .group-hover\:text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-green-300{--tw-text-opacity:1;color:rgb(134 239 172/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}@media (min-width:640px){.sm\:inline{display:inline}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}}@media (min-width:768px){.md\:flex{display:flex}.md\:hidden{display:none}.md\:flex-row{flex-direction:row}.md\:items-end{align-items:flex-end}.md\:items-center{align-items:center}.md\:text-3xl{font-size:1.875rem;line-height:2.25rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}.md\:text-6xl{font-size:3.75rem;line-height:1}}</style>
   <style>
@@ -91,10 +91,10 @@
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Vector Databases Guide for AI Applications",
-  "description": "Complete guide to vector databases for AI apps — embeddings, similarity search, HNSW indexing, and how to pick the right vector DB for production.",
+  "headline": "Approximate Nearest Neighbor Algorithms Explained",
+  "description": "How ANN algorithms work — HNSW, IVF, ScaNN, and PQ explained with code, benchmarks, and tradeoffs for building fast vector search at scale.",
   "image": "https://ailearnings.in/og-image.jpg",
-  "url": "https://ailearnings.in/blog/vector-database-guide/",
+  "url": "https://ailearnings.in/blog/ann-algorithms/",
   "datePublished": "2026-03-15",
   "dateModified": "2026-03-15",
   "author": {
@@ -109,7 +109,7 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://ailearnings.in/blog/vector-database-guide/"
+    "@id": "https://ailearnings.in/blog/ann-algorithms/"
   }
 }
   </script>
@@ -133,8 +133,8 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "Vector Databases Guide for AI Applications",
-      "item": "https://ailearnings.in/blog/vector-database-guide/"
+      "name": "Approximate Nearest Neighbor Algorithms Explained",
+      "item": "https://ailearnings.in/blog/ann-algorithms/"
     }
   ]
 }
@@ -210,7 +210,7 @@
       <span>›</span>
       <a href="/blog/" class="hover:text-gray-300 transition-colors">Blog</a>
       <span>›</span>
-      <span class="text-gray-400">Vector Databases Guide for AI Applications</span>
+      <span class="text-gray-400">Approximate Nearest Neighbor Algorithms Explained</span>
     </nav>
   </div>
 
@@ -218,7 +218,7 @@
   <main class="max-w-3xl mx-auto px-4 py-8">
     <article>
       <header class="mb-8">
-        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">Vector Databases Guide for AI Applications</h1>
+        <h1 class="text-3xl font-bold text-white mb-4 leading-tight">Approximate Nearest Neighbor Algorithms Explained</h1>
 
         <div class="author-card">
           <div class="author-avatar">AK</div>
@@ -236,189 +236,215 @@
       </header>
 
       <div class="prose">
-        <p>Your keyword search returns zero results for &quot;ML model training cost&quot; even though you have twelve articles on the topic. They use phrases like &quot;compute budget,&quot; &quot;GPU spend,&quot; and &quot;training economics.&quot; A user searching with different vocabulary walks away with nothing.</p>
-<p>This is the problem keyword-based search has never been able to solve — it matches tokens, not intent. Vector databases exist to fix exactly this. They store high-dimensional numerical representations of your data and let you search by meaning rather than lexical overlap.</p>
-<p>In practice, almost every RAG system, semantic search engine, recommendation engine, and AI-powered feature you use today is backed by a vector database. Understanding how they work end-to-end — not just the API calls — determines whether your production system is fast, accurate, and cost-efficient, or none of those things.</p>
+        <p>A team building a product recommendation engine indexed 20 million product embeddings with brute-force cosine similarity. Average query latency: 4.2 seconds. They switched to HNSW. Average query latency: 6 milliseconds. Recall stayed above 99%. The only cost was 3GB of RAM for the index structure.</p>
+<p>That 700x speedup is not a coincidence — it is the mathematical consequence of using a graph that exploits the geometry of high-dimensional space rather than scanning every vector. Understanding why ANN algorithms are fast (and when they break down) lets you configure them correctly instead of hoping the defaults work.</p>
+<p>Approximate nearest neighbor is the foundational technique that makes vector databases practical. Without it, every vector database would be a slow, O(n) brute-force scan.</p>
 <h2>Concept Overview</h2>
-<p>A vector database is a data store purpose-built for one operation: given a query vector, find the K stored vectors most similar to it.</p>
-<p>To make that operation useful, you first convert your raw content (text, images, audio) into vectors using an embedding model. The embedding model maps similar inputs to nearby points in high-dimensional space. &quot;Machine learning&quot; and &quot;deep learning&quot; end up close together; &quot;machine learning&quot; and &quot;sourdough bread&quot; end up far apart.</p>
-<p>The database then handles three concerns you do not want to manage yourself:</p>
-<ul>
-<li><strong>Indexing</strong> — building a data structure that lets you search millions of vectors in milliseconds rather than seconds</li>
-<li><strong>Persistence</strong> — storing both the vectors and associated metadata durably</li>
-<li><strong>Filtering</strong> — combining vector similarity with structured predicates (&quot;find the 10 most similar documents, but only from 2025&quot;)</li>
-</ul>
-<p>One thing many developers overlook is that the embedding model and the vector database are separate concerns. You choose them independently, and a poor embedding model will produce bad results regardless of how well-tuned your database index is.</p>
+<p>Exact nearest neighbor search in high-dimensional space requires comparing the query against every stored vector — O(n) time complexity that grows linearly with the number of vectors. At 10 million vectors with 1536 dimensions, that is 10 million dot products per query. On a modern CPU, this takes roughly 5 seconds. Completely impractical for interactive use.</p>
+<p>ANN algorithms exploit the geometric structure of embedding spaces to find very close neighbors much faster than exact search, trading a small, tunable amount of accuracy for orders-of-magnitude speedup. The tradeoff is controlled: you can always tune toward higher recall at the cost of more compute.</p>
+<p>The three dominant ANN algorithm families each make different structural choices:</p>
+<p><strong>Graph-based (HNSW)</strong> — build a multi-layer proximity graph; search by greedy traversal from a fixed entry point. Excellent recall, low latency, high memory usage.</p>
+<p><strong>Inverted File Index (IVF)</strong> — partition the vector space into clusters using k-means; at query time, search only the nearest clusters. Lower memory than HNSW, slightly lower recall.</p>
+<p><strong>Product Quantization (PQ)</strong> — compress vectors into short binary codes; compute approximate distances using lookup tables. Dramatically reduces memory at the cost of recall.</p>
+<p>In practice, these are often combined: IVF+PQ (FAISS&#39;s <code>IndexIVFPQ</code>) for billion-scale compressed search, HNSW for maximum recall on in-memory datasets.</p>
 <h2>How It Works</h2>
-<p><img src="/assets/diagrams/vector-database-guide-diagram-1.png" alt="Architecture diagram"></p>
-<p>At index time, each piece of content goes through the embedding model to produce a float vector. That vector, along with its payload (original text, metadata), is inserted into the database. The database updates its index structure — most commonly HNSW — to incorporate the new vector.</p>
-<p>At query time, the user&#39;s input is embedded with the same model. The database runs an approximate nearest neighbor search against the indexed vectors, returning the K most similar items by cosine similarity, dot product, or Euclidean distance.</p>
-<p>The &quot;approximate&quot; in ANN is intentional. Exact nearest neighbor search requires comparing the query against every stored vector — O(n) complexity that stops scaling at roughly 100K vectors. ANN algorithms trade a small, tunable amount of recall for query times that stay in the single-digit milliseconds even at 100 million vectors.</p>
+<p><img src="/assets/diagrams/ann-algorithms-diagram-1.png" alt="Architecture diagram"></p>
+<p>HNSW builds a hierarchy of graphs. The top layer has few nodes connected by long-range links. The bottom layer has all nodes connected to their close neighbors. Search starts at a fixed entry point in the top layer, greedily moves toward the query, then descends to the next layer and repeats. By the time it reaches the bottom layer, it has already narrowed the search to a small local neighborhood. The <code>M</code> parameter controls how many connections each node has; <code>efConstruction</code> controls how thoroughly neighbors are evaluated during construction; <code>efSearch</code> controls how thoroughly the graph is explored at query time.</p>
+<p>IVF first trains a k-means clustering on a sample of your vectors, producing C centroids. At index time, each vector is assigned to its nearest centroid. At query time, the algorithm finds the <code>nprobe</code> nearest centroids and searches only the vectors in those clusters. With C=1000 clusters and nprobe=10, you search roughly 1% of the dataset per query.</p>
 <h2>Implementation Example</h2>
-<p>The fastest path to a working vector search system is ChromaDB — zero infrastructure, runs in-process, stores vectors on disk automatically.</p>
-<pre><code class="language-python">pip install chromadb openai
+<h3>HNSW with hnswlib — Fine-Grained Control</h3>
+<pre><code class="language-python">pip install hnswlib numpy
 </code></pre>
-<pre><code class="language-python">import chromadb
-from chromadb.utils import embedding_functions
-from openai import OpenAI
-
-# Persistent local store — survives process restarts
-client = chromadb.PersistentClient(path=&quot;./vector_store&quot;)
-
-openai_ef = embedding_functions.OpenAIEmbeddingFunction(
-    api_key=&quot;sk-...&quot;,
-    model_name=&quot;text-embedding-3-small&quot;,
-)
-
-collection = client.get_or_create_collection(
-    name=&quot;engineering_docs&quot;,
-    embedding_function=openai_ef,
-    metadata={&quot;hnsw:space&quot;: &quot;cosine&quot;},
-)
-
-# Index documents — Chroma handles embedding automatically
-docs = [
-    &quot;HNSW builds a multi-layer proximity graph for fast ANN search.&quot;,
-    &quot;IVF partitions the vector space into Voronoi cells before searching.&quot;,
-    &quot;Cosine similarity measures the angle between two vectors, ignoring magnitude.&quot;,
-    &quot;Quantization compresses float32 vectors to int8 to reduce memory by 4x.&quot;,
-    &quot;Metadata filtering lets you combine vector similarity with structured predicates.&quot;,
-]
-
-collection.add(
-    ids=[f&quot;doc_{i}&quot; for i in range(len(docs))],
-    documents=docs,
-    metadatas=[{&quot;topic&quot;: &quot;vector_db&quot;, &quot;version&quot;: &quot;2026&quot;} for _ in docs],
-)
-
-# Query — returns results ordered by cosine similarity
-results = collection.query(
-    query_texts=[&quot;How does approximate nearest neighbor search work?&quot;],
-    n_results=3,
-    where={&quot;topic&quot;: &quot;vector_db&quot;},          # optional metadata filter
-)
-
-for doc, distance in zip(results[&quot;documents&quot;][0], results[&quot;distances&quot;][0]):
-    print(f&quot;[similarity: {1 - distance:.3f}] {doc}&quot;)
-</code></pre>
-<p>For production workloads, Pinecone removes all infrastructure management:</p>
-<pre><code class="language-python">pip install pinecone openai
-</code></pre>
-<pre><code class="language-python">from pinecone import Pinecone, ServerlessSpec
-from openai import OpenAI
+<pre><code class="language-python">import hnswlib
+import numpy as np
 import time
 
-pc = Pinecone(api_key=&quot;your-api-key&quot;)
-oai = OpenAI()
+DIM = 768
+N   = 100_000
 
-def embed(text: str) -&gt; list[float]:
-    return oai.embeddings.create(
-        model=&quot;text-embedding-3-small&quot;,
-        input=text,
-    ).data[0].embedding
-
-# Create serverless index (us-east-1, free tier)
-index_name = &quot;engineering-docs&quot;
-if index_name not in [i.name for i in pc.list_indexes()]:
-    pc.create_index(
-        name=index_name,
-        dimension=1536,
-        metric=&quot;cosine&quot;,
-        spec=ServerlessSpec(cloud=&quot;aws&quot;, region=&quot;us-east-1&quot;),
-    )
-    time.sleep(5)  # wait for index to be ready
-
-index = pc.Index(index_name)
-
-# Upsert — batch for efficiency
-records = [
-    (&quot;doc_0&quot;, embed(&quot;HNSW proximity graph for ANN&quot;), {&quot;topic&quot;: &quot;indexing&quot;}),
-    (&quot;doc_1&quot;, embed(&quot;IVF Voronoi cell partitioning&quot;), {&quot;topic&quot;: &quot;indexing&quot;}),
-    (&quot;doc_2&quot;, embed(&quot;cosine similarity for text embeddings&quot;), {&quot;topic&quot;: &quot;metrics&quot;}),
-]
-
-index.upsert(vectors=[
-    {&quot;id&quot;: rid, &quot;values&quot;: vec, &quot;metadata&quot;: meta}
-    for rid, vec, meta in records
-])
-
-# Query with metadata filter
-response = index.query(
-    vector=embed(&quot;How does vector indexing work?&quot;),
-    top_k=5,
-    filter={&quot;topic&quot;: {&quot;$eq&quot;: &quot;indexing&quot;}},
-    include_metadata=True,
+# Build HNSW index
+print(&quot;Building HNSW index...&quot;)
+index = hnswlib.Index(space=&quot;cosine&quot;, dim=DIM)
+index.init_index(
+    max_elements=N,
+    ef_construction=200,   # higher = better quality, slower build
+    M=32,                  # connections per node; 16–64 is typical
 )
 
-for match in response[&quot;matches&quot;]:
-    print(f&quot;[{match[&#39;score&#39;]:.3f}] id={match[&#39;id&#39;]} meta={match[&#39;metadata&#39;]}&quot;)
+# Generate synthetic data
+np.random.seed(42)
+vectors = np.random.randn(N, DIM).astype(np.float32)
+vectors /= np.linalg.norm(vectors, axis=1, keepdims=True)  # normalize
+
+start = time.time()
+index.add_items(vectors, ids=np.arange(N))
+print(f&quot;Index built in {time.time() - start:.2f}s&quot;)
+
+# Query — tune efSearch for recall/latency tradeoff
+index.set_ef(100)   # higher = better recall, slower query
+query = np.random.randn(1, DIM).astype(np.float32)
+query /= np.linalg.norm(query)
+
+labels, distances = index.knn_query(query, k=10)
+print(f&quot;Top-10 IDs: {labels[0]}&quot;)
+print(f&quot;Similarities: {1 - distances[0]}&quot;)   # cosine distance → similarity
+
+# Save and reload
+index.save_index(&quot;hnsw_index.bin&quot;)
+index2 = hnswlib.Index(space=&quot;cosine&quot;, dim=DIM)
+index2.load_index(&quot;hnsw_index.bin&quot;, max_elements=N)
 </code></pre>
-<p>For teams already running PostgreSQL, pgvector adds native vector search without a new service:</p>
-<pre><code class="language-sql">-- Install once per database
-CREATE EXTENSION IF NOT EXISTS vector;
+<h3>FAISS — Multiple Index Types Compared</h3>
+<pre><code class="language-python">pip install faiss-cpu numpy
+</code></pre>
+<pre><code class="language-python">import faiss
+import numpy as np
+import time
 
-CREATE TABLE documents (
-    id        SERIAL PRIMARY KEY,
-    content   TEXT NOT NULL,
-    topic     TEXT,
-    embedding vector(1536)
-);
+DIM   = 768
+N     = 500_000
+QUERY = 100
 
--- HNSW index for sub-millisecond search
-CREATE INDEX ON documents
-USING hnsw (embedding vector_cosine_ops)
-WITH (m = 16, ef_construction = 64);
+np.random.seed(42)
+vectors = np.random.randn(N, DIM).astype(np.float32)
+faiss.normalize_L2(vectors)  # normalize for cosine (inner product after normalization)
 
--- Insert
-INSERT INTO documents (content, topic, embedding)
-VALUES (&#39;HNSW proximity graph&#39;, &#39;indexing&#39;, &#39;[0.12, -0.34, ...]&#39;);
+queries = np.random.randn(QUERY, DIM).astype(np.float32)
+faiss.normalize_L2(queries)
 
--- Search: &lt;=&gt; is cosine distance (lower = more similar)
-SELECT content, topic,
-       1 - (embedding &lt;=&gt; &#39;[0.12, -0.34, ...]&#39;) AS similarity
-FROM documents
-WHERE topic = &#39;indexing&#39;
-ORDER BY embedding &lt;=&gt; &#39;[0.12, -0.34, ...]&#39;
-LIMIT 5;
+def benchmark(index_name: str, index, queries, k: int = 10) -&gt; dict:
+    start = time.time()
+    D, I = index.search(queries, k)
+    elapsed = (time.time() - start) / QUERY * 1000  # ms per query
+    return {&quot;name&quot;: index_name, &quot;latency_ms&quot;: elapsed, &quot;results&quot;: I}
+
+
+# --- Flat (exact brute-force, baseline) ---
+flat = faiss.IndexFlatIP(DIM)   # inner product = cosine for normalized vectors
+flat.add(vectors)
+r_flat = benchmark(&quot;Flat (exact)&quot;, flat, queries)
+
+# --- HNSW (approximate, graph-based) ---
+hnsw = faiss.IndexHNSWFlat(DIM, 32)   # M=32
+hnsw.hnsw.efConstruction = 200
+hnsw.hnsw.efSearch = 100
+hnsw.add(vectors)
+r_hnsw = benchmark(&quot;HNSW&quot;, hnsw, queries)
+
+# --- IVF + Flat (approximate, cluster-based) ---
+nlist = 1000   # number of Voronoi cells
+quantizer = faiss.IndexFlatIP(DIM)
+ivf = faiss.IndexIVFFlat(quantizer, DIM, nlist, faiss.METRIC_INNER_PRODUCT)
+ivf.train(vectors)  # IVF requires training phase
+ivf.add(vectors)
+ivf.nprobe = 10     # search 10 of 1000 clusters per query (1%)
+r_ivf = benchmark(&quot;IVF (nprobe=10)&quot;, ivf, queries)
+
+# --- IVF + PQ (compressed, low memory) ---
+ivf_pq = faiss.IndexIVFPQ(quantizer, DIM, nlist, 96, 8)  # 96 subvectors, 8 bits
+ivf_pq.train(vectors)
+ivf_pq.add(vectors)
+ivf_pq.nprobe = 10
+r_ivf_pq = benchmark(&quot;IVF+PQ (compressed)&quot;, ivf_pq, queries)
+
+# Compare recall for HNSW and IVF vs exact
+def recall_at_10(approx_ids, exact_ids):
+    hits = sum(
+        len(set(approx_ids[i]) &amp; set(exact_ids[i]))
+        for i in range(len(exact_ids))
+    )
+    return hits / (10 * len(exact_ids))
+
+for r in [r_hnsw, r_ivf, r_ivf_pq]:
+    recall = recall_at_10(r[&quot;results&quot;], r_flat[&quot;results&quot;])
+    print(f&quot;{r[&#39;name&#39;]:30s}  latency: {r[&#39;latency_ms&#39;]:.2f}ms  recall@10: {recall:.3f}&quot;)
+
+# Memory usage estimates
+print(f&quot;\nMemory (float32 vectors only): {N * DIM * 4 / 1e9:.2f} GB&quot;)
+print(f&quot;HNSW overhead: ~{N * 32 * 4 / 1e6:.0f} MB for graph connections&quot;)
+print(f&quot;IVF+PQ storage: ~{N * 96 * 1 / 1e6:.0f} MB for compressed codes&quot;)
+</code></pre>
+<h3>Tuning HNSW Parameters Systematically</h3>
+<pre><code class="language-python">import hnswlib
+import numpy as np
+from itertools import product
+
+def evaluate_hnsw(M: int, ef_construction: int, ef_search: int,
+                  vectors: np.ndarray, queries: np.ndarray,
+                  exact_ids: np.ndarray, k: int = 10) -&gt; dict:
+    dim = vectors.shape[1]
+    idx = hnswlib.Index(space=&quot;cosine&quot;, dim=dim)
+    idx.init_index(max_elements=len(vectors), ef_construction=ef_construction, M=M)
+    idx.add_items(vectors, ids=np.arange(len(vectors)))
+    idx.set_ef(ef_search)
+
+    import time
+    start = time.time()
+    labels, _ = idx.knn_query(queries, k=k)
+    latency = (time.time() - start) / len(queries) * 1000
+
+    recall = sum(
+        len(set(labels[i]) &amp; set(exact_ids[i]))
+        for i in range(len(queries))
+    ) / (k * len(queries))
+
+    return {&quot;M&quot;: M, &quot;ef_c&quot;: ef_construction, &quot;ef_s&quot;: ef_search,
+            &quot;latency_ms&quot;: latency, &quot;recall&quot;: recall}
+
+
+# Grid search over parameters
+N, DIM, Q = 50_000, 384, 200
+vecs = np.random.randn(N, DIM).astype(np.float32)
+vecs /= np.linalg.norm(vecs, axis=1, keepdims=True)
+q = np.random.randn(Q, DIM).astype(np.float32)
+q /= np.linalg.norm(q, axis=1, keepdims=True)
+
+# Exact baseline
+flat = faiss.IndexFlatIP(DIM)
+flat.add(vecs)
+_, exact = flat.search(q, 10)
+
+results = []
+for M, ef_c, ef_s in product([16, 32], [100, 200], [50, 100, 200]):
+    r = evaluate_hnsw(M, ef_c, ef_s, vecs, q, exact)
+    results.append(r)
+    print(f&quot;M={M:2d} ef_c={ef_c:3d} ef_s={ef_s:3d}  &quot;
+          f&quot;latency={r[&#39;latency_ms&#39;]:.1f}ms  recall={r[&#39;recall&#39;]:.3f}&quot;)
 </code></pre>
 <h2>Best Practices</h2>
-<p><strong>Batch your embedding calls.</strong> Every embedding model API accepts arrays. Embedding 1000 texts as one batch call is 20–50x faster than 1000 individual calls and costs the same.</p>
-<p><strong>Cache embeddings aggressively.</strong> If the same text will be embedded more than once — document chunks in a RAG system, product descriptions in a catalog — store the vector and reuse it. Re-embedding is pure waste.</p>
-<p><strong>Normalize vectors before storing.</strong> For cosine similarity, normalized vectors turn dot product into cosine similarity. Most databases do this automatically, but verifying saves debugging time.</p>
-<p><strong>Set <code>ef_construction</code> high at index build time.</strong> Building the HNSW index with <code>ef_construction=200</code> produces a higher-quality graph than <code>ef_construction=64</code>. You only pay the build cost once. At query time, <code>ef_search</code> controls the speed/recall tradeoff dynamically.</p>
-<p><strong>Use metadata filtering to narrow candidate sets.</strong> Pre-filtering by date range, category, or user ID before running ANN search reduces both latency and the chance of irrelevant results surfacing. Every major vector DB supports this natively.</p>
-<p><strong>Monitor recall, not just latency.</strong> A fast search that consistently misses the best results is a broken search. Maintain a golden set of query/expected-result pairs and measure recall@10 as part of your deployment checks.</p>
+<p><strong>Use HNSW for datasets under 50M vectors where memory is available.</strong> HNSW consistently outperforms IVF on recall at the same latency budget. The memory overhead is 20–40% above the raw vector data — acceptable for most use cases.</p>
+<p><strong>Use IVF+PQ for billion-scale or memory-constrained deployments.</strong> Product quantization compresses 768-dimensional float32 vectors (3072 bytes) to 96 bytes — a 32x reduction with ~10% recall loss at equivalent nprobe. At billion scale, the difference between 3TB and 96GB of RAM is the difference between possible and impossible.</p>
+<p><strong>Set <code>ef_construction</code> once based on desired index quality, set <code>ef_search</code> based on latency requirements.</strong> A poorly built index (low <code>ef_construction</code>) cannot be fixed by increasing <code>ef_search</code>. Build once with high quality; tune <code>ef_search</code> dynamically for different use cases.</p>
+<p><strong>Train IVF on a representative sample of your data, not random vectors.</strong> IVF&#39;s cluster centroids should reflect the actual distribution of your embeddings. Training on random Gaussian vectors when your real embeddings form topic clusters produces poor partitioning and degraded recall.</p>
+<p><strong>Benchmark recall@K, not just query latency.</strong> ANN recall degrades silently. Adding many vectors beyond the original <code>max_elements</code> (hnswlib) or beyond the IVF training set size causes recall to drop without any error or warning.</p>
 <h2>Common Mistakes</h2>
-<p><strong>Using the wrong embedding model for the domain.</strong> Generic models trained on web text underperform on legal, medical, or code-heavy content. Always benchmark domain-specific alternatives — <code>BAAI/bge-large-en-v1.5</code> or Cohere&#39;s specialized models — before locking in a choice.</p>
-<p><strong>Indexing full documents instead of chunks.</strong> Embedding a 10-page document into one vector dilutes the meaning. A query about section 3 can never surface that document reliably. Chunk at 256–512 tokens with 20% overlap before indexing.</p>
-<p><strong>Skipping the warm-up query.</strong> HNSW search on the first query after loading an index is often 5–10x slower than subsequent queries due to OS page cache cold starts. In production, run a few warm-up queries before serving traffic.</p>
-<p><strong>Confusing distance and similarity.</strong> Chroma returns cosine distance (lower is better). Pinecone and Qdrant return cosine similarity (higher is better). Sorting the wrong direction is a silent bug that produces terrible results.</p>
-<p><strong>Not setting a <code>max_elements</code> limit for in-memory indexes.</strong> Libraries like <code>hnswlib</code> require you to declare max capacity upfront. Exceeding it causes silent truncation or crashes. Always size for 2–3x your expected data volume.</p>
-<p><strong>Running brute-force search in production.</strong> If you have not explicitly created an index (HNSW, IVF, etc.), most databases fall back to brute-force O(n) search. Check your database&#39;s index status after data loads — pgvector is especially easy to misconfigure here.</p>
+<p><strong>Using <code>IndexFlatL2</code> with text embeddings from OpenAI.</strong> OpenAI embeddings are not normalized by default, so euclidean distance and cosine similarity give different rankings. Use <code>IndexFlatIP</code> with manually normalized vectors, or use Chroma/Pinecone which handle this transparently.</p>
+<p><strong>Building HNSW with the default <code>M=16</code> for high-dimensional vectors.</strong> The optimal M scales roughly with dimensionality. For 1536-dimensional OpenAI embeddings, M=32 or M=48 gives better recall without proportionally higher memory cost.</p>
+<p><strong>Not training IVF on enough vectors.</strong> The rule of thumb is 30–100x <code>nlist</code> training vectors. For 1000 clusters, train on 30,000–100,000 vectors minimum. Training on fewer produces imbalanced clusters and poor recall.</p>
+<p><strong>Choosing <code>nlist</code> too large for your dataset.</strong> The recommended <code>nlist</code> value scales as roughly <code>sqrt(N)</code>. For 1 million vectors, use 1000 clusters. For 100,000 vectors, 300 clusters is appropriate. Too many clusters with too few vectors per cluster reduces recall.</p>
+<p><strong>Ignoring GPU-accelerated FAISS for batch indexing.</strong> If you are building an index over 10+ million vectors, <code>faiss-gpu</code> can build the index 10–50x faster than CPU. This matters when you rebuild indexes regularly — daily or per deployment.</p>
 <h2>Summary</h2>
-<p>Vector databases solve the fundamental limitation of keyword search — they let you find content by semantic meaning rather than token overlap. The full pipeline is: embed your content with a consistent model, store vectors in a purpose-built index, and query with the same model at search time.</p>
-<p>HNSW indexing keeps query latency in the single-digit milliseconds even at millions of vectors. Metadata filtering lets you combine semantic and structured queries. Your choices of embedding model, chunk size, and index parameters matter more than which vector database you pick.</p>
-<p>Start with ChromaDB locally, graduate to Pinecone or Qdrant when you need production scale, and use pgvector if your team lives in PostgreSQL and scale requirements are modest.</p>
+<p>ANN algorithms solve the fundamental scalability problem of vector search: O(n) brute-force search does not scale beyond hundreds of thousands of vectors at interactive latency. HNSW solves it by building a navigable graph structure that enables O(log n) greedy search. IVF solves it by partitioning the space into clusters and searching only the nearest clusters. Product quantization solves the memory problem by compressing vectors at the cost of some accuracy.</p>
+<p>For most production vector search systems, HNSW (as implemented by Qdrant, Weaviate, ChromaDB, and hnswlib) is the right default. It has the best recall-latency tradeoff for datasets up to 50–100 million vectors in RAM. At larger scales, IVF+PQ in FAISS or specialized systems like Milvus with GPU acceleration become necessary.</p>
 <h2>Related Articles</h2>
 <ul>
-<li><a href="/blog/vector-database-comparison">Vector Databases Explained: Chroma vs Pinecone vs FAISS (2026)</a></li>
-<li><a href="/blog/vector-search-explained">Vector Search Explained for AI Developers</a></li>
-<li><a href="/blog/embeddings-explained">Embeddings Explained: How AI Understands Text</a></li>
-<li><a href="/blog/ann-algorithms">Approximate Nearest Neighbor Algorithms Explained</a></li>
+<li><a href="/blog/vector-database-guide">Vector Databases Guide for AI Applications</a></li>
 <li><a href="/blog/vector-indexing">Vector Indexing Techniques Explained</a></li>
+<li><a href="/blog/vector-database-comparison">Vector Database Comparison: Chroma vs Pinecone vs FAISS</a></li>
 <li><a href="/blog/vector-database-scaling">Scaling Vector Databases in Production</a></li>
+<li><a href="/blog/vector-search-explained">Vector Search Explained for AI Developers</a></li>
 </ul>
 <h2>FAQ</h2>
-<p><strong>What is the difference between a vector database and a vector library like FAISS?</strong>
-A vector library (FAISS, hnswlib) is a pure indexing engine — it handles the ANN search math but nothing else. A vector database adds persistence, metadata storage, filtering, API access, and often replication. Use a library for embedded, single-process use cases; use a database for anything production-facing.</p>
-<p><strong>How many vectors can a vector database handle?</strong>
-It depends on the system. ChromaDB handles millions comfortably on a single machine. Pinecone and Weaviate have publicly demonstrated billion-vector scale with distributed architectures. pgvector with HNSW performs well to roughly 10–50 million vectors on a single PostgreSQL node before you need to consider sharding.</p>
-<p><strong>Can I use a vector database without an LLM?</strong>
-Yes. Vector databases are useful for any similarity search problem — product recommendation, image deduplication, music discovery, fraud pattern matching. LLMs are one consumer of vector search, not a requirement.</p>
-<p><strong>What embedding dimension should I use?</strong>
-Higher dimensions capture more nuance but cost more memory and compute. <code>text-embedding-3-small</code> at 1536 dims is the right default for most English text use cases. Open-source models like <code>BAAI/bge-small-en-v1.5</code> at 384 dims are a good choice when you need lower latency and cost.</p>
-<p><strong>Do I need to rebuild the index when I add new vectors?</strong>
-For HNSW-based databases (ChromaDB, Qdrant, Weaviate, Pinecone), no — the index is updated incrementally at insert time. For IVF-based indexes, adding significantly more vectors than the original training set degrades search quality and you should periodically rebuild.</p>
+<p><strong>What is the recall of HNSW in practice?</strong>
+With <code>M=32</code>, <code>ef_construction=200</code>, and <code>ef_search=100</code>, HNSW typically achieves 97–99% recall@10 compared to exact brute-force search. You can reach 99.5%+ recall by increasing <code>ef_search</code> to 200–500, at the cost of 2–5x higher latency.</p>
+<p><strong>Can I switch from flat (exact) search to HNSW without reindexing?</strong>
+No. HNSW builds a graph during insertion — vectors added to a flat index cannot be converted to HNSW without rebuilding. Plan your index type before loading data.</p>
+<p><strong>How does HNSW handle deletions?</strong>
+Most HNSW implementations (including hnswlib and Qdrant) support soft deletes — the vector is marked deleted but the graph connections are not updated. This means deleted vectors still occupy memory and can reduce search quality over time if many deletions accumulate. Periodic index rebuilds are recommended if deletion rate is high.</p>
+<p><strong>What is the difference between HNSW and NSW (no hierarchy)?</strong>
+NSW (the original) uses a single flat graph layer. Search complexity is O(log n) on average but degrades to O(n) in worst-case &quot;shortcut-poor&quot; graphs. HNSW adds multiple layers, each with progressively fewer nodes. The top layer provides long-range shortcuts that guarantee O(log n) performance regardless of graph structure.</p>
+<p><strong>Is ScaNN better than HNSW?</strong>
+Google&#39;s ScaNN achieves better recall at the same latency than HNSW on many benchmarks by using anisotropic quantization tailored to angular distance. However, it is harder to configure, less mature in production tooling, and not integrated into most vector databases. HNSW is the better default; ScaNN is worth evaluating if you need maximum performance on large-scale cloud deployments.</p>
 
       </div>
     </article>

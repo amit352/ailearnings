@@ -1,436 +1,363 @@
 ---
-title: "Multi-Agent Systems: Architectures for Coordinating LLM Agents"
-description: "Build multi-agent AI systems — orchestrator-worker patterns, agent handoffs, shared memory, debate patterns, and production-ready multi-agent orchestration with LangGraph."
-date: "2026-03-10"
-slug: "multi-agent-systems"
-keywords: ["multi-agent systems", "multi-agent AI", "LangGraph agents", "AI agent orchestration"]
+title: "Multi-Agent Systems Explained"
+description: "Multi-agent coordination patterns — supervisor-worker, peer-to-peer, hierarchical. When to use multi-agent vs single agent, with CrewAI and LangGraph examples."
+date: "2026-03-15"
+updatedAt: "2026-03-15"
+slug: "/blog/multi-agent-systems"
+keywords: ["multi agent systems ai", "multi-agent coordination", "crewai langgraph"]
+author: "Amit K Chauhan"
+authorTitle: "Software Engineer & AI Builder"
+level: "intermediate"
+time: "14 min"
+stack: ["Python", "LangChain"]
 ---
 
-## Learning Objectives
+# Multi-Agent Systems Explained
 
-- Understand when multi-agent systems are better than single agents
-- Implement orchestrator-worker, pipeline, and debate patterns
-- Use LangGraph for stateful multi-agent workflows
-- Handle agent failures and coordination errors
-- Design safe, auditable multi-agent systems
+Single agents have a hard ceiling. Once you push past twenty or thirty steps, the context window gets crowded with tool call history, reasoning traces, and accumulated observations. The model starts losing track of earlier findings, making contradictory tool calls, or circling back to work it already did. The simple loop architecture that works beautifully for focused tasks starts to break under the weight of complex, multi-domain problems.
 
----
+Multi-agent systems solve this by dividing work across specialized agents. Instead of one agent that knows how to search the web, write code, query databases, and generate reports, you have specialized agents — a researcher, a coder, a data analyst, a writer — each with a focused tool set and a shorter, more coherent context. A coordinator routes work between them.
 
-## Why Multi-Agent?
-
-Single agents struggle with:
-- **Long tasks** — context gets full; quality degrades
-- **Parallel work** — one agent does everything sequentially
-- **Specialization** — one agent with many tools is confused about which to use
-- **Verification** — the same agent can't reliably critique its own work
-
-Multi-agent systems solve these by distributing work across specialized agents.
+This is not the right architecture for every problem. The coordination overhead is real, and a multi-agent system that does the work of a single-agent system will be slower and more expensive. The decision depends on task complexity, the degree of specialization required, and how much parallelism is available.
 
 ---
 
-## Core Patterns
+## Concept Overview
 
-### 1. Orchestrator-Worker
+Multi-agent systems organize multiple LLM-powered agents to work together on a task. The three primary coordination patterns are:
 
-A controller agent breaks down tasks and delegates to specialized worker agents.
+**Supervisor-Worker** — A supervisor agent receives the task, breaks it down, delegates sub-tasks to specialized workers, and synthesizes the results. Workers do not communicate with each other directly.
+
+**Peer-to-Peer** — Agents communicate directly with each other, passing outputs as inputs. No central coordinator. This works when the workflow has a clear linear sequence.
+
+**Hierarchical** — Multiple levels of supervision. A top-level coordinator delegates to mid-level supervisors, which delegate to specialized workers. Useful for very large, complex workflows.
+
+Each pattern has different trade-offs in terms of control, debuggability, and the cost of coordination overhead.
+
+---
+
+## How It Works
+
+![Architecture diagram](/assets/diagrams/multi-agent-systems-diagram-1.png)
+
+The supervisor receives the task and decides how to split it. It assigns sub-tasks to specialized agents, collects their outputs, and synthesizes a final response. Critically, each worker agent has a focused tool set — the research agent does not have access to the code execution tool, and the coding agent does not have access to web search. This keeps each agent's decision space small and its reasoning more reliable.
+
+---
+
+## Implementation Example
+
+### Option 1: CrewAI — Role-Based Multi-Agent Workflows
+
+CrewAI is optimized for multi-agent systems where agents have defined roles and a clear workflow. It is the fastest way to get a multi-agent system running.
 
 ```python
-from openai import OpenAI
-import json
+from crewai import Agent, Task, Crew, Process
+from langchain_openai import ChatOpenAI
+from langchain_community.tools import DuckDuckGoSearchRun
 
-client = OpenAI()
+llm = ChatOpenAI(model="gpt-4o", temperature=0)
+search_tool = DuckDuckGoSearchRun()
 
-# Specialized worker agents
-def research_agent(topic: str) -> str:
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "You are a research specialist. Provide factual, detailed information."},
-            {"role": "user",   "content": f"Research this topic thoroughly: {topic}"},
-        ],
-        max_tokens=1000,
-    )
-    return response.choices[0].message.content
+# Define specialized agents with distinct roles
+researcher = Agent(
+    role="Senior Research Analyst",
+    goal="Find accurate, comprehensive information on any given topic from multiple reliable sources",
+    backstory="""You are an experienced research analyst who has spent years gathering
+    intelligence from diverse sources. You are thorough, skeptical, and always verify
+    claims against multiple sources before reporting findings.""",
+    tools=[search_tool],
+    llm=llm,
+    verbose=True,
+    max_iter=5,         # Limit iterations per agent
+    allow_delegation=False  # This agent does not delegate
+)
 
+analyst = Agent(
+    role="Data Analyst",
+    goal="Analyze research findings, identify patterns, and extract key insights",
+    backstory="""You are an analytical expert who transforms raw research data into
+    structured insights. You excel at identifying trends, comparing options, and
+    presenting findings clearly.""",
+    tools=[],           # Analysis agent reasons without external tools
+    llm=llm,
+    verbose=True,
+    max_iter=3,
+    allow_delegation=False
+)
 
-def writer_agent(research: str, style: str = "technical") -> str:
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": f"You are a {style} writer. Write clear, engaging content."},
-            {"role": "user",   "content": f"Write an article based on this research:\n\n{research}"},
-        ],
-        max_tokens=1500,
-    )
-    return response.choices[0].message.content
+writer = Agent(
+    role="Technical Writer",
+    goal="Produce clear, well-structured written content based on research and analysis",
+    backstory="""You are a technical writer who specializes in making complex topics
+    accessible. You structure content logically and write in a clear, professional tone.""",
+    tools=[],
+    llm=llm,
+    verbose=True,
+    max_iter=3,
+    allow_delegation=False
+)
 
+# Define tasks for each agent
+research_task = Task(
+    description="""Research the current state of AI agent frameworks in 2026.
+    Focus on: LangChain, LangGraph, CrewAI, AutoGen, and AutoGPT.
+    Find: release dates, key features, adoption trends, and notable use cases.
+    Provide at least 5 specific data points with sources.""",
+    expected_output="A structured research report with specific facts, dates, and sources for each framework",
+    agent=researcher
+)
 
-def editor_agent(draft: str) -> str:
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "You are an editor. Improve clarity, fix errors, ensure consistency."},
-            {"role": "user",   "content": f"Edit and improve this draft:\n\n{draft}"},
-        ],
-        max_tokens=1500,
-    )
-    return response.choices[0].message.content
+analysis_task = Task(
+    description="""Using the research report provided, analyze and compare the AI agent frameworks.
+    Create a comparison matrix covering: ease of use, production readiness, multi-agent support,
+    community size, and documentation quality. Rate each on a 1-10 scale with justification.""",
+    expected_output="A comparison matrix with ratings and 2-3 sentence justifications for each rating",
+    agent=analyst,
+    context=[research_task]   # This task depends on research_task output
+)
 
+writing_task = Task(
+    description="""Write a comprehensive guide based on the research and analysis provided.
+    Structure: Introduction, Framework Overviews, Comparison Table, Recommendation by Use Case, Conclusion.
+    Target audience: senior developers choosing a framework for production use.""",
+    expected_output="A 600-800 word technical guide in markdown format",
+    agent=writer,
+    context=[research_task, analysis_task]  # Depends on both prior tasks
+)
 
-# Orchestrator
-def orchestrate(task: str) -> dict:
-    print(f"Orchestrator: Breaking down task: {task}")
+# Assemble the crew
+crew = Crew(
+    agents=[researcher, analyst, writer],
+    tasks=[research_task, analysis_task, writing_task],
+    process=Process.sequential,   # Tasks run in order
+    verbose=True,
+    max_rpm=10              # Rate limit to avoid API throttling
+)
 
-    # Step 1: Research
-    print("  → Research agent working...")
-    research = research_agent(task)
-
-    # Step 2: Write
-    print("  → Writer agent working...")
-    draft = writer_agent(research)
-
-    # Step 3: Edit
-    print("  → Editor agent reviewing...")
-    final = editor_agent(draft)
-
-    return {
-        "research": research,
-        "draft": draft,
-        "final": final,
-    }
-
-
-result = orchestrate("Explain how Mixture of Experts (MoE) works in LLMs")
-print(result["final"])
+# Execute
+result = crew.kickoff()
+print(result)
 ```
 
-### 2. Pipeline Pattern
+The `context=[research_task]` parameter tells CrewAI to pass the output of `research_task` as input to the analysis task. This is how information flows between agents in a sequential workflow.
 
-Agents form a linear chain, each processing the previous agent's output.
+### Option 2: LangGraph — Stateful Multi-Agent Graphs
 
-```python
-from dataclasses import dataclass
-
-@dataclass
-class PipelineState:
-    raw_input: str
-    extracted_data: dict = None
-    validated_data: dict = None
-    transformed_data: dict = None
-    final_output: str = None
-
-
-def extraction_agent(state: PipelineState) -> PipelineState:
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "Extract structured data from text. Return JSON only."},
-            {"role": "user",   "content": f"Extract key information:\n{state.raw_input}"},
-        ],
-        response_format={"type": "json_object"},
-    )
-    state.extracted_data = json.loads(response.choices[0].message.content)
-    return state
-
-
-def validation_agent(state: PipelineState) -> PipelineState:
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "Validate this data. Return {valid: bool, errors: [], cleaned: {}}"},
-            {"role": "user",   "content": json.dumps(state.extracted_data)},
-        ],
-        response_format={"type": "json_object"},
-    )
-    result = json.loads(response.choices[0].message.content)
-    state.validated_data = result.get("cleaned", state.extracted_data)
-    return state
-
-
-def formatting_agent(state: PipelineState) -> PipelineState:
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "Format this data into a professional summary."},
-            {"role": "user",   "content": json.dumps(state.validated_data)},
-        ],
-    )
-    state.final_output = response.choices[0].message.content
-    return state
-
-
-def run_pipeline(raw_text: str) -> str:
-    state = PipelineState(raw_input=raw_text)
-    for agent_fn in [extraction_agent, validation_agent, formatting_agent]:
-        state = agent_fn(state)
-    return state.final_output
-```
-
-### 3. Debate Pattern
-
-Two agents argue opposing positions, then a judge synthesizes the best answer.
-
-```python
-def debate_pattern(question: str) -> str:
-    # Agent A argues one position
-    pos_a = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "Present the strongest case FOR the following position."},
-            {"role": "user",   "content": question},
-        ],
-    ).choices[0].message.content
-
-    # Agent B argues against
-    pos_b = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "Present the strongest case AGAINST the following position."},
-            {"role": "user",   "content": question},
-        ],
-    ).choices[0].message.content
-
-    # Judge synthesizes
-    verdict = client.chat.completions.create(
-        model="gpt-4o",  # use stronger model for synthesis
-        messages=[
-            {"role": "system", "content": "Synthesize both perspectives into a balanced, well-reasoned conclusion."},
-            {"role": "user",   "content": f"Question: {question}\n\nPro:\n{pos_a}\n\nCon:\n{pos_b}"},
-        ],
-    ).choices[0].message.content
-
-    return verdict
-
-
-print(debate_pattern("Should AI systems be given autonomous decision-making authority in healthcare?"))
-```
-
----
-
-## LangGraph: Stateful Multi-Agent Workflows
-
-LangGraph models agent workflows as directed graphs with shared state.
-
-```bash
-pip install langgraph langchain-openai
-```
+LangGraph gives you explicit control over agent state and transitions. It is more verbose but more powerful for complex, conditional workflows.
 
 ```python
 from langgraph.graph import StateGraph, END
 from langchain_openai import ChatOpenAI
-from langchain_core.messages import HumanMessage, AIMessage
-from typing import TypedDict, Annotated, List
-import operator
+from langchain.agents import AgentExecutor, create_openai_functions_agent
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from typing import TypedDict
 
-# Define shared state
+# Define shared state structure
 class AgentState(TypedDict):
-    messages: Annotated[List, operator.add]  # messages accumulate
+    task: str
+    research_results: str
+    analysis: str
+    final_report: str
     current_agent: str
-    task_complete: bool
-    result: str
+    error: str
 
+# Create individual agents
+llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
-llm = ChatOpenAI(model="gpt-4o-mini")
-
-# Agent nodes
-def researcher_node(state: AgentState) -> AgentState:
-    messages = state["messages"]
-    response = llm.invoke([
-        HumanMessage(content=f"Research this topic and provide key facts: {messages[-1].content}")
+def create_agent(tools: list, instructions: str) -> AgentExecutor:
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", instructions),
+        ("human", "{input}"),
+        MessagesPlaceholder("agent_scratchpad"),
     ])
-    return {
-        "messages": [AIMessage(content=f"[Researcher]: {response.content}")],
-        "current_agent": "writer",
-        "task_complete": False,
-        "result": "",
-    }
+    agent = create_openai_functions_agent(llm=llm, tools=tools, prompt=prompt)
+    return AgentExecutor(agent=agent, tools=tools, max_iterations=8, verbose=True)
 
+search_tool = DuckDuckGoSearchRun()
 
-def writer_node(state: AgentState) -> AgentState:
-    # Get researcher output
-    research = state["messages"][-1].content
-    response = llm.invoke([
-        HumanMessage(content=f"Write a concise summary based on this research:\n{research}")
-    ])
-    return {
-        "messages": [AIMessage(content=f"[Writer]: {response.content}")],
-        "current_agent": "done",
-        "task_complete": True,
-        "result": response.content,
-    }
+research_agent = create_agent(
+    tools=[search_tool],
+    instructions="You are a research specialist. Search the web to find comprehensive information on the given topic. Return structured findings."
+)
 
+analysis_agent = create_agent(
+    tools=[],
+    instructions="You are an analyst. Analyze the provided research findings and extract key insights, patterns, and recommendations."
+)
 
-# Build graph
+# Define agent node functions
+def research_node(state: AgentState) -> AgentState:
+    result = research_agent.invoke({
+        "input": f"Research this topic thoroughly: {state['task']}"
+    })
+    return {**state, "research_results": result["output"], "current_agent": "analysis"}
+
+def analysis_node(state: AgentState) -> AgentState:
+    result = analysis_agent.invoke({
+        "input": f"Analyze these research findings:\n\n{state['research_results']}"
+    })
+    return {**state, "analysis": result["output"], "current_agent": "writing"}
+
+def writing_node(state: AgentState) -> AgentState:
+    writing_prompt = f"""Based on the research and analysis below, write a comprehensive report.
+
+Research:
+{state['research_results']}
+
+Analysis:
+{state['analysis']}
+
+Write a structured, professional report in markdown format."""
+
+    response = llm.invoke(writing_prompt)
+    return {**state, "final_report": response.content, "current_agent": "done"}
+
+def route_agent(state: AgentState) -> str:
+    """Route to next agent based on current state."""
+    return state["current_agent"]
+
+# Build the graph
 workflow = StateGraph(AgentState)
-workflow.add_node("researcher", researcher_node)
-workflow.add_node("writer", writer_node)
 
-# Define edges
-workflow.set_entry_point("researcher")
-workflow.add_edge("researcher", "writer")
-workflow.add_edge("writer", END)
+workflow.add_node("research", research_node)
+workflow.add_node("analysis", analysis_node)
+workflow.add_node("writing", writing_node)
 
-app = workflow.compile()
+workflow.set_entry_point("research")
+workflow.add_conditional_edges(
+    "research",
+    route_agent,
+    {"analysis": "analysis"}
+)
+workflow.add_conditional_edges(
+    "analysis",
+    route_agent,
+    {"writing": "writing"}
+)
+workflow.add_edge("writing", END)
 
-# Run
-result = app.invoke({
-    "messages": [HumanMessage(content="Explain vector databases")],
-    "current_agent": "researcher",
-    "task_complete": False,
-    "result": "",
+# Compile and run
+graph = workflow.compile()
+
+result = graph.invoke({
+    "task": "Compare the top AI agent frameworks for production use in 2026",
+    "research_results": "",
+    "analysis": "",
+    "final_report": "",
+    "current_agent": "analysis",
+    "error": ""
 })
 
-print(result["result"])
+print(result["final_report"])
 ```
 
-### Conditional Routing in LangGraph
-
-```python
-def should_continue(state: AgentState) -> str:
-    """Route to next agent based on state."""
-    if state["task_complete"]:
-        return "end"
-    elif state["current_agent"] == "writer":
-        return "writer"
-    else:
-        return "researcher"
-
-
-workflow.add_conditional_edges(
-    "researcher",
-    should_continue,
-    {
-        "writer": "writer",
-        "end": END,
-    }
-)
-```
+LangGraph's typed state is its key advantage. Every piece of information passed between agents is defined in the `AgentState` TypedDict, which makes the data flow explicit and debuggable.
 
 ---
 
-## Shared Memory and Communication
+## Best Practices
 
-```python
-from threading import Lock
-from collections import defaultdict
+**Choose the right coordination pattern for the task structure.** Sequential workflows (research → analyze → write) fit the sequential pattern. Tasks with independent sub-components that can run in parallel benefit from a supervisor pattern with concurrent execution. Do not force parallelism where tasks have dependencies.
 
-class SharedMemory:
-    """Thread-safe shared memory for multi-agent systems."""
-    def __init__(self):
-        self._store = defaultdict(list)
-        self._lock = Lock()
+**Keep agent tool sets focused.** A research agent with three tools (search, wikipedia, arxiv) will outperform a general agent with twenty tools on research tasks. Specialization reduces the model's decision space and improves reliability.
 
-    def write(self, key: str, value: any):
-        with self._lock:
-            self._store[key].append(value)
+**Implement inter-agent communication contracts.** Define what each agent expects to receive and what it will produce. Treat agent outputs like API responses: structured, typed, and validated before passing to the next agent.
 
-    def read(self, key: str) -> list:
-        with self._lock:
-            return list(self._store[key])
-
-    def read_latest(self, key: str) -> any:
-        with self._lock:
-            items = self._store[key]
-            return items[-1] if items else None
-
-
-memory = SharedMemory()
-
-def agent_1(task: str):
-    result = f"Agent 1 processed: {task}"
-    memory.write("task_results", result)
-    return result
-
-def agent_2():
-    previous = memory.read("task_results")
-    return f"Agent 2 sees: {previous}"
-```
+**Monitor cost at the agent level.** In a multi-agent system, it is easy to lose track of how much each agent is spending. Log token usage per agent and per task. Research agents tend to be the most expensive due to large tool observations.
 
 ---
 
-## Error Handling and Reliability
+## Common Mistakes
 
-```python
-import time
-from functools import wraps
+1. **Using multi-agent architecture when a single agent would work.** Multi-agent systems are slower, more expensive, and harder to debug. If a task fits in a single agent's context window and does not require specialization, use a single agent.
 
-def with_retry(max_retries: int = 3, delay: float = 1.0):
-    def decorator(agent_fn):
-        @wraps(agent_fn)
-        def wrapper(*args, **kwargs):
-            for attempt in range(max_retries):
-                try:
-                    return agent_fn(*args, **kwargs)
-                except Exception as e:
-                    if attempt == max_retries - 1:
-                        raise
-                    print(f"Agent {agent_fn.__name__} failed (attempt {attempt+1}): {e}")
-                    time.sleep(delay * (2 ** attempt))
-        return wrapper
-    return decorator
+2. **Not handling inter-agent failures.** When one agent in a pipeline fails, the failure cascades to downstream agents. Build explicit error handling at each stage and decide whether to retry, skip, or abort.
 
+3. **Letting agents communicate in free text without structure.** When one agent passes results to another as an unstructured string, the receiving agent must parse it. Use structured output (JSON, TypedDicts) between agents.
 
-@with_retry(max_retries=3)
-def reliable_agent(task: str) -> str:
-    return research_agent(task)
-```
+4. **Over-parallelizing.** Running too many agents concurrently can hit API rate limits and produce out-of-order results. Implement a rate limiter and use async execution only where true parallelism is beneficial.
+
+5. **No global context.** Each agent has its own context, but they all need to know the original task. Always pass the top-level goal to every agent, not just the immediate sub-task.
 
 ---
 
-## Safety and Guardrails
+## Summary
 
-```python
-BLOCKED_ACTIONS = ["delete_database", "send_mass_email", "deploy_to_production"]
-
-def safe_execute_tool(name: str, args: dict) -> str:
-    # Blocklist check
-    if name in BLOCKED_ACTIONS:
-        return json.dumps({"error": f"Tool '{name}' is blocked for safety reasons."})
-
-    # Require confirmation for destructive actions
-    destructive = ["delete", "remove", "drop", "truncate"]
-    if any(d in name.lower() for d in destructive):
-        print(f"⚠️  Destructive action requested: {name}({args})")
-        confirm = input("Confirm? (yes/no): ")
-        if confirm.lower() != "yes":
-            return json.dumps({"error": "Action cancelled by user."})
-
-    return execute_tool(name, args)
-```
+Multi-agent systems address the context and specialization limits of single agents. The supervisor-worker pattern is the most practical for most production use cases. CrewAI is the fastest path to a working multi-agent system. LangGraph gives you more control over state and routing. The decision between single-agent and multi-agent should be driven by task complexity, not by the appeal of the architecture.
 
 ---
 
-## Troubleshooting
+## Related Articles
 
-**Agents contradict each other**
-- Use a judge/synthesis agent to resolve conflicts
-- Define clear authority hierarchy — orchestrator has final say
-- Use structured outputs to enforce consistent formats
-
-**Infinite loops**
-- Always set `max_iterations` or use LangGraph's `recursion_limit`
-- Add a termination condition checker as a separate node
-- Log agent state transitions for debugging
-
-**High costs from multi-agent systems**
-- Use `gpt-4o-mini` for worker agents; `gpt-4o` only for orchestration/synthesis
-- Cache repeated sub-tasks
-- Use smaller models for simple routing decisions
+- [AI Agents Guide: Architecture and Design Patterns](/blog/ai-agents-guide)
+- [Agent Framework Comparison: CrewAI vs LangGraph vs AutoGPT](/blog/agent-framework-comparison)
+- [Planning Algorithms in AI Agents](/blog/agent-planning)
+- [Autonomous Task Execution in AI Agents](/blog/autonomous-agents)
 
 ---
 
 ## FAQ
 
-**How many agents is too many?**
-Start with 2–3. Each agent adds latency, cost, and failure points. Add agents only when a single agent demonstrably fails at the task.
+**When should I use multi-agent instead of a single agent?**
+Use multi-agent when the task requires genuinely different capabilities (research vs. coding vs. analysis), when the context window of a single agent is insufficient, or when sub-tasks can be parallelized for speed. If your task fits in one agent's context window and does not require specialization, a single agent is simpler and cheaper.
 
-**When should I use LangGraph vs a custom loop?**
-LangGraph for complex graphs with branching, cycles, and persistent state. Custom loops for simple linear or orchestrator-worker patterns.
+**How do agents in a multi-agent system communicate?**
+Agents communicate through shared state. In CrewAI, task outputs are passed as context to dependent tasks. In LangGraph, all agents read from and write to a shared state object. Direct agent-to-agent messaging is possible but less common.
 
----
+**Can multi-agent systems run agents in parallel?**
+Yes. CrewAI supports `Process.hierarchical` for parallel execution. LangGraph supports parallel node execution with explicit branching. Parallel execution reduces latency but increases cost and API rate limit risk.
 
-## What to Learn Next
+**How do I debug a multi-agent system when it produces wrong output?**
+Enable verbose logging for every agent and inspect the output of each stage independently. Start from the final output and work backwards — if the report is wrong, check the writing agent's input. If the analysis is wrong, check the research output. Isolate each agent and test it with expected inputs.
 
-- **Single agent fundamentals** → [AI Agent Fundamentals](/blog/ai-agent-fundamentals/)
-- **Tool use** → [Tool Use and Function Calling](/blog/tool-use-and-function-calling/)
-- **Deploy agents** → [Deploying AI Applications](/blog/deploying-ai-applications/)
+**Is multi-agent more expensive than single agent?**
+Yes, typically. The coordination overhead — supervisor reasoning, inter-agent communication — adds tokens. However, specialized agents often produce better results with fewer iterations than a single general agent struggling with a complex task. The cost-quality trade-off depends on task complexity.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "When should I use multi-agent instead of a single agent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use multi-agent when the task requires genuinely different capabilities, when the context window of a single agent is insufficient, or when sub-tasks can be parallelized. If your task fits in one agent's context window and does not require specialization, a single agent is simpler and cheaper."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do agents in a multi-agent system communicate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Agents communicate through shared state. In CrewAI, task outputs are passed as context to dependent tasks. In LangGraph, all agents read from and write to a shared state object."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can multi-agent systems run agents in parallel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. CrewAI supports Process.hierarchical for parallel execution. LangGraph supports parallel node execution with explicit branching. Parallel execution reduces latency but increases cost and API rate limit risk."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is multi-agent more expensive than single agent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, typically. The coordination overhead adds tokens. However, specialized agents often produce better results with fewer iterations than a single general agent. The cost-quality trade-off depends on task complexity."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I debug a multi-agent system when it produces wrong output?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Enable verbose logging for every agent and inspect the output of each stage independently. Start from the final output and work backwards, isolating each agent and testing it with expected inputs."
+      }
+    }
+  ]
+}
+</script>

@@ -1,218 +1,334 @@
 ---
-title: "AI Agents Explained – How Autonomous AI Systems Work"
-description: "Learn what AI agents are and how developers build autonomous AI systems."
-date: "2026-03-13"
-slug: "ai-agents-guide"
+title: "AI Agents Guide: Architecture and Design Patterns"
+description: "Complete guide to AI agent architecture — perception, planning, memory, tool use, and execution loops for senior engineers building production systems."
+date: "2026-03-15"
+updatedAt: "2026-03-15"
+slug: "/blog/ai-agents-guide"
+keywords: ["ai agents", "ai agent architecture", "ai agent design patterns"]
 author: "Amit K Chauhan"
 authorTitle: "Software Engineer & AI Builder"
-updatedAt: "2026-03-13"
-keywords: ["AI agents", "AI agents explained", "autonomous AI", "AI agent architecture", "how AI agents work"]
+level: "intermediate"
+time: "20 min"
+stack: ["Python", "LangChain"]
 ---
 
-# AI Agents Explained – How Autonomous AI Systems Work
+# AI Agents Guide: Architecture and Design Patterns
 
-Your product needs to do more than answer questions — it needs to look things up, take actions, and chain those actions together until a task is done. That is the gap between a chatbot and an AI agent. Understanding how agents work at the architectural level is increasingly essential for developers building AI features in 2026.
+Most LLM integrations hit a ceiling around the same point. The model can answer questions well, summarize text, and generate content — but the moment your product needs to take an action, retrieve live data, or chain multiple steps together, the simple prompt-response loop breaks down. That is the inflection point where engineers start building agents.
+
+An AI agent is not a chatbot with extra steps. It is a fundamentally different architecture: a loop where the language model drives its own behavior, decides what tools to call, observes results, and repeats until a task is complete. The model is no longer just producing output — it is acting as a controller for a workflow.
+
+This guide covers what you actually need to know to build agents that work in production: the core components, the design patterns that matter, the trade-offs between different approaches, and the failure modes engineers encounter when they move from prototype to production. This is not an academic survey. It is what a year of building and shipping agents looks like when you write it down.
 
 ---
 
-## What is an AI Agent
+## Concept Overview
 
-An **AI agent** is a system where a language model drives its own actions — deciding what to do next, calling tools, observing results, and repeating until a task is complete. Unlike a chatbot that responds to one question at a time, an agent pursues a goal across multiple steps.
+An AI agent consists of five fundamental components working together:
 
-An agent consists of three core components:
-- **Tools** — Functions the model can call (search, code execution, APIs, database queries)
-- **Memory** — Context that persists across steps or sessions
-- **A loop** — A runtime that repeatedly prompts the model, executes tool calls, and feeds back results
+**1. Perception / Input Layer** — What the agent receives. This includes the user's task, any documents or data provided, system instructions, and the current state of the conversation or task.
 
-The agent receives a goal, breaks it into steps, executes those steps using tools, and adapts based on what it observes. The loop continues until the goal is achieved or a stopping condition is met.
+**2. LLM Reasoning Core** — The language model that decides what to do next. It reads the input, the available tools, and any prior observations, then produces either a tool call or a final response.
 
-At the core of most agents is the **ReAct pattern** (Reason + Act): the model alternates between reasoning about what to do and taking an action.
+**3. Memory** — Context that persists across steps. Short-term memory is the current context window. Long-term memory is a vector store or database that the agent can query for past information.
+
+**4. Tool Registry** — A set of functions the model can call. Tools can be anything: web search, code execution, database queries, file I/O, external APIs, or other agents.
+
+**5. Execution Engine** — The runtime loop that orchestrates everything. It sends prompts to the LLM, parses tool calls, executes them, feeds results back, and decides when to stop.
+
+These five components are present in every serious agent system, regardless of what framework you use.
+
+---
+
+## How It Works
+
+### The Core Execution Loop
+
+Every agent runs on some variant of this loop:
 
 ```
-User: Research the top 3 AI frameworks and write a comparison.
-
-Agent:
-Thought: I need to search for popular AI frameworks.
-Action: search("top AI frameworks 2026")
-Observation: LangChain, LlamaIndex, Haystack, DSPy are widely used...
-Thought: I need details on each to compare them.
-Action: search("LangChain vs LlamaIndex features 2026")
-Observation: [detailed comparison data]
-...
-Final Answer: [formatted comparison table]
+1. Receive task
+2. LLM produces next action (tool call or final answer)
+3. If tool call: execute tool, collect observation
+4. Append observation to context
+5. Go to step 2
+6. If final answer: return result, stop
 ```
 
----
+This loop has a name in the research literature: **ReAct** (Reason + Act). The model alternates between reasoning about what it should do and taking an action. The observations from actions feed back into the next reasoning step.
 
-## Why AI Agents Matter for Developers
+![Architecture diagram](/assets/diagrams/ai-agents-guide-diagram-1.png)
 
-Most meaningful real-world tasks involve multiple steps with dependencies. A user might ask: "Find the best-reviewed hotel in Paris under $200 per night and check availability for next weekend." That requires search, filtering, date logic, and synthesis — steps no single prompt can handle.
+### The ReAct Pattern in Detail
 
-Agents enable:
-- **Multi-step task completion** — Handle tasks requiring planning and sequential execution
-- **Tool integration** — Connect LLMs to real-world systems: databases, APIs, file systems, browsers
-- **Autonomy** — Reduce the amount of human orchestration needed for complex workflows
-- **Adaptive behavior** — Adjust the execution path based on what the agent discovers at runtime
+ReAct works because it forces the model to be explicit about its reasoning before it acts. A typical ReAct turn looks like:
 
-For developers, agents are the building block of AI systems that can be delegated complex tasks rather than merely answering questions. The difference between "What is our refund policy?" and "Process this refund and send the customer a confirmation email" is the difference between a chatbot and an agent.
+```
+Thought: The user wants to know the current price of AAPL. I should search for this.
+Action: web_search
+Action Input: "AAPL stock price today"
+Observation: AAPL is trading at $187.43 as of March 15, 2026.
+Thought: I now have the price. I can answer the user.
+Final Answer: Apple (AAPL) is currently trading at $187.43.
+```
 
----
+Each step is visible, which makes debugging significantly easier than opaque chain-of-thought inside a single generation.
 
-## How AI Agents Work
+### Chain-of-Thought Agents
 
-### Core Components in Detail
+Chain-of-thought (CoT) agents differ from ReAct in that they reason internally before committing to a tool call, rather than exposing each reasoning step as a distinct output. This produces cleaner outputs but makes debugging harder because the reasoning is less visible.
 
-**Reasoning model** — Usually a capable LLM (GPT-4o, Claude Sonnet, Llama 3.1 70B). The quality of the reasoning model directly determines agent reliability. Smaller models under 7B often struggle with consistent tool selection.
+In practice, modern function-calling APIs (OpenAI, Anthropic) blend these approaches. The model reasons internally, then emits a structured tool call. You get the benefits of both patterns.
 
-**Tool registry** — A set of functions the model can invoke. Each tool has a name, description, and input schema. The model selects tools based on their descriptions, so clear, precise descriptions are critical.
+### Tool-Calling Agents
 
-**Agent loop** — The runtime that orchestrates the cycle. It prompts the model, parses tool call instructions from the response, executes the tools, and injects results back as observations. The loop continues until the model produces a final answer or a stopping condition is triggered.
+Tool-calling agents use the provider's native function-calling feature rather than parsing text-based action/observation strings. The model returns a structured JSON object describing the tool call. This is more reliable than text parsing and is the pattern you should use in production.
 
-**Memory systems:**
-- *In-context memory* — The running conversation and tool call history in the current prompt
-- *External memory* — A vector database storing past interactions, user preferences, or knowledge
-- *Episodic memory* — Summaries of past tasks and outcomes stored between sessions
+### Plan-and-Execute Agents
 
-### Agent Architecture Patterns
-
-**Single agent** — One LLM with a set of tools. Simple, predictable, and good for focused tasks. Start here before adding complexity.
-
-**Multi-agent** — Multiple specialized agents that hand off tasks to each other. A supervisor agent delegates subtasks to specialists (researcher, coder, writer). More powerful but harder to debug.
-
-**Plan-and-execute** — The agent generates a full plan upfront, then executes each step. More structured than reactive agents and better for well-defined tasks with predictable requirements.
-
-**Reflexion** — The agent reflects on past failures and revises its approach. Useful for tasks requiring iteration (code debugging, writing refinement).
+For complex, multi-step tasks, a single-loop ReAct agent can get lost. Plan-and-execute splits the problem into two phases: a planning phase where the model creates a step-by-step plan, and an execution phase where a simpler agent works through each step. This gives you more control over long-horizon tasks.
 
 ---
 
-## Practical Example
+## Implementation Example
 
-### Simple Agent with LangChain Tools
+### Basic ReAct Agent with LangChain
 
 ```python
 from langchain_openai import ChatOpenAI
 from langchain.agents import AgentExecutor, create_react_agent
-from langchain.tools import tool
+from langchain_community.tools import DuckDuckGoSearchRun
+from langchain_community.tools import WikipediaQueryRun
+from langchain_community.utilities import WikipediaAPIWrapper
 from langchain import hub
 
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+# Initialize the LLM
+llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
-@tool
-def get_weather(city: str) -> str:
-    """Get the current weather for a city. Use when asked about weather conditions."""
-    # Replace with a real weather API in production
-    weather_data = {
-        "tokyo": "18°C and sunny",
-        "london": "12°C and overcast",
-        "new york": "5°C and snowing",
-    }
-    return weather_data.get(city.lower(), f"Weather data unavailable for {city}")
+# Define tools the agent can use
+search_tool = DuckDuckGoSearchRun(name="web_search")
+wiki_tool = WikipediaQueryRun(
+    api_wrapper=WikipediaAPIWrapper(top_k_results=2),
+    name="wikipedia"
+)
 
-@tool
-def calculate(expression: str) -> str:
-    """Evaluate a math expression. Input must be a valid Python expression."""
-    try:
-        return str(eval(expression, {"__builtins__": {}}, {}))
-    except Exception as e:
-        return f"Error: {e}"
+tools = [search_tool, wiki_tool]
 
-tools = [get_weather, calculate]
+# Pull the ReAct prompt template from LangChain Hub
 prompt = hub.pull("hwchase17/react")
-agent = create_react_agent(llm, tools, prompt)
-executor = AgentExecutor(agent=agent, tools=tools, verbose=True, max_iterations=8)
 
-result = executor.invoke({
-    "input": "Is it above 20°C in Tokyo today? What is the difference from 20°C?"
+# Create the agent
+agent = create_react_agent(llm=llm, tools=tools, prompt=prompt)
+
+# Wrap in executor with safety limits
+agent_executor = AgentExecutor(
+    agent=agent,
+    tools=tools,
+    verbose=True,           # Show reasoning steps
+    max_iterations=10,      # Prevent infinite loops
+    handle_parsing_errors=True  # Recover from malformed outputs
+)
+
+# Run the agent
+result = agent_executor.invoke({
+    "input": "What are the key differences between GPT-4o and Claude 3.5 Sonnet?"
 })
+
 print(result["output"])
 ```
 
-### Streaming Agent Responses
+The `AgentExecutor` handles the loop for you. `max_iterations` is critical — without it, a confused agent can loop indefinitely, burning tokens and money. `handle_parsing_errors=True` is equally important in production; models occasionally produce malformed tool calls.
+
+### Adding Custom Tools
 
 ```python
-for step in executor.stream({"input": "What is the weather in London? Is it warmer than 15°C?"}):
-    if "intermediate_steps" in step:
-        action, observation = step["intermediate_steps"][-1]
-        print(f"Tool: {action.tool}")
-        print(f"Input: {action.tool_input}")
-        print(f"Result: {observation[:200]}\n")
-    if "output" in step:
-        print(f"Final: {step['output']}")
+from langchain.tools import tool
+
+@tool
+def calculate_roi(investment: float, returns: float, period_years: float) -> str:
+    """
+    Calculate return on investment (ROI) as an annualized percentage.
+
+    Args:
+        investment: Initial investment amount in dollars
+        returns: Total returns in dollars
+        period_years: Investment period in years
+    """
+    if investment <= 0 or period_years <= 0:
+        return "Error: investment and period must be positive numbers"
+
+    total_roi = (returns - investment) / investment
+    annualized_roi = ((1 + total_roi) ** (1 / period_years) - 1) * 100
+
+    return f"Total ROI: {total_roi:.1%}, Annualized ROI: {annualized_roi:.2f}%"
+
+# Add to tools list
+tools = [search_tool, wiki_tool, calculate_roi]
 ```
 
----
+Tool docstrings matter more than you might expect. The LLM reads the docstring to decide when and how to call the tool. A vague docstring leads to incorrect tool selection. Be specific about what the tool does, what inputs it expects, and what it returns.
 
-## Real-World Applications
+### Function-Calling Agent (Production Pattern)
 
-Agents are deployed across a wide range of production AI systems:
+```python
+from langchain_openai import ChatOpenAI
+from langchain.agents import AgentExecutor, create_openai_functions_agent
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
-**Enterprise chatbots** — Look up CRM data, check inventory, submit tickets. The agent handles the multi-step workflow; humans only intervene when it escalates.
+llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
-**Coding assistants** — Read files, run linters, write tests, execute them, and iterate based on failures. GitHub Copilot Workspace uses this pattern.
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are a helpful research assistant. Use tools to find accurate, up-to-date information."),
+    MessagesPlaceholder("chat_history", optional=True),
+    ("human", "{input}"),
+    MessagesPlaceholder("agent_scratchpad"),
+])
 
-**Research automation** — Search the web, read articles, extract data, and compile reports. Reduces hours of manual research to minutes.
+agent = create_openai_functions_agent(llm=llm, tools=tools, prompt=prompt)
 
-**Financial analysis** — Query databases, run calculations, generate visualizations, and summarize findings. Each operation uses an appropriate tool rather than asking an LLM to do math from memory.
+agent_executor = AgentExecutor(
+    agent=agent,
+    tools=tools,
+    verbose=True,
+    max_iterations=8,
+    return_intermediate_steps=True  # Useful for debugging and evaluation
+)
 
-**DevOps automation** — Monitor logs, detect anomalies, create incidents, and page on-call engineers. The agent takes action on real systems through tool calls.
+response = agent_executor.invoke({
+    "input": "Research the latest developments in AI agent frameworks"
+})
 
----
+# Access intermediate steps for debugging
+for step in response["intermediate_steps"]:
+    tool_call, observation = step
+    print(f"Tool: {tool_call.tool}")
+    print(f"Input: {tool_call.tool_input}")
+    print(f"Output: {observation[:200]}...")
+    print("---")
+```
 
-## Common Mistakes Developers Make
-
-1. **No stopping condition** — Agents can loop indefinitely on ambiguous tasks. Always set a maximum iteration count and a wall-clock timeout.
-
-2. **Trusting all tool outputs** — Tools return strings. Validate tool outputs before injecting them into the agent's context. A tool that returns 10,000 characters can overflow the context window.
-
-3. **Overly broad tool descriptions** — The agent selects tools based on their description. Vague descriptions cause the agent to select the wrong tool. Be specific about when to use each tool and what it returns.
-
-4. **No error handling in tools** — An unhandled exception inside a tool crashes the agent loop. Wrap every tool in try/except and return descriptive error messages.
-
-5. **Using agents for simple tasks** — If the steps are fixed and known in advance, use a chain. Agents add multiple LLM call latency and unpredictability. Reserve agents for genuinely dynamic tasks.
+`return_intermediate_steps=True` is invaluable during development. It exposes every tool call and observation, which makes debugging a misbehaving agent much faster than reading logs.
 
 ---
 
 ## Best Practices
 
-- **Start with a single agent and a small tool set** — Validate the core loop with two or three tools before adding more. Complexity multiplies quickly.
-- **Log every step** — In production, log every tool call, input, and output. Agent behavior is hard to debug without a complete trace.
-- **Test adversarial inputs** — Users will try to manipulate agents through prompt injection. Test for this explicitly in your QA process.
-- **Give agents clear stopping criteria** — In the system prompt, describe explicitly when the task is complete and the agent should return a final answer.
-- **Use human-in-the-loop for irreversible actions** — For sending emails, executing code against production data, or making API calls with side effects, require human confirmation before proceeding.
+**Set explicit iteration limits.** Every agent executor should have a `max_iterations` cap. In production, also set a `max_execution_time` in seconds. Runaway agents are expensive and can block resources.
+
+**Choose your model tier deliberately.** A GPT-4o or Claude 3.5 Sonnet level model is required for reliable multi-step reasoning. Smaller models (GPT-4o-mini) work for simple single-tool agents but struggle with complex planning. The cost difference is real — profile your tasks before defaulting to the most capable model.
+
+**Design tools with clear boundaries.** Each tool should do exactly one thing. A tool that does too much forces the model to guess at behavior. A tool that does too little creates unnecessary chaining overhead. Aim for tools that return clean, structured data the model can reason about directly.
+
+**Manage context window size.** Every tool observation gets appended to the context. Long conversations and large tool outputs can push you past the model's context limit. Truncate or summarize observations when they exceed a threshold. LangChain's `trim_messages` utility helps here.
+
+**Use structured output for tool calls.** JSON-mode or structured output APIs produce more reliable tool invocations than text-parsed ReAct patterns. Prefer the provider's native function-calling feature over home-grown parsing.
+
+**Implement observability from day one.** Use LangSmith, Langfuse, or a similar tool to trace agent runs in production. You need to see every tool call, every reasoning step, and every token count to debug failures and optimize costs.
+
+---
+
+## Common Mistakes
+
+1. **No iteration limit.** The single most common production incident with agents is a loop that runs until it hits a rate limit or costs hundreds of dollars. Always set `max_iterations` and `max_execution_time`.
+
+2. **Vague tool descriptions.** The model uses tool names and docstrings to decide which tool to call. Ambiguous descriptions lead to wrong tool selection. Treat tool docs with the same care as an API contract.
+
+3. **Ignoring error handling.** Tool calls fail. External APIs time out, return empty results, or throw exceptions. Agents need to handle these cases gracefully. Define what happens when a tool fails — retry, skip, or escalate.
+
+4. **Using a single agent for everything.** Complex tasks that require dozens of steps benefit from specialized sub-agents rather than one giant agent. Multi-agent architectures distribute complexity and are easier to debug.
+
+5. **Not testing with adversarial inputs.** Agents that work perfectly in development often fail when users provide ambiguous, incomplete, or contradictory instructions. Test with bad inputs early.
+
+6. **Over-trusting the agent's output.** Agents can hallucinate tool call parameters, misread observations, or reach incorrect conclusions. Build validation into critical workflows. Do not let an agent take irreversible actions without a human checkpoint.
+
+7. **Ignoring cost.** A 10-step agent run with GPT-4o can cost $0.10–$0.50 per execution at current pricing. At scale, this matters. Profile token usage per task and optimize tool outputs to be as concise as possible.
+
+---
+
+## Summary
+
+AI agents extend language models from single-turn responders into multi-step task executors. The core architecture — perception, LLM reasoning, memory, tools, and execution loop — is consistent across frameworks. The ReAct pattern is the foundational loop that most production agents use, though plan-and-execute and multi-agent patterns address its limitations for complex tasks.
+
+Building agents requires different engineering discipline than building chatbots. Iteration limits, observability, error handling, and cost management are not optional — they are the difference between a prototype and a production system. Start with a single-agent ReAct loop, instrument it heavily, and add complexity only where simpler approaches break down.
+
+---
+
+## Related Articles
+
+- [Building Agents with LangChain: Complete Tutorial](/blog/langchain-agents)
+- [AI Agents Tutorial: Build Autonomous AI Systems](/blog/ai-agents-tutorial)
+- [Memory Systems in AI Agents](/blog/agent-memory)
+- [Tool Use in AI Agents](/blog/agent-tools)
+- [Multi-Agent Systems Explained](/blog/multi-agent-systems)
+- [Planning Algorithms in AI Agents](/blog/agent-planning)
+- [Autonomous Task Execution in AI Agents](/blog/autonomous-agents)
+- [Agent Framework Comparison: CrewAI vs LangGraph vs AutoGPT](/blog/agent-framework-comparison)
+- [Agent Evaluation Metrics](/blog/agent-evaluation)
 
 ---
 
 ## FAQ
 
 **What is the difference between an AI agent and a chatbot?**
-A chatbot responds once per message. An agent acts in a loop, uses tools, and can autonomously complete multi-step tasks without human orchestration.
+A chatbot produces a single response to each user message. An AI agent pursues a goal across multiple steps — calling tools, observing results, and adapting its approach — until the task is complete. The key difference is the execution loop and the ability to take actions.
 
-**When should I use agents versus standard RAG?**
-Use RAG when you need to answer questions about documents. Use agents when you need to take actions, use multiple tools in flexible combinations, or handle tasks requiring dynamic planning.
+**Which framework should I use to build AI agents?**
+LangChain is the most mature option with the largest ecosystem. LangGraph gives you more control over agent state and is better for complex multi-agent systems. CrewAI is the fastest to get started with for role-based multi-agent workflows. The choice depends on how much control you need versus how fast you want to ship.
 
-**Are agents reliable enough for production?**
-Narrow, well-defined tasks with a small tool set can be production-ready. Open-ended tasks with many tools have higher failure rates and need oversight. Start narrow and expand scope as reliability improves.
+**How do I prevent an agent from looping indefinitely?**
+Set `max_iterations` in your executor configuration. Also set `max_execution_time` as a wall-clock limit. For production systems, add monitoring that alerts when an agent run exceeds a time or token budget threshold.
 
-**How do I debug an agent that takes unexpected actions?**
-Enable verbose logging on the agent executor. Log every thought, action, and observation. Use LangSmith if you are in the LangChain ecosystem — it traces every step automatically.
+**How much does running an AI agent cost?**
+Costs vary widely by task complexity, model choice, and number of tool calls. A simple 3-5 step task with GPT-4o typically costs $0.01–$0.10. Complex research tasks can cost $0.50–$2.00. Use smaller models (GPT-4o-mini, Claude Haiku) for sub-tasks where full reasoning capability is not required.
 
-**What is the difference between LangChain agents and LangGraph agents?**
-LangChain agents use a simple loop and are good for prototyping. LangGraph gives you explicit state management, conditional branching, and human-in-the-loop checkpoints — better for production.
+**Can AI agents take actions that are hard to reverse?**
+Yes, and this is a real risk. Agents can delete files, send emails, modify databases, or make API calls with side effects. Build human-in-the-loop checkpoints for irreversible actions. Use a dry-run mode in development. Log every action before executing it so you can audit what happened.
 
----
-
-## Further Reading
-
-- [LangChain Agents Documentation](https://python.langchain.com/docs/concepts/agents/)
-- [LangGraph Getting Started](https://langchain-ai.github.io/langgraph/tutorials/introduction/)
-- [OpenAI Assistants API](https://platform.openai.com/docs/assistants/overview)
-- [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
-- [HuggingFace Agents Documentation](https://huggingface.co/docs/transformers/en/agents)
-
----
-
-## What to Learn Next
-
-- [Build AI Agents Step-by-Step](/blog/build-ai-agents/) — hands-on implementation guide with complete code
-- [LangChain Agents Explained](/blog/langchain-agents/) — LangChain-specific patterns and LangGraph integration
-- [Multi-Agent Systems](/blog/multi-agent-systems/) — coordinating multiple specialized agents
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the difference between an AI agent and a chatbot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A chatbot produces a single response to each user message. An AI agent pursues a goal across multiple steps — calling tools, observing results, and adapting its approach — until the task is complete. The key difference is the execution loop and the ability to take actions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which framework should I use to build AI agents?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LangChain is the most mature option with the largest ecosystem. LangGraph gives you more control over agent state and is better for complex multi-agent systems. CrewAI is the fastest to get started with for role-based multi-agent workflows."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I prevent an agent from looping indefinitely?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Set max_iterations in your executor configuration. Also set max_execution_time as a wall-clock limit. For production systems, add monitoring that alerts when an agent run exceeds a time or token budget threshold."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does running an AI agent cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Costs vary widely by task complexity, model choice, and number of tool calls. A simple 3-5 step task with GPT-4o typically costs $0.01–$0.10. Complex research tasks can cost $0.50–$2.00. Use smaller models for sub-tasks where full reasoning capability is not required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can AI agents take actions that are hard to reverse?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Agents can delete files, send emails, modify databases, or make API calls with side effects. Build human-in-the-loop checkpoints for irreversible actions. Log every action before executing it so you can audit what happened."
+      }
+    }
+  ]
+}
+</script>
