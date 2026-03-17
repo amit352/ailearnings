@@ -615,7 +615,7 @@
                           )}
                         </div>
                         <div className="flex items-center gap-1.5 flex-shrink-0 mt-0.5">
-                          {open !== p.id && <span className="text-xs text-blue-400/70 hidden sm:inline font-medium">View phase</span>}
+                          {open !== p.id && <span className="text-xs text-blue-400 hidden sm:inline font-medium">View phase</span>}
                           <div className={`text-blue-400/70 ${open !== p.id ? "" : "text-gray-400"}`}>{open === p.id ? <ChevronUp size={14}/> : <ChevronDown size={14}/>}</div>
                         </div>
                       </div>
