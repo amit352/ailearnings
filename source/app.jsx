@@ -600,7 +600,7 @@
                           ) : null; })()}
                           {open !== p.id && (
                             <div className="mt-2 space-y-1">
-                              <p className="text-[10px] text-gray-500 uppercase tracking-wide font-medium mt-2">You will be able to:</p>
+                              <p className="text-[10px] text-gray-400 uppercase tracking-wide font-medium mt-2">You will be able to:</p>
                               {(phaseOutcomes[p.id] || []).slice(0, 2).map((o, i) => (
                                 <div key={i} className="flex items-start gap-1.5">
                                   <Check size={9} className="text-blue-400 flex-shrink-0 mt-0.5"/>
