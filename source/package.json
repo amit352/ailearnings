@@ -13,8 +13,8 @@
     "generate:excalidraw": "node scripts/generate-excalidraw.js",
     "generate:sitemap": "node scripts/generate-sitemap.js",
     "generate:og": "node scripts/generate-og-image.js",
-    "deploy": "cd .. && git add -A && git diff --cached --quiet && echo 'nothing to commit' || git commit -m 'build: auto-deploy' && git push origin main",
-    "dev": "chokidar '**/*.tsx' '**/*.jsx' 'tailwind.css' 'tailwind.config.js' 'scripts/inline.js' --ignore 'node_modules/**' --debounce 500 -c 'npm run build && npm run deploy'"
+    "deploy": "npm run generate:all && cd .. && git add docs/ && git diff --cached --quiet && echo 'nothing to commit' || (git commit -m 'build: regenerate site' && git push origin main)",
+    "dev": "chokidar '**/*.tsx' '**/*.jsx' 'tailwind.css' 'tailwind.config.js' 'scripts/inline.js' --ignore 'node_modules/**' --debounce 500 -c 'npm run build'"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.6",
