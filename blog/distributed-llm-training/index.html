@@ -109,11 +109,11 @@
   "description": "Learn distributed LLM training strategies including data parallelism, model sharding, and DeepSpeed ZeRO. Includes HuggingFace Accelerate and FSDP config examples.",
   "image": "https://ailearnings.in/og-image.jpg",
   "url": "https://ailearnings.in/blog/distributed-llm-training/",
-  "datePublished": "2026-03-21",
-  "dateModified": "2026-03-21",
+  "datePublished": "2026-02-04",
+  "dateModified": "2026-02-04",
   "author": {
     "@type": "Person",
-    "name": "Amit K Chauhan",
+    "name": "Mamta Chauhan",
     "url": "https://ailearnings.in/"
   },
   "publisher": {
@@ -283,12 +283,12 @@
         <h1 class="text-3xl font-bold text-white mb-4 leading-tight">Distributed LLM Training: Data Parallelism, Model Sharding &amp; ZeRO (2026)</h1>
 
         <div class="author-card">
-          <div class="author-avatar">AK</div>
+          <div class="author-avatar">MC</div>
           <div class="author-info">
-            <div class="author-name">Amit K Chauhan</div>
-            <div class="author-title">Software Engineer &amp; AI Builder</div>
+            <div class="author-name">Mamta Chauhan</div>
+            <div class="author-title">Content Creator and AI Enthusiast</div>
             <div class="post-meta-row">
-              <span>Published <time datetime="2026-03-21">March 21, 2026</time></span>
+              <span>Published <time datetime="2026-02-04">February 4, 2026</time></span>
               
               <span class="sep">·</span>
               <span>11 min read</span>
@@ -625,11 +625,11 @@ If fitting in memory: 4×A100 80GB with FSDP ZeRO-3 or DeepSpeed ZeRO-3, using Q
 
     <!-- Author bio -->
     <div class="author-bio">
-      <div class="author-avatar">AK</div>
+      <div class="author-avatar">MC</div>
       <div>
-        <div class="bio-name">Amit K Chauhan</div>
-        <div class="bio-title">Software Engineer &amp; AI Builder</div>
-        <p class="bio-text">Software engineer building practical AI systems — RAG pipelines, LLM applications, and developer AI tools. Created AI Learning Hub to provide a structured, no-fluff roadmap for developers entering AI.</p>
+        <div class="bio-name">Mamta Chauhan</div>
+        <div class="bio-title">Content Creator and AI Enthusiast</div>
+        <p class="bio-text">Mamta Chauhan is an AI enthusiast and content creator behind ailearnings.in. She writes practical guides on LLMs, RAG, and AI engineering to help developers navigate the fast-moving world of artificial intelligence. Passionate about bridging the gap between cutting-edge research and real-world application.</p>
       </div>
     </div>
 
@@ -693,6 +693,58 @@ If fitting in memory: 4×A100 80GB with FSDP ZeRO-3 or DeepSpeed ZeRO-3, using Q
         btn.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
         btn.innerHTML = isOpen ? menuIcon : closeIcon;
       });
+    })();
+  </script>
+
+  <!-- Image lightbox / zoom -->
+  <style>
+    .prose img { cursor: zoom-in; }
+    #img-lightbox {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+      cursor: zoom-out;
+    }
+    #img-lightbox.open { display: flex; }
+    #img-lightbox img {
+      max-width: 92vw; max-height: 90vh;
+      border-radius: 0.5rem; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+      cursor: default; object-fit: contain;
+      animation: lb-in 0.18s ease;
+    }
+    @keyframes lb-in { from { opacity:0; transform: scale(0.95); } to { opacity:1; transform: scale(1); } }
+    #img-lightbox-close {
+      position: fixed; top: 1rem; right: 1.25rem;
+      color: #fff; font-size: 2rem; line-height: 1; cursor: pointer;
+      opacity: 0.7; background: none; border: none; padding: 0.25rem 0.5rem;
+    }
+    #img-lightbox-close:hover { opacity: 1; }
+  </style>
+  <div id="img-lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button id="img-lightbox-close" aria-label="Close image viewer">&times;</button>
+    <img id="img-lightbox-img" src="" alt="" />
+  </div>
+  <script>
+    (function(){
+      var lb   = document.getElementById('img-lightbox');
+      var lbImg = document.getElementById('img-lightbox-img');
+      var lbClose = document.getElementById('img-lightbox-close');
+      function open(src, alt) {
+        lbImg.src = src; lbImg.alt = alt || '';
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() {
+        lb.classList.remove('open');
+        lbImg.src = '';
+        document.body.style.overflow = '';
+      }
+      document.querySelectorAll('.prose img').forEach(function(img){
+        img.addEventListener('click', function(){ open(img.src, img.alt); });
+      });
+      lbClose.addEventListener('click', close);
+      lb.addEventListener('click', function(e){ if(e.target === lb) close(); });
+      document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
     })();
   </script>
 

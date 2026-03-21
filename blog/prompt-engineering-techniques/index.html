@@ -579,5 +579,57 @@ When your task involves multi-step agent behavior, tool use, or requires the mod
     })();
   </script>
 
+  <!-- Image lightbox / zoom -->
+  <style>
+    .prose img { cursor: zoom-in; }
+    #img-lightbox {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+      cursor: zoom-out;
+    }
+    #img-lightbox.open { display: flex; }
+    #img-lightbox img {
+      max-width: 92vw; max-height: 90vh;
+      border-radius: 0.5rem; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+      cursor: default; object-fit: contain;
+      animation: lb-in 0.18s ease;
+    }
+    @keyframes lb-in { from { opacity:0; transform: scale(0.95); } to { opacity:1; transform: scale(1); } }
+    #img-lightbox-close {
+      position: fixed; top: 1rem; right: 1.25rem;
+      color: #fff; font-size: 2rem; line-height: 1; cursor: pointer;
+      opacity: 0.7; background: none; border: none; padding: 0.25rem 0.5rem;
+    }
+    #img-lightbox-close:hover { opacity: 1; }
+  </style>
+  <div id="img-lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button id="img-lightbox-close" aria-label="Close image viewer">&times;</button>
+    <img id="img-lightbox-img" src="" alt="" />
+  </div>
+  <script>
+    (function(){
+      var lb   = document.getElementById('img-lightbox');
+      var lbImg = document.getElementById('img-lightbox-img');
+      var lbClose = document.getElementById('img-lightbox-close');
+      function open(src, alt) {
+        lbImg.src = src; lbImg.alt = alt || '';
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() {
+        lb.classList.remove('open');
+        lbImg.src = '';
+        document.body.style.overflow = '';
+      }
+      document.querySelectorAll('.prose img').forEach(function(img){
+        img.addEventListener('click', function(){ open(img.src, img.alt); });
+      });
+      lbClose.addEventListener('click', close);
+      lb.addEventListener('click', function(e){ if(e.target === lb) close(); });
+      document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+    })();
+  </script>
+
 </body>
 </html>
